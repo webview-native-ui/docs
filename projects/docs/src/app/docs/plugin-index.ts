@@ -1,3 +1,4 @@
+import { ThemeComparisonComponent } from './theme-comparison';
 import { guideChaptersForLocale, guideCopyForLocale } from '../../../../../shared/guide-navigation';
 import { STANDARD_SETUP_LABELS, STANDARD_SETUP_PATH } from '../../../../../shared/standard-setup';
 import { resolveDocsLocale } from '../../../../../shared/docs-locales';
@@ -10,45 +11,50 @@ import { SeoService } from './seo.service';
 
 @Component({
   selector: 'app-project-index',
-  imports: [ProjectIconComponent],
+  imports: [ProjectIconComponent, ThemeComparisonComponent],
   template: `
     <div class="catalog">
       <header class="catalog-hero">
-        <p class="eyebrow" i18n="@@openSourceDocumentation">Open source documentation</p>
-        <h1>{{ copy.title }}</h1>
-        <p class="catalog-hero__lead">{{ copy.intro }}</p>
-        <p class="catalog-hero__lead">{{ copy.approach }}</p>
-        <div class="platform-outcomes">
-          <section><h2>{{ copy.iosBenefit }}</h2><p>{{ copy.iosDetail }}</p></section>
-          <section><h2>{{ copy.androidBenefit }}</h2><p>{{ copy.androidDetail }}</p></section>
+        <div class="hero-introduction">
+          <p class="eyebrow" i18n="@@openSourceDocumentation">Open source documentation</p>
+          <h1>{{ copy.title }}</h1>
+          <p class="catalog-hero__lead">{{ copy.heroDefinition }}</p>
+          <p class="hero-audience">{{ copy.heroAudience }}</p>
+          <p class="guide-actions"><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a><a href="#theme-preview-title">{{ copy.previewTitle }} ↓</a></p>
+          <p class="hero-setup-note">{{ copy.standardAudience }}</p>
         </div>
-        <h2>{{ copy.start }}</h2>
-        <p class="catalog-hero__lead">{{ copy.startDescription }}</p>
-        <p class="guide-actions"><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a><a href="#theme-preview-title">{{ copy.previewTitle }} ↓</a></p>
-        <nav class="setup-alternatives" [attr.aria-label]="copy.otherSetups">
-          <span>{{ copy.otherSetups }}</span>
-          <a [href]="guideHref('/guides/appearance')">{{ copy.themeOnly }}</a>
-          <a [href]="guideHref('/projects/capacitor-native-ui/docs/framework-independent')">{{ copy.htmlSetup }}</a>
-          <a [href]="guideHref('/projects/cordova-native-ui/docs/readme')">{{ copy.cordovaSetup }}</a>
-        </nav>
+        <app-theme-comparison />
       </header>
 
-      <section class="theme-preview" aria-labelledby="theme-preview-title">
-        <h2 id="theme-preview-title">{{ copy.previewTitle }}</h2>
-        <p>{{ copy.previewScope }}</p>
-        <div class="theme-preview-grid">
-          <figure>
-            <img src="https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/c70beb9d1e5b39de696b2b2c47a3d9bc5ffcdfbe/screenshots/ios27-library.png" width="780" height="1688" loading="lazy" [alt]="copy.iosPreview" />
-            <figcaption>{{ copy.iosPreview }}</figcaption>
-            <a [href]="iosDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryIos }} ↗</a>
-          </figure>
-          <figure>
-            <img src="https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.1/screenshots/md3.png" width="1848" height="974" loading="lazy" [alt]="copy.androidPreview" />
-            <figcaption>{{ copy.androidPreview }}</figcaption>
-            <a [href]="androidDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryAndroid }} ↗</a>
-          </figure>
+      <section class="experience-explanation" aria-labelledby="how-it-fits">
+        <header><p class="eyebrow">01</p><h2 id="how-it-fits">{{ copy.howTitle }}</h2></header>
+        <div>
+          <p>{{ copy.intro }}</p>
+          <p>{{ copy.approach }}</p>
+          <div class="platform-outcomes">
+            <section><h3>{{ copy.iosBenefit }}</h3><p>{{ copy.iosDetail }}</p></section>
+            <section><h3>{{ copy.androidBenefit }}</h3><p>{{ copy.androidDetail }}</p></section>
+          </div>
         </div>
       </section>
+      <section class="setup-section" aria-labelledby="standard-entry">
+        <header><p class="eyebrow">02</p><h2 id="standard-entry">{{ copy.start }}</h2></header>
+        <div>
+          <p>{{ copy.startDescription }}</p>
+          <p><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a></p>
+          <nav class="setup-alternatives" [attr.aria-label]="copy.otherSetups">
+            <span>{{ copy.otherSetups }}</span>
+            <a [href]="guideHref('/guides/appearance')">{{ copy.themeOnly }}</a>
+            <a [href]="guideHref('/projects/capacitor-native-ui/docs/framework-independent')">{{ copy.htmlSetup }}</a>
+            <a [href]="guideHref('/projects/cordova-native-ui/docs/readme')">{{ copy.cordovaSetup }}</a>
+          </nav>
+          <nav class="theme-preview" [attr.aria-label]="copy.previewTitle">
+            <a [href]="iosDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryIos }} ↗</a>
+            <a [href]="androidDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryAndroid }} ↗</a>
+          </nav>
+        </div>
+      </section>
+      <header class="chapter-heading"><p class="eyebrow">03</p><h2>{{ copy.guideTitle }}</h2></header>
       <section class="guide-chapters" [attr.aria-label]="copy.guide">
         @for (chapter of chapters; track chapter.id) {
           <section class="guide-chapter">
@@ -70,6 +76,10 @@ import { SeoService } from './seo.service';
       </section>
       @for (group of projectGroups; track group.id) {
         <section class="catalog-group" [id]="'category-' + group.id" [attr.aria-labelledby]="'heading-' + group.id">
+          @if (group.id === 'plugins') {
+            <span id="category-capacitor-plugins" class="legacy-category-anchor" aria-hidden="true"></span>
+            <span id="category-cordova-plugins" class="legacy-category-anchor" aria-hidden="true"></span>
+          }
           <header class="catalog-group__heading">
             <h2 [id]="'heading-' + group.id">{{ group.label }} <span>{{ group.projects.length }}</span></h2>
             <p>{{ group.description }}</p>

@@ -42,8 +42,7 @@ export interface ProjectFeatureDefinition {
   description: LocalizedText;
 }
 
-export type ProjectCategoryId =
-  'translations' | 'capacitor-plugins' | 'cordova-plugins' | 'frontend-tools' | 'developer-tools';
+export type ProjectCategoryId = 'translations' | 'plugins' | 'frontend-tools' | 'developer-tools';
 
 export interface ProjectCategoryDefinition {
   id: ProjectCategoryId;
@@ -114,36 +113,15 @@ export const projectCategoryDefinitions: readonly ProjectCategoryDefinition[] = 
     order: 10,
   },
   {
-    id: 'capacitor-plugins',
-    label: {
-      en: 'Capacitor plugins',
-      ja: 'Capacitorプラグイン',
-      fr: 'Plugins Capacitor',
-      de: 'Capacitor-Plugins',
-    },
+    id: 'plugins',
+    label: { en: 'Plugins', ja: 'プラグイン', fr: 'Plugins', de: 'Plugins' },
     description: {
-      en: 'Native controls for Ionic and HTML apps through Capacitor.',
-      ja: 'Capacitorを通じてIonic・HTMLアプリへネイティブコントロールを提供します。',
-      fr: 'Contrôles natifs pour les applications Ionic et HTML via Capacitor.',
-      de: 'Native Steuerelemente für Ionic- und HTML-Apps über Capacitor.',
+      en: 'Choose the native UI integration for your app: Capacitor or Cordova.',
+      ja: 'アプリの構成に合わせて、Capacitor版・Cordova版を選べます。',
+      fr: 'Choisissez l’intégration native adaptée à votre application : Capacitor ou Cordova.',
+      de: 'Wählen Sie die native UI-Integration für Ihre App: Capacitor oder Cordova.',
     },
     order: 20,
-  },
-  {
-    id: 'cordova-plugins',
-    label: {
-      en: 'Cordova plugins',
-      ja: 'Cordovaプラグイン',
-      fr: 'Plugins Cordova',
-      de: 'Cordova-Plugins',
-    },
-    description: {
-      en: 'Native UI adapters and bundled theme integration for Cordova apps.',
-      ja: 'Cordovaアプリ向けのNative UIアダプターと同梱テーマ連携です。',
-      fr: 'Adaptateurs Native UI et intégration du thème fourni pour les applications Cordova.',
-      de: 'Native-UI-Adapter und Integration des mitgelieferten Themes für Cordova-Apps.',
-    },
-    order: 30,
   },
   {
     id: 'developer-tools',
@@ -571,7 +549,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     englishDocsRef: '616c9839d421b4f479c1dad5b9fc3888f3b70887',
     releaseNotesUrl: 'https://github.com/webview-native-ui/capacitor-plugin/releases/tag/v2.1.4',
     demoUrl: 'https://ionic-theme-ios27.rdlabo.dev/',
-    category: 'capacitor-plugins',
+    category: 'plugins',
     icon: 'app',
     adapter: 'markdown',
     description: {
@@ -1119,7 +1097,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     repositoryUrl: 'https://github.com/webview-native-ui/cordova-plugin',
     englishDocsRef: '5ac3c7e2754c55c3ffde2e90b3d54ad10152362a',
     releaseNotesUrl: 'https://github.com/webview-native-ui/cordova-plugin/releases/tag/v0.1.1',
-    category: 'cordova-plugins',
+    category: 'plugins',
     icon: 'app',
     adapter: 'markdown',
     description: {

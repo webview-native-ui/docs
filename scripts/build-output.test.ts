@@ -344,7 +344,7 @@ test('builds bounded search indexes for every published language with the compon
       const indexed = indexedNativeUiPages.get(`/${prefix}projects/capacitor-native-ui${page}/`);
       assert.ok(indexed, `${prefix}${page}: indexed canonical page`);
       assert.deepEqual(indexed.filters['project'], ['capacitor-native-ui']);
-      assert.deepEqual(indexed.filters['category'], ['capacitor-plugins']);
+      assert.deepEqual(indexed.filters['category'], ['plugins']);
       const sponsorAvatars = Array.from(
         dom.window.document.querySelectorAll('app-footer-sponsors img'),
         (image) => image.getAttribute('src'),
@@ -355,7 +355,7 @@ test('builds bounded search indexes for every published language with the compon
       );
       assert.doesNotMatch(
         indexed.content,
-        /capacitor-plugins/,
+        /category:plugins/,
         `${prefix}${page}: filter metadata must not pollute searchable content or excerpts`,
       );
       dom.window.close();
@@ -481,5 +481,86 @@ test('shared guides lead from the complete setup to localized package details', 
     assert.equal(native.querySelectorAll('main table tbody tr').length, 3);
     const deepLink = await read(`${prefix}/projects/capacitor-native-ui/docs/configuration`);
     assert.ok(deepLink.querySelector(`app-guide-context a[href="${prefix}/standard-setup"]`));
+  }
+});
+
+test('theme comparison ships real release assets and keeps one shared screen across locales', async () => {
+  const previewRoot = 'dist/docs/browser/previews/theme';
+  const markup = await readFile(`${previewRoot}/index.html`, 'utf8');
+  const preview = new JSDOM(markup).window.document;
+  assert.equal(preview.querySelector('meta[name="robots"]')?.getAttribute('content'), 'noindex');
+  assert.equal(preview.querySelector('[data-pagefind-body]'), null);
+  for (const element of preview.querySelectorAll('[src], link[href]')) {
+    const asset = element.getAttribute('src') ?? element.getAttribute('href');
+    assert.ok(
+      asset?.startsWith('/previews/theme/'),
+      'assets must survive slashless production redirects',
+    );
+    await access(`dist/docs/browser${asset}`);
+  }
+  for (const [source, target] of [
+    ['@rdlabo/ionic-theme-ios27/dist/styles/class.css', 'ios27.css'],
+    ['@rdlabo/ionic-theme-md3/dist/styles/theme.css', 'md3.css'],
+  ]) {
+    assert.equal(
+      await readFile(`${previewRoot}/vendor/${target}`, 'utf8'),
+      await readFile(`node_modules/${source}`, 'utf8'),
+    );
+  }
+  const source = await readFile(`${previewRoot}/preview.js`, 'utf8');
+  for (const match of source.matchAll(/from ['"](.+?)['"]/g))
+    await access(join(previewRoot, match[1]));
+  for (const { code, subPath } of PUBLISHED_DOCS_LOCALES) {
+    const html = await readFile(join('dist/docs/browser', subPath, 'index.html'), 'utf8');
+    const doc = new JSDOM(html).window.document;
+    const frames = [...doc.querySelectorAll<HTMLIFrameElement>('main app-theme-comparison iframe')];
+    assert.equal(frames.length, 2);
+    const sources = frames.map(
+      (frame) => new URL(frame.getAttribute('src')!, 'https://webview-native-ui.com'),
+    );
+    assert.equal(sources[0].pathname, '/previews/theme/index.html');
+    assert.equal(sources[0].pathname, sources[1].pathname);
+    assert.deepEqual(
+      sources.map((url) => url.searchParams.get('theme')),
+      ['off', 'on'],
+    );
+    assert.ok(
+      sources.every(
+        (url) => url.searchParams.get('mode') === 'ios' && url.searchParams.get('lang') === code,
+      ),
+    );
+    assert.equal(doc.querySelectorAll('main .category-nav a').length, 3);
+    assert.equal(doc.querySelectorAll('#category-plugins .catalog-card').length, 2);
+    assert.ok(doc.getElementById('category-capacitor-plugins'));
+    assert.ok(doc.getElementById('category-cordova-plugins'));
+    assert.equal(doc.querySelectorAll('main img[src*="screenshots/"]').length, 0);
+  }
+});
+
+test('every recorded source-site redirect retains its destination after docs restructuring', async () => {
+  const inventory = JSON.parse(await readFile('migration/redirect-inventory.json', 'utf8')) as {
+    routes: { source: string; destination: string }[];
+  };
+  const redirects = new Map(
+    (await readFile('projects/docs/public/_redirects', 'utf8'))
+      .split('\n')
+      .filter((line) => line.startsWith('/'))
+      .map((line) => {
+        const [source, destination] = line.split(/\s+/);
+        return [source, new URL(destination, 'https://webview-native-ui.com').pathname];
+      }),
+  );
+  assert.equal(inventory.routes.length, 332);
+  assert.equal(new Set(inventory.routes.map(({ source }) => source)).size, 332);
+  for (const { source, destination } of inventory.routes) {
+    let target = destination;
+    const visited = new Set<string>();
+    while (redirects.has(target)) {
+      assert.ok(!visited.has(target), `redirect loop from ${source}`);
+      visited.add(target);
+      target = redirects.get(target)!;
+    }
+    await access(join('dist/docs/browser', target, 'index.html'));
+    if (source !== destination) assert.equal(redirects.get(source), destination, source);
   }
 });

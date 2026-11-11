@@ -8,7 +8,7 @@ export const PROJECT = {
   "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
   "demoUrl": "https://ionic-theme-ios27.rdlabo.dev/",
   "releaseNotesUrl": "https://github.com/webview-native-ui/capacitor-plugin/releases/tag/v2.1.4",
-  "category": "capacitor-plugins",
+  "category": "plugins",
   "icon": "app",
   "version": "2.1.4",
   "description": "WebViewアプリ向けのNative UI、Android Dynamic Color、独自ネイティブコンテンツ。",

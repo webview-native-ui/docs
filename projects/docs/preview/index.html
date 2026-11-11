@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>WebView Native UI — theme comparison</title>
+    <link rel="stylesheet" href="/previews/theme/vendor/ionic/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="/previews/theme/preview.css" />
+    <script type="module" src="/previews/theme/preview.js"></script>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header
+        ><ion-toolbar><ion-title data-copy="settings">Settings</ion-title></ion-toolbar></ion-header
+      >
+      <ion-content>
+        <ion-list inset="true">
+          <ion-item-group
+            ><ion-item
+              ><ion-label
+                ><h2 data-copy="team">Design team</h2>
+                <p data-copy="members">8 members</p></ion-label
+              ><ion-badge slot="end">Pro</ion-badge></ion-item
+            >
+          </ion-item-group></ion-list
+        >
+        <ion-list inset="true">
+          <ion-list-header
+            ><ion-label data-copy="preferences">Preferences</ion-label></ion-list-header
+          >
+          <ion-item-group
+            ><ion-item
+              ><ion-toggle checked="true" data-copy="notifications"
+                >Notifications</ion-toggle
+              ></ion-item
+            >
+            <ion-item><ion-toggle data-copy="offline">Offline access</ion-toggle></ion-item>
+          </ion-item-group></ion-list
+        >
+        <div class="actions">
+          <ion-button id="save" expand="block"
+            ><span data-copy="save">Save changes</span></ion-button
+          >
+          <p id="status" role="status" aria-live="polite"></p>
+        </div>
+      </ion-content>
+      <ion-footer
+        ><ion-toolbar
+          ><ion-segment value="settings"
+            ><ion-segment-button value="home"
+              ><ion-label data-copy="home">Home</ion-label></ion-segment-button
+            ><ion-segment-button value="settings"
+              ><ion-label data-copy="settings">Settings</ion-label></ion-segment-button
+            ></ion-segment
+          ></ion-toolbar
+        ></ion-footer
+      >
+    </ion-app>
+  </body>
+</html>

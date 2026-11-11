@@ -1,0 +1,21 @@
+/* Shared app layout only. Control appearance comes from the published packages. */
+:root {
+  color-scheme: light;
+}
+body {
+  margin: 0;
+}
+ion-content {
+  --background: #f5f6f8;
+}
+.actions {
+  padding: 0 16px 8px;
+}
+#status {
+  min-height: 2.5em;
+  margin: 8px 0 0;
+  font:
+    12px/1.4 system-ui,
+    sans-serif;
+  color: #475569;
+}
