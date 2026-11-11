@@ -52,7 +52,23 @@ await enableNativeUI();
 ```
 
 
-Angular では `bootstrapApplication` の完了後、React や Vue ではアプリシェルの描画後に呼びます。Foldable の初期配置と `layoutChange` 通知を `resolveVerticalBarsLayout` とテーマの `setVerticalBarsLayout` で接続します。[起動とデバイス配置の例](device-layout.md)を参照してください。
+通常導入には、`ion-app` の描画後に次の配置連携も含めます。iPhone Duo / Vertical Bars の余白を適用し、アクティブなディスプレイの変更にも追従します。
+
+```ts
+import { Foldable } from '@erkamyaman/capacitor-foldable';
+import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
+import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
+
+const updateLayout = async () => {
+  setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+};
+
+void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))
+  .then(updateLayout)
+  .catch(console.error);
+```
+
+Angular では `bootstrapApplication` の完了後に `enableNativeUI()` を呼び、配置コードをアプリシェルの既存の `afterNextRender` コールバックへ置きます。React や Vue では両方をアプリシェルの描画後に実行します。ここまでで通常のコントロールとデバイスに応じた Vertical Bars が有効になり、追加のレール設定は不要です。
 
 ## 4. ビルド・同期して実行する
 
