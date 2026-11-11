@@ -1,91 +1,91 @@
 ---
-title: Ionic アプリで Native UI をセットアップする
+title: "iOS Native UI と Android Dynamic Color を導入する"
 ---
 
-# Ionic アプリで Native UI をセットアップする
+# iOS Native UI と Android Dynamic Color を導入する
 
-パッケージを導入し、テーマを設定して、Native UI を起動します。通常のコントロールと **Vertical Bars はデフォルトで有効**です。ネイティブレールを利用できるかどうかはデバイスが決定します。
+標準の Ionic 構成では、iPhone Duo / Vertical Bars を含む iOS のネイティブコントロールと、Android の Dynamic Color をまとめて設定します。アプリの状態、ルート、イベントハンドラーはそのまま使います。
 
 ## 1. パッケージをインストールする
 
 ```sh
-npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
 ```
 
-Capacitor 8 と iOS プロジェクトを持つ既存の Ionic アプリを使います。標準構成は iOS 27 テーマのプリセットと、Foldable 8.5 以降のバージョン8を使用します。
+Capacitor 8 の既存の Ionic アプリを使います。Foldable はバージョン8の8.5以降が必要です。
 
-## 2. テーマを設定する
+## 2. 両方のテーマを設定する
 
-Ionic の基本 CSS は維持します。アプリのテーマとダークパレット用スタイルシートには、この単一エントリーを使います。
+Ionic の基本 CSS は維持し、次のテーマスタイルシートを使います。iOS のエントリーにはクラス方式のダークパレットと Vertical Bars の配置が含まれます。既存のシステム追従・常時ダークのパレット読み込みは、このエントリーへ置き換えます。
 
 ```css
-@import '@rdlabo/ionic-theme-ios27/styles/system.css';
+@import '@rdlabo/ionic-theme-ios27/styles/class.css';
+@import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
 
-描画の前に、アプリの Ionic 初期化へプリセットを渡します。
+既存の Ionic 初期化処理へ、プラットフォームに合うプリセットを渡します。
 
 ```ts
+import { Capacitor } from '@capacitor/core';
 import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
-const ionicConfig = {
-  ...ios27ThemeConfig,
-};
+const ionicConfig = Capacitor.getPlatform() === 'ios' ? ios27ThemeConfig : md3ThemeConfig;
 ```
 
-| フレームワーク | Ionic の初期化 |
+| Framework | Ionic initializer |
 | --- | --- |
-| Angular / Ionic 8 | `@ionic/angular/standalone` の `provideIonicAngular(ionicConfig)` |
-| Angular / Ionic 9 | `@ionic/angular` の `provideIonicAngular(ionicConfig)` |
-| React | `@ionic/react` の `setupIonicReact(ionicConfig)` |
-| Vue | `@ionic/vue` の `IonicVue` を使う `app.use(IonicVue, ionicConfig)` |
+| Angular / Ionic 8 | `provideIonicAngular(ionicConfig)` from `@ionic/angular/standalone` |
+| Angular / Ionic 9 | `provideIonicAngular(ionicConfig)` from `@ionic/angular` |
+| React | `setupIonicReact(ionicConfig)` from `@ionic/react` |
+| Vue | `app.use(IonicVue, ionicConfig)` with `IonicVue` from `@ionic/vue` |
 
-スタイルシートにはレールのレイアウトとシステムのダークパレットが含まれます。プリセットは Ionic のモードとアニメーションを設定し、Native UI のナビゲーションも連携します。
+## 3. アプリシェルの描画後に起動する
 
-## 3. Native UI を起動する
-
-アプリのシェルがマウントされた後に、デフォルトのランタイムを起動します。
+`ion-app` を含むアプリシェルの描画後に、一度実行します。両機能と、必須のデバイス配置通知を接続します。
 
 ```ts
-import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
-
-await enableNativeUI();
-```
-
-
-通常導入には、`ion-app` の描画後に次の配置連携も含めます。iPhone Duo / Vertical Bars の余白を適用し、アクティブなディスプレイの変更にも追従します。
-
-```ts
+import { Capacitor } from '@capacitor/core';
+import { enableNativeUI, getDynamicColorScheme, addDynamicColorListener } from '@rdlabo/capacitor-native-ui';
 import { Foldable } from '@erkamyaman/capacitor-foldable';
 import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
 import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
+import { enableDynamicColors } from '@rdlabo/ionic-theme-md3/dynamic-colors';
 
-const updateLayout = async () => {
-  setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
-};
+await enableDynamicColors({
+  getScheme: getDynamicColorScheme,
+  listen: addDynamicColorListener,
+  mode: 'system',
+  onError: console.error,
+});
 
-void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))
-  .then(updateLayout)
-  .catch(console.error);
+if (Capacitor.getPlatform() === 'ios') {
+  await enableNativeUI();
+
+  const updateLayout = async () => {
+    setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+  };
+
+  void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))
+    .then(updateLayout)
+    .catch(console.error);
+}
 ```
 
-Angular では `bootstrapApplication` の完了後に `enableNativeUI()` を呼び、配置コードをアプリシェルの既存の `afterNextRender` コールバックへ置きます。React や Vue では両方をアプリシェルの描画後に実行します。ここまでで通常のコントロールとデバイスに応じた Vertical Bars が有効になり、追加のレール設定は不要です。
+テーマのコントローラーがシステムの明暗に追従し、対応する Android では端末の配色を適用します。それ以外のプラットフォームや未対応 Android はテーマの既定色を維持します。iOS では通常のコントロールと Vertical Bars を有効にして起動し、配置購読が初期配置とディスプレイの変更を反映します。
 
-## 4. ビルド・同期して実行する
+Angular ではアプリシェルの `afterNextRender` コールバック、React や Vue ではマウント後のアプリ起動処理へ置きます。アプリが独自の明暗設定を管理する場合は、外観コントローラーを二重に作らず、[Dynamic Color ガイド](dynamic-colors.md#apply-to-ionic)に従って既存設定へ接続します。
 
-アプリの Web アセットをビルドしてから、ネイティブプロジェクトを同期します。
+## 4. ビルド・同期・実行する
+
+Web アセットをビルドして同期し、各ネイティブアプリを再ビルド・実行します。
 
 ```sh
-npx cap sync ios
+npx cap sync
 ```
 
-Xcode 26+ で再ビルドし、iOS 26+ で実行します。ネイティブレールには追加の[対応デバイスと OS](vertical-bars.md#native-rendering)が必要です。それ以外のデバイスは通常のレイアウトを維持します。SwiftPM は Engine を自動解決します。既存の CocoaPods アプリには[ネイティブプロジェクト設定](configuration.md#native-project-setup)を適用します。
+iOS のネイティブコントロールは iOS 26 以降と Xcode 26 以降が必要です。Android Dynamic Color は Android 12 以降で利用でき、古い端末は既定の配色を維持します。ネイティブレールには追加の[対応端末と OS](vertical-bars.md#native-rendering)が必要です。SwiftPM は Engine を自動解決します。既存の CocoaPods 構成は[ネイティブプロジェクト設定](configuration.md#native-project-setup)を参照してください。
 
-既存のツールバー操作とタブが元のハンドラーを呼ぶことを確認します。進む・戻る、戻るジェスチャーのキャンセル、レール対応デバイスでの画面切替を試します。ブラウザーでは Web フォールバックを確認します。
+## 個別のオプション
 
-## 次のステップ
-
-- 標準プリセットの代わりに[既存の Web テーマを使う](ionic-vertical-bars.md)。
-- [Ionic なしで HTML を使う](framework-independent.md)。
-- [外観とアプリの上書き設定](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/configuration)。
-- [対応コントロール](native-ui.md)と[設定リファレンス](configuration.md)。
-- [以前の連携を更新する](migration.md#simplify-an-existing-ios-setup)。
+これらのテーマを使わない Native UI は[既存テーマの設定](ionic-vertical-bars.md)または [HTML の設定](framework-independent.md)を使います。明暗設定・配色変換は [Dynamic Color](dynamic-colors.md)、Native UI のオプションは[設定](configuration.md)、既存構成からの移行は[移行ガイド](migration.md)を参照してください。

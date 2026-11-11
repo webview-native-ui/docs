@@ -1,64 +1,44 @@
 ---
-title: はじめに
+title: "Capacitor Native UI"
 ---
+
 # Capacitor Native UI
 
-アプリの状態、ルーティング、ハンドラーをWebViewに維持しながら、対応するWebコントロールをiOS上のUIKitとSwiftUIで描画します。既存のIonicマークアップや明示的に指定したHTMLボタンを使えます。独自のSwiftUIやAndroid Composeのコンテンツは、実験的なアプリ内拡張で追加できます。
+Capacitor Native UI は、WebView アプリにネイティブコントロール、端末の配色、独自のネイティブコンテンツを提供します。
 
-Native UIは明示的に有効化する機能です。Android、ブラウザ、古いiOS、および未対応のコントロールでは、標準コントロールはWeb表示を維持します。Androidでは実験的なアプリ内Compose拡張を利用できます。アプリのスタイルとレイアウトはそのまま使え、iOSテーマは任意です。
+## 標準導入：iOS Native UI と Android Dynamic Color
 
-## npmからインストールする
-
-標準の Ionic iOS 設定では、Native UI、iOS 27 テーマ、Foldable をインストールします。
+Ionic アプリでは、両プラットフォームの機能をまとめて設定するところから始めます。標準導入には iOS の iPhone Duo / Vertical Bars と配置変更への追従、対応する Android 端末の Material You 配色が含まれます。
 
 ```sh
-npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
 ```
 
-テーマの単一スタイルシートと `ios27ThemeConfig` プリセットを使い、アプリのシェルがマウントされた後にランタイムを1つ起動します。
+テーマのプリセット、スタイルシート、必要な起動コード一式は[標準導入](setup.md)にまとめています。
 
-```ts
-import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+## 個別のガイド
 
-await enableNativeUI();
-```
+### 1. プラグインの Native UI を使う
 
-**Vertical Bars は通常のコントロールとともにデフォルトで有効です。** 配置通知を接続すると、対応デバイスがレール配置を決め、それ以外は通常の Web レイアウトを使います。
+対応する Ionic・HTML コントロールを iOS でネイティブ表示します。アプリの状態、ルーティング、ハンドラーはそのまま使います。
 
-スタイルシート、起動、デバイス配置、ネイティブビルドは [Ionic 設定](setup.md)を参照してください。[既存テーマ](ionic-vertical-bars.md)や [Ionic を使わない HTML](framework-independent.md)でも利用できます。アプリの状態、ルーティング、テーマ選択はアプリで管理します。
-
-## 投影の仕組み
-
-**投影**とは、Webコントロールを別の形で表示することです。アプリは元のDOM要素、状態、イベントハンドラーを維持します。プラグインは対応するラベル、アイコン、選択・無効状態、位置と寸法を読み取り、描画したコントロールを投影元の要素に関連付けます。ページ全体をネイティブ画面に変換したり、アプリの別コピーを実行したりするわけではありません。
-
-| Web側の投影元 | 投影後の表示 |
+| アプリの構成 | ガイド |
 | --- | --- |
-| Android の Material You の色を取得する | [Android の動的な配色](/docs/dynamic-colors) |
-| 対応するIonicボタン、タブ、セグメント | 対応するiOS上のネイティブUIKit／SwiftUIコントロール |
-| 明示的に指定したHTMLボタンと戻るボタン | 対応するiOS上のネイティブボタン |
-| Vertical Barsに配置された、条件を満たすコントロール | 利用可能なシステムレール内のSwiftUIコントロール。それ以外はWebレール表示 |
-| アプリ内拡張のDOM要素 | 要素から読み取ったpropsを使って、アプリが登録したSwiftUIまたはComposeコンテンツを表示 |
+| Ionic と標準の iOS 27 テーマ | [標準導入](setup.md) |
+| Ionic と既存の Web テーマ | [既存テーマの設定](ionic-vertical-bars.md) |
+| Ionic を使わない HTML | [HTML の設定](framework-independent.md) |
 
-投影中も元の要素は**DOM内に残ります**。バインディングとハンドラーも接続されたままです。ネイティブ表示が受け付けられると、ランタイムは投影元を視覚的に隠し、直接のポインター操作を防ぎ、Webアクセシビリティからも隠すことで、操作可能なコピーが2つ存在しないようにします。要素への投影では投影元のレイアウト領域が維持されます。レール用の余白はアプリまたはテーマが確保します。WebレールもアダプターのWeb表示を使い、Ionicのレイアウト・クローン、または `webHost` 内のHTMLプロキシボタンで表示します。
+#### 投影の仕組み
 
-たとえば、投影された保存ボタンをタップすると、元のWebボタンが作動します。既存のハンドラーが保存とアプリ状態の更新を行い、対応するDOMの変更が投影先に反映されます。タブなどの操作も投影元のアダプターを経由します。ネイティブ側の状態を別管理せず、引き続き投影元を更新してください。DOM変更を伴わずにreaderの値が変わる場合は `markForCheck()` を使います。
+元の Web コントロールの状態とハンドラーを維持し、ネイティブ表示します。[対応コントロールと投影の動作](native-ui.md)を参照してください。
 
-投影が変更するのは表示です。任意のHTMLやCSSをネイティブビューに変換するものではありません。ネイティブコントロールは対応するデータとスタイルを使用するため、独自のWeb表示がそのまま再現されるとは限りません。投影元を削除または無効化すると、それ以降の有効な操作を防ぎます。投影が利用できない場合や停止した場合、ランタイムは非表示状態を解除し、投影元はWeb表示または利用可能なWebレールへ戻ります。アプリ自身の非表示・無効状態は引き続き適用されます。
+### 2. Dynamic Color を使う
 
-Native の所有権は、アニメーションや画像の有無とは独立して、ソースとその投影コンテキストに従います。投影が引き続き適格である限り、Modal の表示、ドラッグ、サイズ変更、画像の復元によって、受け付け済みのソースが Web に戻ることはありません。明示的な Web への引き渡し、未対応または拒否された投影、ランタイム障害、ソースまたはコンテキストの終了によって所有権を解放します。無効なボタンも Native が所有する同じコントロールのままで、入力が無効になります。
+Android の端末配色を取得し、テーマへ適用します。単独利用、明暗設定、配色変換は [Dynamic Color ガイド](dynamic-colors.md)を参照してください。
 
-操作を遮断する Web オーバーレイでは、ネイティブのボタン、セグメント、FAB、タブバーの準備済み画像をバックドロップの下に残せます。画像はキャプチャしたネイティブの外観を保持し、ネイティブ更新とまとめられた視覚的変更の後に準備されます。Liquid Glass の縁のハイライトなど、プラットフォームのキャプチャ結果はライブの合成表示と異なる場合があり、マテリアルをピクセル単位で同一に再現する保証はありません。タッチ中は準備を停止し、表示時はキャプチャやブリッジの応答を待たず、最後に完成した画像を使います。画像がなくても、受け付け済みの Native ソースを Web へ戻すことはありません。コントロールを保持するネイティブポップオーバーは、ネイティブ表示を維持します。移動、復元、適用除外については[ハンドオフの規則](https://webview-native-ui.com/projects/capacitor-native-ui/docs/appearance#temporary-images-beneath-web-overlays)を参照してください。この機能を有効にするにはネイティブアプリを再ビルドしてください。古いネイティブバイナリは従来の表示経路を維持します。
+### 3. 自分で Native UI を作って使う
 
-## 作りたいものから選ぶ
-
-| 目的 | はじめに読むガイド |
-| --- | --- |
-| 既存のIonicコントロールをネイティブ表示する | [Ionicの設定](/docs/setup) |
-| Ionicを使わずネイティブボタンを利用する | [HTMLの設定](/docs/framework-independent) |
-| 既存テーマを維持してIonicにサイドレールを追加する | [Vertical Barsの導入手順](/docs/ionic-vertical-bars) |
-| Ionicを使わずサイドレールを追加する | [HTMLレールの設定](/docs/framework-independent) |
-| iOS 27テーマを使用中のアプリにネイティブコントロールを追加する | [テーマへのNative UIの追加](/ionic-theme-ios27/docs/add-native-ui) |
-| 独自のSwiftUIまたはAndroid Composeコンテンツを表示する | [アプリ内拡張（実験的）](/docs/native-ui-extensions) |
+[アプリ内拡張](native-ui-extensions.md)を使い、独自の SwiftUI または Android Compose コンテンツを表示します。この機能は実験的です。
 
 ## 要件
 
@@ -127,11 +107,3 @@ Xcode に `https://github.com/webview-native-ui/capacitor-plugin.git` を追加�
 Capacitor アプリは引き続き `RdlaboCapacitorNativeUi` プロダクトと `import NativeUIPlugin` を使います。このモジュールは Core を再エクスポートするため、既存の `NativeUI.register` 呼び出しもアダプターと同じ登録状態を使います。ルートマニフェストが両ターゲットを管理し、別の入れ子の Swift パッケージはありません。
 
 CocoaPods は引き続きアダプターと共有ソースを既存のプラグイン pod へコンパイルします。この変更は、独立した Core pod の公開や Cordova アダプターの実装を行うものではありません。
-
-## Android の動的な配色
-
-`getDynamicColorScheme()` で Android 12 以降の Material You の色を取得し、`addDynamicColorListener()` で再開・構成変更の通知を監視します。どちらも `@rdlabo/capacitor-native-ui` からインポートします。動的な配色は、Native UI の投影や実験的なアプリ内拡張から独立した、正式対応のオプトイン API です。
-
-プラグインは Activity のテーマを変更せず、壁紙への権限も要求せずに、ライトとダークの配色を返します。他のプラットフォームでは `available: false` を返します。プラグインは CSS を適用しません。Ionic アプリでは `@rdlabo/ionic-theme-md3/dynamic-colors` の `enableDynamicColors` を使えます。
-
-インストール、API の契約、変更通知、クリーンアップ、Ionic 連携は [Android の動的な配色](/docs/dynamic-colors)を参照してください。
