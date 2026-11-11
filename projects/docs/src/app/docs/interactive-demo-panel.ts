@@ -25,16 +25,16 @@ import { InteractiveDemo } from './docs-data';
   `,
   template: `
     <aside
-      class="flex h-full min-h-0 flex-col rounded-[1.5rem] border border-[#eadfd9] bg-[#fffaf7] p-4 sm:p-6"
+      class="flex h-full min-h-0 flex-col rounded-[1.5rem] border border-[#e2e8f0] bg-[#f8fbff] p-4 sm:p-6"
       i18n-aria-label="@@interactiveDemo"
       aria-label="Interactive demo"
     >
       <div class="flex flex-wrap items-center justify-between gap-3">
-        <p class="m-0 font-semibold text-[#292320]">
+        <p class="m-0 font-semibold text-[#172033]">
           <ng-container i18n="@@interactiveDemo">Interactive demo</ng-container>
         </p>
         <a
-          class="external-link text-sm font-semibold text-[#c44320] no-underline hover:text-[#923217]"
+          class="external-link text-sm font-semibold text-[#1767d2] no-underline hover:text-[#923217]"
           [href]="demo().url"
           target="_blank"
           rel="noopener noreferrer"
@@ -45,12 +45,12 @@ import { InteractiveDemo } from './docs-data';
       <div class="demo-viewport relative mx-auto mt-4 min-h-0 w-full max-w-[430px] flex-1">
         @if (loading()) {
           <div
-            class="absolute inset-0 z-10 flex items-center justify-center bg-[#fffaf7] text-sm text-[#796e68]"
+            class="absolute inset-0 z-10 flex items-center justify-center bg-[#f8fbff] text-sm text-[#796e68]"
             role="status"
             aria-live="polite"
           >
             <span
-              class="mr-2 size-4 animate-spin rounded-full border-2 border-[#eadfd9] border-t-[#ea572a]"
+              class="mr-2 size-4 animate-spin rounded-full border-2 border-[#e2e8f0] border-t-[#1767d2]"
               aria-hidden="true"
             ></span>
             <ng-container i18n="@@loadingDemo">Loading demo…</ng-container>

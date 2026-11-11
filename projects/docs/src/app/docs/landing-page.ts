@@ -159,11 +159,11 @@ export class LandingPageComponent implements OnInit {
     this.project.set(project);
     if (!project) return;
     this.#seo.setPage({
-      title: project.seoTitle ?? `${project.shortName} - rdlabo.dev`,
+      title: project.seoTitle ?? `${project.shortName} - WebView Native UI`,
       description: project.description,
       path: project.path,
       structuredData: docsBreadcrumbStructuredData(this.#locale, [
-        { name: 'rdlabo.dev', path: '/' },
+        { name: 'WebView Native UI', path: '/' },
         { name: project.shortName, path: project.path },
       ]),
     });

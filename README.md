@@ -1,7 +1,7 @@
 # WebView Native UI documentation
 
 Four-language documentation for Engine, Capacitor Native UI, Ionic Theme iOS27, iOS26, and MD3.
-Production origin: https://webview-native-ui.rdlabo.dev.
+Production origin: https://webview-native-ui.com.
 
 Requires Node.js 24 and npm 11. Run `npm ci`, then `npm start` (English), `npm run start:ja`,
 `npm run start:fr`, or `npm run start:de`.

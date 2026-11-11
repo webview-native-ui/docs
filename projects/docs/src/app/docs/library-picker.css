@@ -46,12 +46,12 @@
   overflow-wrap: anywhere;
 }
 .library-picker-list a:hover {
-  background: #fff5f0;
-  color: #c44320;
+  background: #eff6ff;
+  color: #1767d2;
 }
 .library-picker-list a.is-active {
-  background: #fff0ea;
-  color: #c44320;
+  background: #eff6ff;
+  color: #1767d2;
 }
 .library-picker-list a > span:first-child {
   flex: 1;
@@ -61,6 +61,6 @@
   flex-shrink: 0;
 }
 :is(a, button):focus-visible {
-  outline: 2px solid #ea572a;
+  outline: 2px solid #1767d2;
   outline-offset: -2px;
 }

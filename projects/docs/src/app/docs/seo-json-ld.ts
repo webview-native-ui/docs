@@ -34,7 +34,7 @@ export function docsHomeStructuredData(locale: string, description: string): Jso
       '@id': `${SITE_CONFIG.origin}/#website`,
       url,
       name: SITE_CONFIG.name,
-      alternateName: 'webview-native-ui.rdlabo.dev',
+      alternateName: 'webview-native-ui.com',
       description,
       publisher: { '@id': RDLABO_ORGANIZATION_ID },
       inLanguage,

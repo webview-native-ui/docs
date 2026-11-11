@@ -40,7 +40,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
           <button
             type="button"
             role="tab"
-            class="shrink-0 cursor-pointer rounded-[18px] border-0 bg-transparent px-2.5 py-[5px] font-[ui-monospace,SFMono-Regular,Menlo,monospace] text-[12px] text-white/50 [&.active]:bg-[#ea572a] [&.active]:text-white"
+            class="shrink-0 cursor-pointer rounded-[18px] border-0 bg-transparent px-2.5 py-[5px] font-[ui-monospace,SFMono-Regular,Menlo,monospace] text-[12px] text-white/50 [&.active]:bg-[#1767d2] [&.active]:text-white"
             [attr.aria-selected]="activeFile() === code.file"
             [class.active]="activeFile() === code.file"
             (click)="select(code.file)"

@@ -1,11 +1,11 @@
 <a
   href="#main-content"
-  class="fixed top-3 left-3 z-50 -translate-y-20 rounded-full bg-[#27211e] px-5 py-3 font-semibold text-white no-underline transition focus:translate-y-0"
+  class="fixed top-3 left-3 z-50 -translate-y-20 rounded-full bg-[#101d33] px-5 py-3 font-semibold text-white no-underline transition focus:translate-y-0"
   i18n="@@skipToContent"
   >Skip to content</a
 >
 <header
-  class="docs-header sticky top-0 z-40 flex min-h-17 items-stretch justify-between border-b border-[#eadfd9] bg-white/95 backdrop-blur"
+  class="docs-header sticky top-0 z-40 flex min-h-17 items-stretch justify-between border-b border-[#e2e8f0] bg-white/95 backdrop-blur"
 >
   <div class="flex min-w-0 items-center">
     <button
@@ -19,25 +19,26 @@
       aria-label="Toggle documentation menu"
     >
       <span class="relative block h-3.5 w-4.5" aria-hidden="true">
-        <span class="absolute top-0 left-0 h-0.5 w-full rounded-sm bg-[#292320]"></span>
-        <span class="absolute top-1.5 left-0 h-0.5 w-full rounded-sm bg-[#292320]"></span>
-        <span class="absolute top-3 left-0 h-0.5 w-full rounded-sm bg-[#292320]"></span>
+        <span class="absolute top-0 left-0 h-0.5 w-full rounded-sm bg-[#172033]"></span>
+        <span class="absolute top-1.5 left-0 h-0.5 w-full rounded-sm bg-[#172033]"></span>
+        <span class="absolute top-3 left-0 h-0.5 w-full rounded-sm bg-[#172033]"></span>
       </span>
     </button>
     <a
-      class="docs-brand my-3.5 ml-3.5 flex min-w-0 items-center gap-2.5 text-[#211d1b] no-underline hover:opacity-75"
-      href="https://rdlabo.dev/"
-      aria-label="rdlabo.dev"
+      class="docs-brand my-3.5 ml-3.5 flex min-w-0 items-center gap-2.5 text-[#172033] no-underline hover:opacity-75"
+      [href]="canonicalHomePath"
+      (click)="navigateHome($event)"
+      aria-label="WebView Native UI"
     >
       <img
-        class="h-6 w-auto shrink-0"
-        src="/assets/brand/rdlabo-logo.svg"
-        width="48"
-        height="24"
+        class="size-9 shrink-0"
+        src="/assets/brand/webview-native-ui-logo.png"
+        width="36"
+        height="36"
         alt=""
       />
       <span class="docs-brand__name truncate text-sm font-normal tracking-[-0.02em] sm:text-base"
-        >rdlabo.dev</span
+        >WebView Native UI</span
       >
     </a>
     <span
@@ -46,7 +47,7 @@
       >/</span
     >
     <a
-      class="docs-home-link mr-2 shrink-0 text-sm font-normal tracking-[-0.02em] text-[#211d1b] no-underline hover:opacity-75 sm:mr-3.5 sm:text-base"
+      class="docs-home-link mr-2 shrink-0 text-sm font-normal tracking-[-0.02em] text-[#172033] no-underline hover:opacity-75 sm:mr-3.5 sm:text-base"
       [href]="canonicalHomePath"
       (click)="navigateHome($event)"
       i18n="@@docsHomeNav"
@@ -54,7 +55,7 @@
     >
     @if (navigationProject(); as project) {
       <span
-        class="docs-active-project hidden min-w-0 truncate border-l border-[#e5d9d3] pl-4 text-sm text-[#796e68] md:block"
+        class="docs-active-project hidden min-w-0 truncate border-l border-[#e2e8f0] pl-4 text-sm text-[#796e68] md:block"
         >{{ project.shortName }}</span
       >
     }
@@ -64,7 +65,7 @@
     <pagefind-modal-trigger class="docs-search" />
     <app-language-menu [path]="currentUrl()" (opened)="onLanguageMenuOpened()" />
     <a
-      class="external-link hidden items-center border-l border-[#eadfd9] px-4 text-sm font-medium text-[#292320] no-underline hover:bg-[#fff7f2] sm:flex sm:px-6"
+      class="external-link hidden items-center border-l border-[#e2e8f0] px-4 text-sm font-medium text-[#172033] no-underline hover:bg-[#eff6ff] sm:flex sm:px-6"
       [href]="
         navigationProject()?.repositoryBrowseUrl ??
         navigationProject()?.repositoryUrl ??
@@ -264,18 +265,18 @@
 
 <pagefind-modal />
 
-<footer class="border-t border-[#eadfd9] bg-[#27211e] px-6 py-12 text-sm text-[#d8cec9]">
+<footer class="border-t border-[#e2e8f0] bg-[#101d33] px-6 py-12 text-sm text-[#cbd5e1]">
   <div class="mx-auto grid max-w-6xl gap-3 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-8">
     <app-footer-sponsors [supportUrl]="footerSupportUrl" />
     <div>
-      <p class="m-0 font-semibold">rdlabo.dev</p>
-      <p class="mt-2 mb-0 max-w-2xl leading-6 text-[#bfb3ad]" i18n="@@footerOwnership">
-        Personal open source projects maintained by rdlabo.
+      <p class="m-0 font-semibold">WebView Native UI</p>
+      <p class="mt-2 mb-0 max-w-2xl leading-6 text-[#94a3b8]" i18n="@@footerOwnership">
+        Web and Native UI. One experience. Maintained by rdlabo.
       </p>
     </div>
     <div class="sm:text-right">
       <a
-        class="text-[#ff936f] no-underline hover:text-white"
+        class="text-[#93c5fd] no-underline hover:text-white"
         routerLink="/support"
         i18n="@@supportFooter"
         >Support these projects</a

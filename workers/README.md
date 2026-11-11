@@ -1,6 +1,6 @@
 # Documentation agent router
 
-`docs-agent-router.ts` is an optional Worker Route in front of the existing `webview-native-ui.rdlabo.dev`
+`docs-agent-router.ts` is an optional Worker Route in front of the existing `webview-native-ui.com`
 Static Assets Worker. It experiments with Jev request classification and x402 without making either
 service part of the site's availability path.
 

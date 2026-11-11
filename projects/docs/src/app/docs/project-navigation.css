@@ -7,7 +7,7 @@
 }
 .project-navigation-heading {
   padding: 8px 18px 18px;
-  border-bottom: 1px solid #eadfd9;
+  border-bottom: 1px solid #e2e8f0;
 }
 .project-navigation-back {
   display: flex;
@@ -25,7 +25,7 @@
   cursor: pointer;
 }
 .project-navigation-back:hover {
-  color: #c44320;
+  color: #1767d2;
 }
 .project-navigation-back svg {
   flex-shrink: 0;
@@ -38,7 +38,7 @@
 }
 .project-navigation-title p {
   margin: 0;
-  color: #292320;
+  color: #172033;
   font-size: 15px;
   font-weight: 600;
   overflow-wrap: anywhere;
@@ -66,12 +66,12 @@
   overflow-wrap: anywhere;
 }
 .project-navigation-pages a:hover {
-  color: #c44320;
-  background: #fff5f0;
+  color: #1767d2;
+  background: #eff6ff;
 }
 .project-navigation-pages a.is-active {
-  color: #c44320;
-  background: #fff0ea;
+  color: #1767d2;
+  background: #eff6ff;
 }
 .project-navigation-section {
   margin: 24px 12px 5px;
@@ -81,7 +81,7 @@
   letter-spacing: 0.06em;
 }
 :is(a, button):focus-visible {
-  outline: 2px solid #ea572a;
+  outline: 2px solid #1767d2;
   outline-offset: -2px;
 }
 @media (pointer: coarse) {

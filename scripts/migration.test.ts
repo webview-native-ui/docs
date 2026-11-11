@@ -7,7 +7,7 @@ import { SITE_CONFIG } from '../projects/docs/src/app/site-config';
 test('the migration retains every original source and reviewed translation', async () => {
   const inventory = JSON.parse(await readFile('migration/source-inventory.json', 'utf8'));
   assert.deepEqual(projectDefinitions.map(({ id }) => id).sort(), [...inventory.projects].sort());
-  assert.equal(SITE_CONFIG.origin, 'https://webview-native-ui.rdlabo.dev');
+  assert.equal(SITE_CONFIG.origin, 'https://webview-native-ui.com');
   for (const file of inventory.files) {
     await access(file.path);
   }
@@ -36,7 +36,7 @@ test('production config uses isolated Workers and the approved hostname', async 
   const agent = await readFile('wrangler.docs-agent-router.jsonc', 'utf8');
   assert.match(config, /"name": "webview-native-ui-docs"/);
   assert.doesNotMatch(config, /"binding": "ASSETS"/);
-  assert.match(config, /"pattern": "webview-native-ui.rdlabo.dev"/);
+  assert.match(config, /"pattern": "webview-native-ui.com"/);
   assert.match(agent, /"name": "webview-native-ui-docs-agent-router"/);
   assert.ok(!agent.includes('"pattern": "docs.rdlabo.dev/'));
 });

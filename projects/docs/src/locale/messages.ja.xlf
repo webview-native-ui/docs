@@ -2,7 +2,7 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" target-language="ja" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="docsHomeTitle"><source>WebView Native UI Documentation | rdlabo</source><target>WebView Native UI ドキュメント | rdlabo</target></trans-unit>
+      <trans-unit id="docsHomeTitle"><source>WebView Native UI Documentation</source><target>WebView Native UI ドキュメント</target></trans-unit>
       <trans-unit id="documentationLoadError"><source>This page couldn’t be loaded. Reload the documentation to try again.</source><target>ページを読み込めませんでした。ドキュメントを再読み込みしてください。</target></trans-unit>
       <trans-unit id="reloadDocumentation"><source>Reload documentation</source><target>ドキュメントを再読み込み</target></trans-unit>
       <trans-unit id="dismissLoadError"><source>Dismiss message</source><target>メッセージを閉じる</target></trans-unit>
@@ -23,7 +23,7 @@
       <trans-unit id="documentation"><source>Documentation</source><target>ドキュメント</target></trans-unit>
       <trans-unit id="pluginsNav"><source>Plugins</source><target>プラグイン</target></trans-unit>
       <trans-unit id="introductionNav"><source>Introduction</source><target>はじめに</target></trans-unit>
-      <trans-unit id="footerOwnership"><source>Personal open source projects maintained by rdlabo.</source><target>rdlabo個人が開発・管理するオープンソースプロジェクトです。同じrdlabo名を使用する一般社団法人リレーションデザイン研究所の事業とは独立しています。</target></trans-unit>
+      <trans-unit id="footerOwnership"><source>Web and Native UI. One experience. Maintained by rdlabo.</source><target>Web UIとNative UIを、ひとつの体験へ。rdlaboが開発・管理しています。</target></trans-unit>
       <trans-unit id="footerCopyright"><source>© 2026 rdlabo. Released under the MIT License.</source><target>© 2026 rdlabo。MITライセンスで公開しています。</target></trans-unit>
       <trans-unit id="stripeCapability"><source>Accept PaymentSheet and PaymentFlow, plus Apple Pay and Google Pay, from one Capacitor codebase.</source><target>ひとつのCapacitorコードベースで、PaymentSheet、PaymentFlow、Apple Pay、Google Payに対応します。</target></trans-unit>
       <trans-unit id="identityCapability"><source>Present Stripe Identity verification on native platforms and the web, then handle the result events.</source><target>ネイティブとWebでStripe Identityの本人確認を表示し、結果イベントを処理します。</target></trans-unit>
@@ -95,8 +95,8 @@
       <trans-unit id="capacitorPluginsNav"><source>Capacitor plugins</source><target>Capacitorプラグイン</target></trans-unit>
       <trans-unit id="overviewNav"><source>Overview</source><target>概要</target></trans-unit>
       <trans-unit id="openSourceDocumentation"><source>Open source documentation</source><target>オープンソースドキュメント</target></trans-unit>
-      <trans-unit id="projectsIntro"><source>Documentation for open source projects created and maintained by rdlabo.</source><target>rdlaboが開発・管理するオープンソースプロジェクトの公式ドキュメントです。</target></trans-unit>
-      <trans-unit id="personalOwnershipNotice"><source>Every OSS project listed here is developed and maintained personally by rdlabo. They are independent of the incorporated association that also uses the rdlabo name.</source><target>ここに掲載するOSSはすべて、rdlabo個人が開発・管理しています。同じrdlabo名を使用する一般社団法人リレーションデザイン研究所の事業ではありません。</target></trans-unit>
+      <trans-unit id="projectsIntro"><source>Guides and API references for WebView Native UI and Ionic themes.</source><target>WebView Native UIとIonicテーマの導入ガイド・APIリファレンスです。</target></trans-unit>
+      <trans-unit id="personalOwnershipNotice"><source>WebView Native UI is an independent open-source initiative maintained by rdlabo.</source><target>WebView Native UIは、rdlaboが開発・管理する独立したオープンソースプロジェクトです。</target></trans-unit>
       <trans-unit id="currentCollection"><source>Current collection</source><target>現在のコレクション</target></trans-unit>
       <trans-unit id="capacitorPluginsHeading"><source>Capacitor plugins</source><target>Capacitorプラグイン</target></trans-unit>
       <trans-unit id="collectionDescription"><source>Native payments, identity verification, in-person payments, and mobile ads for Capacitor applications.</source><target>Capacitorアプリ向けのネイティブ決済、本人確認、対面決済、モバイル広告を提供します。</target></trans-unit>
@@ -125,13 +125,13 @@
       <trans-unit id="supportSponsorDescription"><source>Individual sponsorships do not unlock exclusive features, priority support, or a private roadmap. Your support helps keep the same libraries, documentation, compatibility updates, and releases available to everyone.</source><target>個人向けのスポンサー枠に、限定機能、優先サポート、非公開のロードマップはありません。ご支援は、同じライブラリ、ドキュメント、互換性対応、リリースを誰もが利用できる状態に保つ力になります。</target></trans-unit>
       <trans-unit id="becomeSponsor"><source>Sponsor from $5/month</source><target>月5ドルから支援する</target></trans-unit>
       <trans-unit id="supportIndependenceNotice"><source>Sponsorship supports independent open-source work maintained personally by rdlabo.</source><target>スポンサーからのご支援は、rdlabo個人が管理する独立したオープンソース活動に対するものです。同じrdlabo名を使用する一般社団法人リレーションデザイン研究所とは独立しています。</target></trans-unit>
-      <trans-unit id="supportPageTitle"><source>Support open source - rdlabo.dev</source><target>オープンソースを支援する - rdlabo.dev</target></trans-unit>
+      <trans-unit id="supportPageTitle"><source>Support open source - WebView Native UI</source><target>オープンソースを支援する - WebView Native UI</target></trans-unit>
       <trans-unit id="supportPageDescription"><source>Join the community supporting independent open-source projects maintained by rdlabo.</source><target>rdlaboが管理する独立したオープンソースプロジェクトを支えるコミュニティに参加できます。</target></trans-unit>
       <trans-unit id="supportThisOss"><source>Support this OSS</source><target>OSSを支援する</target></trans-unit>
       <trans-unit id="notFoundHeading"><source>Page not found</source><target>ページが見つかりません</target></trans-unit>
       <trans-unit id="notFoundDescription"><source>The page may have moved while the documentation was being reorganized.</source><target>ドキュメントの再編により、ページが移動した可能性があります。</target></trans-unit>
       <trans-unit id="backToProjects"><source>Browse projects</source><target>プロジェクト一覧へ</target></trans-unit>
-      <trans-unit id="notFoundTitle"><source>Page not found - rdlabo.dev</source><target>ページが見つかりません - rdlabo.dev</target></trans-unit>
+      <trans-unit id="notFoundTitle"><source>Page not found - WebView Native UI</source><target>ページが見つかりません - WebView Native UI</target></trans-unit>
       <trans-unit id="documentationTitle"><source>Documentation</source><target>ドキュメント</target></trans-unit>
       <trans-unit id="projectCategoriesNav"><source>Project categories</source><target>プロジェクトのカテゴリ</target></trans-unit>
       <trans-unit id="projectDocumentation"><source>Documentation</source><target>ドキュメント</target></trans-unit>

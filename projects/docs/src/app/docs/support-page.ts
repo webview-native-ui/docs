@@ -7,11 +7,11 @@ import { SeoService } from './seo.service';
   selector: 'app-support-page',
   template: `
     <article class="mx-auto max-w-4xl px-6 py-20 sm:px-10 sm:py-28">
-      <p class="m-0 text-sm font-semibold tracking-[0.18em] text-[#c44320] uppercase">
+      <p class="m-0 text-sm font-semibold tracking-[0.18em] text-[#1767d2] uppercase">
         <ng-container i18n="@@supportEyebrow">Community-supported open source</ng-container>
       </p>
       <h1
-        class="mt-5 mb-0 max-w-3xl text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-[#211d1b]"
+        class="mt-5 mb-0 max-w-3xl text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-[#172033]"
       >
         <ng-container i18n="@@supportHeading"
           >Help build a community around independent OSS</ng-container
@@ -25,11 +25,11 @@ import { SeoService } from './seo.service';
         >
       </p>
 
-      <section class="mt-14 rounded-3xl border border-[#eadfd9] bg-[#fffaf7] p-7 sm:p-10">
-        <p class="m-0 text-sm font-semibold tracking-[0.16em] text-[#c44320] uppercase">
+      <section class="mt-14 rounded-3xl border border-[#e2e8f0] bg-[#f8fbff] p-7 sm:p-10">
+        <p class="m-0 text-sm font-semibold tracking-[0.16em] text-[#1767d2] uppercase">
           <ng-container i18n="@@supportMilestoneEyebrow">Current milestone</ng-container>
         </p>
-        <h2 class="mt-4 mb-0 text-2xl font-semibold tracking-[-0.035em] text-[#211d1b]">
+        <h2 class="mt-4 mb-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]">
           <ng-container i18n="@@supportMilestoneHeading"
             >The first 10 monthly sponsors</ng-container
           >
@@ -49,7 +49,7 @@ import { SeoService } from './seo.service';
           <section class="mt-14" [attr.aria-labelledby]="group.id + '-sponsors-heading'">
             <h2
               [id]="group.id + '-sponsors-heading'"
-              class="m-0 text-2xl font-semibold tracking-[-0.035em] text-[#211d1b]"
+              class="m-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]"
             >
               @if (group.id === 'current') {
                 <ng-container i18n="@@currentSponsorsHeading">Current sponsors</ng-container>
@@ -73,7 +73,7 @@ import { SeoService } from './seo.service';
               @for (sponsor of group.sponsors; track sponsor.login) {
                 <li>
                   <a
-                    class="flex min-h-24 items-center gap-4 rounded-2xl border border-[#eadfd9] bg-white p-5 text-[#211d1b] no-underline transition hover:border-[#d8c4ba] hover:bg-[#fffaf7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ea572a]"
+                    class="flex min-h-24 items-center gap-4 rounded-2xl border border-[#e2e8f0] bg-white p-5 text-[#172033] no-underline transition hover:border-[#d8c4ba] hover:bg-[#f8fbff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
                     [href]="sponsor.profileUrl"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -101,10 +101,10 @@ import { SeoService } from './seo.service';
       }
 
       <section
-        class="mt-14 overflow-hidden rounded-3xl border border-[#eadfd9] bg-[#fffaf7] sm:grid sm:grid-cols-[1fr_auto] sm:items-center"
+        class="mt-14 overflow-hidden rounded-3xl border border-[#e2e8f0] bg-[#f8fbff] sm:grid sm:grid-cols-[1fr_auto] sm:items-center"
       >
         <div class="p-7 sm:p-10">
-          <h2 class="m-0 text-2xl font-semibold tracking-[-0.035em] text-[#211d1b]">
+          <h2 class="m-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]">
             <ng-container i18n="@@supportSponsorHeading">Join from $5 a month</ng-container>
           </h2>
           <p class="mt-4 mb-0 max-w-xl leading-7 text-[#6f6661]">
@@ -115,9 +115,9 @@ import { SeoService } from './seo.service';
             >
           </p>
         </div>
-        <div class="border-t border-[#eadfd9] p-7 sm:border-t-0 sm:border-l sm:p-10">
+        <div class="border-t border-[#e2e8f0] p-7 sm:border-t-0 sm:border-l sm:p-10">
           <a
-            class="external-link inline-flex min-h-12 items-center justify-center rounded-full bg-[#c44320] px-6 py-3 text-sm font-semibold text-white no-underline transition hover:bg-[#9f3417] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c44320]"
+            class="external-link inline-flex min-h-12 items-center justify-center rounded-full bg-[#1767d2] px-6 py-3 text-sm font-semibold text-white no-underline transition hover:bg-[#9f3417] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
             href="https://github.com/sponsors/rdlabo?metadata_campaign=docs-support"
             target="_blank"
             rel="noopener noreferrer"
@@ -127,7 +127,7 @@ import { SeoService } from './seo.service';
         </div>
       </section>
 
-      <p class="mt-10 max-w-2xl border-l-2 border-[#ea572a] pl-4 text-sm leading-6 text-[#675e59]">
+      <p class="mt-10 max-w-2xl border-l-2 border-[#1767d2] pl-4 text-sm leading-6 text-[#675e59]">
         <ng-container i18n="@@supportIndependenceNotice"
           >Sponsorship supports independent open-source work maintained personally by
           rdlabo.</ng-container
@@ -145,16 +145,16 @@ export class SupportPageComponent implements OnInit {
   ] as const;
 
   ngOnInit(): void {
-    const supportLabel = $localize`:@@supportPageTitle:Support open source - rdlabo.dev`.replace(
-      / - rdlabo\.dev$/,
+    const supportLabel = $localize`:@@supportPageTitle:Support open source - WebView Native UI`.replace(
+      / - WebView Native UI$/,
       '',
     );
     this.#seo.setPage({
-      title: $localize`:@@supportPageTitle:Support open source - rdlabo.dev`,
+      title: $localize`:@@supportPageTitle:Support open source - WebView Native UI`,
       description: $localize`:@@supportPageDescription:Join the community supporting independent open-source projects maintained by rdlabo.`,
       path: '/support',
       structuredData: docsBreadcrumbStructuredData(this.#locale, [
-        { name: 'rdlabo.dev', path: '/' },
+        { name: 'WebView Native UI', path: '/' },
         { name: supportLabel, path: '/support' },
       ]),
     });

@@ -29,12 +29,9 @@ test('split theme and Native UI guides resolve localized links and heading fragm
     }
     for (const [route, document] of documents) {
       for (const link of document.querySelectorAll<HTMLAnchorElement>('main a[href]')) {
-        const url = new URL(
-          link.getAttribute('href')!,
-          `https://webview-native-ui.rdlabo.dev${route}`,
-        );
+        const url = new URL(link.getAttribute('href')!, `https://webview-native-ui.com${route}`);
         if (
-          url.origin !== 'https://webview-native-ui.rdlabo.dev' ||
+          url.origin !== 'https://webview-native-ui.com' ||
           !ids.some((id) => url.pathname.includes(`/projects/${id}/docs/`))
         )
           continue;
@@ -97,31 +94,22 @@ test('Japanese home prerender uses slashless canonical SEO URLs and clear site n
     new URL('../dist/docs/browser/ja/index.html', import.meta.url),
     'utf8',
   );
-  assert.match(html, /rel="canonical" href="https:\/\/webview-native-ui\.rdlabo\.dev\/ja"/);
-  assert.match(html, /property="og:url" content="https:\/\/webview-native-ui\.rdlabo\.dev\/ja"/);
-  assert.match(html, /hreflang="ja" href="https:\/\/webview-native-ui\.rdlabo\.dev\/ja"/);
-  assert.doesNotMatch(
-    html,
-    /rel="canonical" href="https:\/\/webview-native-ui\.rdlabo\.dev\/ja\/"/,
-  );
-  assert.doesNotMatch(
-    html,
-    /property="og:url" content="https:\/\/webview-native-ui\.rdlabo\.dev\/ja\/"/,
-  );
-  assert.doesNotMatch(html, /hreflang="ja" href="https:\/\/webview-native-ui\.rdlabo\.dev\/ja\/"/);
-  assert.match(
-    html,
-    /<a(?=[^>]*\bclass="docs-brand[^"]*")(?=[^>]*\bhref="https:\/\/rdlabo\.dev\/")[^>]*>/,
-  );
+  assert.match(html, /rel="canonical" href="https:\/\/webview-native-ui\.com\/ja"/);
+  assert.match(html, /property="og:url" content="https:\/\/webview-native-ui\.com\/ja"/);
+  assert.match(html, /hreflang="ja" href="https:\/\/webview-native-ui\.com\/ja"/);
+  assert.doesNotMatch(html, /rel="canonical" href="https:\/\/webview-native-ui\.com\/ja\/"/);
+  assert.doesNotMatch(html, /property="og:url" content="https:\/\/webview-native-ui\.com\/ja\/"/);
+  assert.doesNotMatch(html, /hreflang="ja" href="https:\/\/webview-native-ui\.com\/ja\/"/);
+  assert.match(html, /<a(?=[^>]*\bclass="docs-brand[^"]*")(?=[^>]*\bhref="\/ja")[^>]*>/);
   assert.doesNotMatch(html, /<a[^>]*href="https:\/\/rdlabo\.dev\/"[^>]*target="_blank"[^>]*>/);
   assert.match(html, /class="docs-home-link[^"]*"[^>]*href="\/ja"/);
   assert.match(html, />docs</);
   assert.match(html, /(?:href="\/ja"[^>]*aria-current="page"|aria-current="page"[^>]*href="\/ja")/);
   assert.match(html, /data-rdlabo-json-ld/);
-  assert.match(html, /"url":"https:\/\/webview-native-ui\.rdlabo\.dev\/ja"/);
+  assert.match(html, /"url":"https:\/\/webview-native-ui\.com\/ja"/);
   assert.match(html, /"inLanguage":"ja"/);
   assert.match(html, /"@type":"WebPage"/);
-  assert.match(html, /"@id":"https:\/\/webview-native-ui\.rdlabo\.dev\/#website"/);
+  assert.match(html, /"@id":"https:\/\/webview-native-ui\.com\/#website"/);
 });
 
 test('prerendered docs mark current location and hide empty search hosts', async () => {
@@ -181,7 +169,7 @@ test('prerendered docs shell stays layout-neutral before bootstrap', async () =>
   const html = await readFile(new URL('../dist/docs/browser/index.html', import.meta.url), 'utf8');
   assert.match(html, /data-rdlabo-json-ld/);
   assert.match(html, /"@type":"WebSite"/);
-  assert.match(html, /"url":"https:\/\/webview-native-ui\.rdlabo\.dev\/"/);
+  assert.match(html, /"url":"https:\/\/webview-native-ui\.com\/"/);
   const shell = html.match(/<div\b[^>]*\bclass="[^"]*\bdocs-shell\b[^"]*"[^>]*>/)?.[0];
   assert.ok(shell, 'docs-shell must be present in prerendered index.html');
   assert.doesNotMatch(shell, /\blayout-ready\b/);
@@ -216,18 +204,18 @@ test('prerendered docs pages include breadcrumb JSON-LD with canonical HTTPS ite
   ]);
 
   assert.match(docsPage, /"@type":"BreadcrumbList"/);
-  assert.match(docsPage, /"item":"https:\/\/webview-native-ui\.rdlabo\.dev\/"/);
+  assert.match(docsPage, /"item":"https:\/\/webview-native-ui\.com\/"/);
   assert.match(
     docsPage,
-    /"item":"https:\/\/webview-native-ui\.rdlabo\.dev\/projects\/capacitor-native-ui"/,
+    /"item":"https:\/\/webview-native-ui\.com\/projects\/capacitor-native-ui"/,
   );
   assert.match(
     docsPage,
-    /"item":"https:\/\/webview-native-ui\.rdlabo\.dev\/projects\/capacitor-native-ui\/docs\/readme"/,
+    /"item":"https:\/\/webview-native-ui\.com\/projects\/capacitor-native-ui\/docs\/readme"/,
   );
 
   assert.match(support, /"@type":"BreadcrumbList"/);
-  assert.match(support, /"item":"https:\/\/webview-native-ui\.rdlabo\.dev\/support"/);
+  assert.match(support, /"item":"https:\/\/webview-native-ui\.com\/support"/);
 });
 
 test('visible docs breadcrumbs use canonical locale home paths', async () => {
@@ -377,4 +365,40 @@ test('builds bounded search indexes for every published language with the compon
     sizes.reduce((total, size) => total + size, 0) < 6.1 * 1024 * 1024,
     'Search bundle must remain under 6.10 MiB across all published locales',
   );
+});
+
+test('ships the WebView Native UI brand in all four languages and static 404 pages', async () => {
+  for (const { code, subPath } of PUBLISHED_DOCS_LOCALES) {
+    const prefix = subPath ? `/${subPath}` : '';
+    const root = join('dist/docs/browser', subPath);
+    const home = new JSDOM(await readFile(join(root, 'index.html'), 'utf8'));
+    assert.ok(home.window.document.title.includes('WebView Native UI'), code);
+    assert.doesNotMatch(home.window.document.title, /Cloudflare|rdlabo/);
+    const brand = home.window.document.querySelector<HTMLAnchorElement>('.docs-brand')!;
+    assert.equal(brand.getAttribute('href'), prefix || '/');
+    assert.equal(
+      brand.querySelector('img')?.getAttribute('src'),
+      '/assets/brand/webview-native-ui-logo.png',
+    );
+    assert.equal(
+      home.window.document.querySelector('link[rel="icon"]')?.getAttribute('href'),
+      '/assets/brand/webview-native-ui-logo.png',
+    );
+    assert.ok(
+      home.window.document.querySelector('footer')?.textContent?.includes('WebView Native UI'),
+      code,
+    );
+    assert.doesNotMatch(
+      home.window.document.querySelector('footer')?.textContent ?? '',
+      /rdlabo\.dev|association|一般社団法人/,
+    );
+    const missing = new JSDOM(await readFile(join(root, '404.html'), 'utf8'));
+    assert.ok(missing.window.document.title.includes('WebView Native UI'), code);
+    assert.equal(
+      missing.window.document.querySelector('img')?.getAttribute('src'),
+      '/assets/brand/webview-native-ui-logo.png',
+    );
+    home.window.close();
+    missing.window.close();
+  }
 });

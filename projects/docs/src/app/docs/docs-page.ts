@@ -55,14 +55,14 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
                 aria-label="Breadcrumb"
               >
                 <a
-                  class="text-inherit no-underline hover:text-[#c44320] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ea572a]"
+                  class="text-inherit no-underline hover:text-[#1767d2] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
                   [href]="docsHomePath"
                 >
                   <ng-container i18n="@@allProjectsNav">All projects</ng-container>
                 </a>
                 <span aria-hidden="true">/</span>
                 <a
-                  class="text-inherit no-underline hover:text-[#c44320] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ea572a]"
+                  class="text-inherit no-underline hover:text-[#1767d2] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
                   [routerLink]="proj.path"
                   >{{ proj.shortName }}</a
                 >
@@ -133,7 +133,7 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
                   <app-oss-resource-links [supportHref]="supportHref" [supportLabel]="supportLabel" [resourcesLabel]="resourcesLabel" />
                   <div class="mt-4 border-t border-slate-200 pt-4">
                     <a
-                      class="external-link inline-flex items-center gap-2 text-[0.82rem] leading-5 font-normal text-[#333] no-underline hover:text-[#c44320]"
+                      class="external-link inline-flex items-center gap-2 text-[0.82rem] leading-5 font-normal text-[#333] no-underline hover:text-[#1767d2]"
                       [href]="doc.editUrl"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -177,8 +177,8 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
                       @for (heading of tocHeadings(); track heading.id) {
                         <li [class.pl-3]="heading.level === 3">
                           <a
-                            class="block py-1 text-[0.82rem] leading-5 font-normal break-words text-[#6b625d] no-underline transition-colors hover:text-[#c44320] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ea572a]"
-                            [class.!text-[#c44320]]="activeToc() === heading.id"
+                            class="block py-1 text-[0.82rem] leading-5 font-normal break-words text-[#6b625d] no-underline transition-colors hover:text-[#1767d2] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
+                            [class.!text-[#1767d2]]="activeToc() === heading.id"
                             [href]="tocHref(doc, heading)"
                             >{{ heading.text }}</a
                           >
@@ -196,7 +196,7 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
                   <app-oss-resource-links [supportHref]="supportHref" [supportLabel]="supportLabel" [resourcesLabel]="resourcesLabel" />
                   <div class="mt-4 border-t border-slate-200 pt-4">
                     <a
-                      class="external-link inline-flex items-center gap-2 text-[0.82rem] leading-5 font-normal text-[#333] no-underline hover:text-[#c44320]"
+                      class="external-link inline-flex items-center gap-2 text-[0.82rem] leading-5 font-normal text-[#333] no-underline hover:text-[#1767d2]"
                       [href]="doc.editUrl"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -262,11 +262,11 @@ export class DocsPageComponent implements OnInit, AfterViewInit {
     this.tocHeadings.set(page.headings.filter((heading) => heading.level <= 3));
     this.activeLines.set({ ...(page.scrollMap[0]?.activeLine ?? {}) });
     this.#seo.setPage({
-      title: page.seoTitle ?? `${page.title} - ${project.shortName} - rdlabo.dev`,
+      title: page.seoTitle ?? `${page.title} - ${project.shortName} - WebView Native UI`,
       description: page.seoDescription ?? `${page.title}. ${project.description}`,
       path: page.path,
       structuredData: docsBreadcrumbStructuredData(this.#locale, [
-        { name: 'rdlabo.dev', path: '/' },
+        { name: 'WebView Native UI', path: '/' },
         { name: project.shortName, path: project.path },
         { name: page.title, path: page.path },
       ]),

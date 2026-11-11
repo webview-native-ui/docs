@@ -260,11 +260,11 @@ function localizeProject(project: ProjectDefinition, locale: Locale, version: st
 function rewriteInternalLinks(html: string, project: ProjectDefinition, locale: Locale): string {
   const localePrefix = docsLocalePrefix(locale);
   let rewritten = html.replace(
-    /<a\b[^>]*\bhref="https:\/\/(?:docs\.rdlabo\.dev|webview-native-ui\.rdlabo\.dev)(\/projects\/([^/"#?]+)[^" ]*)"[^>]*>/g,
+    /<a\b[^>]*\bhref="https:\/\/(?:docs\.rdlabo\.dev|webview-native-ui\.com)(\/projects\/([^/"#?]+)[^" ]*)"[^>]*>/g,
     (tag, path: string, slug: string) =>
       projectDefinitions.some((target) => target.slug === slug)
         ? tag
-            .replace(/https:\/\/(?:docs\.rdlabo\.dev|webview-native-ui\.rdlabo\.dev)/, localePrefix)
+            .replace(/https:\/\/(?:docs\.rdlabo\.dev|webview-native-ui\.com)/, localePrefix)
             .replace(/ target="_blank"/g, '')
             .replace(/ rel="[^"]*"/g, '')
         : tag,

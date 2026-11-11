@@ -10,7 +10,7 @@
   height: calc(100dvh - 68px);
   min-height: 0;
   overflow: hidden;
-  border-right: 1px solid #eadfd9;
+  border-right: 1px solid #e2e8f0;
   background: #fffcfa;
   z-index: 30;
 }
@@ -25,7 +25,7 @@
   flex-direction: column;
   min-height: 0;
   overflow-y: auto;
-  border-right: 1px solid #eadfd9;
+  border-right: 1px solid #e2e8f0;
   padding: 14px 4px 10px;
 }
 .docs-rail-categories,
@@ -58,12 +58,12 @@
   cursor: pointer;
 }
 .docs-rail-button:hover {
-  background: #fff5f0;
-  color: #c44320;
+  background: #eff6ff;
+  color: #1767d2;
 }
 .docs-rail-button.is-active {
-  background: #fff0ea;
-  color: #c44320;
+  background: #eff6ff;
+  color: #1767d2;
 }
 .docs-rail-button svg,
 .docs-rail-button app-project-icon {
@@ -110,10 +110,10 @@
   max-width: 400px;
   margin-inline: auto;
   padding: 24px 48px 24px 24px;
-  border: 1px solid #eadfd9;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  background: #fff0ea;
-  color: #c44320;
+  background: #eff6ff;
+  color: #1767d2;
   font-size: 14px;
 }
 .docs-load-error p {
@@ -148,7 +148,7 @@
 }
 
 #docs-sidebar :is(a, button):focus-visible {
-  outline: 2px solid #ea572a;
+  outline: 2px solid #1767d2;
   outline-offset: -2px;
 }
 

@@ -13,7 +13,7 @@ import { SeoService } from './seo.service';
       <header class="catalog-hero">
         <p class="eyebrow" i18n="@@openSourceDocumentation">Open source documentation</p>
         <h1 i18n="@@documentationTitle">Documentation</h1>
-        <p class="catalog-hero__lead" i18n="@@projectsIntro">Documentation for open source projects created and maintained by rdlabo.</p>
+        <p class="catalog-hero__lead" i18n="@@projectsIntro">Guides and API references for WebView Native UI and Ionic themes.</p>
         <nav class="category-nav" aria-label="Project categories" i18n-aria-label="@@projectCategoriesNav">
           @for (group of projectGroups; track group.id) {
             <a [href]="'#category-' + group.id">
@@ -48,7 +48,7 @@ import { SeoService } from './seo.service';
         </section>
       }
       <footer class="catalog-footer">
-        <p i18n="@@personalOwnershipNotice">Every OSS project listed here is developed and maintained personally by rdlabo. They are independent of the incorporated association that also uses the rdlabo name.</p>
+        <p i18n="@@personalOwnershipNotice">WebView Native UI is an independent open-source initiative maintained by rdlabo.</p>
         <a class="external-link" href="https://github.com/webview-native-ui" target="_blank" rel="noopener noreferrer">GitHub</a>
       </footer>
     </div>
@@ -66,7 +66,7 @@ export class PluginIndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const homeTitle = $localize`:@@docsHomeTitle:WebView Native UI Documentation | rdlabo`;
+    const homeTitle = $localize`:@@docsHomeTitle:WebView Native UI Documentation`;
     const description = $localize`:@@siteDescription:Guides and API references for WebView Native UI Engine, Capacitor Native UI, and Ionic themes.`;
     this.#seo.setPage({
       title: homeTitle,

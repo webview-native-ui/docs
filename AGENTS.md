@@ -1,7 +1,7 @@
 # WebView Native UI documentation
 
 This repository builds one Angular static documentation application at `projects/docs` for
-https://webview-native-ui.rdlabo.dev. Keep `/projects/<slug>` and en/ja/fr/de URL paths stable.
+https://webview-native-ui.com. Keep `/projects/<slug>` and en/ja/fr/de URL paths stable.
 
 - Declare projects, pinned English source refs, pages, and metadata in `scripts/project-manifest.ts`.
 - English normally comes from the package repository at an immutable ref. Portal-owned English falls back to the tracked local source. Translations and code samples live under `projects/docs/src/<project>/docs`.
