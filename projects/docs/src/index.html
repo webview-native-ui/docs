@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>WebView Native UI</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Guides and API references for WebView Native UI Engine, Capacitor Native UI, and Ionic themes."
+    />
+    <meta name="theme-color" content="#fffaf7" />
+    <link rel="icon" type="image/svg+xml" href="/assets/brand/rdlabo-logo.svg" />
+    <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png" />
+    <!-- Google tag (gtag.js): loaded only on production hosts -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      if (/(^|\.)rdlabo\.dev$/.test(window.location.hostname)) {
+        var gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-EXVGMHNGJG';
+        document.head.appendChild(gtagScript);
+        gtag('js', new Date());
+        gtag('config', 'G-EXVGMHNGJG', { send_page_view: false });
+      }
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

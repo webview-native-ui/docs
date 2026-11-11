@@ -1,0 +1,511 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {
+  apiAnchorFragments,
+  expandApiPlaceholders,
+  extractPackageReadme,
+  extractPackageReadmeParts,
+  extractRdlaboDocsPick,
+  normalizePackageMarkdown,
+  rewritePackageDocLinks,
+  rewriteRelativeDocLinks,
+  rewriteRepositoryResourceLinks,
+  stripLeadingH1,
+  stripRdlaboDocsOmit,
+} from './package-markdown';
+
+test('repository resources retain pinned upstream targets instead of nonexistent portal guides', () => {
+  const source =
+    '[guide](/docs/integration) [demo](/docs/demo/README#setup) [native](../demo/rendering) [contribute](../CONTRIBUTING.md#ci) [license](LICENSE) [external](https://example.com/demo/README.md)';
+  const result = rewriteRepositoryResourceLinks(
+    source,
+    'https://github.com/rdlabo-dev/cf-workers-native',
+    'v0.1.0',
+  );
+  assert.match(result, /\[guide\]\(\/docs\/integration\)/);
+  assert.match(result, /blob\/v0\.1\.0\/demo\/README\.md#setup/);
+  assert.match(result, /tree\/v0\.1\.0\/demo\/rendering/);
+  assert.match(result, /blob\/v0\.1\.0\/CONTRIBUTING\.md#ci/);
+  assert.match(result, /blob\/v0\.1\.0\/LICENSE/);
+  assert.match(result, /https:\/\/example\.com\/demo\/README\.md/);
+  assert.equal(
+    rewriteRepositoryResourceLinks(
+      '[events](../src/compat/events/README.md) [websocket](/docs/src/browser/websocket/README) [source](../src/compat/events/index.ts)',
+      'https://github.com/rdlabo-dev/cf-workers-native',
+      'v0.1.8',
+    ),
+    '[events](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.8/src/compat/events/README.md) [websocket](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.8/src/browser/websocket/README.md) [source](../src/compat/events/index.ts)',
+  );
+  const code = '```text\n[demo](../demo/README.md)\n```\n';
+  assert.equal(rewriteRepositoryResourceLinks(code, 'https://example.com/repo', 'v1.0.0'), code);
+  assert.equal(
+    rewriteRepositoryResourceLinks(
+      '[cost](/docs/test-execution-time) [source](test-execution-time.md#baseline)',
+      'https://github.com/rdlabo-dev/cf-workers-native',
+      'v0.1.2',
+    ),
+    '[cost](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.2/docs/test-execution-time.md) [source](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.2/docs/test-execution-time.md#baseline)',
+  );
+  assert.equal(
+    rewriteRepositoryResourceLinks(
+      '[index](/docs/README) [release](/docs/scripts/android-release/README) [script](../scripts/check.mjs)',
+      'https://github.com/rdlabo-dev/cf-workers-native',
+      'v0.1.2',
+    ),
+    '[index](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.2/docs/README.md) [release](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.2/scripts/android-release/README.md) [script](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.2/scripts/check.mjs)',
+  );
+});
+
+test('keeps Overview through Documentation and drops preamble, Index, and API', () => {
+  const markdown = `<p align="center">badge</p>
+
+## Maintainers
+
+rdlabo
+
+## Overview
+
+Native AdMob.
+
+## Installation
+
+npm install
+
+## Documentation
+
+See [Banner Ads](./docs/banner.md).
+
+## Index
+
+<docgen-index>
+* [\`initialize(...)\`](#initialize)
+</docgen-index>
+
+<docgen-api>
+### initialize(...)
+</docgen-api>
+
+## License
+
+MIT
+`;
+
+  assert.equal(
+    extractPackageReadme(markdown),
+    `## Overview
+
+Native AdMob.
+
+## Installation
+
+npm install
+
+## Documentation
+
+See [Banner Ads](./docs/banner.md).
+`,
+  );
+});
+
+test('drops rdlabo-docs-omit regions and keeps the rest', () => {
+  const markdown = `<!-- rdlabo-docs-omit -->
+## Maintainers
+
+rdlabo
+
+<!-- /rdlabo-docs-omit -->
+
+## Install
+
+\`\`\`bash
+npm install
+\`\`\`
+
+<!-- rdlabo-docs-omit -->
+## License
+
+MIT
+<!-- /rdlabo-docs-omit -->
+`;
+
+  assert.equal(
+    stripRdlaboDocsOmit(markdown),
+    `## Install
+
+\`\`\`bash
+npm install
+\`\`\`
+`,
+  );
+  assert.equal(
+    extractPackageReadme(markdown),
+    `## Install
+
+\`\`\`bash
+npm install
+\`\`\`
+`,
+  );
+});
+
+test('ignores omit markers inside fenced code', () => {
+  const markdown = `## Overview
+
+\`\`\`md
+<!-- rdlabo-docs-omit -->
+hidden in a sample
+<!-- /rdlabo-docs-omit -->
+\`\`\`
+`;
+
+  assert.equal(stripRdlaboDocsOmit(markdown), markdown);
+});
+
+test('ignores omit markers inside tilde fences and respects the closing fence length', () => {
+  const markdown = `## Overview
+
+~~~~md
+<!-- rdlabo-docs-omit -->
+literal example
+<!-- /rdlabo-docs-omit -->
+~~~
+still fenced
+~~~~
+`;
+
+  assert.equal(stripRdlaboDocsOmit(markdown), markdown);
+});
+
+test('extracts rdlabo-docs-pick regions for the project Overview', () => {
+  const markdown = `# Theme
+
+Intro.
+
+<!-- rdlabo-docs-pick -->
+![Theme screenshot](https://example.com/theme.png)
+<!-- /rdlabo-docs-pick -->
+
+## Overview
+
+Theme details.
+
+## Installation
+
+npm install
+`;
+
+  assert.deepEqual(extractPackageReadmeParts(markdown), {
+    readme: `## Overview
+
+Theme details.
+
+## Installation
+
+npm install
+`,
+    overview: '![Theme screenshot](https://example.com/theme.png)',
+    api: undefined,
+  });
+});
+
+test('localized imported README headings preserve the same landing boundaries', () => {
+  for (const [overview, index] of [
+    ['Vue d’ensemble', 'Sommaire'],
+    ['Überblick', 'Inhaltsverzeichnis'],
+  ]) {
+    const source = `# Plugin\n\nRepository badges.\n\n## ${overview}\n\nDocumentation.\n\n## Installation\n\nSetup.\n\n## ${index}\n\nRepository index.\n`;
+    const { readme } = extractPackageReadmeParts(source);
+    assert.equal(readme, `## ${overview}\n\nDocumentation.\n\n## Installation\n\nSetup.\n`);
+  }
+});
+
+test('extracts localized rdlabo-docs-pick regions without leaving them in the README', () => {
+  assert.deepEqual(
+    extractRdlaboDocsPick(`紹介
+
+<!-- rdlabo-docs-pick -->
+![テーマのスクリーンショット](theme.png)
+<!-- /rdlabo-docs-pick -->
+
+## 概要
+
+詳細
+`),
+    {
+      markdown: `紹介
+
+
+## 概要
+
+詳細
+`,
+      picked: ['![テーマのスクリーンショット](theme.png)'],
+    },
+  );
+});
+
+test('ignores pick markers inside backtick and tilde fenced code', () => {
+  const markdown = `## Overview
+
+\`\`\`md
+<!-- rdlabo-docs-pick -->
+literal example
+<!-- /rdlabo-docs-pick -->
+\`\`\`
+
+~~~~md
+<!-- rdlabo-docs-pick -->
+another literal example
+<!-- /rdlabo-docs-pick -->
+~~~~
+`;
+
+  assert.deepEqual(extractRdlaboDocsPick(markdown), { markdown, picked: [] });
+});
+
+test('throws on an unclosed rdlabo-docs-pick block', () => {
+  assert.throws(
+    () => extractRdlaboDocsPick('<!-- rdlabo-docs-pick -->\nScreenshot\n'),
+    /unclosed rdlabo-docs-pick block/,
+  );
+});
+
+test('throws on an unclosed rdlabo-docs-omit block', () => {
+  assert.throws(
+    () => stripRdlaboDocsOmit('<!-- rdlabo-docs-omit -->\n## License\n'),
+    /unclosed rdlabo-docs-omit block/,
+  );
+});
+
+test('omits regions that contain fenced code', () => {
+  const markdown = `## Overview
+
+Keep this.
+
+<!-- rdlabo-docs-omit -->
+## API
+
+\`\`\`ts
+initialize()
+\`\`\`
+<!-- /rdlabo-docs-omit -->
+`;
+
+  assert.equal(
+    extractPackageReadme(markdown),
+    `## Overview
+
+Keep this.
+`,
+  );
+});
+
+test('extracts docgen API from an omit-wrapped README section', () => {
+  const markdown = `## Overview
+
+Keep this.
+
+<!-- rdlabo-docs-omit -->
+## Index
+
+<docgen-index>
+* [\`initialize(...)\`](#initialize)
+</docgen-index>
+
+<docgen-api>
+### initialize(...)
+</docgen-api>
+<!-- /rdlabo-docs-omit -->
+`;
+
+  assert.equal(
+    extractPackageReadme(markdown).trim(),
+    `## Overview
+
+Keep this.`,
+  );
+  assert.match(extractPackageReadmeParts(markdown).api ?? '', /### initialize\(\.\.\.\)/);
+});
+
+test('keeps a README that has no Overview heading', () => {
+  assert.equal(
+    extractPackageReadme(`# @rdlabo/capacitor-printer
+
+## Install
+
+\`\`\`bash
+npm install
+\`\`\`
+
+## API
+
+<docgen-index>
+* [\`printFile(...)\`](#printfile)
+</docgen-index>
+
+<docgen-api>
+### printFile(...)
+</docgen-api>
+`),
+    `## Install
+
+\`\`\`bash
+npm install
+\`\`\`
+`,
+  );
+});
+test('strips a leading markdown title', () => {
+  assert.equal(stripLeadingH1('# Banner Ads\n\nHello.\n'), 'Hello.\n');
+});
+
+test('rewrites legacy GitHub org links to rdlabo-dev', () => {
+  const legacyOwner = ['rdlabo', 'team'].join('-');
+  assert.equal(
+    normalizePackageMarkdown(`[theme](https://github.com/${legacyOwner}/ionic-theme-md3)`),
+    '[theme](https://github.com/webview-native-ui/ionic-theme-md3)',
+  );
+});
+
+test('rewrites package-relative guide and API links', () => {
+  const api = new Map([
+    ['AdMobError', '#### `interface` AdMobError\nError payload.\n'],
+    ['initialize', '#### `method` initialize(...)\nStart the SDK.\n'],
+  ]);
+  const markdown = `See [Installation](../README.md#installation), [initialize](../README.md#initialize), [\`AdMobError\`](../README.md#admoberror), [API](../README.md#api), [Banner](./banner.md), and [guides](./docs/consent.md).`;
+
+  assert.equal(
+    rewritePackageDocLinks(markdown, apiAnchorFragments(api)),
+    'See [Installation](/docs/readme#installation), [initialize](/docs/api#method-initialize(...)), [`AdMobError`](/docs/api#interface-admoberror), [API](/docs/api), [Banner](/docs/banner), and [guides](/docs/consent).',
+  );
+});
+
+test('keeps guide-local fragments while relocating explicit README API links', () => {
+  const anchors = new Map([['getstatus', 'method-getstatus']]);
+  assert.equal(
+    rewritePackageDocLinks(
+      '[Layout](#reserve-the-vertical-rail), [status](#getstatus), [API](#api), [README status](../README.md#getstatus)',
+      anchors,
+      'readme',
+      'vertical-bars.md',
+    ),
+    '[Layout](#reserve-the-vertical-rail), [status](#getstatus), [API](#api), [README status](/docs/api#method-getstatus)',
+  );
+  assert.equal(
+    rewritePackageDocLinks('[status](#getstatus)', anchors),
+    '[status](/docs/api#method-getstatus)',
+  );
+});
+
+test('published nested documentation indexes stay inside the portal and retain fragments', () => {
+  const pages = new Map([
+    ['getting-started', 'readme'],
+    ['README', 'overview'],
+    ['configuration/README', 'configuration'],
+    ['advanced/README', 'advanced'],
+    ['getting-started/capacitor', 'getting-started/capacitor'],
+  ]);
+  const source =
+    '[overview](../README.md) [settings](../configuration/README.md#defaults) [advanced](README.md) [integration](../getting-started/capacitor.md) [section](#local)';
+  const expected =
+    '[overview](/docs/overview) [settings](/docs/configuration#defaults) [advanced](/docs/advanced) [integration](/docs/getting-started/capacitor) [section](#local)';
+  const result = rewritePackageDocLinks(source, new Map(), 'readme', 'advanced/renderer.md', pages);
+  assert.equal(result, expected);
+  assert.equal(rewriteRelativeDocLinks(source, 'advanced/renderer.md', pages), expected);
+  assert.equal(
+    rewriteRepositoryResourceLinks(result, 'https://github.com/webview-native-ui/engine', 'v0.0.7'),
+    expected,
+  );
+  assert.equal(
+    rewritePackageDocLinks('[docs](docs/README.md)', new Map(), 'readme', undefined, pages),
+    '[docs](/docs/overview)',
+  );
+});
+
+test('expands bare and HTML-commented API placeholders', () => {
+  const api = new Map([
+    ['createPaymentSheet', '#### `method` createPaymentSheet(...)\n'],
+    ['addListener.Events.Completed', '#### `method` addListener(Events.Completed, ...)\n'],
+  ]);
+  assert.equal(
+    expandApiPlaceholders('Before\n\n!::createPaymentSheet::\n\nAfter\n', api).expanded,
+    'Before\n\n#### `method` createPaymentSheet(...)\n\n\nAfter\n',
+  );
+  assert.equal(
+    expandApiPlaceholders('Before\n\n<!-- !::createPaymentSheet:: -->\n\nAfter\n', api).expanded,
+    'Before\n\n#### `method` createPaymentSheet(...)\n\n\nAfter\n',
+  );
+  assert.deepEqual(expandApiPlaceholders('!::missing::\n', api).missing, ['missing']);
+  assert.equal(
+    expandApiPlaceholders('<!-- !::addListener.Events.Completed:: -->\n', api).expanded,
+    '#### `method` addListener(Events.Completed, ...)\n\n',
+  );
+});
+
+test('rewrites nested package-relative guide links', () => {
+  assert.equal(
+    rewritePackageDocLinks(
+      'See [Event Listeners](./docs/learn/event-listeners.md) and [the same page](./learn/event-listeners.md).',
+      new Map(),
+    ),
+    'See [Event Listeners](/docs/learn/event-listeners) and [the same page](/docs/learn/event-listeners).',
+  );
+});
+
+test('resolves sibling links from nested package pages against the page directory', () => {
+  assert.equal(
+    rewritePackageDocLinks(
+      'See [deny-element](./deny-element.md#options), [setup](../README.md#installation), and [guide](../docs/guide.md).',
+      new Map(),
+      'readme',
+      'rules/prefer-modal-launcher.md',
+    ),
+    'See [deny-element](/docs/rules/deny-element#options), [setup](/docs/readme#installation), and [guide](/docs/guide).',
+  );
+});
+
+test('rewrites relative links on locally hosted nested pages', () => {
+  assert.equal(
+    rewriteRelativeDocLinks(
+      'See [deny-element](./deny-element.md), [root](/docs/api), and [external](https://example.com/a.md).',
+      'rules/prefer-modal-launcher.md',
+    ),
+    'See [deny-element](/docs/rules/deny-element), [root](/docs/api), and [external](https://example.com/a.md).',
+  );
+});
+
+test('routes injected API type links to the reference while preserving guide fragments', () => {
+  const api = new Map([
+    [
+      'BannerAdOptions',
+      '#### `interface` BannerAdOptions\n<a href="#adoptions">AdOptions</a> <a href="#unknown">unknown</a>\n',
+    ],
+  ]);
+  const source = '[guide](#adoptions)\n\n!::BannerAdOptions::\n';
+  assert.equal(
+    expandApiPlaceholders(source, api, new Map([['adoptions', '/docs/api#adoptions']])).expanded,
+    '[guide](#adoptions)\n\n#### `interface` BannerAdOptions\n<a href="/docs/api#adoptions">AdOptions</a> <a href="#unknown">unknown</a>\n\n',
+  );
+  assert.match(expandApiPlaceholders(source, api).expanded, /href="#adoptions"/);
+});
+
+test('keeps split theme and Native UI cross-package guides in the portal', () => {
+  const markdown = [
+    '[native](../../capacitor-native-ui/docs/setup.md#start)',
+    '[theme](../theme-ios27/README.md)',
+    '[appearance](https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios27-v2.0.0/packages/theme-ios27/docs/setup.md#choose-one-dark-mode-pair)',
+    '[example](https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios27-v2.0.0/demo/src/native-ui/counter.ts)',
+  ].join('\n');
+  for (const result of [
+    rewritePackageDocLinks(markdown, new Map()),
+    rewriteRelativeDocLinks(markdown, 'setup.md'),
+  ]) {
+    assert.match(result, /\[native\]\(\/capacitor-native-ui\/docs\/setup#start\)/);
+    assert.match(result, /\[theme\]\(\/ionic-theme-ios27\/docs\/readme\)/);
+    assert.match(
+      result,
+      /\[appearance\]\(\/ionic-theme-ios27\/docs\/setup#choose-one-dark-mode-pair\)/,
+    );
+    assert.match(result, /\/blob\/ios27-v2\.0\.0\/demo\/src\/native-ui\/counter\.ts/);
+  }
+});

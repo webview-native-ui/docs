@@ -1,0 +1,337 @@
+@import 'tailwindcss';
+
+@import 'zenn-content-css/lib/index.css';
+@import '../../shared/styles/external-link.css';
+@import '../../shared/styles/brand.css';
+@import '../../shared/styles/zenn-content-overrides.css';
+
+@container docs-content (min-width: 961px) {
+  .docs-page-layout.with-code .docs-page-article .code-block-container {
+    display: none;
+  }
+}
+
+.docs-page-article :not(pre) > code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+:root {
+  font-family: var(--rd-sans);
+  -webkit-font-smoothing: antialiased;
+  color: #333;
+  background: #fff;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Pagefind injects its controls at runtime, so the header search treatment belongs here. */
+pagefind-modal-trigger.docs-search {
+  --pf-border: #eadfd9;
+  --pf-border-focus: #ea572a;
+  --pf-hover: #fff7f2;
+  --pf-outline-focus: #ea572a;
+  --pf-text: #292320;
+  --pf-text-muted: #6f6661;
+  align-self: stretch;
+  border-left: 1px solid #eadfd9;
+}
+
+/* Hide the empty host in dev/loading/failure so its border cannot leave a 1px divider. */
+pagefind-modal-trigger.docs-search:empty {
+  display: none;
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-btn {
+  width: auto;
+  height: 100%;
+  min-height: 67px;
+  gap: 10px;
+  border: 0;
+  border-radius: 0;
+  padding: 0 18px;
+  background: transparent;
+  color: #292320;
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-btn:hover {
+  border-color: transparent;
+  background: #fff7f2;
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-icon {
+  width: 16px;
+  height: 16px;
+  background: #6f6661;
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-text {
+  color: #292320;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-shortcut {
+  margin-inline-start: 4px;
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-key {
+  min-width: 19px;
+  height: 19px;
+  border: 1px solid #ded3cd;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 1px 0 #ded3cd;
+  color: #796e68;
+}
+
+@media (max-width: 639px) {
+  :is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-btn {
+    min-width: 48px;
+    padding: 0 16px;
+  }
+
+  :is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-text,
+  :is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-shortcut {
+    display: none;
+  }
+}
+
+.znc .msg-symbol {
+  display: none;
+}
+.znc blockquote {
+  margin: 1.8rem 0 !important;
+}
+/* Beat zenn `.znc h1 { margin-top: 2.3em }` (sr-only spans precede the title). */
+.znc > h1 {
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: none;
+  padding-bottom: 0.85rem;
+  color: #292320;
+  font-size: clamp(1.9rem, 1.55rem + 1.6vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.znc > h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  background: #ea572a;
+}
+.znc > div > h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid #e8e1dc;
+  padding-bottom: 0.45rem;
+  color: #292320;
+  font-size: clamp(1.45rem, 1.35rem + 0.45vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+.znc > div > h2:first-child {
+  margin-top: 1.35rem;
+}
+.znc > div > h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.65rem;
+  border-left: none;
+  padding: 0;
+  color: #5d5652;
+  font-size: clamp(1.05rem, 1.02rem + 0.16vw, 1.15rem);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.45;
+}
+/* Readable measure for prose only; tables/pre/images/headings/API cards keep full width. */
+.znc > div > p,
+.znc > div > ul,
+.znc > div > ol {
+  max-width: 70ch;
+  line-height: 1.75;
+}
+
+.znc .api-reference > h2 {
+  margin-bottom: 0.5rem;
+}
+.znc .api-entry {
+  border-top: 1px solid #e8e1dc;
+  padding: 1.55rem 0 1.8rem;
+}
+.znc .api-reference > h2 + .api-entry,
+.znc .api-reference > h3 + .api-entry {
+  border-top: none;
+}
+.znc .api-entry > h4 {
+  margin: 0 0 1rem;
+  border-left: 3px solid #ea572a;
+  padding: 0.2rem 0 0.2rem 0.8rem;
+  color: #28221f;
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
+.znc .api-entry > h4 > code {
+  margin-right: 0.45rem;
+  border-radius: 0.4rem;
+  background: #fff0e9;
+  padding: 0.2rem 0.45rem;
+  color: #9d3e23;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.znc .api-entry > p:not(.api-signature) {
+  max-width: 68ch;
+  margin: 0.65rem 0;
+  color: #5d5652;
+  line-height: 1.75;
+}
+.znc .api-entry > .api-signature {
+  max-width: 100%;
+  margin: 1rem 0 0;
+  overflow-x: auto;
+  border: 1px solid #e4ded9;
+  border-radius: 0.65rem;
+  background: #faf8f6;
+  padding: 0.72rem 0.9rem;
+  line-height: 1.5;
+}
+.znc .api-entry > .api-signature > code {
+  white-space: nowrap;
+  background: transparent;
+  padding: 0;
+}
+.znc .api-entry > table {
+  margin-top: 1rem;
+}
+.znc .api-entry > table th:nth-child(3),
+.znc .api-entry > table td:nth-child(3) {
+  min-width: 17rem;
+}
+
+@media (max-width: 576px) {
+  .znc .api-entry {
+    padding: 1.3rem 0 1.55rem;
+  }
+  .znc .api-entry > h4 {
+    font-size: 1rem;
+  }
+}
+
+.doc-pagination {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.doc-pagination .pagination-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--rd-line);
+  border-radius: 0.75rem;
+  color: var(--rd-ink);
+  line-height: 1.5;
+  text-decoration: none;
+  transition:
+    background-color 150ms,
+    border-color 150ms;
+}
+
+.doc-pagination .pagination-link:hover {
+  background: var(--rd-tint);
+  border-color: #dccac0;
+  text-decoration: none;
+}
+
+.doc-pagination .pagination-link:focus-visible {
+  outline: 2px solid var(--rd-accent);
+  outline-offset: 3px;
+}
+
+.doc-pagination .pagination-direction {
+  color: var(--rd-muted);
+  font-size: 0.75rem;
+}
+
+.doc-pagination .pagination-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.doc-pagination .pagination-title > span {
+  flex-shrink: 0;
+  color: var(--rd-accent);
+}
+
+.doc-pagination .pagination-next {
+  grid-column: 2;
+  text-align: right;
+  align-items: flex-end;
+}
+
+@media (max-width: 480px) {
+  .doc-pagination {
+    gap: 0.5rem;
+  }
+  .doc-pagination .pagination-link {
+    padding: 0.85rem;
+  }
+}
+
+/* Make Markdown section permalinks visible and keyboard accessible. */
+[appHeadingLinks] :is(h2, h3, h4, h5, h6)[id] {
+  position: relative;
+  cursor: pointer;
+  scroll-margin-top: 6rem;
+}
+[appHeadingLinks] [data-docs-heading-alias] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 0;
+  height: 0;
+  scroll-margin-top: 6rem;
+}
+[appHeadingLinks] .header-anchor-link {
+  position: static;
+  display: inline-block;
+  margin-right: 0.4em;
+  color: #796e68;
+  text-decoration: none;
+  opacity: 1;
+}
+[appHeadingLinks] .header-anchor-link::before {
+  content: none;
+}
+[appHeadingLinks] .header-anchor-link:focus-visible,
+[appHeadingLinks] :is(h2, h3, h4, h5, h6):hover > .header-anchor-link {
+  color: #c44320;
+}

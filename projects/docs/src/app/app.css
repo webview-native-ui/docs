@@ -1,0 +1,200 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.docs-sidebar {
+  position: sticky;
+  top: 68px;
+  align-self: start;
+  height: calc(100dvh - 68px);
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid #eadfd9;
+  background: #fffcfa;
+  z-index: 30;
+}
+.docs-navigation-columns {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+}
+.docs-rail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  border-right: 1px solid #eadfd9;
+  padding: 14px 4px 10px;
+}
+.docs-rail-categories,
+.docs-rail-global {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.docs-rail-global {
+  margin-top: auto;
+  padding-top: 28px;
+}
+.docs-rail-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 54px;
+  width: 100%;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #796e68;
+  font: inherit;
+  font-size: 10px;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+}
+.docs-rail-button:hover {
+  background: #fff5f0;
+  color: #c44320;
+}
+.docs-rail-button.is-active {
+  background: #fff0ea;
+  color: #c44320;
+}
+.docs-rail-button svg,
+.docs-rail-button app-project-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.docs-navigation-pane {
+  overflow: hidden;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+.docs-navigation-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translateX(0);
+  transition: none;
+}
+.docs-navigation-track.animate-ready {
+  transition: transform 500ms ease;
+}
+.docs-navigation-track.is-detail {
+  transform: translateX(-100%);
+}
+.docs-navigation-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+#main-content {
+  container: docs-content / inline-size;
+}
+.docs-load-error {
+  position: fixed;
+  top: 108px;
+  right: 24px;
+  left: 328px;
+  z-index: 10;
+  display: block;
+  max-width: 400px;
+  margin-inline: auto;
+  padding: 24px 48px 24px 24px;
+  border: 1px solid #eadfd9;
+  border-radius: 12px;
+  background: #fff0ea;
+  color: #c44320;
+  font-size: 14px;
+}
+.docs-load-error p {
+  margin: 0 0 8px;
+}
+.docs-load-error a {
+  color: inherit;
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+.docs-load-error-dismiss {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.docs-menu-backdrop {
+  position: fixed;
+  inset: 68px 0 0;
+  z-index: 20;
+  border: 0;
+  background: #2b231f40;
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+
+#docs-sidebar :is(a, button):focus-visible {
+  outline: 2px solid #ea572a;
+  outline-offset: -2px;
+}
+
+/* Hide secondary brand text before Docs / controls overflow on narrow phones. */
+@media (max-width: 390px) {
+  .docs-brand__name {
+    display: none;
+  }
+
+  .docs-brand {
+    margin-left: 0.5rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .docs-load-error {
+    left: 24px;
+  }
+  .docs-sidebar {
+    position: fixed;
+    top: 68px;
+    bottom: 0;
+    left: 0;
+    width: min(360px, 100vw);
+    height: calc(100dvh - 68px);
+    transform: translateX(-100%);
+    visibility: hidden;
+    box-shadow: 8px 0 20px #2a1b1414;
+    transition:
+      transform 450ms ease,
+      visibility 450ms;
+  }
+  .docs-sidebar.is-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+  .docs-shell:not(.layout-ready) #docs-sidebar {
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docs-sidebar,
+  .docs-navigation-track.animate-ready {
+    transition: none;
+  }
+}

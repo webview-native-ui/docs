@@ -1,0 +1,853 @@
+{
+  "repository": "https://github.com/rdlabo-dev/website",
+  "revision": "7bd562b441ee69d29a6400230229cd7711f6dfa5",
+  "projects": [
+    "webview-native-ui-engine",
+    "capacitor-native-ui",
+    "ionic-theme-ios27",
+    "ionic-theme-ios26",
+    "ionic-theme-md3"
+  ],
+  "files": [
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/README.md",
+      "sha256": "b5ba3426a6db138ba374327debcc3c8fdc441c5e7ddcfa0607c5636ba8c7dc36"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/advanced/README.md",
+      "sha256": "5786feba142ebb8e8e7dcd738c2644e36a8f7c5e26cb2e5e64767bc22c605ed2"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/advanced/android-placement.md",
+      "sha256": "2c044ec93903d3a559f8ceeabf38018dc90805d093747c7311bbf486df88bd22"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/advanced/native-handoff.md",
+      "sha256": "f18e6926058dc3ee89d5430291ea852839a3f602dd9a39cd61bb2cdf38f6ab3f"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/advanced/renderer.md",
+      "sha256": "4d4e5e0fcab9809a0d78bb5e6a9670b2756eba85b1bf63eed815d2e8b5310934"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/advanced/update-queue.md",
+      "sha256": "63f1b4bd915a83dacc639d20560c91b03ff308f8cabb6c7f946072391409b413"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/advanced/web-projection.md",
+      "sha256": "69a468e01d26f1523e2a7869c11ba5e5168052b349ff579e3ad838bbd0185c4c"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/concepts.md",
+      "sha256": "3420d6d0ef68c0a4fa685e5c88ca36f3f93ccdf7e6af53eeb345cb283a747438"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/configuration/README.md",
+      "sha256": "7e1dec25f3978e4c9763312ad9b282a04052f4bad6b94916270c9dfe5f7b423b"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/configuration/capture.md",
+      "sha256": "cbaf53acccd3cb41d5284de4d164cf8d199777d1b3534619646f26ac987660b2"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/configuration/events.md",
+      "sha256": "9d265dbfe1f9ab1c45db4192fe3ab339bb927c5c3d649d0b1ce9279d50d0ee72"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/configuration/ionic-overlays.md",
+      "sha256": "20f63d1e2a606c7df94edf801c061f65233abdd182ac6c435bac2df9e5ea266b"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/configuration/pause-resume.md",
+      "sha256": "332a030f9550a6d7ea32f3515b95a4b72733da93bd4738044621e3102e68ef70"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/configuration/values.md",
+      "sha256": "600bd9ef69c93b6e7bfeeeecddf6e63a913eadbfbd6628d2107bbafdf31f89ac"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/controls.md",
+      "sha256": "a642f9b1fd39a0a2d52ae40fc8bb294125e5d576067e73d3d4c4360dd6a42e31"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/getting-started/capacitor.md",
+      "sha256": "1877b6656b83968e0946b1e8527bc7a911930971ca188b1cdc74ca3d88182a90"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/getting-started/cordova.md",
+      "sha256": "3d8e820aa4fd9317f60002d7b211c5470c0b113886729e5cf3dbd95571dc989e"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/getting-started/initialization.md",
+      "sha256": "ab6d2355f129216bc7bd7881012f4e5e41ba63f606111b6e0e05349a412fe27d"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/getting-started.md",
+      "sha256": "cd74ccec2f5d13c810a3b2e1e74df1f66dc2db1255dd8d0b68fe5a1d9bfbac60"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/maintenance.md",
+      "sha256": "f3449e3eacf6c88a9e40575c5d67375c621b0414665ec7aef4d75a05cad3b1a3"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/reference/containers.md",
+      "sha256": "e67f44eabe77f06fa3e669348445f4c9301e03d99d3b6c472cb98bd8b25856cf"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/reference/platforms.md",
+      "sha256": "15820d647944492fdecac2601b498ec899142872d505169f2270647d6b218d2d"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/reference/projection.md",
+      "sha256": "e180cc4368f79cefc8ade3a790c26a5cfdc58ea7bae2c89a6e41710076d570b2"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/de/reference/state.md",
+      "sha256": "d701fd444d872a03d101867bf1f242c8b717f632e639d9ef7c3bb3ce37cc1547"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/README.md",
+      "sha256": "5a532f5f346a8e74206c3a9d118a7c37069775175b5a62153e11b1b6ae2692d3"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/advanced/README.md",
+      "sha256": "2702fdabd91cc2387e71f7ea4c0750bcb4331dc5d3973cba17637075cb6e9dce"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/advanced/android-placement.md",
+      "sha256": "725b9968ee5cc4f72fd5ff103f5ac3b0a477ab89093664db8633a97e5b4615ad"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/advanced/native-handoff.md",
+      "sha256": "dee8d64145c6e45cb38899c006a588dd940bf7b7e4352f4bf371b47c893962e5"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/advanced/renderer.md",
+      "sha256": "142020d4a14bbe8b09a6a022b1e901e88fe0db1c1217c88f809212342c34cd8c"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/advanced/update-queue.md",
+      "sha256": "82ca446781bb356f9fe84b24bb0a40dbad6604d2e2181b085ea10ef24cef6c83"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/advanced/web-projection.md",
+      "sha256": "fe976374440e3b6a1ceff11407ad004f1099d417f3614003ffcf9b420a5bc3d7"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/concepts.md",
+      "sha256": "7ea0b729978ca4ed3e48c5c39cd9db0a950e296e72c4252029bacd6ddf53045f"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/configuration/README.md",
+      "sha256": "e4368b60ac57b57c608ee0c15990b654ca2709a8a12031d7cac097f5dffc88ee"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/configuration/capture.md",
+      "sha256": "03e644ad37394fc326405124c5760afea3cd1e6cbe29632da86d2722e69d2f7b"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/configuration/events.md",
+      "sha256": "71682e02fd4c3e637a20034834b6bfeaa66e461430ee7bbca42407c7d6a101eb"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/configuration/ionic-overlays.md",
+      "sha256": "f3f973efb7e22417e89d58c76948f4fb2f3caa74f31b33dc8c67de8b3347fb8c"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/configuration/pause-resume.md",
+      "sha256": "1d1a89e912c5d19b4273fea64f9f3872d0ac56a1997f118799c733544afb0cd0"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/configuration/values.md",
+      "sha256": "f1694c1b34f0f3da5c34a4e8fd9ba9e93434bf5949b68b548a76ba0f45b24d4c"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/controls.md",
+      "sha256": "0fd09c1eae0223d40c6a5a9ca7604c4046d37d11cb8edb0365f3ecf657625354"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/getting-started/capacitor.md",
+      "sha256": "907915678f1043c9ff7ff9af2571358a0e7eec38db160e33a0a4f7f5126c14bb"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/getting-started/cordova.md",
+      "sha256": "c39f9a49b88d19e978154257f8f81e6bd37af41742584b0b860ec32a276c3525"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/getting-started/initialization.md",
+      "sha256": "a6b9e7591acea1c1f9dcb1596ad4e9776186c204e311b7b9fa976c611c1723eb"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/getting-started.md",
+      "sha256": "8576ac904cc0f5dd1a53e8958849a83ea54442208b02070b9ce864dffdd662e7"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/maintenance.md",
+      "sha256": "22e5655a251d02805c86a8dcfff3c9bd6ceeb6ccfaf378946c809c438ae7bcf0"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/reference/containers.md",
+      "sha256": "ff850c0a5ca16960c9ef5228e23302ff8bf84ed9617287e02954e864ff8f9a4a"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/reference/platforms.md",
+      "sha256": "d85b244b97ad317189c1956f148ecc2434f56274097e0f0a778b95c6cfed667a"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/reference/projection.md",
+      "sha256": "de46e78fb0513afdfec3b762484f92f728094b13386b4c95dcfba122a4b7bf2c"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/fr/reference/state.md",
+      "sha256": "c127be52142abf4a86fe5dd68355af4094a278cce31f93a81e05bacc21a52580"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/README.md",
+      "sha256": "40059e3fca34f23015c368a2579690b2d26d9bfb581254cfbe8ab278519f45d6"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/advanced/README.md",
+      "sha256": "ce60ee52473f5077c12dc19e3e079829ce33688e0702de2421926efddb91f025"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/advanced/android-placement.md",
+      "sha256": "d6ad9bacbdb7a4708fa374937fd8ada2f5fabfce2eb51e4ea49ffab1f8f8fed2"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/advanced/native-handoff.md",
+      "sha256": "04cd3e44219b7ccf6800c56dc7a4aeed293331a529d837c8d179abe81e0d96f2"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/advanced/renderer.md",
+      "sha256": "0d7ce3930402246fd18eb36de8649366f61075b9bb96f72f782ef23e07353630"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/advanced/update-queue.md",
+      "sha256": "ac0683c4144b3f97623cb500de2153bed0f3130bb7909be95936c3746f5fd51a"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/advanced/web-projection.md",
+      "sha256": "0edeba6ed40cdce0e9b622ebd9619c7be0253400d39cdd774a7fefe37ffcdc38"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/concepts.md",
+      "sha256": "35826a2a41960abe00ceb45acb3fdf0f603f838e1ddfd0a13a7c6aa3ebb549c5"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/configuration/README.md",
+      "sha256": "938d54bdbb7340b6f9eb123ab89277b82b5a0d41064a05ca7526a658cdd8368e"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/configuration/capture.md",
+      "sha256": "466652455331d970151a57f13cf4b788b3fb7730999e9c63de2ffcdd315eee96"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/configuration/events.md",
+      "sha256": "4376ab62bb462beb84b43896da5a0c281bdd12664e8dcf516ab323d466b46d8c"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/configuration/ionic-overlays.md",
+      "sha256": "b87ba0ab6fa057c55cf99cb72362ba937a3aed28ff6487e51864f2cb77a80f92"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/configuration/pause-resume.md",
+      "sha256": "171e6ce5c495a3ef9ae4690f71944882d594305a1e066f4ba47837068e23762f"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/configuration/values.md",
+      "sha256": "7da6b44ba216840c18039e45483ed36794d3e272fecced5a161f6328791cca7c"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/controls.md",
+      "sha256": "f56bd6cb419fbb301631defac87029bf0ebe4f4ec94de5b101f41e6545fa6702"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/getting-started/capacitor.md",
+      "sha256": "068495319bd8f928d92b7fc533705a7f8446ac212df69e0ed54eeb93d3ab4500"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/getting-started/cordova.md",
+      "sha256": "7c28b8df42148d9463bbd9e22264afb98ae88cdf35c895b1ec29c5a90da72e3c"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/getting-started/initialization.md",
+      "sha256": "2494e66408c415f60a7d1943c98111d7b00010fad554767c3aaabf938542fec7"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/getting-started.md",
+      "sha256": "f11d3d4afe7074df754932768ce67165d4396747d05db7003417468f5ca8dc97"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/maintenance.md",
+      "sha256": "2199e7321e10d8a6113560f45d154765ba7d77f5dd69dc7e558cde9986f6fd23"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/reference/containers.md",
+      "sha256": "004c694dbeea4378a2e79eae0eeca1854ee619db3ed2bc939349a5bb2761d081"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/reference/platforms.md",
+      "sha256": "9dd9faba6e2c4f5f659289398334f5b3526bf9ce21b16841b840d4088c51a253"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/reference/projection.md",
+      "sha256": "57e5634d66b57dd955cc816aa03570f77b8f014f6914a1344475f4d2464d40b0"
+    },
+    {
+      "path": "projects/docs/src/webview-native-ui-engine/docs/ja/reference/state.md",
+      "sha256": "8f7a034d96334048bfd30c6a8f84fad708f9399db98b9161ec35390fd836dc5a"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/appearance.md",
+      "sha256": "a05ad52b1ffbc18c86c1ce60d92d840c37ef00bb5836c08edc1b1de42ca5cc60"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/configuration.md",
+      "sha256": "b06a6d39a5874a19bc7f50bf5fb6e507634f0ace69dd514b8f7eed708c666342"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/dynamic-colors.md",
+      "sha256": "6a1fcd69d030e6b7ff97cb23e657091796ce588ebf0583c4e788d920886b47e4"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/framework-independent.md",
+      "sha256": "0969818511190b7e0d9d50b2003541ee1fd5911ba55276ef573c42d12b99b65e"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/ionic-vertical-bars.md",
+      "sha256": "773c754b1cfcece1992f51f49885675d7f9c967e298793f59f958af256d6a81f"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/migration.md",
+      "sha256": "8cb90fc13a424e5e88bc8b1a2dbbc905a602ea8500edbb57e5f4b4f3685bc9ce"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/native-ui-extensions.md",
+      "sha256": "10567d19b6bd8c1ca2c125fc03863e7b6ed370c868852388adc6384fb194f6b5"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/native-ui.md",
+      "sha256": "6b7cf9cd589d6bf0ea8e1d6db0ef937624fa00e16992c8894daaf6c919b3313e"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/readme.md",
+      "sha256": "e6e0b93588b53eb98524f08228d417168a0a4539289b523b4f6f7cd0f2a4f0fd"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/setup.md",
+      "sha256": "820dd1b297088e6e17ff4d6f1b313f3f20a36149da8662eb86ac985ce586e6d9"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/de/vertical-bars.md",
+      "sha256": "b629c38a0b4578393da04db18ccc23187748d8e7863f9e88554f2b7e32a0d3e8"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/appearance.md",
+      "sha256": "0e0f05a782cddc7fd78709f74bc2fb0302bcbf01d823568127246a1a1cc0ef32"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/configuration.md",
+      "sha256": "1b560382ac6c19d2cf12affea203a6448a0f8103268144deb5ee637b8bde5f02"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/dynamic-colors.md",
+      "sha256": "33a6ce03e2ad9441586cb18ea3c78859f98d6ab0908bf657a80a7a3934a4d7a6"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/framework-independent.md",
+      "sha256": "4465c9cb99f702ee421329a1bc5a5e31f4e7fa9f9b1556077effcdda720fc8ae"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/ionic-vertical-bars.md",
+      "sha256": "72a195f242cefe2585e465950aa46ddbb118cd97a98bf969d50f375e4c54ac13"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/migration.md",
+      "sha256": "6f2205314bf4ca05f4bd79dbdf20bed24d9cf883afa31a32cbc8e8a2c3f0f03e"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/native-ui-extensions.md",
+      "sha256": "172dac65f86148a85dca1bddb5baf5067574f301314686bd355d37add39758a1"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/native-ui.md",
+      "sha256": "2120415b6c0c0077aa35a58d0dd027a21b1416968c4c2b4f86485da09f778096"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/readme.md",
+      "sha256": "727c5eb5b32298dba35da38119751b3301923dedd90280cbc1191a095bf9b9a8"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/setup.md",
+      "sha256": "04aac917fe84974a35001a437b783341c62ac2b1e2e6ee83ac0de73e05069f97"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/fr/vertical-bars.md",
+      "sha256": "0847bc8d2e8d23a0b185c8086c804a7c18b44b84860bdcf0296e5332606dfaa5"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/appearance.md",
+      "sha256": "fd54336bd3b67bfed8527ff338fd7bd5f4abd49c9362f2a5b6254a6622b7fa4a"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/configuration.md",
+      "sha256": "13d9d53b2ab2960fdcb54afb4cf2ffb8ba2148875a42ecaf3f4e6d344bd3127d"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/dynamic-colors.md",
+      "sha256": "26f38c56881c3170459ecdd2e274ce7896f78c9adde484502812b42ff8df96a4"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/framework-independent.md",
+      "sha256": "92e1eab26a7cf59713e0ba72bc519fd6f50eed3d19c0c0dfd4d52140ae51d283"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/ionic-vertical-bars.md",
+      "sha256": "3eef03cc937ff4b511418435c487ffb5630a0cf3dc9d859d9b555f7e25d5c61c"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/migration.md",
+      "sha256": "00e6faeaf425ca9d690a9bd949e3a1333196b9d7fb67b77e1b73b361ccd354cd"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/native-ui-extensions.md",
+      "sha256": "54f95b18c1107d29389f5141e8d2e444e2cf0a381b8d9c9765c872f79779e3df"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/native-ui.md",
+      "sha256": "6e7b101ca17b927e335addb04c9732230bccbe3652cf5b303ffc0c62c0600141"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/readme.md",
+      "sha256": "f64ca1cbeca33b7baae9819fba55bc2895e896570f87101eea1ce43e1568bd55"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/setup.md",
+      "sha256": "b0647e57e22dba139e41d52d085a7c00daad76d1de92f635ea5b7f0f2c6f234b"
+    },
+    {
+      "path": "projects/docs/src/capacitor-native-ui/docs/ja/vertical-bars.md",
+      "sha256": "cacacf92ef4b981f8c37de4ecde87bb3d9ae6c477ab6edb2f4f4c2cd2bbfc3ab"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/adaptive-themes.md",
+      "sha256": "c3abf8dc02bc8952de22ea5c7c619cd46e2a9d90acd061a245bb683ce1201b6f"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/add-native-ui.md",
+      "sha256": "a54b5f64312907f6dfaa906a2decfe734821f9d6954c96912e073bda520b1f5c"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/animation.md",
+      "sha256": "6c93512ce0c3b7a9775a2b9c8108f75d59a5d580475107d52fd40e311c11aa9f"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/cordova.md",
+      "sha256": "092925198a2942b5f49ea893f0f3c9edd48e16531e544b83f57e59d53befa7f8"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/eslint.md",
+      "sha256": "14f7afa3eb9a1c4e11dfb171568cf65d6f61a963493e5db5695303d1f36f281a"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/features.md",
+      "sha256": "9538c6de9ed76a9b8d249379245e10b1a13874c1709d4b6d1762d86a4375e5d8"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/migration.md",
+      "sha256": "1081e371fdeac9623999cdcc2a548163e105757198ea1f109f242dd7835380a3"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/readme.md",
+      "sha256": "bcc7753f1c080a2523af2a43810a7695b1e0f5ed59ce9b5e48d3b94a05a5ff78"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/setup.md",
+      "sha256": "ebc36157a5a6ef4f7bd71dad8db9b712e50e26b6c6abbc710b9403928068ee2a"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/special-markup.md",
+      "sha256": "009693eff382887fcb2e8f6b9bd85b17f17160e56c08649afcb58bd1b61668dc"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/using-ion-item-group.md",
+      "sha256": "61d0eade979dd512168ab3d88e9efb60254fa5bd19e92a86e9f5db57e8ea5182"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/de/vertical-bars-layout.md",
+      "sha256": "1f9ba6d030707ac58a3f4192ef92064ec2785cb67162a528ad12f2ad79712a3b"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/adaptive-themes.md",
+      "sha256": "14f502ce5d2dfe13bf67ce32a9814c109d8c1ad232413c25028171ba77cef542"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/add-native-ui.md",
+      "sha256": "67682dc1eedc09d19bebf435d681bf5cd8493c4bf50b5b8a4bbb38b1f16895d1"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/animation.md",
+      "sha256": "49343008fcc1c6ef0d2fcf82760c445dc255eaf63f6855ffbdd020594a1cdc95"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/cordova.md",
+      "sha256": "4fa0fbdf4f2477e6d3db5496e8d367c8327488ef72f1b3cf31f56cebab34e7ce"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/eslint.md",
+      "sha256": "6f99de0f0dcd527d51a39f3d721baa8b6bfe62cf290c64ac60da67b8f345a071"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/features.md",
+      "sha256": "e3c983852084a6414ed57737d01380c646223528c3cdd0d8511009d9eba4fbd0"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/migration.md",
+      "sha256": "3e1926953aee0a3d1a2d0c4cc8e83d16edcad9e28e59ac193000bcc80c46ae0a"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/readme.md",
+      "sha256": "8203606b7f68c0d432c4a78afed24da85d98f8bf62f23c49450360dcdbc778a5"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/setup.md",
+      "sha256": "aaacdd750b8b1619747e4b6ef6e2a14ba2bcd38b7cece2306301ccdb1febbbf4"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/special-markup.md",
+      "sha256": "d261099f66bb56d7099b0f707d24a3eb2523b9fabffa33cbc902adb998b74677"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/using-ion-item-group.md",
+      "sha256": "f0f246660377bd7ce298606b611b92eebfb8ec7e71b18138acdfc07e9764d24a"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/fr/vertical-bars-layout.md",
+      "sha256": "43f2bc639722740286ce72dabf8f13ce23248ed811ea309cd394cd716e8f4595"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/adaptive-themes.md",
+      "sha256": "30ae578955e6ecce1bab6c684317d83bfd4aa985c3a30c2a9c31f09c8f399db3"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/add-native-ui.md",
+      "sha256": "b4e18a702f6c2fa514a8eb661a5cdfba2994aa642969ef339de40d971f0fbfee"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/animation.md",
+      "sha256": "76b64e92f1b93af1825576a35f659c2bb4cb4d1d6c2d3da9d38619792f9982cd"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/cordova.md",
+      "sha256": "4ba629d0b22a34a4122000daa99d4965392d9fc709277a190abc55c64d091144"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/eslint.md",
+      "sha256": "7aff3e772951c8b6741408151ccced6f8212b14f41c8fb2980e529bad26b000f"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/features.md",
+      "sha256": "e2616f4abfcfc59ea4162bc67453cae294e59ab881df43d29c9b0af71978f68e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/migration.md",
+      "sha256": "283e51ac4fda806dc11dfff58ca9d647da30b12d0b80f9acfc358926aa2bea8c"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/readme.md",
+      "sha256": "a0cda0a62684187bec427a88bc1f1e368a574428b8ad44dafab07c359be5ff79"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/setup.md",
+      "sha256": "cea444dce812f99d3bb0b6d2a44f03a00e8ea4569825dd4bc3094f6f6dd849f5"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/special-markup.md",
+      "sha256": "ced23055c275df9e9baa006f128423290bdc24e6dc955626c63bc70a88ebc6ba"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/using-ion-item-group.md",
+      "sha256": "a29da7db4eefdbd52d8c1a9d5fdaf6bc6f3767391df7ccc12730ec12d56e7ae9"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios27/docs/ja/vertical-bars-layout.md",
+      "sha256": "decc4b3236f5d5c69ef3ac9b6f647387917024b59c04dc70c89e737d350e4afc"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/api.md",
+      "sha256": "c1ab953990d623e13774d0951e254520a3ac05ad4d8750f6fd86fc148a001b3e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/api.md",
+      "sha256": "f3d945ee1938de97e7392509e80c701032441e339ee769d9934d2751482ebbd7"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/e2e-testing.md",
+      "sha256": "fc89761db52d865ca84030b42c6220a9903b58aaa2007fa4aadf403c167234e6"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/eslint.md",
+      "sha256": "939f60f9b1033b457ce69e4ac3bc63b1d57c1a4a67a20c5280b95d614659adb6"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/experimental-animation.md",
+      "sha256": "07fa1b17374c5b3c2d8455e2a6fc4589734606a1d74d90a3272b2b5bf35ba4b8"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/features.md",
+      "sha256": "c234d302c6fd59d18e5cc02c2633c875bb5fdb2e1e00d161ee7ada4ec6d7b52e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/ios-18.md",
+      "sha256": "20f11f775a1a801ab574bc4ecae83babe29b8739a1739485d76a08c4a533145a"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/migration.md",
+      "sha256": "67f9ea8be3d32e7c12c263c64e80a70a719dfb0c5c81424cc1e0d801ed84130b"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/readme.md",
+      "sha256": "0a8fc2eb791b1dba6d92de2be8978cf4bc79fd15ef83cd438f89b9b1ab987a68"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/special-markup.md",
+      "sha256": "1bd456faa7b7bbc07c7be5bf62986a3bc5cccd512b44231f446c1103c5252809"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/de/using-ion-item-group.md",
+      "sha256": "56e03bd969490b3f0b090ab40d7e0c3b0f30d3809b8b8c07e68c92aef8c2225e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/experimental-animation.md",
+      "sha256": "3f07ec823f80916bad05ef8752e8022388598726128563f5a7eb4dbc48d289e6"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/features.md",
+      "sha256": "3e4cc442157a4d0980aa81de37e994c5c92984368cb835644d877bc6943a38ab"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/api.md",
+      "sha256": "80c518a2c04b874393f7f0acfc75cbefae2546163cdc71384982e058edc64221"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/e2e-testing.md",
+      "sha256": "45b4a127226cdba3b69f866a1e593bbb74c5052042d74c4d144eb5700cece0c9"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/eslint.md",
+      "sha256": "a9c6351630c1053c80f48d9f2a162251fda2d88cd0a04d7076d3b718240c3ad4"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/experimental-animation.md",
+      "sha256": "f6afe823e918af8bbdac7db246d81e0be36d5530217973db1e8769208bf2a8b3"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/features.md",
+      "sha256": "c6ebcc9c5c860b7e6a51d53d3d4f767251f23452d73066ff8e867f1297217dd8"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/ios-18.md",
+      "sha256": "1ffb0ac1be2d43e13de241b6a6dcd01f6988b6756e331f93853cd5b875b50bbd"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/migration.md",
+      "sha256": "acb1a642b4fabc798d667f1dbb5bb31b4bd1d80f0fdbfe90b0f349698b8cd852"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/readme.md",
+      "sha256": "e18a318abe35e223a92e24d69dbc978f61ac9581138079a9cd30dd1bbf0ec57b"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/special-markup.md",
+      "sha256": "20029ba6c03a94976869cc79693d5ddbec8da5a5e9a8ff1283ee14ad701fa2ab"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/fr/using-ion-item-group.md",
+      "sha256": "4139fd96b9f6c61855fb9a526920cf5aebf695a61efce11ed644f06199e16acb"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ios-18.md",
+      "sha256": "2df708e5308cd99ea85deaf9ca64275fe64e28a92662a6b1ad64a46a2b032102"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/api.md",
+      "sha256": "327a264523763b9565a6f99205235c79dec646cbacad564bc16c73dd8f386f83"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/e2e-testing.md",
+      "sha256": "8a1c1d308e5eb9d37748a660e979bf8f92a7cfcd4191663ae38e30a5c488abea"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/eslint.md",
+      "sha256": "e873ffe32b1e86a15aecac6f53ba1fc5f23e17609dc84a7c96a0c3d51164897a"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/experimental-animation.md",
+      "sha256": "6a7a7a2402fff0cd7774d3829e514e150def376bff69eff4e01bd775b7540f2e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/features.md",
+      "sha256": "6d38d909c4a9be0417e654e89eca965b46a28963620477bf7eca799a6cf2534c"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/feedback.md",
+      "sha256": "0b3f6a5c4af4ead41bc89238b9f3bf7f9822a3b3aa99021c72620bd67e44c151"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/ios-18.md",
+      "sha256": "4e0d79156c94a1e4271e5e7f321863eee6c488de7d6f8602c372765a313cd3e8"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/migration.md",
+      "sha256": "a45acdeb521a5daec665c9701291f6d7a7201eb87114f3c92edeada497701c35"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/readme.md",
+      "sha256": "f2f00113c7bce4f90fa8b74672d1eea6cd8c7aaf799fb899b209f65a35368a06"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/special-markup.md",
+      "sha256": "3e900005ed36016d323185208e6c67734c635db70bf5d4adeadc458f752a7d66"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/ja/using-ion-item-group.md",
+      "sha256": "5ef39d3eb76873c5efc63e627d2acaf4d6b2497b7c5893b13a38bcb38882784f"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/migration.md",
+      "sha256": "3528f91e0b887789c2304d99e9527f332aa0a5135f87f3c633affc974b9f6982"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/readme.md",
+      "sha256": "8df06c1a6328415e593fe3eb01038ec48703497ff30f12a7963b20d9396ff91a"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-ios26/docs/using-ion-item-group.md",
+      "sha256": "1ee991a42ff06c8643002b5aedd7638af3824a1c76769673412794450c4d07f3"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/api.md",
+      "sha256": "93cb1f3f31fb335a6e57607fc93f95a75308ff76acd1bac0fb2fb089296d8a1d"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/android-settings.md",
+      "sha256": "7a3ca03308f8850190a7be2aacf1d119a31e83bb61abfd3374cc2171859cf9dc"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/api.md",
+      "sha256": "0e1fd147a668d14b4c6b50dec379eabc0a25123d5a7db895e2f16a9ee8e1b940"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/color-system.md",
+      "sha256": "0bb792d21c54f17e0d8437b6f4dba9798e234a6524404bc55ec2a2433f032e9e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/dynamic-colors.md",
+      "sha256": "f52b96860b871a75d2a974715334f02d8ccbfcc534a7153183cc26522b4d295d"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/e2e-testing.md",
+      "sha256": "a6a74836162591414fd914f6ac12b829dac01b3780eb1557e5a955406830f4a4"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/eslint.md",
+      "sha256": "e7401263ce860b1fa2e09d4f2c4f959ca9ff9dfbcd55f4de2ec8082a89e2babe"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/migration.md",
+      "sha256": "2e65dc220bf354ed1ffccac3c6924aeb1c7552fc4ec53eb31245d03b2d5b9d0e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/readme.md",
+      "sha256": "5f062b60e413ae021fcf5e089110f678e481674011a277bea1e0c00369d390dd"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/special-markup.md",
+      "sha256": "9d021eb5e81fa334dda801d695cfd2976021928ffb7fa0a2b09131feec8275aa"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/de/using-ion-item-group.md",
+      "sha256": "4d4131c447220c645b0e5e307d58bfabdb623722a8aff64a41c7740169dc3a38"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/android-settings.md",
+      "sha256": "33aed1d6470fcfc4fe59989d333aea6006b8ac4270894934637e28949680fbf1"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/api.md",
+      "sha256": "1cc7f1eeaeb9408c0eaf446ff8cd937a67ef614655c44c717ee6011040e1d7cd"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/color-system.md",
+      "sha256": "2a1fe30faab36b6e50bb00f0d42440f07ea0d539b43f11d3a61012dcb4a31921"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/dynamic-colors.md",
+      "sha256": "9ab64439addaa3313b97ce15ca3157eb120baea8c34e5eff280a1e1a891c398e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/e2e-testing.md",
+      "sha256": "2bcd2747acef4fd12b81951b5846321a885ace2e109b4ac4daf0c3f1edfc9f24"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/eslint.md",
+      "sha256": "0414a6a9e8cc3c724a4859a38108349c467d8741d8bbb961f927735a1ff1cb19"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/migration.md",
+      "sha256": "2e99ff5c665e469607b7d8bd8ed12794b6051cdcc3e9cb1c1925b22ba7df9503"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/readme.md",
+      "sha256": "bc55cad8f97d0f83ccdad0891e0200d8c6db227f87ce155f2b5bacf68d59e00a"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/special-markup.md",
+      "sha256": "4a4bf3494494128179b25431f23c974fd91a6bb2647301e2f3e3bcf1b10e6e3c"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/fr/using-ion-item-group.md",
+      "sha256": "b00be46460e796280aa3949a34d0da1012c0b00ef20bd29d88a5639acbb41abd"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/android-settings.md",
+      "sha256": "e53c8bd9d14dd12b60a5c957af7ac6fb0ca51fa12b8e95fd7d7e3ed5a9c3533d"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/api.md",
+      "sha256": "01032334c6c20db2632295bb2cb020d8d1d2e934ece6d7d7b5929a9a7262c9e9"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/color-system.md",
+      "sha256": "1f9b1f765c420a598b3bf1f21e8895b67b8d3f0b7f5250a599a995e7fddf5ed0"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/dynamic-colors.md",
+      "sha256": "f7eddd514ce078ee9bcba1055034ed8b389b99141a552fb242c0982447bc2ecf"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/e2e-testing.md",
+      "sha256": "077cc9d6442236c008d610354ec6b260c72fd77559885098aba8e5a65196fc40"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/eslint.md",
+      "sha256": "b036c2115389c046e553e7f5bdf110b5946686e911a361d5c899b1b07bc9a5ad"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/migration.md",
+      "sha256": "8c6347f14facb77df2cc5398e9e7aaa74909815648ab8487317c0aafb52af27d"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/readme.md",
+      "sha256": "2ddd55236ebdc284ec2456e4db51dbe3264b42575fe6e535dfd0ee9b5a66bb2e"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/special-markup.md",
+      "sha256": "5193f21fd40cb6ea6955364526fe31a3b72d117e428eecb52ea852c10d4992af"
+    },
+    {
+      "path": "projects/docs/src/ionic-theme-md3/docs/ja/using-ion-item-group.md",
+      "sha256": "e6456e4797b4753d2c9767f12f454b003e824c40899b53fc49617b45183b1cb7"
+    }
+  ]
+}

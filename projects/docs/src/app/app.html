@@ -1,0 +1,288 @@
+<a
+  href="#main-content"
+  class="fixed top-3 left-3 z-50 -translate-y-20 rounded-full bg-[#27211e] px-5 py-3 font-semibold text-white no-underline transition focus:translate-y-0"
+  i18n="@@skipToContent"
+  >Skip to content</a
+>
+<header
+  class="docs-header sticky top-0 z-40 flex min-h-17 items-stretch justify-between border-b border-[#eadfd9] bg-white/95 backdrop-blur"
+>
+  <div class="flex min-w-0 items-center">
+    <button
+      #menuButton
+      class="ml-2 grid size-11 shrink-0 cursor-pointer place-items-center border-0 bg-transparent lg:hidden"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="layoutReady() ? menuOpen() : null"
+      aria-controls="docs-sidebar"
+      i18n-aria-label="@@toggleDocumentationMenu"
+      aria-label="Toggle documentation menu"
+    >
+      <span class="relative block h-3.5 w-4.5" aria-hidden="true">
+        <span class="absolute top-0 left-0 h-0.5 w-full rounded-sm bg-[#292320]"></span>
+        <span class="absolute top-1.5 left-0 h-0.5 w-full rounded-sm bg-[#292320]"></span>
+        <span class="absolute top-3 left-0 h-0.5 w-full rounded-sm bg-[#292320]"></span>
+      </span>
+    </button>
+    <a
+      class="docs-brand my-3.5 ml-3.5 flex min-w-0 items-center gap-2.5 text-[#211d1b] no-underline hover:opacity-75"
+      href="https://rdlabo.dev/"
+      aria-label="rdlabo.dev"
+    >
+      <img
+        class="h-6 w-auto shrink-0"
+        src="/assets/brand/rdlabo-logo.svg"
+        width="48"
+        height="24"
+        alt=""
+      />
+      <span class="docs-brand__name truncate text-sm font-normal tracking-[-0.02em] sm:text-base"
+        >rdlabo.dev</span
+      >
+    </a>
+    <span
+      class="docs-brand__sep mx-2 inline-flex h-6 shrink-0 items-center text-sm leading-none text-[#a99d96] sm:text-base"
+      aria-hidden="true"
+      >/</span
+    >
+    <a
+      class="docs-home-link mr-2 shrink-0 text-sm font-normal tracking-[-0.02em] text-[#211d1b] no-underline hover:opacity-75 sm:mr-3.5 sm:text-base"
+      [href]="canonicalHomePath"
+      (click)="navigateHome($event)"
+      i18n="@@docsHomeNav"
+      >docs</a
+    >
+    @if (navigationProject(); as project) {
+      <span
+        class="docs-active-project hidden min-w-0 truncate border-l border-[#e5d9d3] pl-4 text-sm text-[#796e68] md:block"
+        >{{ project.shortName }}</span
+      >
+    }
+  </div>
+  <div class="ml-auto flex items-stretch">
+    <pagefind-config [attr.lang]="searchLanguage" />
+    <pagefind-modal-trigger class="docs-search" />
+    <app-language-menu [path]="currentUrl()" (opened)="onLanguageMenuOpened()" />
+    <a
+      class="external-link hidden items-center border-l border-[#eadfd9] px-4 text-sm font-medium text-[#292320] no-underline hover:bg-[#fff7f2] sm:flex sm:px-6"
+      [href]="
+        navigationProject()?.repositoryBrowseUrl ??
+        navigationProject()?.repositoryUrl ??
+        'https://github.com/webview-native-ui'
+      "
+      target="_blank"
+      rel="noopener noreferrer"
+      i18n-aria-label="@@viewOnGitHub"
+      aria-label="View on GitHub"
+      >GitHub</a
+    >
+  </div>
+</header>
+
+<div
+  class="docs-shell relative grid min-h-[calc(100dvh-68px)] grid-cols-1 lg:grid-cols-[304px_minmax(0,1fr)]"
+  [class.layout-ready]="layoutReady()"
+>
+  @if (menuOpen() && mobileLayout()) {
+    <button
+      class="docs-menu-backdrop"
+      type="button"
+      i18n-aria-label="@@closeDocumentationMenu"
+      aria-label="Close documentation menu"
+      (click)="closeMenu()"
+    ></button>
+  }
+  <aside
+    #docsSidebar
+    id="docs-sidebar"
+    class="docs-sidebar lg:translate-x-0"
+    [class.is-open]="menuOpen()"
+    [attr.aria-hidden]="layoutReady() && navigationHidden() ? 'true' : null"
+    [attr.inert]="layoutReady() && navigationHidden() ? '' : null"
+    i18n-aria-label="@@documentation"
+    aria-label="Documentation"
+  >
+    <div class="docs-navigation-columns">
+      <div class="docs-rail">
+        <nav
+          class="docs-rail-categories"
+          aria-label="Choose a library"
+          i18n-aria-label="@@chooseLibrary"
+        >
+          <button
+            type="button"
+            class="docs-rail-button"
+            aria-label="Browse all libraries"
+            i18n-aria-label="@@browseAllLibraries"
+            aria-controls="docs-navigation-pane"
+            [attr.aria-pressed]="selectedCategory() === ''"
+            [class.is-active]="!selectedCategory()"
+            (click)="openLibraryPicker('', $event)"
+          >
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" />
+              <rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" />
+              <rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" />
+              <rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" />
+            </svg>
+            <span i18n="@@librariesRail">Libraries</span>
+          </button>
+          @for (group of projectGroups; track group.id) {
+            <button
+              type="button"
+              class="docs-rail-button"
+              [class.is-active]="selectedCategory() === group.id"
+              [attr.aria-label]="group.label"
+              [attr.title]="group.label"
+              aria-controls="docs-navigation-pane"
+              [attr.aria-pressed]="selectedCategory() === group.id"
+              (click)="openLibraryPicker(group.id, $event)"
+            >
+              <app-project-icon [kind]="categoryIcon(group.id)" />
+              <span>{{ categoryLabel(group.id) }}</span>
+            </button>
+          }
+        </nav>
+        <nav
+          class="docs-rail-global"
+          aria-label="Primary navigation"
+          i18n-aria-label="@@primaryNavigation"
+        >
+          <a
+            class="docs-rail-button"
+            [href]="canonicalHomePath"
+            (click)="navigateHome($event)"
+            [attr.aria-current]="isIndex() ? 'page' : null"
+            aria-label="All projects"
+            i18n-aria-label="@@allProjectsNav"
+          >
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="m2 7 6-5 6 5v7H9.5V9h-3v5H2V7Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              /></svg
+            ><span i18n="@@homeRail">Home</span>
+          </a>
+          <a
+            class="docs-rail-button"
+            href="https://rdlabo.dev/articles"
+            aria-label="Articles"
+            i18n-aria-label="@@articlesNav"
+          >
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M3 2.5h10v11H3v-11ZM5.5 5h5M5.5 7.5h5M5.5 10h3.5"
+                stroke="currentColor"
+                stroke-linecap="round"
+              /></svg
+            ><span i18n="@@articlesNav">Articles</span>
+          </a>
+          <a
+            class="docs-rail-button"
+            routerLink="/support"
+            [class.is-active]="isSupport()"
+            [attr.aria-current]="isSupport() ? 'page' : null"
+            aria-label="Sponsor"
+            i18n-aria-label="@@supportNav"
+          >
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M8 13.5S2.5 10.2 2.5 5.8A2.8 2.8 0 0 1 8 4.9a2.8 2.8 0 0 1 5.5.9C13.5 10.2 8 13.5 8 13.5Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              /></svg
+            ><span i18n="@@supportRail">Sponsor</span>
+          </a>
+        </nav>
+      </div>
+      <div id="docs-navigation-pane" class="docs-navigation-pane">
+        <div
+          class="docs-navigation-track"
+          [class.is-detail]="!showingLibraries()"
+          [class.animate-ready]="navigationAnimationReady()"
+        >
+          <div
+            class="docs-navigation-slide"
+            [attr.inert]="!showingLibraries() ? '' : null"
+            [attr.aria-hidden]="!showingLibraries() ? 'true' : null"
+          >
+            <app-library-picker
+              [groups]="projectGroups"
+              [category]="libraryCategory()"
+              [activeProjectId]="navigationProject()?.id"
+              [activePath]="navigationUrl()"
+              (selected)="selectProject($event)"
+            />
+          </div>
+          <div
+            class="docs-navigation-slide"
+            [attr.inert]="showingLibraries() ? '' : null"
+            [attr.aria-hidden]="showingLibraries() ? 'true' : null"
+          >
+            @if (navigationProject(); as project) {
+              <app-project-navigation
+                [project]="project"
+                [categoryLabel]="categoryTitle(project.category)"
+                (backToLibraries)="openLibraryPicker(project.category)"
+              />
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  @if (navigationError()) {
+    <div class="docs-load-error" role="alert">
+      <button
+        type="button"
+        class="docs-load-error-dismiss"
+        aria-label="Dismiss message"
+        i18n-aria-label="@@dismissLoadError"
+        (click)="dismissNavigationError()"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="m4 4 8 8M12 4l-8 8" stroke="currentColor" stroke-linecap="round" />
+        </svg>
+      </button>
+      <p i18n="@@documentationLoadError">
+        This page couldn’t be loaded. Reload the documentation to try again.
+      </p>
+      <a [href]="reloadDocumentationUrl()" i18n="@@reloadDocumentation">Reload documentation</a>
+    </div>
+  }
+  <main
+    id="main-content"
+    class="min-w-0"
+    tabindex="-1"
+    data-pagefind-body
+    [attr.aria-busy]="pendingNavigation() ? 'true' : null"
+  >
+    <router-outlet />
+  </main>
+</div>
+
+<pagefind-modal />
+
+<footer class="border-t border-[#eadfd9] bg-[#27211e] px-6 py-12 text-sm text-[#d8cec9]">
+  <div class="mx-auto grid max-w-6xl gap-3 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-8">
+    <app-footer-sponsors [supportUrl]="footerSupportUrl" />
+    <div>
+      <p class="m-0 font-semibold">rdlabo.dev</p>
+      <p class="mt-2 mb-0 max-w-2xl leading-6 text-[#bfb3ad]" i18n="@@footerOwnership">
+        Personal open source projects maintained by rdlabo.
+      </p>
+    </div>
+    <div class="sm:text-right">
+      <a
+        class="text-[#ff936f] no-underline hover:text-white"
+        routerLink="/support"
+        i18n="@@supportFooter"
+        >Support these projects</a
+      >
+      <p class="mt-2 mb-0" i18n="@@footerCopyright">
+        © 2026 rdlabo. Released under the MIT License.
+      </p>
+    </div>
+  </div>
+</footer>

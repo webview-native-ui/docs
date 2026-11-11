@@ -1,0 +1,154 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "analytics": false,
+    "schematicCollections": ["angular-eslint"]
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "docs": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/docs",
+      "sourceRoot": "projects/docs/src",
+      "prefix": "app",
+      "i18n": {
+        "sourceLocale": {
+          "code": "en",
+          "subPath": ""
+        },
+        "locales": {
+          "ja": {
+            "translation": "projects/docs/src/locale/messages.ja.xlf",
+            "subPath": "ja"
+          },
+          "fr": {
+            "translation": "projects/docs/src/locale/messages.fr.xlf",
+            "subPath": "fr"
+          },
+          "de": {
+            "translation": "projects/docs/src/locale/messages.de.xlf",
+            "subPath": "de"
+          }
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/docs/src/main.ts",
+            "tsConfig": "projects/docs/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/docs/public"
+              }
+            ],
+            "styles": ["projects/docs/src/styles.css"],
+            "server": "projects/docs/src/main.server.ts",
+            "outputMode": "static",
+            "security": {
+              "allowedHosts": []
+            },
+            "ssr": {
+              "entry": "projects/docs/src/server.ts"
+            },
+            "polyfills": ["@angular/localize/init"],
+            "localize": true,
+            "i18nMissingTranslation": "error"
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "600kB",
+                  "maximumError": "650kB"
+                },
+                {
+                  "type": "anyScript",
+                  "maximumWarning": "550kB",
+                  "maximumError": "650kB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "localize": false,
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "ja": {
+              "localize": ["ja"]
+            },
+            "fr": {
+              "localize": ["fr"]
+            },
+            "de": {
+              "localize": ["de"]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "docs:build:production"
+            },
+            "development": {
+              "buildTarget": "docs:build:development"
+            },
+            "ja": {
+              "buildTarget": "docs:build:development,ja"
+            },
+            "fr": {
+              "buildTarget": "docs:build:development,fr"
+            },
+            "de": {
+              "buildTarget": "docs:build:development,de"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
+          "options": {
+            "buildTarget": "docs:build:development"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/docs/tsconfig.spec.json",
+            "buildTarget": "docs:build",
+            "runner": "vitest"
+          },
+          "configurations": {
+            "ci": {
+              "watch": false
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/docs/src/**/*.ts",
+              "projects/docs/src/**/*.html",
+              "scripts/**/*.ts"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
