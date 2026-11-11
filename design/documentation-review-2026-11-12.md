@@ -44,11 +44,15 @@ remain unchanged for future comparisons.
 The theme and Capacitor guides remain owned by their package repositories. Their English
 changes are tracked in [theme PR #375](https://github.com/webview-native-ui/ionic-theme-ios27/pull/375)
 and [Capacitor PR #48](https://github.com/webview-native-ui/capacitor-plugin/pull/48). This repository
-carries corresponding translations and exact immutable source pins. Merge the source PRs
-and verify ordinary generation/CI before publishing the portal.
+carries corresponding translations and exact immutable source pins. Both source PRs passed review and CI and were squash-merged. The portal pins their merge
+commits and verifies ordinary GitHub generation before publication.
 
 Before source publication, local verification read only those two unpublished raw-source refs
 from their exact local Git commits through a temporary fetch adapter outside the repository.
 All other sources used the normal fetch path. Normal GitHub raw retrieval and generation were
 subsequently verified after publishing both source branches. This adapter is a local verification aid, not part
 of the application, CI or deployment workflow. Local results do not replace post-publication CI.
+
+CI revealed that sponsor tier visibility differs between the maintainer token and the workflow token.
+Sponsor ordering now uses public GitHub login only, without querying payment amounts.
+This makes every public sponsor equally discoverable and generation consistent across credentials.

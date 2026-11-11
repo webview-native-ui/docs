@@ -10,10 +10,6 @@ export interface PublicSponsors {
   past: PublicSponsor[];
 }
 
-interface SponsorWithTier extends PublicSponsor {
-  monthlyPriceInDollars: number;
-}
-
 interface SponsorshipNode {
   sponsorEntity?: {
     login?: unknown;
@@ -21,7 +17,6 @@ interface SponsorshipNode {
     avatarUrl?: unknown;
     url?: unknown;
   } | null;
-  tier?: { monthlyPriceInDollars?: unknown } | null;
 }
 
 interface SponsorsResponse {
@@ -50,7 +45,6 @@ const query = `
             ... on User { login name avatarUrl url }
             ... on Organization { login name avatarUrl url }
           }
-          tier { monthlyPriceInDollars }
         }
         pageInfo { hasNextPage endCursor }
       }
@@ -68,17 +62,13 @@ function isExpectedUrl(value: unknown, hostname: string): value is string {
   }
 }
 
-function parseSponsor(node: SponsorshipNode): SponsorWithTier | undefined {
+function parseSponsor(node: SponsorshipNode): PublicSponsor | undefined {
   const entity = node.sponsorEntity;
-  const monthlyPrice = node.tier?.monthlyPriceInDollars;
   if (
     typeof entity?.login !== 'string' ||
     entity.login.length === 0 ||
     !isExpectedUrl(entity.avatarUrl, 'avatars.githubusercontent.com') ||
-    !isExpectedUrl(entity.url, 'github.com') ||
-    (monthlyPrice !== null &&
-      monthlyPrice !== undefined &&
-      (typeof monthlyPrice !== 'number' || !Number.isFinite(monthlyPrice)))
+    !isExpectedUrl(entity.url, 'github.com')
   ) {
     return undefined;
   }
@@ -90,7 +80,6 @@ function parseSponsor(node: SponsorshipNode): SponsorWithTier | undefined {
         : entity.login,
     avatarUrl: entity.avatarUrl,
     profileUrl: entity.url,
-    monthlyPriceInDollars: typeof monthlyPrice === 'number' ? monthlyPrice : 0,
   };
 }
 
@@ -99,8 +88,8 @@ async function fetchSponsorships(
   token: string,
   activeOnly: boolean,
   fetchImplementation: typeof fetch = fetch,
-): Promise<Map<string, SponsorWithTier>> {
-  const sponsors = new Map<string, SponsorWithTier>();
+): Promise<Map<string, PublicSponsor>> {
+  const sponsors = new Map<string, PublicSponsor>();
   let cursor: string | null = null;
   do {
     const response = await fetchImplementation('https://api.github.com/graphql', {
@@ -131,10 +120,7 @@ async function fetchSponsorships(
       const sponsor = parseSponsor(node);
       if (sponsor) {
         const key = sponsor.login.toLowerCase();
-        const previous = sponsors.get(key);
-        if (!previous || sponsor.monthlyPriceInDollars > previous.monthlyPriceInDollars) {
-          sponsors.set(key, sponsor);
-        }
+        sponsors.set(key, sponsor);
       }
     }
     cursor = connection.pageInfo?.hasNextPage ? (connection.pageInfo.endCursor ?? null) : null;
@@ -146,16 +132,12 @@ async function fetchSponsorships(
   return sponsors;
 }
 
-function sortedSponsors(sponsors: SponsorWithTier[]): PublicSponsor[] {
-  return sponsors
-    .sort((left, right) => {
-      const tierOrder = right.monthlyPriceInDollars - left.monthlyPriceInDollars;
-      if (tierOrder !== 0) return tierOrder;
-      const leftLogin = left.login.toLowerCase();
-      const rightLogin = right.login.toLowerCase();
-      return leftLogin === rightLogin ? 0 : leftLogin < rightLogin ? -1 : 1;
-    })
-    .map(({ monthlyPriceInDollars: _, ...sponsor }) => sponsor);
+function sortedSponsors(sponsors: PublicSponsor[]): PublicSponsor[] {
+  return sponsors.sort((left, right) => {
+    const leftLogin = left.login.toLowerCase();
+    const rightLogin = right.login.toLowerCase();
+    return leftLogin === rightLogin ? 0 : leftLogin < rightLogin ? -1 : 1;
+  });
 }
 
 export async function fetchPublicSponsors(
