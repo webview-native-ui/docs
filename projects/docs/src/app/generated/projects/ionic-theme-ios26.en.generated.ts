@@ -62,7 +62,7 @@ export const PROJECT = {
     {
       "title": "Getting Started",
       "navTitle": "Getting Started",
-      "updatedAt": "2026-09-30",
+      "updatedAt": "2026-11-11",
       "slug": "readme",
       "file": "readme.md",
       "section": "Quickstart",

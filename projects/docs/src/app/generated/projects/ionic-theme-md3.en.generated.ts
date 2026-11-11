@@ -24,7 +24,7 @@ export const PROJECT = {
     {
       "icon": "layers",
       "title": "iOS 26-compatible markup",
-      "description": "Share one HTML structure with `@rdlabo/ionic-theme-ios26` across platforms."
+      "description": "Share one HTML structure with @rdlabo/ionic-theme-ios26 across platforms."
     },
     {
       "icon": "motion",

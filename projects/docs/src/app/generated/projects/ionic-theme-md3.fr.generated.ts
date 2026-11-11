@@ -24,7 +24,7 @@ export const PROJECT = {
     {
       "icon": "layers",
       "title": "Balisage compatible avec iOS 26",
-      "description": "Partagez une structure HTML unique avec `@rdlabo/ionic-theme-ios26` sur toutes les plateformes."
+      "description": "Partagez une structure HTML unique avec @rdlabo/ionic-theme-ios26 sur toutes les plateformes."
     },
     {
       "icon": "motion",

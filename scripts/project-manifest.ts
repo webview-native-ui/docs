@@ -752,7 +752,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     ],
     pages: [
       page('Getting Started', 'はじめに', 'readme', 'readme.md', 'Quickstart', 'クイックスタート', {
-        updatedAt: text('2026-09-30', '2026-09-30'),
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       }),
       {
         title: {
@@ -906,8 +906,8 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         icon: 'layers',
         title: text('iOS 26-compatible markup', 'iOS 26互換マークアップ'),
         description: text(
-          'Share one HTML structure with `@rdlabo/ionic-theme-ios26` across platforms.',
-          'プラットフォームをまたぎ `@rdlabo/ionic-theme-ios26` と同じHTML構造を共有します。',
+          'Share one HTML structure with @rdlabo/ionic-theme-ios26 across platforms.',
+          'プラットフォームをまたぎ @rdlabo/ionic-theme-ios26 と同じHTML構造を共有します。',
         ),
       },
       {

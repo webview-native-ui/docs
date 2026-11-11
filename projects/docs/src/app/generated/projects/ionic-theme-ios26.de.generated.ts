@@ -62,6 +62,7 @@ export const PROJECT = {
     {
       "title": "Erste Schritte",
       "navTitle": "Erste Schritte",
+      "updatedAt": "2026-11-11",
       "slug": "readme",
       "file": "readme.md",
       "section": "Schnellstart",

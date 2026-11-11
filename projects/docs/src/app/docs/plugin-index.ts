@@ -67,7 +67,7 @@ export class PluginIndexComponent implements OnInit {
 
   ngOnInit(): void {
     const homeTitle = $localize`:@@docsHomeTitle:WebView Native UI Documentation`;
-    const description = $localize`:@@siteDescription:Guides and API references for WebView Native UI Engine, Capacitor Native UI, and Ionic themes.`;
+    const description = $localize`:@@siteDescription:Guides and API references for Ionic themes, Capacitor and Cordova plugins, and WebView Native UI Engine.`;
     this.#seo.setPage({
       title: homeTitle,
       description,

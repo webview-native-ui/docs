@@ -5,6 +5,8 @@
   --rd-line: #e2e8f0;
   --rd-accent: #1767d2;
   --rd-tint: #eff6ff;
+  --site-accent: var(--rd-accent);
+  --site-accent-strong: #1456b0;
   --rd-sans:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
   --rd-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;

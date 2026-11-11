@@ -30,31 +30,44 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     <aside
       class="block h-full max-h-full overflow-hidden rounded-lg bg-[#151e2c] text-[#e1e4e8] shadow-[0_4px_14px_rgba(0,14,30,0.15)]"
       aria-label="Code example"
+      i18n-aria-label="@@codeExample"
     >
       <div
         class="flex gap-1.5 overflow-x-auto border-b border-[#0c121c] px-5 pt-[18px] pb-3.5"
         role="tablist"
         aria-label="Files"
+        i18n-aria-label="@@codeFiles"
       >
-        @for (code of codes; track code.file) {
+        @for (code of codes; track code.file; let index = $index) {
           <button
             type="button"
             role="tab"
             class="shrink-0 cursor-pointer rounded-[18px] border-0 bg-transparent px-2.5 py-[5px] font-[ui-monospace,SFMono-Regular,Menlo,monospace] text-[12px] text-white/50 [&.active]:bg-[#1767d2] [&.active]:text-white"
+            [id]="tabId(index)"
+            [attr.aria-controls]="panelId(index)"
+            [attr.tabindex]="activeFile() === code.file ? 0 : -1"
             [attr.aria-selected]="activeFile() === code.file"
             [class.active]="activeFile() === code.file"
             (click)="select(code.file)"
+            (keydown)="onTabKeydown($event, index)"
           >
             {{ code.file }}
           </button>
         }
       </div>
       <div #scroller class="h-[calc(100%-58px)] overflow-auto scroll-smooth">
-        @for (code of codes; track code.file) {
-          @if (activeFile() === code.file) {
-            <pre
-              class="m-0 min-w-max px-6 pt-5 pb-12 font-[ui-monospace,SFMono-Regular,Menlo,Consolas,monospace] text-[13px]/[1.3]"
-            ><code
+        @for (code of codes; track code.file; let index = $index) {
+          <div
+            role="tabpanel"
+            [id]="panelId(index)"
+            [attr.aria-labelledby]="tabId(index)"
+            [hidden]="activeFile() !== code.file"
+            tabindex="0"
+          >
+            @if (activeFile() === code.file) {
+              <pre
+                class="m-0 min-w-max px-6 pt-5 pb-12 font-[ui-monospace,SFMono-Regular,Menlo,Consolas,monospace] text-[13px]/[1.3]"
+              ><code
                 >@for (line of code.lines; track $index) {<span
                   class="code-row block min-h-[1.3em] transition-opacity duration-[160ms] [&.dimmed]:opacity-40"
                   [class.highlight]="isHighlighted(code.file, $index + 1)"
@@ -62,7 +75,8 @@ import { SafeHtmlPipe } from './safe-html.pipe';
                   [innerHTML]="line | safeHtml"
                 ></span>
 }</code></pre>
-          }
+            }
+          </div>
         }
       </div>
     </aside>
@@ -70,6 +84,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 })
 export class CodePanel implements OnChanges {
   readonly #document = inject(DOCUMENT);
+  readonly #element: ElementRef<HTMLElement> = inject(ElementRef);
   readonly #platformId = inject(PLATFORM_ID);
   @ViewChild('scroller') protected readonly scroller?: ElementRef<HTMLElement>;
   /** @Input bindings are assigned by Angular; readonly breaks parent template binding. */
@@ -93,6 +108,37 @@ export class CodePanel implements OnChanges {
     this.activeFile.set(file);
   }
 
+  protected tabId(index: number): string {
+    return `code-tab-${encodeURIComponent(this.codes[index]?.file ?? String(index))}`;
+  }
+
+  protected panelId(index: number): string {
+    return `code-panel-${encodeURIComponent(this.codes[index]?.file ?? String(index))}`;
+  }
+
+  protected onTabKeydown(event: KeyboardEvent, index: number): void {
+    let next: number;
+    switch (event.key) {
+      case 'ArrowRight':
+        next = (index + 1) % this.codes.length;
+        break;
+      case 'ArrowLeft':
+        next = (index - 1 + this.codes.length) % this.codes.length;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = this.codes.length - 1;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    this.select(this.codes[next].file);
+    this.#element.nativeElement.querySelectorAll<HTMLButtonElement>('[role="tab"]')[next]?.focus();
+  }
+
   isHighlighted(file: string, line: number): boolean {
     const range = this.activeLines[file];
     return this.#hasActiveExclusiveRange(range) && line > range[0] && line < range[1];
@@ -112,7 +158,9 @@ export class CodePanel implements OnChanges {
     const view = this.#document.defaultView;
     if (!view) return;
     view.requestAnimationFrame(() => {
-      const row = this.scroller?.nativeElement.querySelector<HTMLElement>('.code-row.highlight');
+      const row = this.scroller?.nativeElement.querySelector<HTMLElement>(
+        '[role="tabpanel"]:not([hidden]) .code-row.highlight',
+      );
       if (row && this.scroller)
         this.scroller.nativeElement.scrollTo({
           top: Math.max(0, row.offsetTop - 72),
