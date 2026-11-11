@@ -510,16 +510,22 @@ export const GUIDE_CHAPTERS = [
 ] as const;
 export const GUIDE_COPY = {
   title: {
-    en: 'Bring iOS and Android design to your Ionic app.',
-    ja: 'Ionicの画面を、iOSとAndroidに馴染むUIへ。',
-    fr: 'Adoptez le design iOS et Android dans votre application Ionic.',
-    de: 'Bringen Sie iOS- und Android-Design in Ihre Ionic-App.',
+    en: 'WebView Native UI',
+    ja: 'WebView Native UI',
+    fr: 'WebView Native UI',
+    de: 'WebView Native UI',
   },
   intro: {
-    en: 'Give your existing Ionic screens platform themes and native controls while keeping your routes, state and event handlers. Start with the combined setup, then customize the features your app needs.',
-    ja: '既存のIonic画面に、プラットフォームに合うテーマとネイティブコントロールを取り入れます。ルート・状態・イベント処理はそのまま活かし、標準導入から必要な機能を調整できます。',
-    fr: 'Ajoutez des thèmes adaptés aux plateformes et des contrôles natifs à vos écrans Ionic existants, en conservant routes, état et événements. Commencez par la configuration combinée, puis personnalisez les fonctions utiles.',
-    de: 'Ergänzen Sie Ihre vorhandenen Ionic-Oberflächen um Plattform-Themes und native Steuerelemente. Routing, Zustand und Ereignisbehandlung bleiben erhalten. Beginnen Sie mit der gemeinsamen Einrichtung und passen Sie die benötigten Funktionen an.',
+    en: 'An open-source toolkit for combining Web screens with native UI in iOS and Android apps. Build your screens with HTML, CSS and JavaScript, use themes for platform styling, and add native controls through Capacitor or Cordova.',
+    ja: 'Webで作る画面とネイティブUIを組み合わせる、iOS・Androidアプリ向けのオープンソースツールキットです。HTML・CSS・JavaScriptで作る画面に、プラットフォームに合うテーマや、Capacitor・Cordovaを通じたネイティブコントロールを取り入れられます。',
+    fr: 'Une boîte à outils open source pour associer écrans Web et interface native dans les applications iOS et Android. Créez vos écrans en HTML, CSS et JavaScript, utilisez des thèmes adaptés aux plateformes et ajoutez des contrôles natifs via Capacitor ou Cordova.',
+    de: 'Ein Open-Source-Toolkit, das Web-Oberflächen und native UI in iOS- und Android-Apps verbindet. Erstellen Sie Oberflächen mit HTML, CSS und JavaScript, nutzen Sie Plattform-Themes und ergänzen Sie native Steuerelemente über Capacitor oder Cordova.',
+  },
+  approach: {
+    en: 'Your app keeps its state, navigation and event handlers in the Web layer. The themes are built for Ionic; native UI integrations also support HTML without Ionic. The standard setup below brings the pieces together for an Ionic app with Capacitor.',
+    ja: 'アプリの状態・画面遷移・イベント処理はWeb側で管理します。テーマはIonic向けで、ネイティブUIの導入はIonicを使わないHTMLにも対応しています。この下の標準導入では、IonicとCapacitorを使って全体を組み合わせます。',
+    fr: 'L’état, la navigation et les événements restent dans la couche Web. Les thèmes sont conçus pour Ionic ; les intégrations natives prennent aussi en charge HTML sans Ionic. La configuration standard ci-dessous réunit ces éléments pour une application Ionic avec Capacitor.',
+    de: 'Zustand, Navigation und Ereignisbehandlung bleiben in der Web-Schicht. Die Themes sind für Ionic ausgelegt; native UI lässt sich auch mit HTML ohne Ionic integrieren. Die folgende Standardeinrichtung verbindet diese Bausteine für eine Ionic-App mit Capacitor.',
   },
   start: {
     en: 'Start with the complete setup',

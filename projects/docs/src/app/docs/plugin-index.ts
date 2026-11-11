@@ -17,6 +17,7 @@ import { SeoService } from './seo.service';
         <p class="eyebrow" i18n="@@openSourceDocumentation">Open source documentation</p>
         <h1>{{ copy.title }}</h1>
         <p class="catalog-hero__lead">{{ copy.intro }}</p>
+        <p class="catalog-hero__lead">{{ copy.approach }}</p>
         <div class="platform-outcomes">
           <section><h2>{{ copy.iosBenefit }}</h2><p>{{ copy.iosDetail }}</p></section>
           <section><h2>{{ copy.androidBenefit }}</h2><p>{{ copy.androidDetail }}</p></section>
