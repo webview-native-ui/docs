@@ -43,7 +43,7 @@ export interface ProjectFeatureDefinition {
 }
 
 export type ProjectCategoryId =
-  'translations' | 'capacitor-plugins' | 'frontend-tools' | 'developer-tools';
+  'translations' | 'capacitor-plugins' | 'cordova-plugins' | 'frontend-tools' | 'developer-tools';
 
 export interface ProjectCategoryDefinition {
   id: ProjectCategoryId;
@@ -98,31 +98,68 @@ const text = (en: string, ja: string): LocalizedText => ({ en, ja });
 
 export const projectCategoryDefinitions: readonly ProjectCategoryDefinition[] = [
   {
-    id: 'capacitor-plugins',
-    label: text('Capacitor plugins', 'Capacitorプラグイン'),
-    description: text(
-      'Native controls for Ionic and HTML apps through Capacitor.',
-      'Capacitorを通じてIonic・HTMLアプリへネイティブコントロールを提供します。',
-    ),
+    id: 'frontend-tools',
+    label: {
+      en: 'Themes',
+      ja: 'テーマ',
+      fr: 'Thèmes',
+      de: 'Themes',
+    },
+    description: {
+      en: 'iOS and Material Design themes, motion, and layout for Ionic.',
+      ja: 'Ionic向けのiOS・Material Designテーマ、アニメーション、レイアウトです。',
+      fr: 'Thèmes iOS et Material Design, animations et mise en page pour Ionic.',
+      de: 'iOS- und Material-Design-Themes, Animationen und Layout für Ionic.',
+    },
     order: 10,
   },
   {
-    id: 'frontend-tools',
-    label: text('UI tools', 'UIツール'),
-    description: text(
-      'iOS and Material Design themes, motion, and layout for Ionic.',
-      'Ionic向けのiOS・Material Designテーマ、アニメーション、レイアウトです。',
-    ),
+    id: 'capacitor-plugins',
+    label: {
+      en: 'Capacitor plugins',
+      ja: 'Capacitorプラグイン',
+      fr: 'Plugins Capacitor',
+      de: 'Capacitor-Plugins',
+    },
+    description: {
+      en: 'Native controls for Ionic and HTML apps through Capacitor.',
+      ja: 'Capacitorを通じてIonic・HTMLアプリへネイティブコントロールを提供します。',
+      fr: 'Contrôles natifs pour les applications Ionic et HTML via Capacitor.',
+      de: 'Native Steuerelemente für Ionic- und HTML-Apps über Capacitor.',
+    },
     order: 20,
   },
   {
-    id: 'developer-tools',
-    label: text('Developer tools', '開発ツール'),
-    description: text(
-      'Shared native UI placement and lifecycle for Capacitor and Cordova plugins.',
-      'Capacitor・Cordovaプラグインで共有するネイティブUIの配置とライフサイクルを提供します。',
-    ),
+    id: 'cordova-plugins',
+    label: {
+      en: 'Cordova plugins',
+      ja: 'Cordovaプラグイン',
+      fr: 'Plugins Cordova',
+      de: 'Cordova-Plugins',
+    },
+    description: {
+      en: 'Native UI adapters and bundled theme integration for Cordova apps.',
+      ja: 'Cordovaアプリ向けのNative UIアダプターと同梱テーマ連携です。',
+      fr: 'Adaptateurs Native UI et intégration du thème fourni pour les applications Cordova.',
+      de: 'Native-UI-Adapter und Integration des mitgelieferten Themes für Cordova-Apps.',
+    },
     order: 30,
+  },
+  {
+    id: 'developer-tools',
+    label: {
+      en: 'Developer tools',
+      ja: '開発ツール',
+      fr: 'Outils de développement',
+      de: 'Entwicklertools',
+    },
+    description: {
+      en: 'Shared native UI placement and lifecycle for Capacitor and Cordova plugins.',
+      ja: 'Capacitor・Cordovaプラグインで共有するネイティブUIの配置とライフサイクルを提供します。',
+      fr: 'Placement et cycle de vie partagés des interfaces natives pour les plugins Capacitor et Cordova.',
+      de: 'Gemeinsame Platzierung und Lebenszyklus nativer UI für Capacitor- und Cordova-Plugins.',
+    },
+    order: 40,
   },
 ];
 interface PageOptions {
@@ -379,9 +416,9 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     shortName: 'Ionic Theme iOS27',
     packageName: '@rdlabo/ionic-theme-ios27',
     repositoryUrl: 'https://github.com/webview-native-ui/ionic-theme-ios27',
-    englishDocsRef: 'c70beb9d1e5b39de696b2b2c47a3d9bc5ffcdfbe',
+    englishDocsRef: '93a492a8f82157a30d5f590c0b5b269cf2730d0f',
     englishDocsAssetsRef: 'c70beb9d1e5b39de696b2b2c47a3d9bc5ffcdfbe',
-    releaseNotesUrl: 'https://github.com/webview-native-ui/ionic-theme-ios27/releases/tag/v2.1.1',
+    releaseNotesUrl: 'https://github.com/webview-native-ui/ionic-theme-ios27/releases/tag/v2.1.3',
     demoUrl: 'https://ionic-theme-ios27.rdlabo.dev/',
     category: 'frontend-tools',
     icon: 'theme',
@@ -403,15 +440,46 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'readme',
         file: 'readme.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
-        title: text('Theme setup', 'テーマの設定'),
+        title: {
+          en: 'Theme setup',
+          ja: 'テーマのセットアップ',
+          fr: 'Configurer le thème',
+          de: 'Theme einrichten',
+        },
         section: text('Guides', 'ガイド'),
         slug: 'setup',
         file: 'setup.md',
-        headingAliases: { '3-configure-ionic-animations': '3.-configure-ionic-animations' },
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        headingAliases: {
+          'choose-one-dark-mode-pair': '2.-load-one-stylesheet',
+          '3-configure-ionic-animations': '3.-pass-theme-configuration-to-ionic',
+          '3-pass-theme-configuration-to-ionic': '3.-pass-theme-configuration-to-ionic',
+        },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
+      },
+      {
+        title: {
+          en: 'Theme configuration',
+          ja: 'テーマの設定',
+          fr: 'Configuration du thème',
+          de: 'Theme-Konfiguration',
+        },
+        section: {
+          en: 'Guides',
+          ja: 'ガイド',
+          fr: 'Guides',
+          de: 'Anleitungen',
+        },
+        slug: 'configuration',
+        file: 'configuration.md',
+        updatedAt: {
+          en: '2026-11-11',
+          ja: '2026-11-11',
+          fr: '2026-11-11',
+          de: '2026-11-11',
+        },
       },
       {
         title: {
@@ -423,14 +491,14 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'cordova',
         file: 'cordova.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: text('Adaptive themes', 'テーマの自動切り替え'),
         section: text('Guides', 'ガイド'),
         slug: 'adaptive-themes',
         file: 'adaptive-themes.md',
-        updatedAt: { en: '2026-10-22', ja: '2026-10-22', fr: '2026-10-22', de: '2026-10-22' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: text('Add Native UI', 'Native UIの追加'),
@@ -486,7 +554,8 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'migration',
         file: 'migration.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        headingAliases: { 'optional-simplify-the-setup': 'optional%3A-simplify-the-setup' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
     ],
   },
@@ -627,6 +696,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
   },
   {
     id: 'ionic-theme-ios26',
+    sourceHeadingAliases: ['ja'],
     slug: 'ionic-theme-ios26',
     sourceDirectory: 'ionic-theme-ios26',
     name: 'rdlabo Ionic Theme iOS26',
@@ -634,12 +704,12 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     packageName: '@rdlabo/ionic-theme-ios26',
     repositoryUrl: 'https://github.com/webview-native-ui/ionic-theme-ios27',
     // Reviewed documentation from ios26, independently of the npm release.
-    englishDocsRef: 'f1b9c02d870d033a03afa2313cade4146def69c0',
+    englishDocsRef: '19a8418e42cf6c0af35c0fcf20c6b60236545054',
     repositoryBrowseUrl: 'https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios26',
     englishDocsEditBranch: 'ios26',
     demoUrl: 'https://ionic-theme-ios26.rdlabo.dev/',
     releaseNotesUrl:
-      'https://github.com/webview-native-ui/ionic-theme-ios27/releases/tag/ios26-v9.4.2',
+      'https://github.com/webview-native-ui/ionic-theme-ios27/releases/tag/ios26-v9.4.3',
     releaseTagPrefix: 'ios26-v',
     category: 'frontend-tools',
     icon: 'theme',
@@ -684,6 +754,50 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       page('Getting Started', 'はじめに', 'readme', 'readme.md', 'Quickstart', 'クイックスタート', {
         updatedAt: text('2026-09-30', '2026-09-30'),
       }),
+      {
+        title: {
+          en: 'Theme setup',
+          ja: 'テーマのセットアップ',
+          fr: 'Configurer le thème',
+          de: 'Theme einrichten',
+        },
+        section: {
+          en: 'Guides',
+          ja: 'ガイド',
+          fr: 'Guides',
+          de: 'Anleitungen',
+        },
+        slug: 'setup',
+        file: 'setup.md',
+        updatedAt: {
+          en: '2026-11-11',
+          ja: '2026-11-11',
+          fr: '2026-11-11',
+          de: '2026-11-11',
+        },
+      },
+      {
+        title: {
+          en: 'Theme configuration',
+          ja: 'テーマの設定',
+          fr: 'Configuration du thème',
+          de: 'Theme-Konfiguration',
+        },
+        section: {
+          en: 'Guides',
+          ja: 'ガイド',
+          fr: 'Guides',
+          de: 'Anleitungen',
+        },
+        slug: 'configuration',
+        file: 'configuration.md',
+        updatedAt: {
+          en: '2026-11-11',
+          ja: '2026-11-11',
+          fr: '2026-11-11',
+          de: '2026-11-11',
+        },
+      },
       page(
         'Using ion-item-group',
         'ion-item-groupの使用方法',
@@ -732,7 +846,8 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       ),
       page('iOS 18', 'iOS 18', 'ios-18', 'ios-18.md', 'Guides', 'ガイド'),
       page('Migration', '移行', 'migration', 'migration.md', 'Guides', 'ガイド', {
-        updatedAt: { ja: '2026-10-01' },
+        headingAliases: { 'optional-simplify-the-setup': 'optional%3A-simplify-the-setup' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       }),
       page(
         'E2E screenshot testing',
@@ -745,6 +860,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       ),
       page('API', 'API', 'api', 'api.md', 'Reference', 'リファレンス', {
         localEnglishSource: true,
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       }),
     ],
   },
@@ -758,9 +874,9 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     packageName: '@rdlabo/ionic-theme-md3',
     repositoryUrl: 'https://github.com/webview-native-ui/ionic-theme-md3',
     // Reviewed documentation from main, independently of the npm release.
-    englishDocsRef: 'e2ccd2ed99fdca724cbc10e3a9468b8536e1d827',
+    englishDocsRef: '45e00998d64b4806428d282cecdedbaa4f44fc6f',
     demoUrl: 'https://ionic-theme-md3.rdlabo.dev/',
-    releaseNotesUrl: 'https://github.com/webview-native-ui/ionic-theme-md3/releases/tag/v9.2.0',
+    releaseNotesUrl: 'https://github.com/webview-native-ui/ionic-theme-md3/releases/tag/v9.2.1',
     category: 'frontend-tools',
     icon: 'theme',
     adapter: 'markdown',
@@ -805,8 +921,52 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     ],
     pages: [
       page('Getting Started', 'はじめに', 'readme', 'readme.md', 'Documentation', 'ドキュメント', {
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       }),
+      {
+        title: {
+          en: 'Theme setup',
+          ja: 'テーマのセットアップ',
+          fr: 'Configurer le thème',
+          de: 'Theme einrichten',
+        },
+        section: {
+          en: 'Guides',
+          ja: 'ガイド',
+          fr: 'Guides',
+          de: 'Anleitungen',
+        },
+        slug: 'setup',
+        file: 'setup.md',
+        updatedAt: {
+          en: '2026-11-11',
+          ja: '2026-11-11',
+          fr: '2026-11-11',
+          de: '2026-11-11',
+        },
+      },
+      {
+        title: {
+          en: 'Theme configuration',
+          ja: 'テーマの設定',
+          fr: 'Configuration du thème',
+          de: 'Theme-Konfiguration',
+        },
+        section: {
+          en: 'Guides',
+          ja: 'ガイド',
+          fr: 'Guides',
+          de: 'Anleitungen',
+        },
+        slug: 'configuration',
+        file: 'configuration.md',
+        updatedAt: {
+          en: '2026-11-11',
+          ja: '2026-11-11',
+          fr: '2026-11-11',
+          de: '2026-11-11',
+        },
+      },
       {
         title: {
           en: 'Android Settings appearance',
@@ -818,7 +978,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         slug: 'android-settings',
         file: 'android-settings.md',
         headingAliases: { 'default-font-css-only': 'default-font%2C-css-only' },
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: {
@@ -830,7 +990,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'dynamic-colors',
         file: 'dynamic-colors.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: {
@@ -842,7 +1002,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'color-system',
         file: 'color-system.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       page(
         'Using ion-item-group',
@@ -883,12 +1043,13 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       ),
       page('Migration', '移行', 'migration', 'migration.md', 'Guides', 'ガイド', {
         headingAliases: {
+          'optional-simplify-the-setup': 'optional%3A-simplify-the-setup',
           'unreleased-android-settings-alignment':
             'migrating-to-9.2.0%3A-android-settings-alignment',
           'migrating-to-920-android-settings-alignment':
             'migrating-to-9.2.0%3A-android-settings-alignment',
         },
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       }),
       page(
         'E2E screenshot testing',
@@ -901,8 +1062,72 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       ),
       page('API', 'API', 'api', 'api.md', 'Reference', 'リファレンス', {
         localEnglishSource: true,
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       }),
+    ],
+  },
+  {
+    id: 'cordova-native-ui',
+    slug: 'cordova-native-ui',
+    sourceDirectory: 'cordova-native-ui',
+    name: 'Cordova Native UI',
+    shortName: 'Cordova Native UI',
+    packageName: '@webview-native-ui/cordova-plugin',
+    repositoryUrl: 'https://github.com/webview-native-ui/cordova-plugin',
+    englishDocsRef: '5ac3c7e2754c55c3ffde2e90b3d54ad10152362a',
+    releaseNotesUrl: 'https://github.com/webview-native-ui/cordova-plugin/releases/tag/v0.1.1',
+    category: 'cordova-plugins',
+    icon: 'app',
+    adapter: 'markdown',
+    description: {
+      en: 'Native UI for Cordova, with standard HTML and optional Ionic theme integration.',
+      ja: '標準HTMLと任意のIonicテーマ連携に対応するCordova向けNative UI。',
+      fr: 'Native UI pour Cordova, avec HTML standard et intégration facultative du thème Ionic.',
+      de: 'Native UI für Cordova mit Standard-HTML und optionaler Ionic-Theme-Integration.',
+    },
+    headline: {
+      en: 'Bring Native UI to your Cordova app',
+      ja: 'CordovaアプリにNative UIを追加する',
+      fr: 'Ajoutez Native UI à votre application Cordova',
+      de: 'Native UI in Ihre Cordova-App integrieren',
+    },
+    overview: {
+      en: 'Install the published adapter in your native and Web projects, start after deviceready, and keep Web fallback behavior on unsupported controls. Capacitor and Cordova share Core, but their host integrations and support scopes differ.',
+      ja: '公開済みのアダプターをネイティブとWebの両プロジェクトへ導入し、deviceready後に開始します。未対応コントロールはWeb表示を維持します。CapacitorとCordovaはCoreを共有しますが、ホスト連携と対応範囲は異なります。',
+      fr: 'Installez l’adaptateur publié dans vos projets natif et Web, démarrez après deviceready et conservez la présentation Web des contrôles non pris en charge. Capacitor et Cordova partagent Core, mais leur intégration hôte et leur périmètre de prise en charge diffèrent.',
+      de: 'Installieren Sie den veröffentlichten Adapter im nativen und im Web-Projekt, starten Sie nach deviceready und behalten Sie die Web-Darstellung nicht unterstützter Steuerelemente bei. Capacitor und Cordova teilen Core, unterscheiden sich jedoch bei Host-Integration und Unterstützungsumfang.',
+    },
+    featuresHeading: {
+      en: 'Features',
+      ja: '機能',
+      fr: 'Fonctionnalités',
+      de: 'Funktionen',
+    },
+    features: [],
+    pages: [
+      {
+        title: {
+          en: 'Getting Started',
+          ja: 'はじめに',
+          fr: 'Premiers pas',
+          de: 'Erste Schritte',
+        },
+        section: {
+          en: 'Guides',
+          ja: 'ガイド',
+          fr: 'Guides',
+          de: 'Anleitungen',
+        },
+        slug: 'readme',
+        file: 'readme.md',
+        localEnglishSource: true,
+        updatedAt: {
+          en: '2026-11-11',
+          ja: '2026-11-11',
+          fr: '2026-11-11',
+          de: '2026-11-11',
+        },
+      },
     ],
   },
 ];

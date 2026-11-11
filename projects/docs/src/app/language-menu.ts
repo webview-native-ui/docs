@@ -60,7 +60,7 @@ import { localizedPublicPath } from './locale-path';
   styles: `
     :host {
       display: flex;
-      border-left: 1px solid #eadfd9;
+      border-left: 1px solid #e2e8f0;
     }
     details {
       position: relative;
@@ -77,7 +77,7 @@ import { localizedPublicPath } from './locale-path';
       padding: 0 16px;
       cursor: pointer;
       list-style: none;
-      color: #292320;
+      color: #172033;
       font-size: 14px;
       white-space: nowrap;
     }
@@ -87,7 +87,7 @@ import { localizedPublicPath } from './locale-path';
     summary svg {
       width: 18px;
       height: 18px;
-      color: #292320;
+      color: #172033;
     }
     summary .language-caret {
       width: 8px;
@@ -95,11 +95,11 @@ import { localizedPublicPath } from './locale-path';
     }
     summary:hover,
     a:hover {
-      background: #fff7f2;
+      background: #eff6ff;
     }
     summary:focus-visible,
     a:focus-visible {
-      outline: 2px solid #c44320;
+      outline: 2px solid #1767d2;
       outline-offset: -3px;
     }
     nav {
@@ -110,7 +110,7 @@ import { localizedPublicPath } from './locale-path';
       min-width: 160px;
       padding: 6px;
       background: white;
-      border: 1px solid #eadfd9;
+      border: 1px solid #e2e8f0;
       border-radius: 10px;
       box-shadow: 0 8px 24px #2a1b1414;
     }
@@ -123,12 +123,12 @@ import { localizedPublicPath } from './locale-path';
       padding: 0 12px;
       border-radius: 6px;
       text-decoration: none;
-      color: #292320;
+      color: #172033;
       font-size: 14px;
     }
     .language-current {
-      color: #c44320;
-      background: #fff0ea;
+      color: #1767d2;
+      background: #eff6ff;
     }
     @media (max-width: 399px) {
       summary {

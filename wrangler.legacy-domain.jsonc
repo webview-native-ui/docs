@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "webview-native-ui-docs-legacy-domain",
+  "account_id": "09b7a8355cbc8a838af7de40ed9ec7f8",
+  "compatibility_date": "2026-08-15",
+  "main": "./workers/legacy-domain-redirect.mjs",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "webview-native-ui.rdlabo.dev/*", "zone_name": "rdlabo.dev" }],
+}

@@ -40,10 +40,10 @@ function webSiteArticleBody(slug: string): string {
 }
 
 const DOCS_HOME_JSON_LD_EN =
-  '<script id="rdlabo-json-ld" type="application/ld+json" data-rdlabo-json-ld>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","url":"https://webview-native-ui.rdlabo.dev/","publisher":{"@id":"https://rdlabo.dev/#organization"},"inLanguage":"en"}]}</script>';
+  '<script id="rdlabo-json-ld" type="application/ld+json" data-rdlabo-json-ld>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","url":"https://webview-native-ui.com/","publisher":{"@id":"https://rdlabo.dev/#organization"},"inLanguage":"en"}]}</script>';
 
 const DOCS_HOME_JSON_LD_JA =
-  '<script id="rdlabo-json-ld" type="application/ld+json" data-rdlabo-json-ld>{"@context":"https://schema.org","@graph":[{"@type":"WebPage","url":"https://webview-native-ui.rdlabo.dev/ja","isPartOf":{"@id":"https://webview-native-ui.rdlabo.dev/#website"},"inLanguage":"ja"}]}</script>';
+  '<script id="rdlabo-json-ld" type="application/ld+json" data-rdlabo-json-ld>{"@context":"https://schema.org","@graph":[{"@type":"WebPage","url":"https://webview-native-ui.com/ja","isPartOf":{"@id":"https://webview-native-ui.com/#website"},"inLanguage":"ja"}]}</script>';
 
 function docsHomeAlternates(origin: string): string {
   return (
@@ -58,12 +58,12 @@ test('parseSitemap reads loc and lastmod only', () => {
   const entries = parseSitemap(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://webview-native-ui.rdlabo.dev/</loc>
+    <loc>https://webview-native-ui.com/</loc>
     <lastmod>2026-08-23</lastmod>
   </url>
 </urlset>`);
   assert.equal(entries.length, 1);
-  assert.equal(entries[0]?.loc, 'https://webview-native-ui.rdlabo.dev/');
+  assert.equal(entries[0]?.loc, 'https://webview-native-ui.com/');
   assert.equal(entries[0]?.lastmod, '2026-08-23');
 });
 
@@ -83,7 +83,7 @@ test('auditSitemapEntries rejects duplicate locs and future lastmod values', () 
 });
 
 test('auditHtmlPage rejects empty hreflang attributes even when en, ja, and x-default are present', () => {
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   const html = `<!doctype html><html lang="en"><head>
 <title>Docs home</title>
 <meta name="description" content="Docs portal home." />
@@ -100,7 +100,7 @@ test('auditHtmlPage rejects empty hreflang attributes even when en, ja, and x-de
 });
 
 test('auditHtmlPage rejects relative and non-HTTPS hreflang alternate hrefs', () => {
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   const baseHead = (enHref: string, jaHref: string) => `<!doctype html><html lang="en"><head>
 <title>Docs home</title>
 <meta name="description" content="Docs portal home." />
@@ -119,19 +119,19 @@ test('auditHtmlPage rejects relative and non-HTTPS hreflang alternate hrefs', ()
     /hreflang="ja" alternate href must be a fully-qualified HTTPS URL \(got "\/ja"\)/,
   );
   assert.match(
-    auditHtmlPage(baseHead('//webview-native-ui.rdlabo.dev/', `${origin}/ja`), `${origin}/`, {
+    auditHtmlPage(baseHead('//webview-native-ui.com/', `${origin}/ja`), `${origin}/`, {
       bilingual: true,
     }).join('\n'),
     /hreflang="en" alternate href must be a fully-qualified HTTPS URL \(got protocol-relative/,
   );
   assert.match(
-    auditHtmlPage(baseHead('http://webview-native-ui.rdlabo.dev/', `${origin}/ja`), `${origin}/`, {
+    auditHtmlPage(baseHead('http://webview-native-ui.com/', `${origin}/ja`), `${origin}/`, {
       bilingual: true,
     }).join('\n'),
     /hreflang="en" alternate href must use HTTPS/,
   );
   assert.match(
-    auditHtmlPage(baseHead('https:webview-native-ui.rdlabo.dev', `${origin}/ja`), `${origin}/`, {
+    auditHtmlPage(baseHead('https:webview-native-ui.com', `${origin}/ja`), `${origin}/`, {
       bilingual: true,
     }).join('\n'),
     /hreflang="en" alternate href must be a fully-qualified HTTPS URL/,
@@ -139,7 +139,7 @@ test('auditHtmlPage rejects relative and non-HTTPS hreflang alternate hrefs', ()
 });
 
 test('auditHtmlPage rejects unpublished hreflang keys such as es', () => {
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   const html = `<!doctype html><html lang="en"><head>
 <title>Docs home</title>
 <meta name="description" content="Docs portal home." />
@@ -156,7 +156,7 @@ test('auditHtmlPage rejects unpublished hreflang keys such as es', () => {
 });
 
 test('auditHtmlHreflangReciprocity rejects matching unpublished es hreflang', () => {
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   const english = normalizePublicUrl(origin, `${origin}/support`);
   const japanese = normalizePublicUrl(origin, `${origin}/ja/support`);
   const spanish = normalizePublicUrl(origin, `${origin}/es/support`);
@@ -179,7 +179,7 @@ test('auditHtmlHreflangReciprocity rejects matching unpublished es hreflang', ()
 });
 
 test('auditHreflangKeys requires all published languages and x-default', () => {
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   assert.deepEqual(auditHreflangKeys(`${origin}/`, new Map([['en', `${origin}/`]])), [
     ...PUBLISHED_DOCS_LOCALES.filter(({ code }) => code !== 'en').map(
       ({ code }) => `${origin}/: missing hreflang="${code}" alternate link`,
@@ -189,7 +189,7 @@ test('auditHreflangKeys requires all published languages and x-default', () => {
 });
 
 test('auditHtmlPage rejects canonical URLs with query strings or fragments', () => {
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   const baseHead = (canonical: string) => `<!doctype html><html lang="en"><head>
 <title>Docs home</title>
 <meta name="description" content="Docs portal home." />
@@ -200,11 +200,11 @@ test('auditHtmlPage rejects canonical URLs with query strings or fragments', () 
     auditHtmlPage(baseHead(`${origin}/?utm_source=test`), `${origin}/`, { bilingual: false }).join(
       '\n',
     ),
-    /canonical mismatch \(expected https:\/\/webview-native-ui\.rdlabo\.dev\/, got https:\/\/webview-native-ui\.rdlabo\.dev\/\?utm_source=test\)/,
+    /canonical mismatch \(expected https:\/\/webview-native-ui\.com\/, got https:\/\/webview-native-ui\.com\/\?utm_source=test\)/,
   );
   assert.match(
     auditHtmlPage(baseHead(`${origin}/#section`), `${origin}/`, { bilingual: false }).join('\n'),
-    /canonical mismatch \(expected https:\/\/webview-native-ui\.rdlabo\.dev\/, got https:\/\/webview-native-ui\.rdlabo\.dev\/#section\)/,
+    /canonical mismatch \(expected https:\/\/webview-native-ui\.com\/, got https:\/\/webview-native-ui\.com\/#section\)/,
   );
   assert.deepEqual(auditHtmlPage(baseHead(`${origin}/`), `${origin}/`, { bilingual: false }), []);
   assert.equal(normalizeCanonicalUrl(origin, `${origin}/ja/`), `${origin}/ja`);
@@ -226,20 +226,20 @@ test('auditHtmlPage reports duplicate hreflang alternate links', () => {
   const html = `<!doctype html><html lang="en"><head>
 <title>Docs home</title>
 <meta name="description" content="Docs portal home." />
-<link rel="canonical" href="https://webview-native-ui.rdlabo.dev/" />
-<link rel="alternate" hreflang="en" href="https://webview-native-ui.rdlabo.dev/" />
-<link rel="alternate" hreflang="en" href="https://webview-native-ui.rdlabo.dev/support" />
-<link rel="alternate" hreflang="ja" href="https://webview-native-ui.rdlabo.dev/ja" />
-<link rel="alternate" hreflang="x-default" href="https://webview-native-ui.rdlabo.dev/" />
+<link rel="canonical" href="https://webview-native-ui.com/" />
+<link rel="alternate" hreflang="en" href="https://webview-native-ui.com/" />
+<link rel="alternate" hreflang="en" href="https://webview-native-ui.com/support" />
+<link rel="alternate" hreflang="ja" href="https://webview-native-ui.com/ja" />
+<link rel="alternate" hreflang="x-default" href="https://webview-native-ui.com/" />
 </head><body></body></html>`;
   assert.match(
-    auditHtmlPage(html, 'https://webview-native-ui.rdlabo.dev/', { bilingual: true }).join('\n'),
+    auditHtmlPage(html, 'https://webview-native-ui.com/', { bilingual: true }).join('\n'),
     /duplicate hreflang="en" alternate link/,
   );
 });
 
 test('auditHtmlHreflangReciprocity requires reciprocal en/ja mappings across sitemap pages', () => {
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   const english = normalizePublicUrl(origin, `${origin}/support`);
   const japanese = normalizePublicUrl(origin, `${origin}/ja/support`);
   const sitemapLocs = new Set([english, japanese]);
@@ -263,7 +263,7 @@ test('auditHtmlHreflangReciprocity requires reciprocal en/ja mappings across sit
 });
 
 test('auditHtmlHreflangReciprocity reports non-reciprocal and off-sitemap hreflang targets', () => {
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   const english = normalizePublicUrl(origin, `${origin}/support`);
   const japanese = normalizePublicUrl(origin, `${origin}/ja/support`);
   const sitemapLocs = new Set([english, japanese]);
@@ -307,39 +307,33 @@ test('auditHtmlPage validates title, description, canonical, and hreflang metada
   const html = `<!doctype html><html lang="en"><head>
 <title>Open Source Project Documentation | rdlabo</title>
 <meta name="description" content="Docs portal home." />
-<link rel="canonical" href="https://webview-native-ui.rdlabo.dev/" />
-${docsHomeAlternates('https://webview-native-ui.rdlabo.dev')}
+<link rel="canonical" href="https://webview-native-ui.com/" />
+${docsHomeAlternates('https://webview-native-ui.com')}
 </head><body></body></html>`;
-  assert.deepEqual(
-    auditHtmlPage(html, 'https://webview-native-ui.rdlabo.dev/', { bilingual: true }),
-    [],
-  );
+  assert.deepEqual(auditHtmlPage(html, 'https://webview-native-ui.com/', { bilingual: true }), []);
 });
 
 test('maps sitemap URLs and built HTML paths for docs locales', () => {
   const browserRoot = '/tmp/docs/browser';
   assert.equal(
     sitemapUrlToHtmlPath(
-      'https://webview-native-ui.rdlabo.dev',
-      'https://webview-native-ui.rdlabo.dev/ja',
+      'https://webview-native-ui.com',
+      'https://webview-native-ui.com/ja',
       browserRoot,
     ),
     join(browserRoot, 'ja', 'index.html'),
   );
   assert.equal(
     htmlPathToPublicUrl(
-      'https://webview-native-ui.rdlabo.dev',
+      'https://webview-native-ui.com',
       join(browserRoot, 'ja', 'projects', 'capacitor-admob', 'index.html'),
       browserRoot,
     ),
-    'https://webview-native-ui.rdlabo.dev/ja/projects/capacitor-admob',
+    'https://webview-native-ui.com/ja/projects/capacitor-admob',
   );
   assert.equal(
-    normalizePublicUrl(
-      'https://webview-native-ui.rdlabo.dev',
-      'https://webview-native-ui.rdlabo.dev/ja/',
-    ),
-    'https://webview-native-ui.rdlabo.dev/ja',
+    normalizePublicUrl('https://webview-native-ui.com', 'https://webview-native-ui.com/ja/'),
+    'https://webview-native-ui.com/ja',
   );
 });
 
@@ -350,7 +344,7 @@ test('runSeoAudit reports missing build output', async () => {
     targets: [
       {
         name: 'docs',
-        origin: 'https://webview-native-ui.rdlabo.dev',
+        origin: 'https://webview-native-ui.com',
         sitemapPath: 'dist/docs/browser/sitemap.xml',
         browserRoot: 'dist/docs/browser',
         bilingual: true,
@@ -563,25 +557,21 @@ test('expectedJsonLdTypes maps representative routes to required schema types', 
     'BlogPosting',
     'BreadcrumbList',
   ]);
-  assert.deepEqual(expectedJsonLdTypes('https://webview-native-ui.rdlabo.dev/', 'docs'), [
-    'WebSite',
-  ]);
-  assert.deepEqual(expectedJsonLdTypes('https://webview-native-ui.rdlabo.dev/ja', 'docs'), [
-    'WebPage',
-  ]);
-  assert.deepEqual(expectedJsonLdTypes('https://webview-native-ui.rdlabo.dev/support', 'docs'), [
+  assert.deepEqual(expectedJsonLdTypes('https://webview-native-ui.com/', 'docs'), ['WebSite']);
+  assert.deepEqual(expectedJsonLdTypes('https://webview-native-ui.com/ja', 'docs'), ['WebPage']);
+  assert.deepEqual(expectedJsonLdTypes('https://webview-native-ui.com/support', 'docs'), [
     'BreadcrumbList',
   ]);
   assert.deepEqual(
     expectedJsonLdTypes(
-      'https://webview-native-ui.rdlabo.dev/projects/capacitor-admob/docs/readme',
+      'https://webview-native-ui.com/projects/capacitor-admob/docs/readme',
       'docs',
     ),
     ['BreadcrumbList'],
   );
   assert.deepEqual(
     expectedJsonLdTypes(
-      'https://webview-native-ui.rdlabo.dev/projects/eslint-plugin/docs/rules/example-rule',
+      'https://webview-native-ui.com/projects/eslint-plugin/docs/rules/example-rule',
       'docs',
     ),
     ['BreadcrumbList'],
@@ -711,7 +701,7 @@ test('auditJsonLdSemantics validates breadcrumbs, BlogPosting canonical alignmen
 test('runSeoAudit passes for every published docs language with a simple sitemap', async () => {
   const root = await mkdtemp(join(tmpdir(), 'seo-audit-docs-'));
   const browserRoot = join(root, 'dist/docs/browser');
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   await mkdir(browserRoot, { recursive: true });
   await writeFile(
     join(browserRoot, 'sitemap.xml'),
@@ -763,7 +753,7 @@ test('runSeoAudit catches empty hreflang and relative href via global extraction
   const root = await mkdtemp(join(tmpdir(), 'seo-audit-hreflang-'));
   const browserRoot = join(root, 'dist/docs/browser');
   await mkdir(join(browserRoot, 'ja'), { recursive: true });
-  const origin = 'https://webview-native-ui.rdlabo.dev';
+  const origin = 'https://webview-native-ui.com';
   await writeFile(
     join(root, 'dist/docs/browser/sitemap.xml'),
     `<?xml version="1.0" encoding="UTF-8"?>

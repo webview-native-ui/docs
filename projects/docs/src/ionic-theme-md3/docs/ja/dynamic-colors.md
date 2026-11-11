@@ -1,6 +1,6 @@
 ---
 title: "Androidの動的な配色"
-sourceRevision: "6ebe7b39be22337397e0e7b7a3e8058b446e8d1258bdbf1a1ee7fed47327ab34"
+sourceRevision: "a3b26e9db93f2bc1205adea86f47a53c43e2ccc4a23ea8558fa525756db06e4c"
 ---
 # Androidの動的な配色
 
@@ -112,9 +112,9 @@ DOMを変更せずに変換するには、Ionic変数に`materialToIonicColors(s
 
 ## 検証に関する補足
 
-過去の連携計測です（テーマ全体の受け入れ検証ではありません。[Android 16のレビュー証跡](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.0/docs/validation/android16-2026-11-07.md)を参照）。Android 15（API 35）エミュレーターで、両方のネイティブ配色が適用済みのIonicトークンと一致すること、systemの外観がAndroidに追従すること、明示的なlight/darkモードがOSの変更にかかわらず固定されることを確認しました。ブラウザーE2Eも同じ外観ポリシーを検証します。ユニットテストは、パレット変更、再開／設定変更通知、処理中の無効化、未変更時の更新抑制、エラー、終了処理を対象とします。
+過去の連携計測です（テーマ全体の受け入れ検証ではありません。[Android 16のレビュー証跡](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/android16-2026-11-07.md)を参照）。Android 15（API 35）エミュレーターで、両方のネイティブ配色が適用済みのIonicトークンと一致すること、systemの外観がAndroidに追従すること、明示的なlight/darkモードがOSの変更にかかわらず固定されることを確認しました。ブラウザーE2Eも同じ外観ポリシーを検証します。ユニットテストは、パレット変更、再開／設定変更通知、処理中の無効化、未変更時の更新抑制、エラー、終了処理を対象とします。
 
-その過去の連携計測では、拡張された46ロールのAPIをAndroidエミュレーターで検証し、すべてのネイティブロールが対応する`--md-sys-color-*`値と一致しました。Ionic 8と9のブラウザーテストは、Ionicだけのフォールバック、任意の上書き、明示的なカラーパレット、コンポーネント単位の無効化を検証します。別のテストではアプリのJavaScriptを無効にします。[2026-11-07のスクリーンショット更新CI](https://github.com/webview-native-ui/ionic-theme-md3/actions/runs/42332891975)は、ライト／ダークのスクリーンショット84枚を含め、Ionic 8と9でそれぞれ141件のテストを検証しました。その過去の配色ポリシー修正と、ブラウザーだけの検証範囲については、[Ionicの色継承レビュー](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.0/docs/validation/ionic-color-inheritance-2026-11-07.md)を参照してください。
+その過去の連携計測では、拡張された46ロールのAPIをAndroidエミュレーターで検証し、すべてのネイティブロールが対応する`--md-sys-color-*`値と一致しました。Ionic 8と9のブラウザーテストは、Ionicだけのフォールバック、任意の上書き、明示的なカラーパレット、コンポーネント単位の無効化を検証します。別のテストではアプリのJavaScriptを無効にします。[2026-11-07のスクリーンショット更新CI](https://github.com/webview-native-ui/ionic-theme-md3/actions/runs/42332891975)は、ライト／ダークのスクリーンショット84枚を含め、Ionic 8と9でそれぞれ141件のテストを検証しました。その過去の配色ポリシー修正と、ブラウザーだけの検証範囲については、[Ionicの色継承レビュー](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/ionic-color-inheritance-2026-11-07.md)を参照してください。
 
 拡張APIをローカルWebViewで計測した結果（ネイティブの連続読み取り30回、ウォームアップ後の変換1,000回）、取得は中央値約9 ms／p90約21 ms、両配色をIonicとMD3の変数へ変換する処理は約0.6 msでした。これはデバッグ用エミュレーターでの観測値であり、あらゆるデバイスでの性能保証ではありません。変換時間にはCSSの描画を含みません。通常のIonicだけのテーマ設定はCSSを直接使い、変換の実行もブリッジ呼び出しも行いません。
 

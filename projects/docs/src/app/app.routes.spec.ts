@@ -19,7 +19,7 @@ describe('routes', () => {
   });
 
   it('keeps canonical and legacy routes for every migrated project', () => {
-    expect(projectCatalog).toHaveLength(5);
+    expect(projectCatalog).toHaveLength(6);
     for (const project of projectCatalog) {
       expect(
         routes.find((route) => route.path === `projects/${project.slug}`)?.component,

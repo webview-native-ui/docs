@@ -444,7 +444,7 @@ export class App {
   }
 
   protected categoryIcon(category: ProjectCategory): ProjectIcon {
-    return category === 'capacitor-plugins'
+    return category === 'capacitor-plugins' || category === 'cordova-plugins'
       ? 'app'
       : category === 'frontend-tools'
         ? 'theme'
@@ -455,8 +455,10 @@ export class App {
     return category === 'capacitor-plugins'
       ? 'Capacitor'
       : category === 'frontend-tools'
-        ? 'UI'
-        : $localize`:@@developerToolsRail:Dev`;
+        ? 'Themes'
+        : category === 'cordova-plugins'
+          ? 'Cordova'
+          : $localize`:@@developerToolsRail:Dev`;
   }
 
   #sidebarContainsFocus(): boolean {

@@ -1,6 +1,6 @@
 ---
 title: "カラーシステム"
-sourceRevision: "95393078f806a13505d7d20cae6753b00b7e6538e69cc591c91a7a4f1215553a"
+sourceRevision: "e25be211c6e85d9e07398a1ae57015754feba0766851d494cc2b627662a2beaf"
 ---
 
 # カラーシステム
@@ -89,7 +89,7 @@ Material You はこれらの値の任意のプロバイダーの1つです。ネ
 
 テーマの色と寸法は、任意の JavaScript ヘルパーや Capacitor プラグインなしで動作します。任意の HTML サーフェス上に range を置く場合は、`--md3-range-gap-color` をそのサーフェスの色に設定します。標準の Ionic コンテナは背景を自動で提供します。
 
-計測したタブレットのダイアログ寸法、角、キーボードの動作、過去のネイティブ参照キャプチャは [Android 17 タブレットレビュー](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.0/docs/validation/android17-tablet-2026-11-07.md)を参照してください。その後の Ionic 既定色への修正とブラウザー検証は [Ionic の色継承レビュー](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.0/docs/validation/ionic-color-inheritance-2026-11-07.md)を参照してください。
+計測したタブレットのダイアログ寸法、角、キーボードの動作、過去のネイティブ参照キャプチャは [Android 17 タブレットレビュー](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/android17-tablet-2026-11-07.md)を参照してください。その後の Ionic 既定色への修正とブラウザー検証は [Ionic の色継承レビュー](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/ionic-color-inheritance-2026-11-07.md)を参照してください。
 
 ## タブレットの Alert のサイズ
 

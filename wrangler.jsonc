@@ -11,8 +11,9 @@
     "html_handling": "drop-trailing-slash",
   },
   "routes": [
+    { "pattern": "webview-native-ui.rdlabo.dev", "custom_domain": true },
     {
-      "pattern": "webview-native-ui.rdlabo.dev",
+      "pattern": "webview-native-ui.com",
       "custom_domain": true,
     },
   ],

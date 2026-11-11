@@ -12,10 +12,10 @@ import { projectDefinitions } from './project-manifest';
 import { AGENT_MARKDOWN } from '../workers/generated/agent-markdown.generated';
 import { PUBLISHED_DOCS_LOCALES } from '../shared/docs-locales';
 
-const target = 'https://webview-native-ui.rdlabo.dev/projects/capacitor-native-ui';
-const guide = 'https://webview-native-ui.rdlabo.dev/projects/capacitor-native-ui/docs/setup';
+const target = 'https://webview-native-ui.com/projects/capacitor-native-ui';
+const guide = 'https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup';
 const japaneseGuide =
-  'https://webview-native-ui.rdlabo.dev/ja/projects/webview-native-ui-engine/docs/readme';
+  'https://webview-native-ui.com/ja/projects/webview-native-ui-engine/docs/readme';
 
 afterEach(() => vi.restoreAllMocks());
 
@@ -56,7 +56,7 @@ test('covers every generated project documentation route', () => {
         `missing ${code} path for ${path}`,
       );
       assert.equal(
-        isExperimentRequest(new Request(`https://webview-native-ui.rdlabo.dev${localizedPath}`)),
+        isExperimentRequest(new Request(`https://webview-native-ui.com${localizedPath}`)),
         true,
       );
     }
@@ -65,14 +65,8 @@ test('covers every generated project documentation route', () => {
   assert.equal(isExperimentRequest(new Request(`${target}/`)), true);
   assert.equal(isExperimentRequest(new Request(guide)), true);
   assert.equal(isExperimentRequest(new Request(japaneseGuide)), true);
-  assert.equal(
-    isExperimentRequest(new Request('https://webview-native-ui.rdlabo.dev/support')),
-    false,
-  );
-  assert.equal(
-    isExperimentRequest(new Request('https://webview-native-ui.rdlabo.dev/main.js')),
-    false,
-  );
+  assert.equal(isExperimentRequest(new Request('https://webview-native-ui.com/support')), false);
+  assert.equal(isExperimentRequest(new Request('https://webview-native-ui.com/main.js')), false);
   assert.equal(isExperimentRequest(new Request(target, { method: 'POST' })), false);
 });
 

@@ -33,7 +33,7 @@ export interface SitemapUrlEntry {
 const DEFAULT_TARGETS: readonly SeoAuditTarget[] = [
   {
     name: 'docs',
-    origin: 'https://webview-native-ui.rdlabo.dev',
+    origin: 'https://webview-native-ui.com',
     sitemapPath: 'dist/docs/browser/sitemap.xml',
     browserRoot: 'dist/docs/browser',
     bilingual: true,

@@ -2,7 +2,7 @@
 title: API
 ---
 
-Reference for the JavaScript API exported by `@rdlabo/ionic-theme-ios26` v9.4.2. CSS and Sass entry points remain documented in the README.
+Reference for the JavaScript API exported by `@rdlabo/ionic-theme-ios26` v9.4.3. CSS and Sass entry points remain documented in the README.
 
 ## Effects
 
@@ -71,3 +71,11 @@ Builds the iOS popover enter animation.
 `(baseEl: HTMLElement) => Animation`
 
 Builds the iOS popover leave animation.
+
+## Theme configuration preset
+
+#### `constant` ios26ThemeConfig
+
+`IonicConfig`
+
+A ready-to-spread Ionic configuration object. Spread `ios26ThemeConfig` into your framework’s Ionic initialization, then override individual properties if needed. See [Theme setup](/docs/setup) and [Theme configuration](/docs/configuration).

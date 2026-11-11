@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://webview-native-ui.rdlabo.dev/sitemap.xml
+Sitemap: https://webview-native-ui.com/sitemap.xml

@@ -2,7 +2,7 @@
 title: API
 ---
 
-`@rdlabo/ionic-theme-ios26` v9.4.2 が公開するJavaScript APIのリファレンスです。CSSとSassのentry pointはREADMEで説明します。
+`@rdlabo/ionic-theme-ios26` v9.4.3 が公開するJavaScript APIのリファレンスです。CSSとSassのentry pointはREADMEで説明します。
 
 ## Effect
 
@@ -71,3 +71,11 @@ iOS Popoverのenter animationを生成します。
 `(baseEl: HTMLElement) => Animation`
 
 iOS Popoverのleave animationを生成します。
+
+## テーマ設定プリセット
+
+#### `constant` ios26ThemeConfig
+
+`IonicConfig`
+
+Ionic の初期化オプションへ展開できる設定オブジェクトです。`ios26ThemeConfig` をフレームワークの Ionic 初期化へ展開し、必要なプロパティを後から上書きします。[セットアップ](/docs/setup)と[設定ガイド](/docs/configuration)を参照してください。

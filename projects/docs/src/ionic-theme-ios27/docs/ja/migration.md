@@ -6,6 +6,72 @@ title: テーマの移行
 
 このガイドは独立したテーマと Capacitor 連携を更新するためのものです。Cordova 同梱のテーマを採用する場合は、[既存のテーマアプリを Cordova へ移行する](cordova.md#moving-an-existing-theme-app-to-this-integration)を参照してください。
 
+
+## 任意: セットアップを簡略化する
+
+まとめたテーマスタイルと `ios27ThemeConfig` は、既存の API に追加された便利な設定方法です。導入は任意で、既存の個別 CSS パスとアニメーションのエクスポートも引き続き使用できます。新しいアプリは[セットアップ](setup.md)、個別の設定は[設定ガイド](configuration.md)を参照してください。
+
+### 対応するスタイルシートの組み合わせを置き換える
+
+スタイルシートを選ぶときは、アプリの既存の外観方針を維持します。たとえば、クラスによるダークモードを使うアプリでは、Ionic の基本 CSS の後の import を次のように置き換えられます。
+
+```diff
+- @import '@ionic/core/css/palettes/dark.class.css';
+- @import '@rdlabo/ionic-theme-ios27/dist/css/default-variables.css';
+- @import '@rdlabo/ionic-theme-ios27/dist/css/ionic-theme-ios27.css';
+- @import '@rdlabo/ionic-theme-ios27/dist/css/md-remove-ios-class-effect.css';
+- @import '@rdlabo/ionic-theme-ios27/dist/css/ionic-theme-ios27-dark-class.css';
++ @import '@rdlabo/ionic-theme-ios27/styles/class.css';
+```
+
+既存のシステム連動ダークモードには `styles/system.css`、常時ダークには `styles/always.css` を使用します。Ionic の基本 CSS とアプリ独自の変数の上書きは維持し、上書きはスタイルシートの後に置いてください。クラスによる制御では、既存の `ion-palette-dark` の切替を維持します。対応する import をまとめて置き換え、パレットやテーマスタイルを重複して読み込まないようにします。必要なスタイルだけを独自に組み合わせているアプリは、[個別 import](configuration.md#compose-individual-stylesheets)を引き続き使用できます。
+
+### アニメーションの既定値を置き換え、アプリのオプションを維持する
+
+手動で組み立てたアニメーションの既定値を、テーマ設定のスプレッドに置き換えます。具体的なアプリの設定はスプレッドの後に残し、優先されるようにしてください。
+
+```diff
+- import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@rdlabo/ionic-theme-ios27';
++ import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+
+ const ionicConfig = {
+-   mode: 'ios' as const,
+-   navAnimation: iosTransitionAnimation,
+-   popoverEnter: popoverEnterAnimation,
+-   popoverLeave: popoverLeaveAnimation,
++   ...ios27ThemeConfig,
+   animated: false, // Keep this application's reduced-motion setting.
+ };
+```
+
+この設定は、どのプラットフォームでも iOS モードを適用します。従来プラットフォーム別にモードを選んでいたアプリは、展開する前に設定全体を選びます。これにより、iOS 以外では Ionic 標準の Material Design 設定を維持できます。
+
+```ts
+import { isPlatform } from '@ionic/core';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+
+const ionicConfig = {
+  ...(isPlatform('ios') ? ios27ThemeConfig : { mode: 'md' as const }),
+  animated: false, // 両プラットフォームに適用する任意のアプリ設定です。
+};
+```
+
+独自のモード選択方針がある場合は、アプリの既存の判定関数を使用してください。スプレッドの後で `mode` だけを変えても、テーマ設定のアニメーションは残ります。既存のフレームワーク初期化を維持し、描画前に組み立てた設定を渡します。
+
+独自のアニメーションや、明示的な `undefined` もスプレッドの後に指定できます。たとえば、次の設定は popover の表示アニメーションの選択を Ionic に任せます。
+
+```ts
+const ionicConfig = {
+  ...ios27ThemeConfig,
+  popoverEnter: undefined, // Ionic 標準の表示アニメーションを使用します。
+  // navAnimation: myNavigationAnimation, // アプリ独自の画面遷移です。
+};
+```
+
+導入時は、従来のテーマ既定値の代入をスプレッドに置き換えます。意図的なアプリ独自の上書きは、その後に維持します。ブラウザー機能の条件分岐や複数テーマの選択は、既存の[適応設定](adaptive-themes.md)を引き続き使えます。
+
+導入後は、従来サポートしていたモードとライト・ダークを確認し、画面遷移と popover も検証してください。デバイスレイアウトと Native UI の起動は、それぞれの API を引き続き使用します。
+
 ## 2.1.0 からの更新
 
 この節はテーマと Native UI の両ガイドで同じ更新を説明しています。どちらか一方に従えば十分です。既存のテーマのインポート、スタイルシート、アニメーション設定を維持してください。Native UI は引き続き任意です。有効にしている場合は、既存の `enableNativeUI()` 呼び出し、コントロールの選択、アプリルートのランタイムを維持します。以下にある以前のパッケージ分離の移行を繰り返す必要はありません。

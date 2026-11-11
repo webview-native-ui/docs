@@ -1,11 +1,77 @@
 ---
 title: "Migration du thème"
-sourceRevision: "8bafa4e67f3794af95d07aa55318d81efaf5ccb7b0d396e639d20d3fb32f7f0a"
+sourceRevision: "e0736094ab4c14cfe7ca73ae198834b8da48fae24d8e4c7ad8f82e95a6484fad"
 ---
 
 # Migration du thème
 
 Ce guide met à niveau le thème autonome et son intégration Capacitor. Pour adopter le thème fourni avec Cordova, consultez [Migrer une application existante vers Cordova](cordova.md#moving-an-existing-theme-app-to-this-integration).
+
+
+## Facultatif : simplifier la configuration
+
+Les styles groupés du thème et `ios27ThemeConfig` sont des API de commodité qui s’ajoutent aux API existantes. Leur adoption est facultative, et les chemins CSS individuels et exports d’animation existants restent pris en charge. Suivez l’[installation](setup.md) pour une nouvelle application et la [configuration](configuration.md) pour les réglages individuels.
+
+### Remplacer le groupe de feuilles de style correspondant
+
+Conservez la politique d’apparence actuelle de l’application lorsque vous choisissez une feuille de style. Par exemple, une application utilisant le mode sombre par classe peut remplacer ce groupe après le CSS de base d’Ionic.
+
+```diff
+- @import '@ionic/core/css/palettes/dark.class.css';
+- @import '@rdlabo/ionic-theme-ios27/dist/css/default-variables.css';
+- @import '@rdlabo/ionic-theme-ios27/dist/css/ionic-theme-ios27.css';
+- @import '@rdlabo/ionic-theme-ios27/dist/css/md-remove-ios-class-effect.css';
+- @import '@rdlabo/ionic-theme-ios27/dist/css/ionic-theme-ios27-dark-class.css';
++ @import '@rdlabo/ionic-theme-ios27/styles/class.css';
+```
+
+Utilisez `styles/system.css` pour un mode sombre système existant et `styles/always.css` pour un mode toujours sombre existant. Conservez le CSS de base d’Ionic et les personnalisations des variables de l’application, ces dernières après la feuille de style. Les applications utilisant des classes conservent leur basculement `ion-palette-dark` existant. Remplacez ensemble les imports correspondants pour éviter de charger une seconde palette ou des styles du thème en double. Les applications composant des feuilles de style partielles personnalisées peuvent continuer à utiliser les [imports individuels](configuration.md#compose-individual-stylesheets).
+
+### Remplacer les animations par défaut et conserver les options de l’application
+
+Remplacez les valeurs d’animation assemblées manuellement par le spread de configuration. Conservez les réglages concrets de l’application après le spread pour qu’ils soient prioritaires.
+
+```diff
+- import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@rdlabo/ionic-theme-ios27';
++ import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+
+ const ionicConfig = {
+-   mode: 'ios' as const,
+-   navAnimation: iosTransitionAnimation,
+-   popoverEnter: popoverEnterAnimation,
+-   popoverLeave: popoverLeaveAnimation,
++   ...ios27ThemeConfig,
+   animated: false, // Keep this application's reduced-motion setting.
+ };
+```
+
+La configuration fournit le mode iOS sur toutes les plateformes. Si l’application sélectionnait auparavant le mode selon la plateforme, sélectionnez la configuration entière avant de la déployer. Cela conserve les valeurs Material Design par défaut d’Ionic en dehors d’iOS.
+
+```ts
+import { isPlatform } from '@ionic/core';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+
+const ionicConfig = {
+  ...(isPlatform('ios') ? ios27ThemeConfig : { mode: 'md' as const }),
+  animated: false, // Optional application preference on both platforms.
+};
+```
+
+Utilisez la fonction de sélection du mode de l’application si elle applique une autre politique. Modifier uniquement `mode` après le spread conserve les propriétés d’animation de la configuration. Conservez l’initialiseur de framework existant et transmettez-lui la configuration assemblée avant le rendu.
+
+Des animations personnalisées et des valeurs d’animation `undefined` explicites peuvent aussi être fournies après le spread. Par exemple, cette configuration laisse Ionic sélectionner l’animation d’entrée du popover.
+
+```ts
+const ionicConfig = {
+  ...ios27ThemeConfig,
+  popoverEnter: undefined, // Use Ionic's default enter animation.
+  // navAnimation: myNavigationAnimation, // Your application's custom transition.
+};
+```
+
+Lorsque vous adoptez la configuration, remplacez les anciennes affectations des valeurs par défaut du thème par le spread. Conservez les personnalisations applicatives intentionnelles après celui-ci. Les conditions de capacités du navigateur et la sélection multithème peuvent conserver leur [configuration adaptative](adaptive-themes.md) existante.
+
+Après l’adoption, vérifiez les mêmes modes et états clairs/sombres que l’application prenait déjà en charge, puis vérifiez la navigation et les popovers. La disposition de l’appareil et le démarrage de Native UI continuent d’utiliser leurs API respectives.
 
 ## Mise à niveau depuis 2.1.0
 

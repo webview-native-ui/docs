@@ -1,170 +1,50 @@
 ---
-title: 'はじめに'
-code: []
-scrollActiveLine: []
+title: Ionic Theme iOS26
 ---
 
-IonicアプリケーションにiOS26デザインシステムを適用するCSS/JSテーマライブラリです。
+# Ionic Theme iOS26
+
+Ionic アプリに iOS26 のデザインを適用する CSS・JavaScript テーマです。
 
 <!-- rdlabo-docs-pick -->
-![iOS 26テーマを適用したIonic画面。Liquid Glassのタブバー、リスト、コントロール](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/ios26-v9.4.2/screenshots/ios26.png)
+
+![Liquid Glass のタブバー、リスト、コントロールを使う iOS 26 テーマ](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/ios26-v9.4.3/screenshots/ios26.png)
+
 <!-- /rdlabo-docs-pick -->
 
-DEMOはこちら: https://ionic-theme-ios26.rdlabo.dev/
+[デモ](https://ionic-theme-ios26.rdlabo.dev/)を確認できます。
 
 ## インストール
 
-既存のIonicプロジェクトにインストールします。
-
-```bash
+```sh
 npm install @rdlabo/ionic-theme-ios26
 ```
 
-Note: **@ionic/core@ < 8.8.1 を使う場合は**、@rdlabo/ionic-theme-ios26@2.2.1 を使ってください。
-
-プロジェクトのメインCSSファイル（例: `src/styles.scss`）でテーマをインポートします。
+Ionic の基本 CSS の後に、システム連動ダーク用のスタイルシートをグローバルに追加します。
 
 ```css
-@import '@rdlabo/ionic-theme-ios26/dist/css/default-variables.css';
-@import '@rdlabo/ionic-theme-ios26/dist/css/ionic-theme-ios26.css';
-
-/**
- * This file is to eliminate the impact of class name changes for iOS26.
- * For example, `ion-buttons ion-button[fill=default]` is not normally implemented, but may be required for iOS26.
- * This file is to eliminate such effects.
- * Note: This stylesheet is not included in `@rdlabo/ionic-theme-md3`.
- */
-@import '@rdlabo/ionic-theme-ios26/dist/css/md-remove-ios-class-effect.css';
-
-/**
- * If you will use the design of ion-item-group with ion-list on Android as well, import it.
- * More info: https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/using-ion-item-group
- * Note: This stylesheet is included in `@rdlabo/ionic-theme-md3`.
- * @import '@rdlabo/ionic-theme-ios26/dist/css/md-ion-list-inset.css';
- */
-
-/*
- * Support Dark Mode
- * We support Ionic Dark Mode. More information is here: https://ionicframework.com/docs/theming/dark-mode
- * use Always:    @import '@rdlabo/ionic-theme-ios26/dist/css/ionic-theme-ios26-dark-always.css'
- * use System:    @import '@rdlabo/ionic-theme-ios26/dist/css/ionic-theme-ios26-dark-system.css'
- * use CSS Class: @import '@rdlabo/ionic-theme-ios26/dist/css/ionic-theme-ios26-dark-class.css'
- */
+@import '@rdlabo/ionic-theme-ios26/styles/system.css';
 ```
 
-### アニメーションを設定する
-
-iOS 26テーマだけをインストールした場合は、次のようにアニメーションを設定します。
+既存の Ionic 初期化のオプションへ `ios26ThemeConfig` を展開します。iOS モードとテーマのアニメーションが設定されます。
 
 ```ts
-import { isPlatform } from '@ionic/core'; // or @ionic/angular (Ionic 9), @ionic/angular/standalone (Ionic 8), @ionic/react, @ionic/vue
-import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@rdlabo/ionic-theme-ios26';
+import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
 
-// Angular
-provideIonicAngular({
-    ...
-    navAnimation: isPlatform('ios') ? iosTransitionAnimation: undefined,
-    popoverEnter: isPlatform('ios') ? popoverEnterAnimation: undefined,
-    popoverLeave: isPlatform('ios') ? popoverLeaveAnimation: undefined,
-});
-
-// React
-setupIonicReact({
-    ...
-    navAnimation: isPlatform('ios') ? iosTransitionAnimation: undefined,
-    popoverEnter: isPlatform('ios') ? popoverEnterAnimation: undefined,
-    popoverLeave: isPlatform('ios') ? popoverLeaveAnimation: undefined,
-});
-
-// Vue
-createApp(App)
-    .use(IonicVue, {
-        ...
-        navAnimation: isPlatform('ios') ? iosTransitionAnimation: undefined,
-        popoverEnter: isPlatform('ios') ? popoverEnterAnimation: undefined,
-        popoverLeave: isPlatform('ios') ? popoverLeaveAnimation: undefined,
-})
+const ionicConfig = {
+  ...ios26ThemeConfig,
+  // animated: false,
+};
 ```
 
-### テーマの適用を確認する
-
-iOSで確認してください。デスクトップでプレビューする場合は、既存のフレームワーク初期化設定で Ionic の mode を `ios` にしてください（例: `mode: 'ios'`）。
-
-次のマークアップで inset のグループ化されたリストの見た目をプレビューできます。テーマが想定するリスト構造は [ion-item-groupの使用方法](/docs/using-ion-item-group) を参照してください。
-
-```html
-<ion-list mode="ios" inset="true">
-  <ion-item-group>
-    <ion-item><ion-label>Notifications</ion-label></ion-item>
-    <ion-item><ion-label>Appearance</ion-label></ion-item>
-  </ion-item-group>
-</ion-list>
-```
-
-### オプション: iOS 26テーマとMD3テーマを併用する
-
-同じアプリケーションでIonicの両モードをスタイルするには、MD3テーマをインストールします。
-
-両テーマの現行リリースには、`@ionic/core` 8.8.1以降が必要です。
-
-```bash
-npm install @rdlabo/ionic-theme-md3
-```
-
-グローバルスタイルシートでSassを使っている場合は、次の順序でテーマを初期化します。
-
-```scss
-@use '@rdlabo/ionic-theme-ios26/src/styles/default-variables.scss' as ios26-vars;
-@use '@rdlabo/ionic-theme-ios26/src/styles/ionic-theme-ios26.scss';
-@use '@rdlabo/ionic-theme-ios26/src/styles/ionic-theme-ios26-dark-class.scss';
-@use '@rdlabo/ionic-theme-ios26/src/styles/md-remove-ios-class-effect.scss';
-@use '@rdlabo/ionic-theme-md3/dist/css/default-variables.css' as md3-vars;
-@use '@rdlabo/ionic-theme-md3/dist/css/ionic-theme-md3.css';
-```
-
-この例ではIonicのclassベースのダークモードを使います。グローバルスタイルシートでは、Angularの `@ionic/angular/css/palettes/dark.class.css` など、Ionic側の対応するダークパレットも読み込んでください。`dark-system` または `dark-always` を使う場合は、IonicのパレットとiOS 26テーマの両方で同じvariantを選びます。詳しくはIonicの[ダークモードのドキュメント](https://ionicframework.com/docs/theming/dark-mode)を参照してください。`ios26-vars` と `md3-vars` を明示することで、2つの変数モジュールが同じデフォルトnamespaceを使うことを防ぎます。
-
-両テーマをインストールした場合は、両方のtransition実装を設定します。
-
-```ts
-import { isPlatform } from '@ionic/core'; // or @ionic/angular (Ionic 9), @ionic/angular/standalone (Ionic 8), @ionic/react, @ionic/vue
-import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@rdlabo/ionic-theme-ios26';
-import { mdTransitionAnimation } from '@rdlabo/ionic-theme-md3';
-
-// Angular
-provideIonicAngular({
-    ...
-    navAnimation: isPlatform('ios') ? iosTransitionAnimation : mdTransitionAnimation,
-    popoverEnter: isPlatform('ios') ? popoverEnterAnimation : undefined,
-    popoverLeave: isPlatform('ios') ? popoverLeaveAnimation : undefined,
-});
-
-// React
-setupIonicReact({
-    ...
-    navAnimation: isPlatform('ios') ? iosTransitionAnimation : mdTransitionAnimation,
-    popoverEnter: isPlatform('ios') ? popoverEnterAnimation : undefined,
-    popoverLeave: isPlatform('ios') ? popoverLeaveAnimation : undefined,
-});
-
-// Vue
-createApp(App)
-    .use(IonicVue, {
-        ...
-        navAnimation: isPlatform('ios') ? iosTransitionAnimation : mdTransitionAnimation,
-        popoverEnter: isPlatform('ios') ? popoverEnterAnimation : undefined,
-        popoverLeave: isPlatform('ios') ? popoverLeaveAnimation : undefined,
-    });
-```
-
+Angular・React・Vue、ダークモードの選択、プレビューは[セットアップ](/docs/setup)を参照してください。個別の CSS、アニメーション、独自オプション、MD3 との併用は[設定](/docs/configuration)、既存アプリへの導入は[移行](/docs/migration)を参照します。
 
 ## ドキュメント
 
-- [ion-item-groupの使用方法](/docs/using-ion-item-group) — inset リストに必要なマークアップ。
-- [特別なマークアップとクラス](/docs/special-markup) — テーマで使う任意のマークアップとutility class。
-- [ESLint](/docs/eslint) — リスト構造を ESLint で整える。
-- [機能](/docs/features) — CSS変数、Liquid Glass、選択的import、ダークモード。
-- [実験的なアニメーション](/docs/experimental-animation) — タブバーと Searchable。
-- [iOS 18](/docs/ios-18) — iOS 26 だけでテーマを読む。
-- [移行](/docs/migration) — major version更新時に必要な変更。
-- [E2Eスクリーンショットテスト](/docs/e2e-testing) — デモの外観を検証する手順。
+- [ion-item-group](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/using-ion-item-group): inset リストに必要な構造。
+- [特殊なマークアップとクラス](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/special-markup): 明示的に使う構造とユーティリティ。
+- [ESLint](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/eslint): リスト構造の検査。
+- [機能](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/features): CSS 変数、Liquid Glass、個別読み込み、ダークモード。
+- [Experimental Animation](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/experimental-animation): タブバーと検索の効果。
+- [iOS 18](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/ios-18): iOS 26 だけでテーマを読み込む設定。
+- [移行](/docs/migration): 任意の設定簡略化とバージョン別の更新手順。

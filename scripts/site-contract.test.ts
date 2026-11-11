@@ -267,10 +267,7 @@ test('lists ionic theme packages and pins localized README imports', async () =>
     iosReadme,
     /\]\(https:\/\/docs\.rdlabo\.dev\/projects\/ionic-theme-ios26\/docs\/using-ion-item-group\)/,
   );
-  assert.match(
-    iosReadme,
-    /More info: https:\/\/docs\.rdlabo\.dev\/projects\/ionic-theme-ios26\/docs\/using-ion-item-group/,
-  );
+  assert.match(iosReadme, /ios26ThemeConfig/);
 
   assert.equal(yamlTitle(usingDocJa), 'ion-item-groupの使用方法');
   assert.notEqual(yamlTitle(usingDocJa), usingPage.title.en);
@@ -496,9 +493,7 @@ test('old Engine guide URLs permanently redirect to the reorganized guides in ev
     ]) {
       const base = `${prefix}/projects/webview-native-ui-engine/docs/`;
       assert.ok(
-        redirects.includes(
-          `${base}${oldSlug} https://webview-native-ui.rdlabo.dev${base}${newSlug} 301`,
-        ),
+        redirects.includes(`${base}${oldSlug} https://webview-native-ui.com${base}${newSlug} 301`),
       );
     }
   }
@@ -530,7 +525,7 @@ test('all published internal document links resolve within this standalone site'
     for (const link of dom.window.document.querySelectorAll<HTMLAnchorElement>('a[href^="/"]')) {
       const path = new URL(
         link.getAttribute('href')!,
-        'https://webview-native-ui.rdlabo.dev',
+        'https://webview-native-ui.com',
       ).pathname.replace(/\/$/, '');
       assert.ok(paths.has(path), `${document.name}: unresolved link ${link.getAttribute('href')}`);
     }

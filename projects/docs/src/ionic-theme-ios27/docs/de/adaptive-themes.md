@@ -1,6 +1,6 @@
 ---
 title: "iOS-26-, iOS-27- und MD3-Themes verwenden"
-sourceRevision: 5a844ab11008cd1c9a36cb9bca3555a9698674b567a43a3c1219f3fb0f05cbfc
+sourceRevision: "fd9030cfed768c0f016d9cce4071e73b69f57d35a925ae5ab5caab1a6f3848ad"
 ---
 # iOS-26-, iOS-27- und MD3-Themes verwenden
 
@@ -56,7 +56,7 @@ Die Prüfungen wählen anhand von Browserfunktionen aus, nicht anhand von iOS-Ve
 | `text-wrap: pretty`, ohne `overflow-anchor: auto` | iOS-26-Theme. |
 | Keine der beiden Funktionen | Ionics standardmäßige iOS-Darstellung. |
 
-Das Beispiel verwendet den klassenbasierten Dunkelmodus: Laden Sie zusätzlich [Ionics passende dunkle Palette](https://ionicframework.com/docs/theming/dark-mode). Für den systemgesteuerten oder permanenten Dunkelmodus ersetzen Sie beide `-dark-class`-Importe durch die passende Variante; siehe [Dunkelmodus-Paare](setup.md#choose-one-dark-mode-pair). Die Stile aus `md-remove-ios-class-effect` verhindern, dass iOS-spezifische Klassen den Material-Design-Modus beeinflussen.
+Das Beispiel verwendet den klassenbasierten Dunkelmodus: Laden Sie zusätzlich [Ionics passende dunkle Palette](https://ionicframework.com/docs/theming/dark-mode). Für den systemgesteuerten oder permanenten Dunkelmodus ersetzen Sie beide `-dark-class`-Importe durch die passende Variante; siehe [Dunkelmodus-Paare](configuration.md#dark-mode). Die Stile aus `md-remove-ios-class-effect` verhindern, dass iOS-spezifische Klassen den Material-Design-Modus beeinflussen.
 
 ## 3. Animationen konfigurieren
 

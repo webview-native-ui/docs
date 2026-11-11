@@ -34,7 +34,7 @@ test('repository resources retain pinned upstream targets instead of nonexistent
       'https://github.com/rdlabo-dev/cf-workers-native',
       'v0.1.8',
     ),
-    '[events](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.8/src/compat/events/README.md) [websocket](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.8/src/browser/websocket/README.md) [source](../src/compat/events/index.ts)',
+    '[events](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.8/src/compat/events/README.md) [websocket](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.8/src/browser/websocket/README.md) [source](https://github.com/rdlabo-dev/cf-workers-native/blob/v0.1.8/src/compat/events/index.ts)',
   );
   const code = '```text\n[demo](../demo/README.md)\n```\n';
   assert.equal(rewriteRepositoryResourceLinks(code, 'https://example.com/repo', 'v1.0.0'), code);

@@ -14,12 +14,12 @@
   },
   "routes": [
     {
-      "pattern": "webview-native-ui.rdlabo.dev/projects/*",
-      "zone_name": "rdlabo.dev",
+      "pattern": "webview-native-ui.com/projects/*",
+      "zone_name": "webview-native-ui.com",
     },
     {
-      "pattern": "webview-native-ui.rdlabo.dev/ja/projects/*",
-      "zone_name": "rdlabo.dev",
+      "pattern": "webview-native-ui.com/ja/projects/*",
+      "zone_name": "webview-native-ui.com",
     },
   ],
 }

@@ -1,6 +1,6 @@
 ---
 title: "Cordova einrichten"
-sourceRevision: "632cc17d693c442a94e91c595e10edb6c77e6f53158df62f69dca027ee1a7e0f"
+sourceRevision: "3da4022d906e1f5a52ee44ac27a4f0088d6e51b99ad7140b61090f2e5588e836"
 ---
 
 # Cordova einrichten
@@ -56,7 +56,7 @@ const ionicConfig = {
 };
 ```
 
-Verwenden Sie den vorhandenen Initialisierer Ihres Frameworks wie unter [Ionic-Animationen konfigurieren](setup.md#3-configure-ionic-animations) beschrieben; initialisieren Sie Ionic nicht zweimal. Wenden Sie diese Optionen nur in der iOS-Konfiguration an, um Androids Material-Design-Modus beizubehalten. Weitere Helfer wie `attachTabBarSearchable` sind ebenfalls über `/theme` verfügbar; ihr Import bindet das Verhalten nicht automatisch an.
+Verwenden Sie den vorhandenen Initialisierer Ihres Frameworks wie unter [Initialisierung des Frameworks](setup.md#3-pass-theme-configuration-to-ionic) beschrieben; initialisieren Sie Ionic nicht zweimal. Wenden Sie diese Optionen nur in der iOS-Konfiguration an, um Androids Material-Design-Modus beizubehalten. Weitere Helfer wie `attachTabBarSearchable` sind ebenfalls über `/theme` verfügbar; ihr Import bindet das Verhalten nicht automatisch an.
 
 ## 4. Native UI nach Bereitschaft von Cordova und App starten
 

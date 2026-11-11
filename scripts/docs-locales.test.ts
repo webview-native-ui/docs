@@ -151,27 +151,20 @@ test('hreflang reciprocity audits every language in a four-language cluster', ()
   const alternates = new Map(
     languages.map((language) => [
       language,
-      `https://webview-native-ui.rdlabo.dev${localizedPublicPath(language === 'x-default' ? 'en' : language, '/projects/example')}`,
+      `https://webview-native-ui.com${localizedPublicPath(language === 'x-default' ? 'en' : language, '/projects/example')}`,
     ]),
   );
   const pages = new Map([...new Set(alternates.values())].map((url) => [url, new Map(alternates)]));
   const sitemap = new Set(pages.keys());
   assert.deepEqual(auditHtmlHreflangReciprocity(pages, sitemap, languages), []);
-  pages
-    .get(alternates.get('de')!)!
-    .set('fr', 'https://webview-native-ui.rdlabo.dev/fr/projects/other');
+  pages.get(alternates.get('de')!)!.set('fr', 'https://webview-native-ui.com/fr/projects/other');
   assert.match(
     auditHtmlHreflangReciprocity(pages, sitemap, languages).join('\n'),
     /not reciprocal/,
   );
-  assert.deepEqual(expectedJsonLdTypes('https://webview-native-ui.rdlabo.dev/fr', 'docs'), [
-    'WebPage',
-  ]);
+  assert.deepEqual(expectedJsonLdTypes('https://webview-native-ui.com/fr', 'docs'), ['WebPage']);
   assert.deepEqual(
-    expectedJsonLdTypes(
-      'https://webview-native-ui.rdlabo.dev/de/projects/example/docs/api',
-      'docs',
-    ),
+    expectedJsonLdTypes('https://webview-native-ui.com/de/projects/example/docs/api', 'docs'),
     ['BreadcrumbList'],
   );
 });

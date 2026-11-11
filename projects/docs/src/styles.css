@@ -36,14 +36,14 @@ a {
 
 /* Pagefind injects its controls at runtime, so the header search treatment belongs here. */
 pagefind-modal-trigger.docs-search {
-  --pf-border: #eadfd9;
-  --pf-border-focus: #ea572a;
-  --pf-hover: #fff7f2;
-  --pf-outline-focus: #ea572a;
-  --pf-text: #292320;
+  --pf-border: #e2e8f0;
+  --pf-border-focus: #1767d2;
+  --pf-hover: #eff6ff;
+  --pf-outline-focus: #1767d2;
+  --pf-text: #172033;
   --pf-text-muted: #6f6661;
   align-self: stretch;
-  border-left: 1px solid #eadfd9;
+  border-left: 1px solid #e2e8f0;
 }
 
 /* Hide the empty host in dev/loading/failure so its border cannot leave a 1px divider. */
@@ -60,12 +60,12 @@ pagefind-modal-trigger.docs-search:empty {
   border-radius: 0;
   padding: 0 18px;
   background: transparent;
-  color: #292320;
+  color: #172033;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-btn:hover {
   border-color: transparent;
-  background: #fff7f2;
+  background: #eff6ff;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-icon {
@@ -75,7 +75,7 @@ pagefind-modal-trigger.docs-search:empty {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) pagefind-modal-trigger.docs-search .pf-trigger-text {
-  color: #292320;
+  color: #172033;
   font-size: 14px;
   font-weight: 500;
 }
@@ -119,7 +119,7 @@ pagefind-modal-trigger.docs-search:empty {
   margin-bottom: 1.5rem;
   border-bottom: none;
   padding-bottom: 0.85rem;
-  color: #292320;
+  color: #172033;
   font-size: clamp(1.9rem, 1.55rem + 1.6vw, 2.35rem);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -132,14 +132,14 @@ pagefind-modal-trigger.docs-search:empty {
   left: 0;
   width: 3rem;
   height: 3px;
-  background: #ea572a;
+  background: #1767d2;
 }
 .znc > div > h2 {
   margin-top: 2.75rem;
   margin-bottom: 0.9rem;
   border-bottom: 1px solid #e8e1dc;
   padding-bottom: 0.45rem;
-  color: #292320;
+  color: #172033;
   font-size: clamp(1.45rem, 1.35rem + 0.45vw, 1.65rem);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -180,7 +180,7 @@ pagefind-modal-trigger.docs-search:empty {
 }
 .znc .api-entry > h4 {
   margin: 0 0 1rem;
-  border-left: 3px solid #ea572a;
+  border-left: 3px solid #1767d2;
   padding: 0.2rem 0 0.2rem 0.8rem;
   color: #28221f;
   font-size: 1.08rem;
@@ -333,5 +333,5 @@ pagefind-modal-trigger.docs-search:empty {
 }
 [appHeadingLinks] .header-anchor-link:focus-visible,
 [appHeadingLinks] :is(h2, h3, h4, h5, h6):hover > .header-anchor-link {
-  color: #c44320;
+  color: #1767d2;
 }

@@ -1,9 +1,9 @@
 ---
 title: API
-sourceRevision: "51faa9c97da38365c846c28f1bdb410d0615b95328c9f352e726f3d5c2bfd24d"
+sourceRevision: "da47167a99620f3b5a260eaf113addd8c5eccbde459a8ab23f8cb8e1a23cd8df"
 ---
 
-`@rdlabo/ionic-theme-md3` v9.2.0 が公開するJavaScript APIのリファレンスです。CSSエントリーポイントはREADMEで説明します。
+`@rdlabo/ionic-theme-md3` v9.2.1 が公開するJavaScript APIのリファレンスです。CSSエントリーポイントはREADMEで説明します。
 
 ## アニメーション
 
@@ -86,3 +86,11 @@ interface DynamicColorTheme {
 `(toggle: HTMLElement) => Promise<() => void>`
 
 描画済みのIonicトグル1つにAndroid Settingsの状態アイコンを追加します。Ionicのオン／オフラベルが優先されます。戻り値の関数で追加した表示を解除します。[Android Settingsの外観](/docs/android-settings)を参照してください。
+
+## テーマ設定プリセット
+
+#### `constant` md3ThemeConfig
+
+`IonicConfig`
+
+Ionic の初期化オプションへ展開できる設定オブジェクトです。`md3ThemeConfig` をフレームワークの Ionic 初期化へ展開し、必要なプロパティを後から上書きします。[セットアップ](/docs/setup)と[設定ガイド](/docs/configuration)を参照してください。

@@ -16,7 +16,7 @@ h1 { margin: .8rem 0 0; color: var(--rd-ink); font-size: clamp(2.4rem, 4.5vw, 4r
 .catalog-group__heading > p { max-width: 48rem; margin: 0; color: var(--rd-muted); font-size: .875rem; line-height: 1.65; }
 .catalog-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
 .catalog-card { position: relative; display: flex; flex-direction: column; height: 100%; padding: 1.5rem; border: 1px solid var(--rd-line); border-radius: .75rem; background: #fff; color: var(--rd-ink); text-decoration: none; transition: border-color 160ms ease, box-shadow 160ms ease; }
-.catalog-card:hover { border-color: var(--rd-accent); box-shadow: 0 4px 16px #29232008; }
+.catalog-card:hover { border-color: var(--rd-accent); box-shadow: 0 4px 16px #17203308; }
 .catalog-card__icon { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: .5rem; background: var(--rd-tint); color: var(--rd-accent); }
 .catalog-card__arrow { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--rd-muted); font-size: 1.1rem; }
 .catalog-card:hover .catalog-card__arrow { color: var(--rd-accent); }

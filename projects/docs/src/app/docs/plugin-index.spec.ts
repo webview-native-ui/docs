@@ -28,11 +28,10 @@ describe('PluginIndexComponent', () => {
   it('renders documentation categories and project links', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(TestBed.inject(Title).getTitle()).toBe(
-      'WebView Native UI Documentation | rdlabo',
+      'WebView Native UI Documentation',
     );
     expect(compiled.querySelector('h1')?.textContent).toContain('Documentation');
-    expect(compiled.textContent).toContain('developed and maintained personally by rdlabo');
-    expect(compiled.textContent).toContain('independent of the incorporated association');
+    expect(compiled.textContent).toContain('independent open-source initiative maintained by rdlabo');
     const categoryLinks = compiled.querySelectorAll<HTMLAnchorElement>('.category-nav a');
     expect(categoryLinks.length).toBe(projectGroupsForLocale('en').length);
     for (const link of categoryLinks) {
@@ -55,7 +54,7 @@ describe('PluginIndexComponent', () => {
     const japaneseProjects = projectsForLocale('ja');
     const englishProjects = projectsForLocale('en');
     expect(japaneseProjects).toHaveLength(projectCatalog.length);
-    expect(englishProjects).toHaveLength(5);
+    expect(englishProjects).toHaveLength(6);
     expect(japaneseProjects.flatMap((project) => project.pages)).toHaveLength(
       projectCatalog.flatMap((project) => project.pages).length,
     );

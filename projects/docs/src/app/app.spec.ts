@@ -105,9 +105,11 @@ describe('App', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('header .docs-brand img')?.getAttribute('src')).toBe(
-      '/assets/brand/rdlabo-logo.svg',
+      '/assets/brand/webview-native-ui-logo.png',
     );
-    expect(compiled.querySelector('header .docs-brand')?.textContent).toContain('rdlabo.dev');
+    expect(compiled.querySelector('header .docs-brand')?.textContent).toContain(
+      'WebView Native UI',
+    );
     const projects = projectsForLocale('en').filter((project) => !project.hostedUrl);
     const links = compiled.querySelectorAll<HTMLAnchorElement>(
       'app-library-picker a[id^="project-link-"]',
@@ -125,7 +127,7 @@ describe('App', () => {
     ).toBe('Articles');
     expect(compiled.querySelector('app-project-navigation')).toBeNull();
     expect(compiled.querySelector('footer')?.textContent).toContain(
-      'Personal open source projects maintained by rdlabo',
+      'Web and Native UI. One experience. Maintained by rdlabo',
     );
     expect(compiled.querySelector('footer')?.textContent).toMatch(/© \d{4} rdlabo/);
   });
@@ -289,7 +291,7 @@ describe('App', () => {
       .click();
     fixture.detectChanges();
     compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="UI tools"]')!
+      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
       .click();
     fixture.detectChanges();
     compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
@@ -384,7 +386,7 @@ describe('App', () => {
     compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
     compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="UI tools"]')!
+      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
       .click();
     fixture.detectChanges();
     compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
@@ -475,7 +477,7 @@ describe('App', () => {
       compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
       fixture.detectChanges();
       compiled
-        .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="UI tools"]')!
+        .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
         .click();
       fixture.detectChanges();
       compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
@@ -566,7 +568,7 @@ describe('App', () => {
     compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
     compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="UI tools"]')!
+      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
       .click();
     fixture.detectChanges();
     const link = compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!;
@@ -641,7 +643,7 @@ describe('App', () => {
     const allProjects = compiled.querySelector<HTMLAnchorElement>(
       'nav[aria-label="Primary navigation"] > a',
     )!;
-    expect(brand.href).toBe('https://rdlabo.dev/');
+    expect(brand.getAttribute('href')).toBe('/ja');
     expect(brand.target).toBe('');
     expect(docsHome.getAttribute('href')).toBe('/ja');
     expect(docsHome.textContent?.trim()).toBe('docs');
@@ -649,7 +651,7 @@ describe('App', () => {
     expect(allProjects.getAttribute('aria-current')).toBe('page');
   });
 
-  it('links the Japanese header brand to the main site in the same tab', async () => {
+  it('links the Japanese header brand to the documentation home in the same tab', async () => {
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
       imports: [App],
@@ -675,13 +677,13 @@ describe('App', () => {
     const docsHome = (fixture.nativeElement as HTMLElement).querySelector<HTMLAnchorElement>(
       'header a.docs-home-link',
     )!;
-    expect(brand.href).toBe('https://rdlabo.dev/');
+    expect(brand.getAttribute('href')).toBe('/ja');
     expect(brand.target).toBe('');
     expect(docsHome.getAttribute('href')).toBe('/ja');
     expect(router.url).toBe('/projects/capacitor-native-ui');
   });
 
-  it('links the English header brand to the main site in the same tab', async () => {
+  it('links the English header brand to the documentation home in the same tab', async () => {
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
     await router.navigateByUrl('/projects/capacitor-native-ui');
@@ -693,7 +695,7 @@ describe('App', () => {
     const docsHome = (fixture.nativeElement as HTMLElement).querySelector<HTMLAnchorElement>(
       'header a.docs-home-link',
     )!;
-    expect(brand.href).toBe('https://rdlabo.dev/');
+    expect(brand.getAttribute('href')).toBe('/');
     expect(brand.target).toBe('');
     expect(docsHome.getAttribute('href')).toBe('/');
     expect(docsHome.textContent?.trim()).toBe('docs');

@@ -1,12 +1,67 @@
 ---
 title: "Migration"
-sourceRevision: "5a4c28f9cae897fd53bc1ef9655924b939eda51ea08039d2645e53ba7c06ee2d"
+sourceRevision: "ffdf5f0b3f847737ba5f52689f4435990c3a8abab0a1c6b8a6b77e91fe560811"
 ---
 # Migration
 
 Examinez chaque section plus récente que la version actuellement installée, dans l’ordre croissant. Par exemple, pour passer de 1.x à 9.0.0, effectuez les étapes de migration 2.0.0 et 3.0.0 avant d’examiner 9.0.0.
 
-Chaque section répertorie uniquement les changements nécessitant une mise à jour du code ou de la configuration de l’application.
+La section de configuration facultative explique comment adopter les wrappers. Les sections versionnées documentent les changements de mise à niveau et les conseils de compatibilité.
+
+
+## Facultatif : simplifier la configuration
+
+Les chemins CSS individuels et exports d’animation existants restent pris en charge. Vous pouvez adopter `ios26ThemeConfig` et une feuille de style groupée pour simplifier votre configuration. Les nouvelles applications peuvent suivre [Installer le thème](setup.md).
+
+Remplacez les imports manuels du thème et de la palette sombre Ionic par la feuille de style correspondant à votre politique actuelle de mode sombre. Pour une application en mode sombre système, appliquez ce changement après le CSS de base d’Ionic et avant les personnalisations de l’application.
+
+```diff
+- @import '@ionic/core/css/palettes/dark.system.css';
+- @import '@rdlabo/ionic-theme-ios26/dist/css/default-variables.css';
+- @import '@rdlabo/ionic-theme-ios26/dist/css/ionic-theme-ios26.css';
+- @import '@rdlabo/ionic-theme-ios26/dist/css/md-remove-ios-class-effect.css';
+- @import '@rdlabo/ionic-theme-ios26/dist/css/ionic-theme-ios26-dark-system.css';
++ @import '@rdlabo/ionic-theme-ios26/styles/system.css';
+```
+
+Pour le mode sombre manuel, utilisez `styles/class.css` et conservez le basculement `ion-palette-dark` sur la racine du document. Pour une apparence toujours sombre, utilisez `styles/always.css`. La feuille de style inclut la palette Ionic correspondante. Conservez les styles sélectifs supplémentaires, comme `md-ion-list-inset.css`, selon les besoins actuels de votre application.
+
+Remplacez la configuration assemblée manuellement par un spread de configuration. Cet exemple conserve une option concrète de l’application, `animated: false`, après la configuration.
+
+```diff
+- import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@rdlabo/ionic-theme-ios26';
++ import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
+
+ const ionicConfig = {
+-   mode: 'ios',
+-   navAnimation: iosTransitionAnimation,
+-   popoverEnter: popoverEnterAnimation,
+-   popoverLeave: popoverLeaveAnimation,
++   ...ios26ThemeConfig,
+   animated: false,
+ };
+```
+
+Transmettez l’objet au même appel `provideIonicAngular`, `setupIonicReact` ou `app.use(IonicVue, ...)` que l’application utilise déjà. Les propriétés après le spread sont prioritaires sur la configuration, y compris les animations personnalisées et les valeurs `undefined` explicitement fournies. Conservez vos options personnalisées après le spread.
+
+La configuration définit `mode: 'ios'` et inclut les animations iOS. Conservez une politique de mode selon la plateforme en ne déployant la configuration que pour le mode iOS effectif. Cet exemple conserve la sélection de plateforme existante de l’application.
+
+```diff
+ import { isPlatform, type IonicConfig } from '@ionic/core';
+- import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@rdlabo/ionic-theme-ios26';
++ import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
+
+ const mode = isPlatform('ios') ? 'ios' : 'md';
+ const ionicConfig: IonicConfig = {
+-   ...(mode === 'ios'
+-     ? { navAnimation: iosTransitionAnimation, popoverEnter: popoverEnterAnimation, popoverLeave: popoverLeaveAnimation }
+-     : {}),
++   ...(mode === 'ios' ? ios26ThemeConfig : {}),
+   mode,
+ };
+```
+
+Modifier `mode` après un spread inconditionnel conserve ses fonctions d’animation. Sélectionnez la configuration et le mode ensemble avant l’initialisation d’Ionic. Conservez votre politique actuelle de mode sombre lorsque vous choisissez la feuille de style groupée. Pour les options individuelles de CSS et d’animation et les recettes combinant les thèmes, consultez la [configuration](configuration.md).
 
 ## Migrer vers 9.2.0
 
