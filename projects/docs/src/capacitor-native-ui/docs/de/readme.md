@@ -1,67 +1,45 @@
 ---
-title: "Erste Schritte"
-sourceRevision: "1a81174b4fab6b7d08cd0ee915bf1b57b437bad51016f5d9a8a011107c758211"
+title: "Capacitor Native UI"
+sourceRevision: "00f6528542dd4a1a7d25155d5b882f1fcba0f952002c4bfa21b745c83434594b"
 ---
 
 # Capacitor Native UI
 
-Stellen Sie unterstützte Web-Bedienelemente unter iOS mit UIKit und SwiftUI dar, während Anwendungszustand, Routing und Handler in der WebView bleiben. Verwenden Sie bestehendes Ionic-Markup oder ausdrücklich gekennzeichnete HTML-Schaltflächen; eigene SwiftUI- oder Android-Compose-Inhalte lassen sich über experimentelle app-lokale Erweiterungen ergänzen.
+Capacitor Native UI bietet native Steuerelemente, Gerätefarben und eigene native Inhalte für WebView-Anwendungen.
 
-Native UI wird ausdrücklich aktiviert. Standardbedienelemente unter Android, in Browsern, unter älterem iOS und nicht unterstützte Bedienelemente bleiben im Web. Android unterstützt experimentelle app-lokale Compose-Erweiterungen. Behalten Sie Stile und Layout Ihrer Anwendung bei; das iOS-Theme ist optional.
+## Standardeinrichtung: iOS Native UI und Android Dynamic Color
 
-## Von npm installieren
-
-Installieren Sie für die standardmäßige Ionic-iOS-Einrichtung Native UI, das iOS-27-Theme und Foldable:
+Beginnen Sie mit der gemeinsamen Einrichtung beider Plattformfunktionen in einer Ionic-App. Die Standardeinrichtung enthält iPhone Duo / Vertical Bars und Layoutänderungen unter iOS sowie Material-You-Farben auf unterstützten Android-Geräten.
 
 ```sh
-npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
 ```
 
-Verwenden Sie das einzelne Stylesheet und das Preset `ios27ThemeConfig` des Themes. Starten Sie anschließend eine Runtime, nachdem die App-Shell eingebunden wurde:
+Die [Standardeinrichtung](setup.md) enthält Theme-Presets, Stylesheets und den vollständigen Startcode.
 
-```ts
-import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+## Einzelne Leitfäden
 
-await enableNativeUI();
-```
+### 1. Native UI des Plugins verwenden
 
-**Vertical Bars ist zusammen mit den normalen Steuerelementen standardmäßig aktiviert.** Verbinden Sie Layoutmeldungen; unterstützte Geräte wählen die Rail-Platzierung, andere behalten das Web-Layout.
+Das Plugin rendert unterstützte Ionic- und HTML-Steuerelemente unter iOS nativ. Zustand, Routing und Handler bleiben bei der Anwendung.
 
-Folgen Sie der [Ionic-Einrichtung](setup.md) für Stylesheet, Start, Gerätelayout und nativen Build. Sie können [ein vorhandenes Theme](ionic-vertical-bars.md) oder [HTML ohne Ionic](framework-independent.md) verwenden. Zustand, Routing und Theme-Auswahl bleiben bei der Anwendung.
-
-## Funktionsweise der Projektion
-
-Eine **Projektion** ist eine weitere Darstellung eines Web-Bedienelements. Ihre Anwendung behält das ursprüngliche DOM-Element, den Zustand und die Ereignishandler. Das Plugin liest unterstützte Beschriftungen, Symbole, Auswahl-/Deaktivierungszustände und Geometrie und ordnet anschließend das dargestellte Bedienelement seinem Quellelement zu. Es wandelt die Seite nicht in einen nativen Bildschirm um und führt keine zweite Kopie Ihrer Anwendung aus.
-
-| Web-Quelle | Projizierte Darstellung |
+| Ihre Anwendung | Leitfaden |
 | --- | --- |
-| Android Material You-Farben auslesen | [Dynamische Android-Farben](/docs/dynamic-colors) |
-| Unterstützte Ionic-Schaltflächen, Tabs und Segmente | Native UIKit-/SwiftUI-Bedienelemente unter unterstütztem iOS |
-| Ausdrücklich markierte HTML-Schaltflächen und Zurückschaltflächen | Native Schaltflächen unter unterstütztem iOS |
-| Geeignete Bedienelemente in Vertical Bars | SwiftUI-Bedienelemente in der verfügbaren Systemleiste; andernfalls Web-Seitenleiste |
-| DOM-Element einer app-lokalen Erweiterung | Von Ihrer App registrierte SwiftUI- oder Compose-Inhalte mit aus diesem Element gelesenen Props |
+| Ionic mit dem standardmäßigen iOS-27-Theme | [Standardeinrichtung](setup.md) |
+| Ionic mit vorhandenem Web-Theme | [Einrichtung mit vorhandenem Theme](ionic-vertical-bars.md) |
+| HTML ohne Ionic | [HTML-Einrichtung](framework-independent.md) |
 
-Das Originalelement **bleibt während der Projektion im DOM**. Bindungen und Handler bleiben verbunden. Sobald die native Darstellung akzeptiert wurde, blendet die Laufzeit die Quelle visuell aus, verhindert direkte Zeigerinteraktionen und verbirgt sie vor der Web-Barrierefreiheit, damit keine zwei interaktiven Kopien existieren. Elementprojektion erhält die Layoutbox der Quelle; die Abstände der Seitenleiste liefert Ihre App oder Ihr Theme. Eine Web-Seitenleiste verwendet entsprechend die Web-Darstellung ihres Adapters: Ionic-Layout/Klone oder HTML-Proxy-Schaltflächen in Ihrem `webHost`.
+#### Funktionsweise der Projektion
 
-Beispielsweise aktiviert das Antippen einer projizierten Speichern-Schaltfläche die ursprüngliche Web-Schaltfläche. Ihr vorhandener Handler speichert und aktualisiert den Anwendungszustand; unterstützte DOM-Änderungen aktualisieren anschließend die Projektion. Auch Tabs und andere Bedienelemente leiten Aktionen über ihre Quelladapter weiter. Aktualisieren Sie weiterhin die Quelle, statt einen separaten nativen Zustand zu verwalten. Für Reader-Werte, die sich ohne DOM-Mutation ändern, verwenden Sie `markForCheck()`.
+Native UI stellt das ursprüngliche Web-Steuerelement nativ dar und behält Zustand und Handler bei. Siehe [unterstützte Steuerelemente und Projektion](native-ui.md).
 
-Projektion ändert die Darstellung; sie übersetzt kein beliebiges HTML oder CSS in native Ansichten. Native Bedienelemente verwenden unterstützte Daten und Stile; eine eigene Web-Darstellung wird nicht garantiert nachgebildet. Entfernen oder Deaktivieren einer Quelle verhindert weitere gültige Aktionen. Ist Projektion nicht verfügbar oder wird sie beendet, hebt die Laufzeit ihre Ausblendung auf und die Quelle kehrt zur Web-Darstellung oder einer verfügbaren Web-Seitenleiste zurück. Der eigene Sichtbarkeits-/Deaktivierungszustand Ihrer Anwendung gilt weiterhin.
+### 2. Dynamic Color verwenden
 
-Die Native-Darstellungsverantwortung folgt der Quelle und ihrem Projektionskontext, unabhängig von Animationen und verfügbaren Bildern. Darstellung, Ziehen und Größenänderung eines Modals sowie die Bildwiederherstellung übertragen eine akzeptierte Quelle nicht ins Web, solange ihre Projektion geeignet bleibt. Eine ausdrückliche Web-Übergabe, eine nicht unterstützte oder abgelehnte Projektion, ein Laufzeitfehler oder das Ende der Quelle beziehungsweise des Kontexts gibt sie frei. Eine deaktivierte Schaltfläche bleibt dasselbe Native-eigene Bedienelement mit deaktivierter Eingabe.
+Lesen Sie die Android-Gerätepalette und wenden Sie sie über das Theme an. Der [Dynamic-Color-Leitfaden](dynamic-colors.md) beschreibt die eigenständige Verwendung, Darstellungspräferenzen und Farbzuordnung.
 
-Blockierende Web-Overlays können vorbereitete Bilder nativer Schaltflächen, Segmente, FABs und Tab-Leisten unter ihrem Hintergrund behalten. Die Bilder bewahren das erfasste native Erscheinungsbild und werden nach nativen Aktualisierungen und zusammengefassten visuellen Änderungen vorbereitet. Die Erfassung der Plattform kann vom Live-Compositing abweichen, etwa bei Liquid Glass-Kantenreflexen; eine pixelgenaue Reproduktion der Materialien ist nicht garantiert. Während einer Berührung pausiert die Vorbereitung; die Darstellung verwendet das letzte fertiggestellte Bild, ohne auf Erfassung oder Bridge-Bestätigung zu warten. Ein fehlendes Bild gibt eine akzeptierte Native-Quelle nicht an das Web zurück. Native Popover, die ihre Bedienelemente behalten, bleiben auf dem nativen Pfad. Die [Übergaberegeln](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/appearance#temporary-images-beneath-web-overlays) beschreiben Bewegung, Wiederherstellung und Ausnahmen. Erstellen Sie die native App neu, um diese Funktion zu aktivieren; ältere native Binärdateien behalten ihren bisherigen Pfad.
+### 3. Eigene Native UI erstellen
 
-## Wählen Sie Ihr Ziel
-
-| Ziel | Einstieg |
-| --- | --- |
-| Bestehende Ionic-Bedienelemente nativ rendern | [Ionic-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup) |
-| Native Schaltflächen ohne Ionic verwenden | [HTML-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent) |
-| Ein anderes Ionic-Theme mit Vertical Bars behalten | [Vertical Bars Schritt für Schritt](https://webview-native-ui.com/projects/capacitor-native-ui/docs/ionic-vertical-bars) |
-| Vertical Bars ohne Ionic verwenden | [HTML-Rail-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent) |
-| Native Bedienelemente zu einer bestehenden iOS-27-Theme-App hinzufügen | [Native UI zum Theme hinzufügen](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/add-native-ui) |
-| Android-Material-You-Farben lesen | [Android Dynamic Colors](/docs/dynamic-colors) |
-| Eigene SwiftUI- oder Android-Compose-Inhalte rendern | [App-lokale Erweiterungen (experimentell)](https://webview-native-ui.com/projects/capacitor-native-ui/docs/native-ui-extensions) |
+Rendern Sie eigene SwiftUI- oder Android-Compose-Inhalte über [anwendungslokale Erweiterungen](native-ui-extensions.md). Diese Funktion ist experimentell.
 
 ## Anforderungen
 
@@ -130,11 +108,3 @@ Fügen Sie `https://github.com/webview-native-ui/capacitor-plugin.git` in Xcode 
 Capacitor-Apps verwenden weiterhin das Produkt `RdlaboCapacitorNativeUi` und `import NativeUIPlugin`. Dieses Modul exportiert Core erneut, sodass bestehende `NativeUI.register`-Aufrufe denselben Registrierungszustand wie der Adapter verwenden. Das Root-Manifest verwaltet beide Targets; es gibt kein separates verschachteltes Swift-Paket.
 
 CocoaPods kompiliert den Adapter und die gemeinsamen Quellen weiterhin in den bestehenden Plugin-Pod. Diese Änderung veröffentlicht keinen eigenständigen Core-Pod und implementiert keinen Cordova-Adapter.
-
-## Dynamische Android-Farben
-
-Lesen Sie Material You-Farben unter Android 12+ mit `getDynamicColorScheme()` und beobachten Sie Wiederaufnahme- und Konfigurationsbenachrichtigungen mit `addDynamicColorListener()`. Importieren Sie beide aus `@rdlabo/capacitor-native-ui`. Dynamische Farben sind eine unterstützte, ausdrücklich zu aktivierende API, unabhängig von der Native UI-Projektion und experimentellen app-lokalen Erweiterungen.
-
-Das Plugin liefert helle und dunkle Farbschemata, ohne das Activity-Theme zu ändern oder Wallpaper-Berechtigungen anzufordern. Andere Plattformen melden `available: false`. Das Plugin wendet kein CSS an; Ionic-Anwendungen können `enableDynamicColors` aus `@rdlabo/ionic-theme-md3/dynamic-colors` verwenden.
-
-[Android Dynamic Colors](/docs/dynamic-colors) beschreibt Installation, API-Verträge, Änderungsbenachrichtigungen, Bereinigung und Ionic-Integration.

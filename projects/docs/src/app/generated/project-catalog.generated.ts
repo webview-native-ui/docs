@@ -323,7 +323,7 @@ export const PROJECTS_EN = [
     "category": "capacitor-plugins",
     "icon": "app",
     "version": "2.1.4",
-    "description": "Native controls for Ionic and HTML apps, with Web-owned state and events.",
+    "description": "Native UI, Android Dynamic Color and custom native content for WebView apps.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
       {
@@ -334,8 +334,8 @@ export const PROJECTS_EN = [
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
-        "title": "Ionic setup",
-        "navTitle": "Ionic setup",
+        "title": "Standard Ionic setup",
+        "navTitle": "Standard Ionic setup",
         "slug": "setup",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/setup"
@@ -956,19 +956,19 @@ export const PROJECTS_JA = [
     "category": "capacitor-plugins",
     "icon": "app",
     "version": "2.1.4",
-    "description": "Web側の状態とイベントを維持する、Ionic／HTMLアプリ向けのNative UI。",
+    "description": "WebViewアプリ向けのNative UI、Android Dynamic Color、独自ネイティブコンテンツ。",
     "path": "/projects/capacitor-native-ui",
     "pages": [
       {
-        "title": "はじめに",
+        "title": "Capacitor Native UI",
         "navTitle": "はじめに",
         "slug": "readme",
         "section": "ガイド",
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
-        "title": "Ionic アプリで Native UI をセットアップする",
-        "navTitle": "Ionicの設定",
+        "title": "iOS Native UI と Android Dynamic Color を導入する",
+        "navTitle": "Ionicの標準導入",
         "slug": "setup",
         "section": "ガイド",
         "path": "/projects/capacitor-native-ui/docs/setup"
@@ -1589,19 +1589,19 @@ export const PROJECTS_FR = [
     "category": "capacitor-plugins",
     "icon": "app",
     "version": "2.1.4",
-    "description": "Contrôles natifs pour Ionic et HTML, avec état et événements gérés par le Web.",
+    "description": "Native UI, Dynamic Color Android et contenu natif personnalisé pour les applications WebView.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
       {
-        "title": "Premiers pas",
+        "title": "Capacitor Native UI",
         "navTitle": "Premiers pas",
         "slug": "readme",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
-        "title": "Configurer Native UI dans une application Ionic",
-        "navTitle": "Configuration Ionic",
+        "title": "Configurer Native UI iOS et Dynamic Color Android",
+        "navTitle": "Configuration Ionic standard",
         "slug": "setup",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/setup"
@@ -2222,19 +2222,19 @@ export const PROJECTS_DE = [
     "category": "capacitor-plugins",
     "icon": "app",
     "version": "2.1.4",
-    "description": "Native Bedienelemente für Ionic und HTML mit Zustand und Ereignissen im Web.",
+    "description": "Native UI, Android Dynamic Color und eigene native Inhalte für WebView-Apps.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
       {
-        "title": "Erste Schritte",
+        "title": "Capacitor Native UI",
         "navTitle": "Erste Schritte",
         "slug": "readme",
         "section": "Anleitungen",
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
-        "title": "Native UI in einer Ionic-App einrichten",
-        "navTitle": "Ionic einrichten",
+        "title": "iOS Native UI und Android Dynamic Color einrichten",
+        "navTitle": "Standardmäßige Ionic-Einrichtung",
         "slug": "setup",
         "section": "Anleitungen",
         "path": "/projects/capacitor-native-ui/docs/setup"
