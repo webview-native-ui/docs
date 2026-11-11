@@ -22,7 +22,9 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Refresh and verify public sponsor data
-        run: npm run sponsors:generate
+        run: |
+          npm run sponsors:generate
+          git diff --exit-code -- projects/docs/src/app/generated/sponsors.generated.ts
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - run: npm run fmt:check
@@ -31,4 +33,7 @@ jobs:
       - run: npm run build
       - run: npm run seo:audit
       - name: Verify generated output is committed
-        run: test -z "$(git status --porcelain --untracked-files=all -- projects/docs/src/app/generated projects/docs/public/sitemap.xml projects/docs/public/robots.txt)"
+        run: |
+          git status --short -- projects/docs/src/app/generated projects/docs/public/sitemap.xml projects/docs/public/robots.txt
+          git diff --stat -- projects/docs/src/app/generated projects/docs/public/sitemap.xml projects/docs/public/robots.txt
+          test -z "$(git status --porcelain --untracked-files=all -- projects/docs/src/app/generated projects/docs/public/sitemap.xml projects/docs/public/robots.txt)"
