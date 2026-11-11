@@ -61,7 +61,7 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
                   class="text-inherit no-underline hover:text-[#1767d2] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
                   [href]="docsHomePath"
                 >
-                  <ng-container i18n="@@allProjectsNav">All projects</ng-container>
+                  <ng-container i18n="@@allProjectsNav">Documentation overview</ng-container>
                 </a>
                 <span aria-hidden="true">/</span>
                 <a

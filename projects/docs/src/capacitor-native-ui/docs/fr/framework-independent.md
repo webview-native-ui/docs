@@ -1,6 +1,6 @@
 ---
 title: "Native UI sans Ionic"
-sourceRevision: "4cd601ca51b4e76686aba2c65e422204fc2a00405a1fa97807a35538231f5917"
+sourceRevision: "6c7da5b1931e776a2f089d61ea2049e09dc8bc8608816339c794576962212eb5"
 ---
 
 # Native UI sans Ionic
@@ -70,7 +70,33 @@ const shell = await enableNativeUI({
 });
 ```
 
-Appelez une seule fois après la création de la racine source. Conservez le handle et appelez `await shell.destroy()` lorsque cette racine est libérée. Le plugin n’ajoute ni marges de page ni règles de zone sûre ; conservez le CSS de l’application. Pour Angular, React ou Vue, utilisez le [démarrage de l’application et la disposition de l’appareil](device-layout.md) avec l’import `/core` et votre propre callback de disposition. Pour la navigation animée, utilisez la [suspension jusqu’à la fin ou à l’annulation](native-ui.md#custom-overlay-suspension).
+Appelez une seule fois après la création de la racine source. Le plugin n’ajoute ni marges de page ni règles de zone sûre ; conservez le CSS de l’application. Pour Angular, React ou Vue, utilisez le [démarrage de l’application et la disposition de l’appareil](device-layout.md) avec l’import `/core` et votre propre callback de disposition. Pour la navigation animée, utilisez la [suspension jusqu’à la fin ou à l’annulation](native-ui.md#custom-overlay-suspension).
+
+### Placement sur l’appareil pour Vertical Bars
+
+Foldable est déjà inclus dans l’installation standard de l’étape 1. Raccordez-le à votre disposition comme suit.
+
+Réutilisez le runtime de l’étape 3 **sans `verticalBars.placement`**. Native UI suit alors le bord signalé par l’appareil ; un `edge: 'trailing'` fixe le contraindrait et pourrait rejeter un rail situé au début.
+
+Suivez l’[intégration Foldable](vertical-bars.md#with-application-owned-css-or-without-ionic) :
+
+1. Utilisez Foldable 8.5 ou ultérieur dans la version majeure 8. Au démarrage de l’application, abonnez-vous à `layoutChange` **avant** la lecture initiale et résolvez chaque rapport avec `resolveVerticalBarsLayout(Foldable)` depuis `@rdlabo/capacitor-native-ui/integration`.
+2. Appliquez les valeurs `edge`, `inset` **et `toolbarTop`** du résolveur via l’état de disposition et le CSS existants de l’application. Réservez le retrait du côté logique signalé et placez la barre d’outils du rail à l’origine signalée. Préservez vos propres valeurs par défaut pour les champs non définis ; n’inventez pas de dimensions d’appareil. Un changement d’écran peut modifier `toolbarTop` sans modifier le bord ou le retrait, d’où l’utilisation de `layoutChange` pour la connexion standard.
+3. Lorsque le bord est nul ou indisponible, rétablissez l’espacement ordinaire et appelez `shell.disableVerticalControlArea()` ; lorsqu’un bord revient, appelez `shell.enableVerticalControlArea()`. Sérialisez ces modifications avec les mises à jour de disposition de l’application.
+
+Le résolveur fournit uniquement des valeurs : il ne crée pas d’abonnement, n’écrit pas de CSS et ne démarre pas Native UI. Votre application possède la disposition Web ; Native UI possède la projection des contrôles. Aucun helper ou feuille de style de thème n’est requis et aucune politique liée à l’appareil n’appartient aux gestionnaires métier des pages individuelles.
+
+Conservez les marqueurs sources explicites de l’étape 2 ; ils déclarent les contrôles et leur placement demandé. Pour projeter seulement Back, retirez `data-native-ui="button"` d’Add. `controls` ne désactive pas les déclarations explicites. Sans hôte de rail Web, les contrôles de rail natif indisponibles restent à leur position Web d’origine. Le package du thème n’est pas requis.
+
+## 4. Compiler et exécuter sur iOS
+
+Pour les projets CocoaPods, effectuez d’abord la [configuration du projet natif](configuration.md#native-project-setup). SwiftPM résout Engine automatiquement.
+
+Compilez l’application Web, exécutez `npx cap sync ios` et lancez le projet iOS depuis Xcode. Avec la configuration de l’étape 3, Add apparaît à sa position source et invoque son gestionnaire de clic original. Back demande le rail natif signalé par l’appareil lorsqu’il est disponible ; la connexion de l’étape 3 synchronise l’espacement Web. Dans le navigateur, ce même bouton reste Web. Le HTML non marqué reste inchangé.
+
+Si un bouton reste Web sur un iOS compatible, vérifiez sa visibilité dans la racine configurée, son nom accessible, la synchronisation de la dépendance directe du plugin et la recompilation iOS.
+
+Dans une application utilisant aussi Ionic, définissez `ionic: { auto: false }` pour projeter uniquement les sources explicites et extensions enregistrées. Consultez la [projection Ionic sélective](configuration.md#select-controls-explicitly-in-a-customized-ionic-app).
 
 ### Superpositions personnalisées
 
@@ -80,32 +106,9 @@ Avant de présenter une modale personnalisée qui rend l’arrière-plan non int
 
 Pour un thème HTML personnalisé, déclarez `color-scheme: light` ou `color-scheme: dark` dans le CSS qui sélectionne la palette Web. Les seules couleurs de fond ne sélectionnent pas l’apparence native. Consultez [Apparence claire et sombre](appearance.md) pour un exemple de bascule manuelle, les priorités en présence des variables Ionic/thème et le comportement du rail partagé.
 
-## 4. Compiler et exécuter sur iOS
+### Applications qui remplacent la racine source
 
-Pour les projets CocoaPods, effectuez d’abord la [configuration du projet natif](configuration.md#native-project-setup). SwiftPM résout Engine automatiquement.
-
-Compilez l’application Web, exécutez `npx cap sync ios` et lancez le projet iOS depuis Xcode. Avec la configuration de l’étape 3, Add apparaît à sa position source et invoque son gestionnaire de clic original. Back demande le rail natif signalé par l’appareil lorsqu’il est disponible ; raccordez le placement ci-dessous pour synchroniser l’espacement Web. Dans le navigateur, ce même bouton reste Web. Le HTML non marqué reste inchangé.
-
-Si un bouton reste Web sur un iOS compatible, vérifiez sa visibilité dans la racine configurée, son nom accessible, la synchronisation de la dépendance directe du plugin et la recompilation iOS.
-
-Dans une application utilisant aussi Ionic, définissez `ionic: { auto: false }` pour projeter uniquement les sources explicites et extensions enregistrées. Consultez la [projection Ionic sélective](configuration.md#select-controls-explicitly-in-a-customized-ionic-app).
-
-## Placement sur l’appareil pour Vertical Bars
-
-Foldable est déjà inclus dans l’installation standard de l’étape 1. Raccordez-le à votre disposition comme suit.
-
-Réutilisez le runtime de l’étape 3 **sans `verticalBars.placement`**. Native UI suit alors le bord signalé par l’appareil ; un `edge: 'trailing'` fixe le contraindrait et pourrait rejeter un rail situé au début.
-
-Suivez l’[intégration Foldable](vertical-bars.md#with-application-owned-css-or-without-ionic) :
-
-1. Utilisez Foldable 8.5 ou ultérieur dans la version majeure 8. Dans un service ou un module d’intégration appartenant à l’application, abonnez-vous à `layoutChange` **avant** la lecture initiale et résolvez chaque rapport avec `resolveVerticalBarsLayout(Foldable)` depuis `@rdlabo/capacitor-native-ui/integration`. Conservez le handle de l’écouteur retourné.
-2. Appliquez les valeurs `edge`, `inset` **et `toolbarTop`** du résolveur via l’état de disposition et le CSS existants de l’application. Réservez le retrait du côté logique signalé et placez la barre d’outils du rail à l’origine signalée. Préservez vos propres valeurs par défaut pour les champs non définis ; n’inventez pas de dimensions d’appareil. Un changement d’écran peut modifier `toolbarTop` sans modifier le bord ou le retrait, d’où l’utilisation de `layoutChange` pour la connexion standard.
-3. Lorsque le bord est nul ou indisponible, rétablissez l’espacement ordinaire et appelez `shell.disableVerticalControlArea()` ; lorsqu’un bord revient, appelez `shell.enableVerticalControlArea()`. Sérialisez ces modifications avec les mises à jour de disposition de l’application.
-4. À la destruction de l’application, appelez `await listener.remove()` et détruisez le runtime dont elle est propriétaire.
-
-Le résolveur fournit uniquement des valeurs : il ne crée pas d’abonnement, n’écrit pas de CSS et ne démarre pas Native UI. Votre application possède la disposition Web ; Native UI possède la projection des contrôles. Aucun helper ou feuille de style de thème n’est requis et aucune politique liée à l’appareil n’appartient aux gestionnaires métier des pages individuelles.
-
-Conservez les marqueurs sources explicites de l’étape 2 ; ils déclarent les contrôles et leur placement demandé. Pour projeter seulement Back, retirez `data-native-ui="button"` d’Add. `controls` ne désactive pas les déclarations explicites. Sans hôte de rail Web, les contrôles de rail natif indisponibles restent à leur position Web d’origine. Le package du thème n’est pas requis.
+Uniquement si votre application démonte ou remplace cette racine, conservez le handle de l’écouteur Foldable et retirez-le avant d’appeler `await shell.destroy()`. Consultez la [configuration du runtime](configuration.md#common-configurations) pour son remplacement.
 
 ## Aperçu facultatif du rail dans le navigateur
 

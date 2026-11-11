@@ -1,6 +1,6 @@
 ---
 title: "Native UI ohne Ionic"
-sourceRevision: "4cd601ca51b4e76686aba2c65e422204fc2a00405a1fa97807a35538231f5917"
+sourceRevision: "6c7da5b1931e776a2f089d61ea2049e09dc8bc8608816339c794576962212eb5"
 ---
 
 # Native UI ohne Ionic
@@ -70,15 +70,23 @@ const shell = await enableNativeUI({
 });
 ```
 
-Rufen Sie die Funktion einmal auf, nachdem die Quellwurzel existiert. Behalten Sie das Handle und rufen Sie `await shell.destroy()` auf, wenn diese Wurzel entsorgt wird. Das Plugin ergänzt weder Seitenabstände noch Safe-Area-Regeln; behalten Sie das CSS Ihrer Anwendung. Verwenden Sie für Angular, React oder Vue [Anwendungsstart und Gerätelayout](device-layout.md) mit dem `/core`-Import und Ihrem eigenen Layout-Callback. Für animierte Navigation verwenden Sie die [Suspendierung bis zum Abschluss oder Abbruch](native-ui.md#custom-overlay-suspension).
+Rufen Sie die Funktion einmal auf, nachdem die Quellwurzel existiert. Das Plugin ergänzt weder Seitenabstände noch Safe-Area-Regeln; behalten Sie das CSS Ihrer Anwendung. Verwenden Sie für Angular, React oder Vue [Anwendungsstart und Gerätelayout](device-layout.md) mit dem `/core`-Import und Ihrem eigenen Layout-Callback. Für animierte Navigation verwenden Sie die [Suspendierung bis zum Abschluss oder Abbruch](native-ui.md#custom-overlay-suspension).
 
-### Benutzerdefinierte Overlays
+### Gerätepositionierung für Vertical Bars
 
-Rufen Sie vor der Darstellung eines benutzerdefinierten Modals, das den Hintergrund nicht interaktiv macht, `await shell.suspend({ covered: true })` auf und setzen Sie die zurückgegebene Lease nach dem Schließen fort. Vorbereitete native Bilder bewahren das Erscheinungsbild des Hintergrunds, ohne Ihrem HTML native Abmessungen aufzuzwingen. Leistenbilder sind an ihren Proxys in Ihrem `webHost` verankert; das Scrollen der ursprünglichen Quelle bewegt sie daher nicht. Ihre Bildbreite und -höhe stammen von Native, auch wenn Quell- und Proxy-Schaltflächen unterschiedliche CSS-Größen haben. Rufen Sie `shell.suspend()` ohne Optionen auf, wenn Bedienelemente im Web interaktiv bleiben müssen. Die [Aussetzung für benutzerdefinierte Overlays](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/native-ui#custom-overlay-suspension) beschreibt Lebenszyklus und Fallback-Verhalten.
+Foldable ist bereits in der Standardinstallation aus Schritt 1 enthalten. Verbinden Sie es wie folgt mit Ihrem Anwendungslayout.
 
-### An das HTML-Theme anpassen
+Verwenden Sie die Laufzeit aus Schritt 3 **ohne `verticalBars.placement`**. Native UI folgt dann der vom Gerät gemeldeten Kante; ein festes `edge: 'trailing'` würde sie einschränken und kann die führende Seitenleiste eines Geräts ablehnen.
 
-Deklarieren Sie für ein eigenes HTML-Theme `color-scheme: light` oder `color-scheme: dark` im selben CSS, das Ihre Web-Palette auswählt. Hintergrundfarben allein wählen keine native Darstellung. [Helle und dunkle Darstellung](appearance.md) zeigt einen manuellen Umschalter, die Priorität vorhandener Ionic-/Theme-Variablen und das gemeinsame Seitenleistenverhalten.
+Folgen Sie der [Foldable-Integration](vertical-bars.md#with-application-owned-css-or-without-ionic):
+
+1. Verwenden Sie Foldable 8.5 oder neuer innerhalb von Version 8. Abonnieren Sie beim Anwendungsstart `layoutChange` **vor** dem ersten Abruf und lösen Sie jeden Bericht mit `resolveVerticalBarsLayout(Foldable)` aus `@rdlabo/capacitor-native-ui/integration` auf.
+2. Wenden Sie `edge`, `inset` **und `toolbarTop`** des Resolvers über den bestehenden Layoutzustand und das CSS Ihrer Anwendung an. Reservieren Sie den Einzug auf der gemeldeten logischen Seite und positionieren Sie die Rail-Werkzeugleiste am gemeldeten Ursprung. Behalten Sie für undefinierte Felder Ihre eigenen Standardwerte bei; erfinden Sie keine Geräteabmessungen. Eine Anzeigeänderung kann `toolbarTop` ändern, ohne Kante oder Einzug zu ändern. Deshalb verwendet die standardmäßige Verbindung `layoutChange`.
+3. Stellen Sie bei einer Kante von null oder einer nicht verfügbaren Kante gewöhnliche Abstände wieder her und rufen Sie `shell.disableVerticalControlArea()` auf; kehrt eine Kante zurück, rufen Sie `shell.enableVerticalControlArea()` auf. Serialisieren Sie diese Änderungen mit den Layoutaktualisierungen Ihrer Anwendung.
+
+Der Resolver liefert ausschließlich Werte: Er registriert keine Abonnements, schreibt kein CSS und startet Native UI nicht. Ihre Anwendung besitzt das Web-Layout; Native UI besitzt die Bedienelementprojektion. Weder Theme-Helfer noch Theme-Stylesheet sind erforderlich, und Geräterichtlinien gehören nicht in die Geschäftslogik einzelner Seiten.
+
+Behalten Sie die expliziten Quellmarkierungen aus Schritt 2; sie deklarieren Bedienelemente und ihre gewünschte Position. Entfernen Sie `data-native-ui="button"` von Add, um nur Back zu projizieren. `controls` deaktiviert keine expliziten Deklarationen. Ohne Web-Seitenleistenhost bleiben nicht verfügbare native Seitenleisten-Bedienelemente an ihren ursprünglichen Web-Positionen. Das Theme-Paket ist nicht erforderlich.
 
 ## 4. Erstellen und unter iOS ausführen
 
@@ -90,22 +98,17 @@ Bleibt eine Schaltfläche unter unterstütztem iOS im Web, prüfen Sie ihre Sich
 
 Setzen Sie in einer App, die auch Ionic verwendet, `ionic: { auto: false }`, um nur explizite Quellen und registrierte Erweiterungen zu projizieren. Siehe [selektive Ionic-Projektion](configuration.md#select-controls-explicitly-in-a-customized-ionic-app).
 
-## Gerätepositionierung für Vertical Bars
+### Benutzerdefinierte Overlays
 
-Foldable ist bereits in der Standardinstallation aus Schritt 1 enthalten. Verbinden Sie es wie folgt mit Ihrem Anwendungslayout.
+Rufen Sie vor der Darstellung eines benutzerdefinierten Modals, das den Hintergrund nicht interaktiv macht, `await shell.suspend({ covered: true })` auf und setzen Sie die zurückgegebene Lease nach dem Schließen fort. Vorbereitete native Bilder bewahren das Erscheinungsbild des Hintergrunds, ohne Ihrem HTML native Abmessungen aufzuzwingen. Leistenbilder sind an ihren Proxys in Ihrem `webHost` verankert; das Scrollen der ursprünglichen Quelle bewegt sie daher nicht. Ihre Bildbreite und -höhe stammen von Native, auch wenn Quell- und Proxy-Schaltflächen unterschiedliche CSS-Größen haben. Rufen Sie `shell.suspend()` ohne Optionen auf, wenn Bedienelemente im Web interaktiv bleiben müssen. Die [Aussetzung für benutzerdefinierte Overlays](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/native-ui#custom-overlay-suspension) beschreibt Lebenszyklus und Fallback-Verhalten.
 
-Verwenden Sie die Laufzeit aus Schritt 3 **ohne `verticalBars.placement`**. Native UI folgt dann der vom Gerät gemeldeten Kante; ein festes `edge: 'trailing'` würde sie einschränken und kann die führende Seitenleiste eines Geräts ablehnen.
+### An das HTML-Theme anpassen
 
-Folgen Sie der [Foldable-Integration](vertical-bars.md#with-application-owned-css-or-without-ionic):
+Deklarieren Sie für ein eigenes HTML-Theme `color-scheme: light` oder `color-scheme: dark` im selben CSS, das Ihre Web-Palette auswählt. Hintergrundfarben allein wählen keine native Darstellung. [Helle und dunkle Darstellung](appearance.md) zeigt einen manuellen Umschalter, die Priorität vorhandener Ionic-/Theme-Variablen und das gemeinsame Seitenleistenverhalten.
 
-1. Verwenden Sie Foldable 8.5 oder neuer innerhalb von Version 8. Abonnieren Sie in einem anwendungseigenen Service oder Integrationsmodul `layoutChange` **vor** dem ersten Abruf und lösen Sie jeden Bericht mit `resolveVerticalBarsLayout(Foldable)` aus `@rdlabo/capacitor-native-ui/integration` auf. Bewahren Sie das zurückgegebene Listener-Handle auf.
-2. Wenden Sie `edge`, `inset` **und `toolbarTop`** des Resolvers über den bestehenden Layoutzustand und das CSS Ihrer Anwendung an. Reservieren Sie den Einzug auf der gemeldeten logischen Seite und positionieren Sie die Rail-Werkzeugleiste am gemeldeten Ursprung. Behalten Sie für undefinierte Felder Ihre eigenen Standardwerte bei; erfinden Sie keine Geräteabmessungen. Eine Anzeigeänderung kann `toolbarTop` ändern, ohne Kante oder Einzug zu ändern. Deshalb verwendet die standardmäßige Verbindung `layoutChange`.
-3. Stellen Sie bei einer Kante von null oder einer nicht verfügbaren Kante gewöhnliche Abstände wieder her und rufen Sie `shell.disableVerticalControlArea()` auf; kehrt eine Kante zurück, rufen Sie `shell.enableVerticalControlArea()` auf. Serialisieren Sie diese Änderungen mit den Layoutaktualisierungen Ihrer Anwendung.
-4. Rufen Sie beim Beenden der Anwendung `await listener.remove()` auf und zerstören Sie die Runtime, die dieser Anwendung gehört.
+### Anwendungen, die die Quellwurzel ersetzen
 
-Der Resolver liefert ausschließlich Werte: Er registriert keine Abonnements, schreibt kein CSS und startet Native UI nicht. Ihre Anwendung besitzt das Web-Layout; Native UI besitzt die Bedienelementprojektion. Weder Theme-Helfer noch Theme-Stylesheet sind erforderlich, und Geräterichtlinien gehören nicht in die Geschäftslogik einzelner Seiten.
-
-Behalten Sie die expliziten Quellmarkierungen aus Schritt 2; sie deklarieren Bedienelemente und ihre gewünschte Position. Entfernen Sie `data-native-ui="button"` von Add, um nur Back zu projizieren. `controls` deaktiviert keine expliziten Deklarationen. Ohne Web-Seitenleistenhost bleiben nicht verfügbare native Seitenleisten-Bedienelemente an ihren ursprünglichen Web-Positionen. Das Theme-Paket ist nicht erforderlich.
+Nur wenn Ihre Anwendung diese Wurzel unmountet oder ersetzt, behalten Sie das Foldable-Listener-Handle und entfernen den Listener vor `await shell.destroy()`. Hinweise zum Ersetzen einer Runtime finden Sie in der [Konfigurationsreferenz](configuration.md#common-configurations).
 
 ## Optionale Seitenleistenvorschau im Browser
 

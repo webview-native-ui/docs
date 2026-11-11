@@ -92,6 +92,13 @@ npx cap sync
 
 SwiftPM resolves Engine automatically; existing CocoaPods projects use [native project setup](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
 
+## Check the result on each platform
+
+- On iOS 26 or later, supported controls render natively and keep the existing Web event handlers. The iOS theme styles the remaining Web content.
+- On Android 12 or later, Material Design 3 uses the device’s Dynamic Color palette. The controls remain Web controls. Older Android devices use the theme’s fallback palette.
+- On devices supporting native rails, changing the device layout updates Vertical Bars. Other devices retain the ordinary Web layout.
+- A browser can preview the Web themes and application behavior. Check native controls, device colors and device-driven rails in the native apps.
+
 ## Individual options
 
 For Native UI without these themes, use [existing-theme setup](/projects/capacitor-native-ui/docs/ionic-vertical-bars) or [HTML setup](/projects/capacitor-native-ui/docs/framework-independent). See [Dynamic Color](/projects/capacitor-native-ui/docs/dynamic-colors) for appearance preferences and color mapping, [configuration](/projects/capacitor-native-ui/docs/configuration) for Native UI options, and [migration](/projects/capacitor-native-ui/docs/migration) for an existing integration.

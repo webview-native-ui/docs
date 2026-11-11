@@ -79,4 +79,4 @@ removeIcons();
 
 ## 更新と検証
 
-寸法の変更は[移行の注意事項](migration.md#migrating-to-9.2.0%3A-android-settings-alignment)、サイズ設定は[グループ化したリストのマークアップ](using-ion-item-group.md)を確認してください。Ionic の明示的な `color`、disabled 状態、操作、ローカルの上書きの意味は変わりません。[計測レポート](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/android17-pixel-pass1-2026-11-09.md)は実機の根拠とブラウザーの回帰検証を区別しています。描画結果の完全一致やネイティブタブレットでの受け入れ完了を主張するものではありません。
+寸法の変更は[移行の注意事項](migration.md#migrating-to-9.2.0%3A-android-settings-alignment)、サイズ設定は[グループ化したリストのマークアップ](using-ion-item-group.md)を確認してください。Ionic の明示的な `color`、disabled 状態、操作、ローカルの上書きの意味は変わりません。[計測レポート](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/android17-pixel-pass1-2026-11-09.md)は実機の根拠とブラウザーの回帰検証を区別しています。描画結果の完全一致やネイティブタブレットでの受け入れ完了を主張するものではありません。

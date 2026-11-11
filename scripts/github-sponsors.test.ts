@@ -9,7 +9,7 @@ function githubResponse(body: unknown): Response {
   });
 }
 
-test('fetches only valid public sponsors and sorts by tier without publishing amounts', async () => {
+test('fetches only valid public sponsors and sorts by public login regardless of tier visibility', async () => {
   const requests: { activeOnly: boolean; cursor: string | null }[] = [];
   const smallSponsor = {
     sponsorEntity: {
@@ -18,7 +18,7 @@ test('fetches only valid public sponsors and sorts by tier without publishing am
       avatarUrl: 'https://avatars.githubusercontent.com/u/1?v=4',
       url: 'https://github.com/small',
     },
-    tier: { monthlyPriceInDollars: 5 },
+    tier: { monthlyPriceInDollars: 500 },
   };
   const largeSponsor = {
     sponsorEntity: {
@@ -40,8 +40,11 @@ test('fetches only valid public sponsors and sorts by tier without publishing am
   };
   const fetchImplementation: typeof fetch = async (_input, init) => {
     const body = JSON.parse(String(init?.body)) as {
+      query: string;
       variables: { activeOnly: boolean; cursor: string | null };
     };
+    assert.match(body.query, /includePrivate:\s*false/);
+    assert.doesNotMatch(body.query, /tier|monthlyPriceInDollars/);
     const { activeOnly, cursor } = body.variables;
     requests.push({ activeOnly, cursor });
     const nodes = activeOnly

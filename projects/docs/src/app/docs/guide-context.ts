@@ -4,7 +4,7 @@ import { localizedPublicPath } from '../locale-path';
 
 @Component({
   selector: 'app-guide-context',
-  template: `<aside class="border-b border-slate-200 px-6 py-3 text-sm text-slate-600" data-pagefind-ignore><a [href]="home">{{ copy.overview }}</a> · <a [href]="setup">{{ copy.start }}</a></aside>`,
+  template: `<aside class="border-b border-slate-200 px-6 py-3 text-sm text-slate-600" data-pagefind-ignore><a [href]="home">{{ copy.overview }}</a> · <a [href]="setup"><span i18n="@@combinedSetupContext">Ionic + Capacitor standard setup</span></a></aside>`,
 })
 export class GuideContextComponent {
   readonly #locale = inject(LOCALE_ID);

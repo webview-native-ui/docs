@@ -1,6 +1,6 @@
 ---
 title: "Apparence Android Settings"
-sourceRevision: "db537a7e09e3d5127c5cb9ae308630319b0515ce624bf754930b0539f46ffa9e"
+sourceRevision: "c25e4375d55e2cd7fbe81530b3c2632e3d36aac95a590a20952d5e7967bbbe36"
 ---
 
 # Apparence Android Settings
@@ -79,4 +79,4 @@ Le helper ajoute un élément style au Shadow DOM de la Part publique handle. Il
 
 ## Mise à niveau et vérification
 
-Consultez les [notes de migration](migration.md#migrating-to-9.2.0%3A-android-settings-alignment) pour les changements de dimensions et le [balisage des listes groupées](using-ion-item-group.md) pour le dimensionnement. Les `color` explicites d’Ionic, l’état désactivé, les interactions et personnalisations locales conservent leur sens. Le [rapport de mesure](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/android17-pixel-pass1-2026-11-09.md) distingue les observations sur appareil physique des vérifications de régression navigateur ; il ne revendique ni égalité complète des rendus ni validation native sur tablette.
+Consultez les [notes de migration](migration.md#migrating-to-9.2.0%3A-android-settings-alignment) pour les changements de dimensions et le [balisage des listes groupées](using-ion-item-group.md) pour le dimensionnement. Les `color` explicites d’Ionic, l’état désactivé, les interactions et personnalisations locales conservent leur sens. Le [rapport de mesure](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/android17-pixel-pass1-2026-11-09.md) distingue les observations sur appareil physique des vérifications de régression navigateur ; il ne revendique ni égalité complète des rendus ni validation native sur tablette.

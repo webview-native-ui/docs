@@ -71,27 +71,9 @@ const shell = await enableNativeUI({
 });
 ```
 
-ソースルートが存在してから一度呼びます。ハンドルを保持し、ルート破棄時に `await shell.destroy()` を呼んでください。プラグインはページ余白やセーフエリア規則を追加しないため、アプリの CSS を維持します。Angular・React・Vue は `/core` インポートで[アプリの起動とデバイス配置](device-layout.md)を使用します。アニメーション付き遷移は[完了・キャンセルまでの中断](native-ui.md#custom-overlay-suspension)を参照してください。
+ソースルートが存在してから一度呼びます。プラグインはページ余白やセーフエリア規則を追加しないため、アプリの CSS を維持します。Angular・React・Vue は `/core` インポートで[アプリの起動とデバイス配置](device-layout.md)を使用します。アニメーション付き遷移は[完了・キャンセルまでの中断](native-ui.md#custom-overlay-suspension)を参照してください。
 
-### カスタムオーバーレイ
-
-背景を操作できなくするカスタムモーダルを表示する前に `await shell.suspend({ covered: true })` を呼び出し、閉じた後に返されたリースを再開します。準備済みのネイティブ画像は、HTML にネイティブの寸法を強制せず、背景の外観を維持します。レールの画像は `webHost` 内のプロキシに固定されるため、元のソースをスクロールしても移動しません。ソースとプロキシのボタンの CSS サイズが異なっても、画像の幅と高さは Native から取得します。Web 上でコントロールを操作可能に保つ必要がある場合は、オプションなしで `shell.suspend()` を呼び出してください。ライフサイクルとフォールバックの動作は[カスタムオーバーレイの中断](https://webview-native-ui.com/projects/capacitor-native-ui/docs/native-ui#custom-overlay-suspension)を参照してください。
-
-### HTML テーマに合わせる
-
-独自 HTML テーマでは Web パレットを選ぶ同じ CSS に `color-scheme: light` または `color-scheme: dark` を宣言します。背景色だけではネイティブ外観は選択されません。手動切り替えの例、Ionic・テーマ変数の優先順位、共有レールの動作は[ライト・ダーク外観](appearance.md)を参照してください。
-
-## 4. iOS でビルドして実行する
-
-CocoaPods プロジェクトでは、まず [Engine の Podfile 設定](configuration.md#native-project-setup)を完了してください。SwiftPM は Engine を自動で解決します。
-
-Web アプリをビルドして `npx cap sync ios` を実行し、Xcode から iOS プロジェクトを起動します。手順 3 の設定では Add はソース位置に描画され、元のクリックハンドラーを実行します。Back は利用可能ならデバイスが報告するネイティブレールを要求します。Web の余白を同期するため後述のデバイス配置を接続してください。ブラウザーでは同じボタンが通常の Web ボタンのままです。マーカーのない HTML は変わりません。
-
-対応 iOS で Web のままなら、設定した root 内で表示され、アクセシブルな名前があり、直接依存のプラグインを同期して iOS アプリを再ビルドしたことを確認します。
-
-Ionic も使うアプリで明示的ソースと登録拡張だけを投影するには `ionic: { auto: false }` を設定します。[選択的な Ionic 投影](configuration.md#select-controls-explicitly-in-a-customized-ionic-app)を参照してください。
-
-## Vertical Bars のデバイス配置
+### Vertical Bars のデバイス配置
 
 標準の導入手順1には Foldable が含まれます。レイアウト API には Foldable 8.5 以降のバージョン8が必要です。手順3のランタイムは `verticalBars.placement` なしで再利用します。Native UI はデバイスの edge を使うため、固定の `edge: 'trailing'` は leading のレールを拒否する可能性があります。
 
@@ -101,9 +83,31 @@ Ionic も使うアプリで明示的ソースと登録拡張だけを投影す�
 2. `edge`、`inset`、`toolbarTop` をアプリのレイアウト状態と CSS へ適用します。undefined はアプリ既定値を維持します。null の edge では通常の余白へ戻して `shell.disableVerticalControlArea()` を呼び、edge が戻ったら `shell.enableVerticalControlArea()` を呼びます。レイアウト更新と直列化します。
 3. アプリの破棄時に購読を解除し、アプリが所有するランタイムを破棄します。
 
-この連携はアプリ所有のサービスやモジュールに置きます。Foldable はデバイス情報を報告し、リゾルバーは値を返し、アプリは CSS へ適用し、Native UI は投影を担当します。位置と寸法はビューポートの CSS ピクセルへ揃えてください。
+この連携はアプリの起動処理に置きます。Foldable はデバイス情報を報告し、リゾルバーは値を返し、アプリは CSS へ適用し、Native UI は投影を担当します。位置と寸法はビューポートの CSS ピクセルへ揃えてください。
 
 手順2の明示的なソースマーカーを維持します。マーカーがコントロールと要求する配置を宣言します。Back だけを投影する場合は Add の `data-native-ui="button"` を外します。`controls` は明示宣言を無効にしません。Web レールホストがない場合、ネイティブレールが利用できなければ元の Web の位置を維持します。テーマパッケージは不要です。
+
+## 4. iOS でビルドして実行する
+
+CocoaPods プロジェクトでは、まず [Engine の Podfile 設定](configuration.md#native-project-setup)を完了してください。SwiftPM は Engine を自動で解決します。
+
+Web アプリをビルドして `npx cap sync ios` を実行し、Xcode から iOS プロジェクトを起動します。手順 3 の設定では Add はソース位置に描画され、元のクリックハンドラーを実行します。Back は利用可能ならデバイスが報告するネイティブレールを要求します。手順3のデバイス接続が Web の余白を同期します。ブラウザーでは同じボタンが通常の Web ボタンのままです。マーカーのない HTML は変わりません。
+
+対応 iOS で Web のままなら、設定した root 内で表示され、アクセシブルな名前があり、直接依存のプラグインを同期して iOS アプリを再ビルドしたことを確認します。
+
+Ionic も使うアプリで明示的ソースと登録拡張だけを投影するには `ionic: { auto: false }` を設定します。[選択的な Ionic 投影](configuration.md#select-controls-explicitly-in-a-customized-ionic-app)を参照してください。
+
+### カスタムオーバーレイ
+
+背景を操作できなくするカスタムモーダルを表示する前に `await shell.suspend({ covered: true })` を呼び出し、閉じた後に返されたリースを再開します。準備済みのネイティブ画像は、HTML にネイティブの寸法を強制せず、背景の外観を維持します。レールの画像は `webHost` 内のプロキシに固定されるため、元のソースをスクロールしても移動しません。ソースとプロキシのボタンの CSS サイズが異なっても、画像の幅と高さは Native から取得します。Web 上でコントロールを操作可能に保つ必要がある場合は、オプションなしで `shell.suspend()` を呼び出してください。ライフサイクルとフォールバックの動作は[カスタムオーバーレイの中断](https://webview-native-ui.com/projects/capacitor-native-ui/docs/native-ui#custom-overlay-suspension)を参照してください。
+
+### HTML テーマに合わせる
+
+独自 HTML テーマでは Web パレットを選ぶ同じ CSS に `color-scheme: light` または `color-scheme: dark` を宣言します。背景色だけではネイティブ外観は選択されません。手動切り替えの例、Ionic・テーマ変数の優先順位、共有レールの動作は[ライト・ダーク外観](appearance.md)を参照してください。
+
+### ソースルートを置き換えるアプリ
+
+アプリがこのルートをアンマウント・置換する場合だけ、Foldable の購読ハンドルを保持し、購読を解除してから `await shell.destroy()` を呼びます。ランタイムの置き換えは[設定リファレンス](configuration.md#common-configurations)を参照してください。
 
 ## 任意のブラウザーレールプレビュー
 

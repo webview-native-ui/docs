@@ -513,7 +513,7 @@ export const PROJECTS_EN = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-md3",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.2.1",
+    "version": "9.2.2",
     "description": "Material Design 3 styling for Ionic applications.",
     "path": "/projects/ionic-theme-md3",
     "pages": [
@@ -1140,7 +1140,7 @@ export const PROJECTS_JA = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-md3",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.2.1",
+    "version": "9.2.2",
     "description": "Ionicアプリ向けのMaterial Design 3スタイル。",
     "path": "/projects/ionic-theme-md3",
     "pages": [
@@ -1767,7 +1767,7 @@ export const PROJECTS_FR = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-md3",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.2.1",
+    "version": "9.2.2",
     "description": "Styles Material Design 3 pour les applications Ionic.",
     "path": "/projects/ionic-theme-md3",
     "pages": [
@@ -2394,7 +2394,7 @@ export const PROJECTS_DE = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-md3",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.2.1",
+    "version": "9.2.2",
     "description": "Material-Design-3-Gestaltung für Ionic-Anwendungen.",
     "path": "/projects/ionic-theme-md3",
     "pages": [

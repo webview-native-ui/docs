@@ -58,11 +58,11 @@ describe('LandingPageComponent', () => {
     const actionLabels = Array.from(
       compiled.querySelectorAll<HTMLAnchorElement>('.project-actions > a'),
     ).map((link) => link.textContent?.trim());
-    expect(actionLabels).toEqual(['Get started', 'Demo']);
+    expect(actionLabels).toEqual(['Get started', 'Try the Web theme']);
     expect(
       compiled.querySelector<HTMLAnchorElement>('a[href="https://ionic-theme-md3.rdlabo.dev/"]')
         ?.textContent,
-    ).toContain('Demo');
+    ).toContain('Try the Web theme');
     const links = Array.from(
       compiled.querySelectorAll<HTMLAnchorElement>('a[href^="https://rdlabo.dev/articles/"]'),
     );

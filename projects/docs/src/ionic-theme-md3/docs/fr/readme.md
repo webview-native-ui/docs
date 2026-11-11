@@ -1,6 +1,6 @@
 ---
 title: "Premiers pas"
-sourceRevision: "6584c761ae6c6037a19ddd7567803500ce5b2cf8a33df543992228ac18c5368a"
+sourceRevision: "a5bc0d556da0b580bbff6fcd573ba36d62ee9a846beac10df029f98c8c7e4e56"
 ---
 
 # Ionic Theme Material Design 3
@@ -9,7 +9,7 @@ Thème CSS/JS pour les applications Ionic, qui prend Android Settings comme réf
 
 <!-- rdlabo-docs-pick -->
 
-![Thème Ionic MD3 avec la palette Ionic par défaut sur Android 17](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.1/screenshots/md3.png)
+![Thème Ionic MD3 avec la palette Ionic par défaut sur Android 17](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.2/screenshots/md3.png)
 
 <!-- /rdlabo-docs-pick -->
 

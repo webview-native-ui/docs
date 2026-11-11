@@ -27,6 +27,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Refresh all public sponsors before building
+        run: npm run sponsors:generate
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - run: npm run fmt:check && npm run lint && npm test && npm run build && npm run seo:audit
       - run: npm run deploy:docs
         env:

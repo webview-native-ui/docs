@@ -394,7 +394,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     shortName: 'Ionic Theme iOS27',
     packageName: '@rdlabo/ionic-theme-ios27',
     repositoryUrl: 'https://github.com/webview-native-ui/ionic-theme-ios27',
-    englishDocsRef: '93a492a8f82157a30d5f590c0b5b269cf2730d0f',
+    englishDocsRef: 'bc691614914661ef6fc3c1a0547c1366da5d9b52',
     englishDocsAssetsRef: 'c70beb9d1e5b39de696b2b2c47a3d9bc5ffcdfbe',
     releaseNotesUrl: 'https://github.com/webview-native-ui/ionic-theme-ios27/releases/tag/v2.1.3',
     demoUrl: 'https://ionic-theme-ios27.rdlabo.dev/',
@@ -483,7 +483,13 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'add-native-ui',
         file: 'add-native-ui.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        headingAliases: {
+          'optional%3A-vertical-bars': '2.-enable-native-controls',
+          'optional-vertical-bars': '2.-enable-native-controls',
+          '%E4%BB%BB%E6%84%8F%3A-vertical-bars': '2.-enable-native-controls',
+          'facultatif-%3A-vertical-bars': '2.-enable-native-controls',
+        },
+        updatedAt: { en: '2026-11-12', ja: '2026-11-12', fr: '2026-11-12', de: '2026-11-12' },
       },
       {
         title: text('Using ion-item-group', 'ion-item-groupの使用方法'),
@@ -546,7 +552,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     shortName: 'Capacitor Native UI',
     packageName: '@rdlabo/capacitor-native-ui',
     repositoryUrl: 'https://github.com/webview-native-ui/capacitor-plugin',
-    englishDocsRef: '616c9839d421b4f479c1dad5b9fc3888f3b70887',
+    englishDocsRef: '16f9c9281794aaab6526f72f271aeba028885f57',
     releaseNotesUrl: 'https://github.com/webview-native-ui/capacitor-plugin/releases/tag/v2.1.4',
     demoUrl: 'https://ionic-theme-ios27.rdlabo.dev/',
     category: 'plugins',
@@ -627,7 +633,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         slug: 'framework-independent',
         file: 'framework-independent.md',
         headingAliases: { '2-mark-source-controls': '2.-mark-source-controls' },
-        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
+        updatedAt: { en: '2026-11-12', ja: '2026-11-12', fr: '2026-11-12', de: '2026-11-12' },
       },
       {
         title: {
@@ -895,9 +901,9 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     packageName: '@rdlabo/ionic-theme-md3',
     repositoryUrl: 'https://github.com/webview-native-ui/ionic-theme-md3',
     // Reviewed documentation from main, independently of the npm release.
-    englishDocsRef: '45e00998d64b4806428d282cecdedbaa4f44fc6f',
+    englishDocsRef: '07b51b583e0bf45b105af6dc62c735c394e26a0b',
     demoUrl: 'https://ionic-theme-md3.rdlabo.dev/',
-    releaseNotesUrl: 'https://github.com/webview-native-ui/ionic-theme-md3/releases/tag/v9.2.1',
+    releaseNotesUrl: 'https://github.com/webview-native-ui/ionic-theme-md3/releases/tag/v9.2.2',
     category: 'frontend-tools',
     icon: 'theme',
     adapter: 'markdown',
@@ -1083,7 +1089,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       ),
       page('API', 'API', 'api', 'api.md', 'Reference', 'リファレンス', {
         localEnglishSource: true,
-        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
+        updatedAt: { en: '2026-11-12', ja: '2026-11-12', fr: '2026-11-12', de: '2026-11-12' },
       }),
     ],
   },

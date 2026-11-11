@@ -83,8 +83,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="allProjectsNav" datatype="html">
-        <source>All projects</source>
-        <target>Tous les projets</target>
+        <source>Documentation overview</source>
+        <target>Vue d’ensemble de la documentation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">projects/docs/src/app/app.html</context>
           <context context-type="linenumber">155,156</context>
@@ -293,8 +293,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="viewDemo" datatype="html">
-        <source>Demo</source>
-        <target>Démo</target>
+        <source>Try the Web theme</source>
+        <target>Essayer le thème Web</target>
         <context-group purpose="location">
           <context context-type="sourcefile">projects/docs/src/app/docs/landing-page.ts</context>
           <context context-type="linenumber">39,40</context>
@@ -401,8 +401,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backToProjects" datatype="html">
-        <source>Browse projects</source>
-        <target>Parcourir les projets</target>
+        <source>Back to documentation</source>
+        <target>Retour à la documentation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">projects/docs/src/app/docs/not-found.ts</context>
           <context context-type="linenumber">22,24</context>
@@ -643,6 +643,8 @@
       <trans-unit id="footerBecomeSponsor" datatype="html"><source>Become a sponsor</source><target>Devenir sponsor</target></trans-unit>
     <trans-unit id="codeExample"><source>Code example</source><target>Exemple de code</target></trans-unit>
 <trans-unit id="codeFiles"><source>Files</source><target>Fichiers</target></trans-unit>
+      <trans-unit id="combinedSetupContext"><source>Ionic + Capacitor standard setup</source><target>Configuration standard Ionic + Capacitor</target></trans-unit>
+      <trans-unit id="webThemeDemoScope"><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source><target>La démo dans le navigateur montre le style du thème et les interactions Web. Les contrôles natifs et les couleurs Android nécessitent l’application native sur un appareil compatible.</target></trans-unit>
 </body>
   </file>
 </xliff>

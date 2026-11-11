@@ -1,6 +1,6 @@
 ---
 title: "Système de couleurs"
-sourceRevision: "e25be211c6e85d9e07398a1ae57015754feba0766851d494cc2b627662a2beaf"
+sourceRevision: "126a7aeaf2ac0cf0f747fff098f8a4dded9668c0dc96df518c9b5dfbe9b42493"
 ---
 
 # Système de couleurs
@@ -89,7 +89,7 @@ La typographie, les responsabilités des boutons de retour Ionic et les icônes 
 
 Les couleurs et dimensions du thème fonctionnent sans helpers JavaScript facultatifs ni plugin Capacitor. Pour un range sur une surface HTML arbitraire, définissez `--md3-range-gap-color` sur la couleur de cette surface ; les conteneurs Ionic standard fournissent automatiquement leur fond.
 
-Pour les dimensions mesurées des dialogues sur tablette, les coins, le comportement du clavier et les captures natives historiques de référence, consultez la [revue tablette Android 17](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/android17-tablet-2026-11-07.md). Pour la correction ultérieure des couleurs Ionic par défaut et sa vérification navigateur, consultez la [revue d’héritage des couleurs Ionic](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/ionic-color-inheritance-2026-11-07.md).
+Pour les dimensions mesurées des dialogues sur tablette, les coins, le comportement du clavier et les captures natives historiques de référence, consultez la [revue tablette Android 17](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/android17-tablet-2026-11-07.md). Pour la correction ultérieure des couleurs Ionic par défaut et sa vérification navigateur, consultez la [revue d’héritage des couleurs Ionic](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/ionic-color-inheritance-2026-11-07.md).
 
 ## Dimensions des Alert sur tablette
 

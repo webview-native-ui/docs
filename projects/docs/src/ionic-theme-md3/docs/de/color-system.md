@@ -1,6 +1,6 @@
 ---
 title: "Farbsystem"
-sourceRevision: "e25be211c6e85d9e07398a1ae57015754feba0766851d494cc2b627662a2beaf"
+sourceRevision: "126a7aeaf2ac0cf0f747fff098f8a4dded9668c0dc96df518c9b5dfbe9b42493"
 ---
 
 # Farbsystem
@@ -89,7 +89,7 @@ Typografie, Ionics Zuständigkeiten für Zurück-Buttons und Schalter-Zustandssy
 
 Farben und Geometrie des Themes funktionieren ohne optionale JavaScript-Helfer oder Capacitor-Plugin. Setzen Sie für einen Range auf einer beliebigen HTML-Fläche `--md3-range-gap-color` auf deren Farbe; normale Ionic-Container stellen ihren Hintergrund automatisch bereit.
 
-Gemessene Tablet-Dialoggrößen, Ecken, Tastaturverhalten und historische native Referenzaufnahmen finden Sie im [Android-17-Tablet-Review](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/android17-tablet-2026-11-07.md). Die anschließende Korrektur der Ionic-Standardfarben und ihre Browserprüfung beschreibt der [Review der Ionic-Farbvererbung](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/ionic-color-inheritance-2026-11-07.md).
+Gemessene Tablet-Dialoggrößen, Ecken, Tastaturverhalten und historische native Referenzaufnahmen finden Sie im [Android-17-Tablet-Review](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/android17-tablet-2026-11-07.md). Die anschließende Korrektur der Ionic-Standardfarben und ihre Browserprüfung beschreibt der [Review der Ionic-Farbvererbung](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/ionic-color-inheritance-2026-11-07.md).
 
 ## Alert-Größen auf Tablets
 

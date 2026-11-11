@@ -28,16 +28,16 @@ sources locally so a fresh checkout can build without already-published files in
 Generated modules and sitemap are committed; `workers/generated` is disposable.
 
 Public paths and npm package names remain unchanged. Related English articles remain on rdlabo.dev.
-The catalog order is Themes, Capacitor plugins, Cordova plugins, then Developer tools.
-Cordova has its own getting-started guide and links to the shared Engine documentation.
+The catalog order is Themes, Plugins, then Developer tools.
+The Plugins category contains the Capacitor and Cordova integrations.
 
-Published package versions checked against npm on 2026-11-11:
+Published package versions checked against npm on 2026-11-12:
 
 | Package | Version |
 | --- | --- |
 | `@rdlabo/ionic-theme-ios27` | 2.1.3 |
 | `@rdlabo/ionic-theme-ios26` | 9.4.3 |
-| `@rdlabo/ionic-theme-md3` | 9.2.1 |
+| `@rdlabo/ionic-theme-md3` | 9.2.2 |
 | `@rdlabo/capacitor-native-ui` | 2.1.4 |
 | `@webview-native-ui/cordova-plugin` | 0.1.1 |
 | `@webview-native-ui/engine` | 1.0.4 |
@@ -48,3 +48,11 @@ Cloudflare Workers Static Assets uses `wrangler.jsonc` and the `webview-native-u
 Production deploys are manual via the environment-gated workflow after explicit approval.
 Configure `CLOUDFLARE_API_TOKEN` and the custom domain before running it. The optional agent router
 has a distinct Worker name; see [workers/README.md](workers/README.md) for secrets and fail-open setup.
+
+The footer lists every current public GitHub sponsor; the support page also lists past public
+sponsors. Production deployment refreshes the list with `npm run sponsors:generate` before
+testing and building, using the workflow's GitHub token. CI runs the same refresh and
+checks that the committed snapshot is current. The generator excludes private
+sponsorships and follows every pagination cursor. If fetching fails, deployment stops rather
+than publishing a stale list. Local builds use the committed snapshot; to refresh it, run
+`GITHUB_TOKEN=<token> npm run sponsors:generate` with a GitHub token provided through the environment.

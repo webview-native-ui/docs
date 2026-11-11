@@ -82,7 +82,7 @@
     "@rdlabo/eslint-plugin-rules": "22.1.1",
     "@rdlabo/ionic-theme-ios26": "9.4.3",
     "@rdlabo/ionic-theme-ios27": "2.1.3",
-    "@rdlabo/ionic-theme-md3": "9.2.1",
+    "@rdlabo/ionic-theme-md3": "9.2.2",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/express": "^5.0.1",
     "@types/jsdom": "^27.0.0",

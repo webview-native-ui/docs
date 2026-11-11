@@ -1,6 +1,6 @@
 ---
 title: 'Configuration standard WebView Native UI'
-sourceRevision: '2d07f86743b5fd6d41c2e37b6a6d08966595e2ff8911c5f00f8ac30572c39519'
+sourceRevision: '7fcf8d7e1460bbd5798e4542392a783f93f1e248c800994b3031a6407b21d95c'
 ---
 
 # Configuration standard WebView Native UI
@@ -96,6 +96,13 @@ npx cap sync
 ```
 
 SwiftPM résout Engine automatiquement ; les projets CocoaPods existants suivent la [configuration native](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
+
+## Vérifier le résultat sur chaque plateforme
+
+- Sur iOS 26 ou ultérieur, les contrôles pris en charge sont natifs et conservent les gestionnaires Web existants. Le thème iOS habille le contenu Web restant.
+- Sur Android 12 ou ultérieur, Material Design 3 utilise la palette Dynamic Color de l’appareil. Les contrôles restent Web. Les versions Android antérieures utilisent la palette du thème.
+- Sur les appareils compatibles avec les rails natifs, les changements de disposition mettent à jour Vertical Bars. Les autres appareils conservent la disposition Web habituelle.
+- Le navigateur permet de vérifier les thèmes Web et le comportement de l’application. Vérifiez les contrôles natifs, les couleurs de l’appareil et les rails adaptatifs dans les applications natives.
 
 ## Options individuelles
 

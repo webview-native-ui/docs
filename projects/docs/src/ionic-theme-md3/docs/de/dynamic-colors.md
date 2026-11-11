@@ -1,6 +1,6 @@
 ---
 title: "Dynamische Android-Farben"
-sourceRevision: "a3b26e9db93f2bc1205adea86f47a53c43e2ccc4a23ea8558fa525756db06e4c"
+sourceRevision: "823d65e59aac85f274d4d101474557fdb33d9e490a138d67a4f576781ec096fd"
 ---
 # Dynamische Android-Farben
 
@@ -112,9 +112,9 @@ Die [Änderung der Vordergrundpaare](https://github.com/webview-native-ui/ionic-
 
 ## Hinweise zur Validierung
 
-Historische Integrationsmessung (keine vollständige Theme-Abnahme; siehe [Android-16-Review-Nachweise](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/android16-2026-11-07.md)). Auf einem Android-15-Emulator (API 35) geprüft: Beide nativen Schemata entsprechen den angewendeten Ionic-Tokens; das system-Erscheinungsbild folgt Android; explizite light/dark-Modi bleiben bei Betriebssystemänderungen fest. Browser-E2E deckt dieselbe Erscheinungsbildrichtlinie ab. Unit-Tests prüfen geänderte Paletten, Wiederaufnahme-/Konfigurationsbenachrichtigungen, Invalidierung während laufender Vorgänge, Unterdrückung unveränderter Updates, Fehler und Abbau.
+Historische Integrationsmessung (keine vollständige Theme-Abnahme; siehe [Android-16-Review-Nachweise](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/android16-2026-11-07.md)). Auf einem Android-15-Emulator (API 35) geprüft: Beide nativen Schemata entsprechen den angewendeten Ionic-Tokens; das system-Erscheinungsbild folgt Android; explizite light/dark-Modi bleiben bei Betriebssystemänderungen fest. Browser-E2E deckt dieselbe Erscheinungsbildrichtlinie ab. Unit-Tests prüfen geänderte Paletten, Wiederaufnahme-/Konfigurationsbenachrichtigungen, Invalidierung während laufender Vorgänge, Unterdrückung unveränderter Updates, Fehler und Abbau.
 
-Bei dieser historischen Integrationsmessung wurde die erweiterte API mit 46 Rollen auf dem Android-Emulator geprüft: Jede native Rolle entsprach ihrem `--md-sys-color-*`-Wert. Browser-Tests für Ionic 8 und 9 decken reine Ionic-Fallbacks, optionale Überschreibungen, explizite Farbpaletten und komponentenweise Deaktivierung ab; ein separater Test deaktiviert das Anwendungs-JavaScript. Die [Screenshot-Update-CI vom 2026-11-07](https://github.com/webview-native-ui/ionic-theme-md3/actions/runs/42332891975) prüfte jeweils 141 Tests für Ionic 8 und 9, einschließlich 84 heller/dunkler Screenshots. Siehe [Review der Ionic-Farbvererbung](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/ionic-color-inheritance-2026-11-07.md) für diese historische Farbregelkorrektur und ihren auf Browser begrenzten Prüfumfang.
+Bei dieser historischen Integrationsmessung wurde die erweiterte API mit 46 Rollen auf dem Android-Emulator geprüft: Jede native Rolle entsprach ihrem `--md-sys-color-*`-Wert. Browser-Tests für Ionic 8 und 9 decken reine Ionic-Fallbacks, optionale Überschreibungen, explizite Farbpaletten und komponentenweise Deaktivierung ab; ein separater Test deaktiviert das Anwendungs-JavaScript. Die [Screenshot-Update-CI vom 2026-11-07](https://github.com/webview-native-ui/ionic-theme-md3/actions/runs/42332891975) prüfte jeweils 141 Tests für Ionic 8 und 9, einschließlich 84 heller/dunkler Screenshots. Siehe [Review der Ionic-Farbvererbung](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/ionic-color-inheritance-2026-11-07.md) für diese historische Farbregelkorrektur und ihren auf Browser begrenzten Prüfumfang.
 
 Eine lokale WebView-Messung der erweiterten API (30 aufeinanderfolgende native Lesevorgänge, 1.000 aufgewärmte Konvertierungsdurchläufe) ergab für den Abruf etwa 9 ms Median / 21 ms p90 und für die Konvertierung beider Schemata in Ionic- und MD3-Variablen etwa 0,6 ms. Dies sind Beobachtungen auf einem Debug-Emulator, keine geräteübergreifenden Leistungsgarantien; die Konvertierung schließt CSS-Rendering aus. Gewöhnliches reines Ionic-Theming verwendet direkt CSS und führt weder die Konvertierung aus noch ruft es die Bridge auf.
 
