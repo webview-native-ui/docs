@@ -4,13 +4,15 @@ title: Ionic なしで Native UI を使う
 
 # Ionic なしで Native UI を使う
 
+Vertical Bars は Native UI のデフォルト構成に含まれます。Web レイアウトはアプリが所有し、Ionic やテーマ CSS は不要です。
+
 Ionic やテーマ CSS を使わず、既存の Web アプリにネイティブボタンを追加します。ラベル、状態、クリックハンドラーは通常の HTML 要素に維持します。標準ボタンに独自の Swift 登録は不要です。
 
 iOS プロジェクトを持つ Capacitor 8 アプリ、Xcode 26 以降、iOS 26 以降のデバイス・シミュレーターを使います。ブラウザーと Android は Web コントロールを維持します。独自の Android ネイティブ内容には [Kotlin/Compose 拡張](native-ui-extensions.md#2b-register-compose-content-on-android)を使用してください。
 
 まず[投影の仕組み](../README.md#how-projection-works)を参照してください。HTML 要素をソースとして維持し、ネイティブコントロールや Web プロキシが表示を担当します。
 
-**Vertical Bars だけを使う場合**は、以下の手順 1–4 と[デバイス配置の設定](#device-placement-for-vertical-bars)に従います。手順 3 のランタイムは固定の配置希望値なしで再利用します。Web に残すボタンからは明示的なマーカーを削除します。Ionic、`@rdlabo/ionic-theme-ios27`、`vertical-bars.css` は不要です。
+**Vertical Bars は標準構成に含まれます。** 以下の手順 1–4 と[デバイス配置の設定](#device-placement-for-vertical-bars)に従います。手順 3 のランタイムは固定の配置希望値なしで再利用します。Web に残すボタンからは明示的なマーカーを削除します。Ionic、`@rdlabo/ionic-theme-ios27`、`vertical-bars.css` は不要です。
 
 独自テーマで `ion-tabs`、`ion-toolbar` などの Ionic コンポーネントを使うアプリの Vertical Bars には、[Ionic Vertical Bars 設定](ionic-vertical-bars.md#try-it-in-your-existing-ionic-app)を使用してください。Angular・React・Vue というフレームワークだけでアダプターは決まりません。
 
@@ -73,7 +75,7 @@ const shell = await enableNativeUI({
 
 ### カスタムオーバーレイ
 
-背景を操作できなくするカスタムモーダルを表示する前に `await shell.suspend({ covered: true })` を呼び出し、閉じた後に返されたリースを再開します。準備済みのネイティブ画像は、HTML にネイティブの寸法を強制せず、背景の外観を維持します。レールの画像は `webHost` 内のプロキシに固定されるため、元のソースをスクロールしても移動しません。ソースとプロキシのボタンの CSS サイズが異なっても、画像の幅と高さは Native から取得します。Web 上でコントロールを操作可能に保つ必要がある場合は、オプションなしで `shell.suspend()` を呼び出してください。ライフサイクルとフォールバックの動作は[カスタムオーバーレイの中断](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/native-ui#custom-overlay-suspension)を参照してください。
+背景を操作できなくするカスタムモーダルを表示する前に `await shell.suspend({ covered: true })` を呼び出し、閉じた後に返されたリースを再開します。準備済みのネイティブ画像は、HTML にネイティブの寸法を強制せず、背景の外観を維持します。レールの画像は `webHost` 内のプロキシに固定されるため、元のソースをスクロールしても移動しません。ソースとプロキシのボタンの CSS サイズが異なっても、画像の幅と高さは Native から取得します。Web 上でコントロールを操作可能に保つ必要がある場合は、オプションなしで `shell.suspend()` を呼び出してください。ライフサイクルとフォールバックの動作は[カスタムオーバーレイの中断](https://webview-native-ui.com/projects/capacitor-native-ui/docs/native-ui#custom-overlay-suspension)を参照してください。
 
 ### HTML テーマに合わせる
 
@@ -81,7 +83,7 @@ const shell = await enableNativeUI({
 
 ## 4. iOS でビルドして実行する
 
-CocoaPods プロジェクトでは、まず [Engine の Podfile 設定](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/setup#4-build-sync-and-run)を完了してください。SwiftPM は Engine を自動で解決します。
+CocoaPods プロジェクトでは、まず [Engine の Podfile 設定](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup#4-build-sync-and-run)を完了してください。SwiftPM は Engine を自動で解決します。
 
 Web アプリをビルドして `npx cap sync ios` を実行し、Xcode から iOS プロジェクトを起動します。手順 3 の設定では Add はソース位置に描画され、元のクリックハンドラーを実行します。Back は利用可能ならデバイスが報告するネイティブレールを要求します。Web の余白を同期するため後述のデバイス配置を接続してください。ブラウザーでは同じボタンが通常の Web ボタンのままです。マーカーのない HTML は変わりません。
 
@@ -91,17 +93,17 @@ Ionic も使うアプリで明示的ソースと登録拡張だけを投影す�
 
 ## Vertical Bars のデバイス配置
 
-Foldable は手順 1 の標準インストールに含まれています。次のようにレイアウトへ接続します。
+標準の導入手順1には Foldable が含まれます。レイアウト API には Foldable 8.5 以降のバージョン8が必要です。手順3のランタイムは `verticalBars.placement` なしで再利用します。Native UI はデバイスの edge を使うため、固定の `edge: 'trailing'` は leading のレールを拒否する可能性があります。
 
-手順 3 のランタイムを **`verticalBars.placement` なし**で再利用します。Native UI がデバイスの edge に従います。固定の `edge: 'trailing'` は制約となり、leading 側のレールを拒否する場合があります。
+[アプリ所有の CSS 向け連携](vertical-bars.md#with-application-owned-css-or-without-ionic)に従います。
 
-[Foldable 連携](vertical-bars.md#with-application-owned-css-or-without-ionic)に従います。
+1. `layoutChange` を購読してから、初期の `resolveVerticalBarsLayout(Foldable)` を読み取ります。
+2. `edge`、`inset`、`toolbarTop` をアプリのレイアウト状態と CSS へ適用します。undefined はアプリ既定値を維持します。null の edge では通常の余白へ戻して `shell.disableVerticalControlArea()` を呼び、edge が戻ったら `shell.enableVerticalControlArea()` を呼びます。レイアウト更新と直列化します。
+3. アプリの破棄時に購読を解除し、アプリが所有するランタイムを破棄します。
 
-1. `barPlacementChange` を購読し、`getBarPlacement()` で初期 edge と inset を取得します。
-2. edge と inset をアプリの CSS に適用します。null の edge では通常の余白に戻して `shell.disableVerticalControlArea()` を呼び、edge が戻れば `shell.enableVerticalControlArea()` を呼びます。レイアウト更新と直列化してください。
-3. 終了時にリスナーを削除し、このアプリが所有するランタイムを破棄します。
+この連携はアプリ所有のサービスやモジュールに置きます。Foldable はデバイス情報を報告し、リゾルバーは値を返し、アプリは CSS へ適用し、Native UI は投影を担当します。位置と寸法はビューポートの CSS ピクセルへ揃えてください。
 
-手順 2 の明示的マーカーはコントロールと希望配置を宣言するので維持します。Back だけを投影するには Add から `data-native-ui="button"` を削除します。`controls` は明示的宣言を無効にしません。Web レールホストがなければ、利用不可のネイティブレールコントロールは元の Web 位置に残ります。テーマパッケージは不要です。
+手順2の明示的なソースマーカーを維持します。マーカーがコントロールと要求する配置を宣言します。Back だけを投影する場合は Add の `data-native-ui="button"` を外します。`controls` は明示宣言を無効にしません。Web レールホストがない場合、ネイティブレールが利用できなければ元の Web の位置を維持します。テーマパッケージは不要です。
 
 ## 任意のブラウザーレールプレビュー
 

@@ -1,43 +1,50 @@
 ---
 title: "Native UI in einer Ionic-App einrichten"
-sourceRevision: "f23c1a5c98248f6d5b8ad565ba8ecc78e5086b89bf3d839eb175b6dd83de0146"
+sourceRevision: "13342d88e06664f78fd13bc71777b73b3c4be06d5865804072aea81678a2dc49"
 ---
+
 # Native UI in einer Ionic-App einrichten
 
-Behalten Sie Ihre bestehende Web-Darstellung und rendern Sie unterstützte Ionic-Bedienelemente unter iOS nativ. Diese Anleitung benötigt keine iOS-Theme-Stylesheets.
+Beginnen Sie mit der standardmäßigen Ionic-iOS-Einrichtung: Pakete installieren, Theme-Preset verwenden und eine Native-UI-Runtime starten. **Vertical Bars ist standardmäßig aktiviert**, neben gewöhnlichen Bedienelementen. Ein unterstütztes Gerät bestimmt die Rail-Platzierung; Browser und Geräte ohne Rail behalten ihr Web-Layout.
 
-Sie verwenden bereits das iOS-27-Theme? Folgen Sie [Native UI zum Theme hinzufügen](/ionic-theme-ios27/docs/add-native-ui). Ohne Ionic folgen Sie stattdessen der [HTML-Einrichtung](framework-independent.md).
-
-Lesen Sie zuerst die [Funktionsweise der Projektion](../README.md#how-projection-works), wenn Native UI neu für Sie ist. Diese Anleitung verbindet Ihre bestehenden Ionic-Bedienelemente mit dieser Darstellung.
-
-## Vorbereitungen
-
-| Anforderung | Gewöhnliche native Bedienelemente |
-| --- | --- |
-| Ionic | `>=8.8.1 <10` |
-| Natives Projekt | Capacitor 8 mit iOS-Projekt |
-| Buildwerkzeuge | Xcode 26 oder neuer |
-| Gerät oder Simulator | iOS 26 oder neuer |
-| Nativer Abhängigkeitsmanager | Bestehende SPM- oder CocoaPods-Integration beibehalten. |
-| Vertical Bars | Siehe separate [Geräteanforderungen](vertical-bars.md#native-rendering). |
-
-Verwendet die App noch kein Capacitor, erstellen und konfigurieren Sie vor den folgenden nativen Schritten ihr Capacitor-iOS-Projekt. Browservorschauen behalten Web-Bedienelemente und demonstrieren kein UIKit- oder SwiftUI-Rendering.
+Verwenden Sie eine bestehende Ionic-Anwendung mit Capacitor 8. Diese Anleitung nutzt das übergeordnete Stylesheet und die Konfiguration des iOS-27-Themes. Wenn Sie ein anderes Web-Theme behalten möchten, verwenden Sie die [Einrichtung für bestehende Themes](ionic-vertical-bars.md); ohne Ionic die [HTML-Einrichtung](framework-independent.md).
 
 ## 1. Plugin installieren
 
-[Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable) ist unsere Standardintegration für den Gerätezustand. Seine Positions- und Faltstellungs-APIs lassen Ihre App Layoutanpassungen steuern; nach der Installation müssen Anfangswerte und Änderungsereignisse verbunden werden.
-
-Behalten Sie Ihre Capacitor-Pakete auf Version 8. Ergänzen Sie diese direkten Anwendungsabhängigkeiten:
-
 ```sh
-npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
 ```
 
-Der Ionic-Adapter verwendet `@ionic/core`, das Ihre Ionic-App bereits bereitstellt. Entfernen Sie Ihre bestehenden Web-Stile nicht: Sie gestalten Seiteninhalt und Fallback-Bedienelemente.
+Deklarieren Sie Native UI direkt in der Anwendung, damit Capacitor das native Plugin erkennt. Behalten Sie Theme, Plugin und Foldable als separate Abhängigkeiten; das Theme deklariert seinen kompatiblen Native-UI-Peer-Bereich. Die standardmäßige Gerätelayout-Integration verwendet Foldable 8.5 oder neuer innerhalb von Version 8.
 
 ## 2. Shell aktivieren
 
-Rufen Sie die Funktion einmal beim Anwendungsstart nach dem Einbinden von `ion-app` auf:
+Behalten Sie die Ionic-Basisstile. Ersetzen Sie im globalen Stylesheet separate Ionic-Dunkelpaletten- und iOS-Theme-Importe durch den einzelnen Theme-Einstiegspunkt:
+
+```css
+@import '@rdlabo/ionic-theme-ios27/styles/system.css';
+```
+
+Übergeben Sie das Theme-Preset vor dem Rendern an Ihre bestehende Ionic-Initialisierung:
+
+```ts
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+
+const ionicConfig = {
+  ...ios27ThemeConfig,
+};
+```
+
+| Framework | Bestehende Ionic-Initialisierung |
+| --- | --- |
+| Angular / Ionic 8 | `provideIonicAngular(ionicConfig)` aus `@ionic/angular/standalone` |
+| Angular / Ionic 9 | `provideIonicAngular(ionicConfig)` aus `@ionic/angular` |
+| React | `setupIonicReact(ionicConfig)` aus `@ionic/react` |
+| Vue | `app.use(IonicVue, ionicConfig)` mit `IonicVue` aus `@ionic/vue` |
+
+Das Stylesheet enthält das Vertical-Bars-Layout; das Preset enthält den Native-UI-fähigen Seitenübergang. Fügen Sie kein zweites Rail-Stylesheet hinzu und umschließen Sie den Übergang des Presets nicht erneut. Die [Theme-Konfiguration](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/configuration) beschreibt manuellen Dunkelmodus und anwendungsspezifische Überschreibungen.
+
+Starten Sie Native UI einmal, nachdem das `ion-app` der Anwendung eingebunden wurde:
 
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
@@ -45,135 +52,59 @@ import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 const shell = await enableNativeUI();
 ```
 
-Behalten Sie das zurückgegebene Handle, wenn Sie Funktionen deaktivieren oder Projektion stoppen müssen. Rufen Sie beim Auflösen der verantwortlichen Anwendungsinstanz `await shell.destroy()` auf. Starten Sie keine neue Shell pro Seite.
-
-Vorhandenes Ionic-Markup liefert Beschriftungen, Symbole, Deaktivierungszustand und Aktionen. Beispielsweise kann eine bestehende feste Seitenkopfzeile Folgendes enthalten:
-
-```html
-<ion-header>
-  <ion-toolbar>
-    <ion-title>My app</ion-title>
-    <ion-buttons slot="end">
-      <ion-button aria-label="Add">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-```
-
-Behalten Sie Ihren Framework-Handler an der Originalschaltfläche und registrieren Sie das Symbol wie gewohnt. Die Eignung beschreibt [unterstütztes Markup](native-ui.md#supported-markup); nicht unterstützte Bedienelemente bleiben im Web.
+Dieser Standardaufruf aktiviert gewöhnliche Bedienelemente **und Vertical Bars**. Übergeben Sie für die Standardeinrichtung nicht `controls: 'verticalOnly'`. Individuelle Auswahl, feste Browser-Platzierung, Erweiterungen und Suspendierungs-Leases sind Referenz-APIs und keine Installationsvoraussetzungen.
 
 ### Start im App-Stamm Ihres Frameworks platzieren
 
-Verwalten Sie eine Shell für die ganze App oberhalb gerouteter Seiten. Der folgende anwendungseigene Helfer serialisiert asynchronen Start und Bereinigung, einschließlich erneuter Einbindungen im React-Entwicklungsmodus. Platzieren Sie Ihre gemeinsamen Startoptionen hier und entfernen Sie alle anderen `enableNativeUI()`-Aufrufe:
+Der Anwendungs-Bootstrap besitzt den Runtime-Lebenszyklus. Geräteinformationen gehören in einen Anwendungsservice, die Theme-Konfiguration in die Ionic-Initialisierung beziehungsweise das globale Stylesheet. Geroutete Komponenten behalten ihre bestehenden Handler und ihren Zustand. Ergänzen Sie in `AppComponent` oder Seitenkomponenten keinen zweiten Router, Projektionszustand oder eigene native Lebenszyklusverwaltung.
+
+Verwenden Sie für Angular den [Gerätelayout-Service](ionic-vertical-bars.md#3-connect-device-placement-and-start-the-controls) und verbinden Sie anschließend beide Verantwortlichen in der bestehenden `src/main.ts`:
 
 ```ts
-// native-ui.ts — neben Ihrer Stammkomponente ablegen
-import { enableNativeUI, type NativeUIHandle } from '@rdlabo/capacitor-native-ui';
-// Ohne Ionic stattdessen @rdlabo/capacitor-native-ui/core verwenden.
+import { bootstrapApplication } from '@angular/platform-browser';
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
+import { VerticalBarsLayoutService } from './app/vertical-bars-layout.service';
 
-let lifecycle = Promise.resolve();
-const report = (error: unknown) => console.error('Native UI lifecycle failed', error);
-
-export function mountNativeUI(): () => void {
-  let disposed = false;
-  let shell: NativeUIHandle | undefined;
-  lifecycle = lifecycle
-    .then(async () => {
-      if (disposed) return;
-      shell = await enableNativeUI(); // Hier Ihre Optionen eintragen.
-      if (disposed) await shell.destroy();
-    })
-    .catch(report);
-  return () => {
-    disposed = true;
-    lifecycle = lifecycle
-      .then(async () => {
-        await shell?.destroy();
-        shell = undefined;
-      })
-      .catch(report);
-  };
-}
+void bootstrapApplication(AppComponent, appConfig)
+  .then(async (app) => {
+    const shell = await enableNativeUI();
+    if (app.destroyed) {
+      await shell.destroy();
+      return;
+    }
+    app.onDestroy(() => {
+      void shell.destroy().catch((error: unknown) => console.error('Native UI cleanup failed', error));
+    });
+    await app.injector.get(VerticalBarsLayoutService).initialize();
+  })
+  .catch((error: unknown) => console.error('Application startup failed', error));
 ```
 
-Wählen Sie unten **ein** Framework. Der Helfer gehört zu Ihrer Anwendung; er ist kein weiteres zu installierendes Paket.
+Integrieren Sie dies in den einzigen Bootstrap der Anwendung; erstellen Sie weder einen weiteren Bootstrap noch eine weitere Runtime. `AppComponent` setzt weiterhin nur App-Shell und Router-Outlet zusammen. Der Service registriert seinen Listener vor dem ersten Geräteabruf, entfernt ihn bei der Zerstörung und übergibt die aufgelöste Geometrie an das Theme. Native UI übernimmt native Projektion, Fallback und Ereignisweiterleitung.
 
-**Angular:** Nach dem ersten DOM-Rendern aus der Stammkomponente aufrufen und Bereinigung mit deren `DestroyRef` registrieren:
-
-```ts
-import { afterNextRender, DestroyRef, inject } from '@angular/core';
-import { mountNativeUI } from './native-ui';
-
-// Im Konstruktor Ihrer Stamm-AppComponent:
-const destroyRef = inject(DestroyRef);
-afterNextRender(() => {
-  const stop = mountNativeUI();
-  destroyRef.onDestroy(stop);
-});
-```
-
-**React:** Einen Effekt in der Stammkomponente verwenden, die `IonApp` rendert:
-
-```tsx
-import { useEffect } from 'react';
-import { mountNativeUI } from './native-ui';
-
-// Innerhalb Ihrer App-Stammkomponente:
-useEffect(() => mountNativeUI(), []);
-```
-
-**Vue:** Lebenszyklus-Hooks im `<script setup>` der Stammkomponente registrieren:
-
-```ts
-import { onMounted, onBeforeUnmount } from 'vue';
-import { mountNativeUI } from './native-ui';
-
-let stop: (() => void) | undefined;
-onMounted(() => {
-  stop = mountNativeUI();
-});
-onBeforeUnmount(() => {
-  stop?.();
-});
-```
-
-Diese Hooks verwalten die App-Lebensdauer, nicht einzelne Seitenübergänge. Konfigurieren Sie zusätzlich die Navigation unten.
+Für React- und Vue-Anwendungen gilt dieselbe Zuständigkeit: einmal nach dem Einbinden der App-Shell starten, Geräteinformationen oberhalb gerouteter Seiten verwalten und bei der Entsorgung des Anwendungseigentümers die zurückgegebene Runtime zerstören sowie den Gerätelistener entfernen. Kopieren Sie Angulars DI-Service nicht in ein anderes Framework und führen Sie keine gemeinsame modulglobale Lebenszykluswarteschlange ein.
 
 ## 3. Navigation koordinieren
 
-Installieren Sie für die optionale Ionic-Animationskoordination `@rdlabo/ionic-theme-ios27` mit einer kompatiblen Native UI-Version. Die Pakete werden unabhängig versioniert; verwenden Sie den vom Theme deklarierten Native UI-Peer-Bereich. Konfigurieren Sie die Navigation vor der Initialisierung von Ionic. Der Adapter kann die Standardübergänge von Ionic ohne Theme-CSS beibehalten:
+Das standardmäßige `ios27ThemeConfig` koordiniert bereits die native Darstellung mit der Ionic-Navigation, einschließlich Zurück-Gesten. Behalten Sie normale Ionic-Routen und Handler. Ein selbst geschriebener `navigate()`-Wrapper, ein Seitenwechsel per Web Animation oder ein Native-UI-Start je Seite ist nicht erforderlich.
 
-```sh
-npm install @rdlabo/ionic-theme-ios27 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
-```
+Die standardmäßige Vertical-Bars-Einrichtung enthält das Geräteabonnement oben; es ist kein späterer optionaler Schritt. `layoutChange` zusammen mit `resolveVerticalBarsLayout(Foldable)` liefert Kante, Einzug und Werkzeugleistenursprung auch dann, wenn eine Anzeigeänderung Kante und Einzug unverändert lässt. Das Theme wendet das Web-Layout an; Native UI bestimmt, ob natives Rail-Rendering verfügbar ist. Eine Gerätekante von null stellt das gewöhnliche Layout wieder her.
 
-```ts
-import { iosTransitionAnimation, mdTransitionAnimation, type AnimationBuilder } from '@ionic/core';
-import { withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
-
-const defaultTransition: AnimationBuilder = (baseEl, opts) =>
-  (opts.mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation)(baseEl, opts);
-
-const ionicConfig = {
-  navAnimation: withNativeUITransition(defaultTransition),
-};
-```
-
-Übergeben Sie diese Option an Angulars `provideIonicAngular`, Reacts `setupIonicReact` oder Vues `IonicVue`-Optionen. Für eigene Animationen folgen Sie den [Übergangsadapter-Anweisungen](migration.md#native-ui-transition-adapter). Dieser optionale Adapter benötigt das Theme-Paket, aber weder dessen Stylesheets noch ersetzt er Ihre Animation.
-
-Für eine reine Plugin-App verwenden Sie unten [Navigation ohne Theme](#navigation-without-the-theme). Konfigurieren Sie vor dem Navigationstest einen der Ansätze.
+Folgen Sie für ein bestehendes oder eigenes Web-Theme der [eigenständigen Layout- und Übergangseinrichtung](ionic-vertical-bars.md), statt das Theme zu ersetzen. Eigene Animations-Builder verwenden den [Übergangsadapter](migration.md#native-ui-transition-adapter); dieser ersetzt den Preset-Weg, statt einen zweiten Koordinator hinzuzufügen.
 
 ## 4. Erstellen, synchronisieren und ausführen
 
-Installieren Sie bei CocoaPods-Projekten zunächst eine Engine-Version, die mit dem installierten Native UI-Paket kompatibel ist:
+Gewöhnliche native Bedienelemente benötigen Ionic `>=8.8.1 <10`, Capacitor 8, Xcode 26+ und iOS 26+. Native Vertical Bars benötigen zusätzlich das [unterstützte Rail-Gerät und Betriebssystem](vertical-bars.md#native-rendering). Die standardmäßig aktivierte Rail erzwingt auf nicht unterstützter Hardware keine native Darstellung.
+
+SwiftPM löst Engine automatisch auf. Installieren Sie für eine bestehende CocoaPods-App die Engine-Version, die Ihr installiertes Native-UI-Paket benötigt:
 
 ```sh
 npm install "@webview-native-ui/engine@$(node -p "require('./node_modules/@rdlabo/capacitor-native-ui/package.json').dependencies['@webview-native-ui/engine']")"
 ```
 
-Fügen Sie Engine im bestehenden App-Target in `ios/App/Podfile` außerhalb des generierten Blocks `def capacitor_pods` hinzu:
+Fügen Sie Engine dem bestehenden Anwendungstarget in `ios/App/Podfile` hinzu, außerhalb des generierten Blocks `def capacitor_pods`:
 
 ```ruby
 target 'App' do
@@ -183,66 +114,31 @@ target 'App' do
 end
 ```
 
-Passen Sie den Pfad an, falls Ihr natives Projekt oder node_modules anders angeordnet ist. Gleichen Sie die npm-Versionen bei einem Upgrade von Native UI erneut ab. Engine wird über npm und nicht über CocoaPods Trunk verteilt. SwiftPM-Projekte beziehen die native Bibliothek aus Git und benötigen diesen Schritt nicht.
+Passen Sie den Pfad an Ihr Projektlayout an und wiederholen Sie die Versionsabstimmung bei Native-UI-Upgrades. Dies ist eine CocoaPods-Kompatibilitätseinrichtung und keine UI-Logik der Anwendung.
 
-Führen Sie den Web-Build Ihrer Anwendung aus und synchronisieren Sie anschließend:
+Erstellen Sie die Web-Assets der Anwendung und synchronisieren Sie anschließend:
 
 ```sh
 npx cap sync ios
 ```
 
-Starten Sie die iOS-App aus Xcode auf einem iOS-26+-Gerät oder Simulator. Unterstützte feste Bedienelemente sollten nativ dargestellt werden und weiterhin ihre ursprünglichen Handler auslösen. Navigieren Sie vorwärts und zurück, einschließlich einer abgebrochenen Zurück-Wischgeste. Ein Browser- oder Android-Build sollte funktionierende Web-Bedienelemente behalten.
+Erstellen Sie die App erneut und starten Sie sie in Xcode. Vorhandene unterstützte Werkzeugleistenaktionen und Tabs sollten nativ projiziert werden und ihre ursprünglichen Handler aufrufen. Auf einem unterstützten Rail-Gerät verwenden sie Vertical Bars; der Inhalt reserviert den gemeldeten Platz. Prüfen Sie Vorwärts-/Zurück-Navigation, abgebrochene Zurück-Gesten, eine Geräteanzeigeänderung und den Web-Fallback. Eine Browser-Vorschau kann natives Rendering nicht überprüfen.
 
 | Beobachtung | Prüfung |
 | --- | --- |
-| Alle Bedienelemente bleiben unter iOS im Web | Natives Paket als direkte Abhängigkeit, App synchronisiert und neu erstellt, Start auf unterstütztem OS ausgeführt. |
-| Nur ein Bedienelement bleibt im Web | Markup und Stile mit [unterstützten Bedienelementen](native-ui.md#supported-markup) vergleichen. |
-| Bedienelemente überlappen während Navigation | Übergangsadapter oder Suspend-/Resume-Lebenszyklus vor der Navigation konfigurieren. |
-| Fehlende Stile oder Abstände | Web-CSS der App behalten; das Plugin liefert kein Seitenlayout. |
+| Alle Bedienelemente bleiben unter unterstütztem iOS im Web | Direkte Abhängigkeit, Start nach dem Einbinden, Capacitor-Synchronisierung und nativer Neubuild. |
+| Nur ein Bedienelement bleibt im Web | Quell-Markup mit [unterstützten Bedienelementen](native-ui.md#supported-markup) vergleichen. |
+| Ein Rail-Gerät behält das gewöhnliche Layout | Geräteservice einbinden und passendes Theme-Stylesheet laden. |
+| Das Layout reagiert nicht auf Anzeigeänderungen | `layoutChange` mit dem Resolver verwenden, nicht nur ein Kanten-/Einzugsereignis. |
+| Bedienelemente überlappen bei der Navigation | Preset-Übergang beibehalten oder genau einen eigenen Übergangsadapter konfigurieren. |
 
 ## Nächste Schritte
 
-- [Nur Vertical Bars](ionic-vertical-bars.md): schrittweise Seitenleisteneinrichtung mit Ihrem bestehenden Theme.
-- [Konfiguration](configuration.md): Bedienelemente wählen und Seitenleisteneinstellungen zur Laufzeit ändern.
-- [Eigene SwiftUI- oder Compose-Inhalte](native-ui-extensions.md): eine app-lokale Erweiterung erstellen.
-- [Migration](migration.md): ältere Paketnamen, Importe und native Projekte aktualisieren.
+- [Ein bestehendes Web-Theme behalten](ionic-vertical-bars.md) und dabei das standardmäßige Vertical-Bars-Verhalten erhalten.
+- [Konfigurationsreferenz](configuration.md) für explizite Anpassungen und das Deaktivieren von Standards.
+- [Unterstützte Bedienelemente](native-ui.md) und [Darstellung](appearance.md).
+- [Migration](migration.md) für ältere Paketnamen und Integrations-APIs.
 
 ## Navigation ohne Theme
 
-Native UI hängt weder von einem Theme noch von einem Ionic-Animationsbuilder ab. Ihr Router kann Projektion vor dem Seitenwechsel aussetzen und nach Abschluss oder Abbruch wieder aufnehmen:
-
-```ts
-const suspension = await shell.suspend();
-try {
-  await navigate();
-} finally {
-  await suspension.resume();
-}
-```
-
-Das Promise muss erst nach Abschluss von DOM-Änderungen und Seitenanimationen enden, nicht bereits nach der URL-Änderung. Verbinden Sie Browser-Zurück, Gestenabbruch und programmatische Navigation mit demselben Lebenszyklus. Für Ionic verwenden Sie den obigen Übergangsadapter zur Abdeckung animierter und interaktiver Übergänge.
-
-Für eine routerlose HTML-App ist dies ein vollständiger animierter Seitenwechsel. Eine abgebrochene Animation stellt vor der Wiederaufnahme der Projektion die alte Seite wieder her:
-
-```ts
-async function showPage(current: HTMLElement, next: HTMLElement) {
-  const lease = await shell.suspend();
-  try {
-    current.hidden = true;
-    next.hidden = false;
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const animation = next.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150 });
-      try {
-        await animation.finished;
-      } catch {
-        next.hidden = true;
-        current.hidden = false;
-      }
-    }
-  } finally {
-    await lease.resume();
-  }
-}
-```
-
-Serialisieren Sie Seitenwechsel, wenn Ihre App vor Abschluss dieses Promises weitere Navigation erlaubt. Die Quell-Klickhandler bleiben für Router oder History zuständig; das Plugin navigiert nicht für Sie.
+Dies ist eine fortgeschrittene Integration für Anwendungen mit einem anderen eigenen Navigationslebenszyklus, kein Bestandteil der standardmäßigen Ionic-Installation. Behalten Sie den Anwendungsrouter als einzigen Navigationsverantwortlichen. Verwenden Sie das [HTML-Beispiel](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.4/examples/native-ui-html) für eine routerlose App und die [Suspendierung](native-ui.md#custom-overlay-suspension), wenn die Anwendung die Darstellung ausdrücklich an das Web zurückgeben muss. Setzen Sie erst fort, wenn Abschluss oder Abbruch vollständig abgewickelt sind; kopieren Sie keinen zweiten Seitenrouter in eine Ionic-App.

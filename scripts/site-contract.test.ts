@@ -357,7 +357,8 @@ test('publishes separate theme and Native UI guides with current package APIs', 
     assert.match(layout.html, /applyFoldStateClasses/);
     const setup = native.pages.find((page) => page.slug === 'ionic-vertical-bars')!;
     assert.match(setup.html, /enableNativeUI/);
-    assert.match(setup.html, /barPlacementChange/);
+    assert.match(setup.html, /layoutChange/);
+    assert.match(setup.html, /resolveVerticalBarsLayout/);
     assert.ok(
       setup.html.includes(`href="${prefix}/projects/ionic-theme-ios27/docs/vertical-bars-layout`),
     );

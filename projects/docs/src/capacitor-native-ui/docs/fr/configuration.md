@@ -1,10 +1,11 @@
 ---
 title: "Configurer Native UI"
-sourceRevision: 6ae131fbc838b94e4a275911b28a910c3249ae733ea66dfa93d601ec76dac5e1
+sourceRevision: "874fe4b43b3bec975b14d096396048c4073b97927cb037fe8f7baf686e470ae4"
 ---
+
 # Configurer Native UI
 
-Cette page décrit les réglages. Commencez par le [fonctionnement de la projection](../README.md#how-projection-works), puis la [configuration Ionic](setup.md) ou [HTML](framework-independent.md) pour l’installation.
+Pour l’installation, utilisez la [configuration standard](setup.md) minimale : `enableNativeUI()` comprend les contrôles ordinaires et Vertical Bars par défaut. Cette page est la référence des réglages ; ne copiez pas toutes ses options comme code d’installation obligatoire. Commencez par le [fonctionnement de la projection](https://webview-native-ui.com/projects/capacitor-native-ui/docs/readme#how-projection-works), puis la [configuration Ionic](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup) ou la [configuration HTML](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent) pour l’installation.
 
 Appelez `enableNativeUI()` une seule fois après le montage du DOM de l’application. Les contrôles Ionic et HTML explicitement marqués partagent les moteurs Swift standard. Le thème est facultatif ; la disposition Web, les zones de sécurité et l’espacement relèvent de l’application ou du thème.
 
@@ -167,7 +168,6 @@ const shell = await enableNativeUI({
   verticalBars: {
     enabled: true,
     placement: {
-      edge: 'trailing',
       webHost: document.querySelector<HTMLElement>('#rail')!,
     },
   },

@@ -26,7 +26,7 @@ Native UI と必須のデバイス状態プラグイン Foldable をアプリの
 npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
 ```
 
-Ionic は[標準設定](ionic-vertical-bars.md)に従います。レール CSS、ナビゲーションを設定し、Foldable の初期配置と `barPlacementChange` を接続してから単一ランタイムを起動します。[後述の連携](#use-with-capacitor-foldable)は既存ランタイムとアプリ所有 CSS も扱います。Web アセットをビルドし、`npx cap sync ios` 後にネイティブアプリを再ビルドします。
+Ionic は[標準設定](ionic-vertical-bars.md)に従います。レール CSS、ナビゲーションを設定し、Foldable の初期配置と `layoutChange` を接続してから単一ランタイムを起動します。[後述の連携](#use-with-capacitor-foldable)は既存ランタイムとアプリ所有 CSS も扱います。Web アセットをビルドし、`npx cap sync ios` 後にネイティブアプリを再ビルドします。
 
 ランタイムだけでは Web の領域を確保しません。標準設定ではデバイス購読を維持し、手動配置は[任意のブラウザープレビュー](ionic-vertical-bars.md#optional-browser-preview)で使います。Native UI が有効なら別のランタイムを起動せず再利用してください。
 
@@ -42,34 +42,37 @@ Web の余白、レール配置、フォールバックのスタイルはアプ�
 
 ## Capacitor Foldable と併用する
 
-標準の Vertical Bars 設定には [`@erkamyaman/capacitor-foldable`](https://github.com/erkamyaman/capacitor-foldable) が必要です。上記のように Native UI と一緒に導入し、デバイス配置を Web レイアウトへ接続してください。Native UI は自動で Foldable を購読しません。
+標準の Vertical Bars 構成には [`@erkamyaman/capacitor-foldable`](https://github.com/erkamyaman/capacitor-foldable) が必要です。Native UI とともにインストールし、デバイス配置を Web レイアウトへ接続します。Native UI 自体が Foldable を自動購読するわけではありません。
 
-配置の例には `BarPlacement.inset` を含む Foldable **バージョン 8 の 8.3.3 以降**が必要です。古い版なら `npm install @erkamyaman/capacitor-foldable@^8.3.3` で更新し、同期・再ビルドしてください。
+配置の例には **Foldable 8.5 以降のバージョン8**が必要です。`layoutChange` は、edge と inset が同じままでも予約領域の変更を通知します。古いバージョンなら `npm install @erkamyaman/capacitor-foldable@^8.5` で更新し、ネイティブアプリを同期・再ビルドします。
 
 | 所有者 | 責務 |
-| -------------------- | ------------------------------------------------------------------------------------------- |
-| Foldable | 初期のデバイス状態と以降の配置・折りたたみ状態の変更を通知。 |
-| アプリまたはテーマ | 通知された論理方向と計測インセットで Web の領域を確保し、レイアウトを選択。 |
-| Native UI | ネイティブレールの利用可否を独立して確認し、対象ソースを投影。 |
+| --- | --- |
+| Foldable | デバイスの初期の位置と寸法、および以降のレイアウト・姿勢の変更を報告します。 |
+| アプリまたはテーマ | 解決された edge、inset、ツールバー原点を Web レイアウトへ適用し、その適用側で既定値を管理します。 |
+| Native UI | ネイティブレールの利用可否を独立して判断し、対応コントロールを投影します。 |
 
 ### テーマの Ionic レールレイアウトと併用する
 
-[レールスタイルシート](../../theme-ios27/docs/vertical-bars-layout.md)を読み込み、`ion-app` をマウントした後、デバイス配置を接続してランタイムを一度起動します。
+[レール用スタイルシート](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout)を読み込み、`ion-app` がマウントされた後に、デバイス配置を接続してランタイムを一度起動します。
 
 ```ts
-import { Foldable, type BarPlacement } from '@erkamyaman/capacitor-foldable';
+import { Foldable } from '@erkamyaman/capacitor-foldable';
+import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
 import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const applyPlacement = ({ verticalBarEdge, inset }: BarPlacement) => setVerticalBarsLayout({ edge: verticalBarEdge, inset });
-const listener = await Foldable.addListener('barPlacementChange', applyPlacement);
-applyPlacement(await Foldable.getBarPlacement());
-const rail = await enableNativeUI({ controls: 'verticalOnly' });
+const applyLayout = async () => {
+  setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+};
+const listener = await Foldable.addListener('layoutChange', () => void applyLayout());
+await applyLayout();
+const rail = await enableNativeUI();
 ```
 
-既存ランタイムがあれば維持し、配置の購読だけを追加します。`setVerticalBarsLayout` は RTL の論理方向を解決し、null の edge で通常の Web レイアウトへ戻します。固定幅ではなく計測インセットを使ってください。テーマのレールスタイルシートを維持し、Foldable の `ionic-tabs.css` は不要です。
+既存のランタイムがあれば維持し、配置の購読だけを追加します。`setVerticalBarsLayout` は RTL の論理方向を解決し、null の edge で通常の Web レイアウトへ戻します。固定幅ではなく計測インセットを使います。テーマのレールスタイルシートを維持し、Foldable の `ionic-tabs.css` は不要です。
 
-アプリの所有コンポーネントを破棄するときは、購読を削除して自身のランタイムを破棄します。
+アプリの所有者を破棄するときは、購読を解除して、自分が所有するランタイムを破棄します。
 
 ```ts
 await listener.remove();
@@ -78,11 +81,11 @@ await rail.destroy();
 
 ### アプリ所有の CSS、または Ionic なしで使う
 
-同じ `getBarPlacement()` / `barPlacementChange` を購読し、`setVerticalBarsLayout` の代わりに独自 CSS へ edge と inset を適用します。null の edge では通常の余白へ戻します。Ionic は前述のレールクラスを維持します。HTML は `/core` と[デバイスレール設定](framework-independent.md#device-placement-for-vertical-bars)を使います。Foldable と Native UI はアプリの CSS を提供しません。明示的な HTML レールマーカーは CSS と独立して有効なため、null の edge でソースを元の配置に戻すには `disableVerticalControlArea()`、レール edge が戻れば `enableVerticalControlArea()` を呼びます。これらの変更とレイアウト更新は直列化してください。
+同じ `resolveVerticalBarsLayout(Foldable)` と `layoutChange` の接続を使い、`setVerticalBarsLayout` の代わりに、戻り値の `edge`、`inset`、`toolbarTop` をすべてアプリ自身のレイアウトへ適用します。ルーティングされるページではなく、アプリ所有のサービスやモジュールに置きます。null の edge なら通常の余白へ戻します。Ionic では上記のレール用クラス、プレーン HTML では `/core` と[デバイスレールの設定](framework-independent.md#device-placement-for-vertical-bars)を使います。Foldable と Native UI はアプリの CSS を供給しません。明示的な HTML レールマーカーは CSS と独立して有効です。null の edge で元の位置へ戻すには `disableVerticalControlArea()`、edge が戻ったら `enableVerticalControlArea()` を呼びます。これらはレイアウト更新と直列化してください。
 
-Web レイアウト更新とネイティブの利用可否を分離してください。Foldable の edge を非推奨の `nativeEdge` へ渡さないでください。Native UI 自身が能力を取得します。この購読を模擬配置に置き換えるのは任意のブラウザープレビューだけです。
+Web レイアウトとネイティブ利用可否の更新を混在させず、非推奨の `nativeEdge` へ Foldable の edge を渡さないでください。Native UI が利用可否を読み取ります。シミュレーション配置へ置き換えるのは、任意のブラウザーレイアウトプレビューだけです。
 
-ヒンジに応じた内容レイアウトは別途 `getFoldState()` と `foldStateChange` を使います。ヒンジ状態はコントロール選択やレール有効化をしません。テーマの[状態購読と分割ペインの例](../../theme-ios27/docs/vertical-bars-layout.md#read-the-device-layout)を参照してください。
+ヒンジに応じたコンテンツ配置には、別に `getFoldState()` と `foldStateChange` を使います。ヒンジの姿勢はコントロールを選択したりレールを有効にしたりしません。[姿勢購読と split-pane の例](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout#read-the-device-layout)を参照してください。
 
 ## ネイティブ描画
 
@@ -108,7 +111,6 @@ SwiftUI の面はシステムレール内でクリップ・ヒットテストさ
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
 const rail = await enableNativeUI({
-  controls: 'verticalOnly',
   ionic: { verticalBars: { popover: true } },
 });
 ```
@@ -239,7 +241,7 @@ Shell の除外、horizontal-only クラス、オーバーレイ制約は維持�
 
 ```html
 <ion-buttons data-vertical-bars="false">
-  <!-- backButton が true なら引き続き投影されます。 -->
+  <!-- Still projects when backButton is true. -->
   <ion-back-button></ion-back-button>
 </ion-buttons>
 ```
@@ -279,7 +281,7 @@ Ionic の DOM コンテナーはナビゲーションの役割を変更しませ
 | `'source'` | [source の fill 規則](#source-fill-rules)に従い、対応する Ionic の fill と計算済み色を投影。 |
 
 ```ts
-const rail = await enableNativeUI({ controls: 'verticalOnly', ionic: { verticalBars: { buttonProjection: 'source' } } });
+const rail = await enableNativeUI({ ionic: { verticalBars: { buttonProjection: 'source' } } });
 ```
 
 `enableNativeUI()` と単独の `enableVerticalControlArea()` は `ionic.verticalBars` 内でこれらの設定を受けます。ランタイムは 1 つにし、別設定で再起動する前に破棄してください。どちらも操作、無効状態、グループ化を維持します。無効アイコンはネイティブの無効外観になります。水平コントロール、ソース要素、Web フォールバックの複製には影響しないため、対応 iOS でネイティブ外観を比較してください。
@@ -327,12 +329,12 @@ const rail = await enableNativeUI({ controls: 'verticalOnly', ionic: { verticalB
 `verticalBars.buttonDefaultFill` は `'solid'` または `'glass'` を受け、省略は `'glass'` です。Ionic 標準のボタンなら `'solid'`、ガラスなら `'glass'` を使います。全体が `system` のときのローカル例外も含め、`source` と解決されるすべてのボタンに適用します。
 
 ```ts
-// 全体では system のスタイルを維持し、ローカルの source ボタンは Ionic の既定の fill を使います。
-const rail = await enableNativeUI({ controls: 'verticalOnly', ionic: { verticalBars: { buttonDefaultFill: 'solid' } } });
+// Keep system styling globally; local source buttons use Ionic's default fill.
+const rail = await enableNativeUI({ ionic: { verticalBars: { buttonDefaultFill: 'solid' } } });
 ```
 
 ```html
-<!-- 固定ツールバーの ion-buttons 外では、fill の省略は solid になります。 -->
+<!-- In a fixed toolbar, outside ion-buttons: omitted fill resolves to solid. -->
 <ion-button data-projection="source" aria-label="Add">
   <ion-icon name="add-outline" slot="icon-only"></ion-icon>
 </ion-button>
@@ -349,7 +351,7 @@ const rail = await enableNativeUI({ controls: 'verticalOnly', ionic: { verticalB
 
 ## Modal の移動
 
-Modal レールのコントロールは、表示、ドラッグ、スナップ、終了の間も Native のソース所有権を維持します。静止中はライブの Native コントロールを使います。予約済みツールバー境界より下の移動では Modal ダイアログと一緒に動く画像を使い、境界上かそれより上の移動ではライブの Native コントロールを固定します。表示と終了は遷移に準備済み画像を使います。この規則は、グループ化されたボタンと個別に投影されたボタンの両方に適用されます。表示の規則とクリッピング範囲は [Modal レールの移動とガラスの縁のクリッピング](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/appearance#modal-rail-movement)を参照してください。
+Modal レールのコントロールは、表示、ドラッグ、スナップ、終了の間も Native のソース所有権を維持します。静止中はライブの Native コントロールを使います。予約済みツールバー境界より下の移動では Modal ダイアログと一緒に動く画像を使い、境界上かそれより上の移動ではライブの Native コントロールを固定します。表示と終了は遷移に準備済み画像を使います。この規則は、グループ化されたボタンと個別に投影されたボタンの両方に適用されます。表示の規則とクリッピング範囲は [Modal レールの移動とガラスの縁のクリッピング](https://webview-native-ui.com/projects/capacitor-native-ui/docs/appearance#modal-rail-movement)を参照してください。
 
 ## タブバー
 

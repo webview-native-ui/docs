@@ -348,8 +348,8 @@ export const PROJECTS_EN = [
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
-        "title": "Add Vertical Bars while keeping your theme",
-        "navTitle": "Add Vertical Bars while keeping your theme",
+        "title": "Vertical Bars with your existing theme",
+        "navTitle": "Vertical Bars with your existing theme",
         "slug": "ionic-vertical-bars",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
@@ -974,8 +974,8 @@ export const PROJECTS_JA = [
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
-        "title": "既存テーマを維持して Vertical Bars を追加する",
-        "navTitle": "既存テーマへのVertical Barsの追加",
+        "title": "既存テーマで使う Vertical Bars",
+        "navTitle": "既存テーマで使うVertical Bars",
         "slug": "ionic-vertical-bars",
         "section": "ガイド",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
@@ -1600,8 +1600,8 @@ export const PROJECTS_FR = [
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
-        "title": "Ajouter Vertical Bars en conservant votre thème",
-        "navTitle": "Ajouter Vertical Bars en conservant votre thème",
+        "title": "Vertical Bars avec votre thème existant",
+        "navTitle": "Vertical Bars avec votre thème existant",
         "slug": "ionic-vertical-bars",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
@@ -2226,8 +2226,8 @@ export const PROJECTS_DE = [
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
-        "title": "Vertical Bars hinzufügen und das Theme behalten",
-        "navTitle": "Vertical Bars mit eigenem Theme hinzufügen",
+        "title": "Vertical Bars mit Ihrem bestehenden Theme",
+        "navTitle": "Vertical Bars mit Ihrem bestehenden Theme",
         "slug": "ionic-vertical-bars",
         "section": "Anleitungen",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"

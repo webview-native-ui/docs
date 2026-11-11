@@ -1,8 +1,10 @@
 ---
-title: 既存テーマを維持して Vertical Bars を追加する
+title: 既存テーマで使う Vertical Bars
 ---
 
-# 既存テーマを維持して Vertical Bars を追加する
+# 既存テーマで使う Vertical Bars
+
+Vertical Bars は Native UI のデフォルト構成に含まれます。このガイドでは標準の iOS 27 テーマではなく、既存の Web テーマを維持する場合を扱います。
 
 アプリの既存の外観を維持して Vertical Bars を追加します。Angular、React、Vue、その他のフレームワークでも、使用するコンポーネントに合わせて設定を選びます。
 
@@ -26,7 +28,7 @@ iPhone Duo 対応と Vertical Bars は 2.0.0 から安定版です。
 
 ### 1. インストールして単独スタイルシートを読み込む
 
-既存の Ionic アプリ（Ionic `>=8.8.1 <10`、Capacitor 8.5 以降）を使用します。既存の Foldable は[配置 API の要件](vertical-bars.md#use-with-capacitor-foldable)であるバージョン 8 の 8.3.3 以降を満たす必要があります。Native UI、レイアウトスタイルシートのパッケージ、必須のデバイス状態プラグインを一緒に導入します。
+既存の Ionic アプリ（Ionic `>=8.8.1 <10`、Capacitor 8）を使用します。既存の Foldable は[配置 API の要件](vertical-bars.md#use-with-capacitor-foldable)であるバージョン 8 の 8.5 以降を満たす必要があります。Native UI、レイアウトスタイルシートのパッケージ、必須のデバイス状態プラグインを一緒に導入します。
 
 ```bash
 npm install @rdlabo/ionic-theme-ios27 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
@@ -86,7 +88,7 @@ const ionicConfig = {
 import type { AnimationBuilder } from '@ionic/core';
 import { withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
 
-// アプリがすでに使っているアニメーションビルダーを渡します。
+// Pass the animation builder your app already uses.
 const configureNavigation = (existingTransition: AnimationBuilder) => ({
   navAnimation: withNativeUITransition(existingTransition),
 });
@@ -98,32 +100,77 @@ const configureNavigation = (existingTransition: AnimationBuilder) => ({
 
 ### 3. デバイス配置を接続してコントロールを起動する
 
-`ion-app` のマウント後に配置変更を購読し、初期配置を取得して 1 つのランタイムを起動します。既存の `ion-app` マークアップは維持します。ヘルパーがデバイス状態からレイアウトクラスを追加・削除します。
+デバイス情報の連携は、ルーティングされるページから分離したアプリ所有のサービスへ置きます。サービスは報告された位置と寸法を解決してテーマへ渡し、Native UI は独立して投影を担当します。Angular では `src/app/vertical-bars-layout.service.ts` を作成します。
 
 ```ts
-import { Foldable, type BarPlacement } from '@erkamyaman/capacitor-foldable';
+import { DestroyRef, Injectable, inject } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
+import { Foldable } from '@erkamyaman/capacitor-foldable';
+import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
 import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
-import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const applyPlacement = ({ verticalBarEdge, inset }: BarPlacement) => setVerticalBarsLayout({ edge: verticalBarEdge, inset });
-const listener = await Foldable.addListener('barPlacementChange', applyPlacement);
-applyPlacement(await Foldable.getBarPlacement());
-const rail = await enableNativeUI({ controls: 'verticalOnly' });
+@Injectable({ providedIn: 'root' })
+export class VerticalBarsLayoutService {
+  readonly #destroyRef = inject(DestroyRef);
+
+  async initialize(): Promise<void> {
+    if (Capacitor.getPlatform() !== 'ios' || this.#destroyRef.destroyed) return;
+    const listener = await Foldable.addListener('layoutChange', () => {
+      void this.#applyLayout().catch((error: unknown) => {
+        console.error('Vertical Bars layout refresh failed', error);
+      });
+    });
+    if (this.#destroyRef.destroyed) {
+      await listener.remove();
+      return;
+    }
+    this.#destroyRef.onDestroy(() => {
+      void listener.remove().catch((error: unknown) => {
+        console.error('Vertical Bars listener cleanup failed', error);
+      });
+    });
+    await this.#applyLayout();
+  }
+
+  async #applyLayout(): Promise<void> {
+    const layout = await resolveVerticalBarsLayout(Foldable);
+    if (!this.#destroyRef.destroyed) setVerticalBarsLayout(layout);
+  }
+}
 ```
+
+`ion-app` がマウントされた後に、既存の `src/main.ts` の bootstrap から一度初期化します。手順1・2のスタイルシートと Ionic 設定を維持し、デフォルトの Native UI ランタイムとデバイスサービスをアプリの起動時に接続します。
+
+```ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
+import { VerticalBarsLayoutService } from './app/vertical-bars-layout.service';
+
+void bootstrapApplication(AppComponent, appConfig)
+  .then(async (app) => {
+    const shell = await enableNativeUI();
+    if (app.destroyed) {
+      await shell.destroy();
+      return;
+    }
+    app.onDestroy(() => {
+      void shell.destroy().catch((error: unknown) => console.error('Native UI cleanup failed', error));
+    });
+    await app.injector.get(VerticalBarsLayoutService).initialize();
+  })
+  .catch((error: unknown) => console.error('Application startup failed', error));
+```
+
+既存の bootstrap へ統合し、別のアプリや2つ目のランタイムを起動しないでください。初期の購読・配置エラーは bootstrap のエラーハンドラーへ渡ります。サービスはアプリ破棄時に購読を解除し、破棄後に到着した配置は適用しません。Native UI のハンドルはアプリの所有者が別に破棄します。React と Vue もデバイス連携をルーティングされるページの外へ置き、アプリの寿命に合わせて解除します。
 
 | デバイス配置 | Web レイアウト |
-| -------------------------------------- | -------------------------------------------------------------------------- |
-| `leading` または `trailing` | 論理的な端に報告されたインセットを確保。RTL はヘルパーが解決。 |
-| ブラウザーフォールバックを含む `null` | 通常のレイアウトへ復元し、サイドレールを強制しない。 |
+| --- | --- |
+| `leading` または `trailing` | 論理方向の計測インセットを確保し、ツールバーの原点を適用します。 |
+| ブラウザーのフォールバックを含む `null` | 通常レイアウトへ戻し、レールを強制しません。 |
 
-アプリの所有元を破棄するときにリスナーを削除し、自身のランタイムを破棄します。
-
-```ts
-await listener.remove();
-await rail.destroy();
-```
-
-Native UI が有効なら既存ランタイムを維持し、配置購読だけを追加します。2 つ目を起動しないでください。共有設定とアプリ所有 CSS は [Foldable 連携](vertical-bars.md#use-with-capacitor-foldable)を参照してください。
+標準サービスはブラウザーへ固定配置を強制しません。手動の edge は[ブラウザープレビュー](#optional-browser-preview)専用です。Native UI が起動済みなら、サービス初期化だけを既存の所有者へ統合し、新しい起動呼び出しを再実行しないでください。独自 CSS は [Foldable 連携](vertical-bars.md#use-with-capacitor-foldable)を参照します。
 
 ### 初期レイアウトのタイミング
 
@@ -152,8 +199,7 @@ Xcode 27.1 以降でビルドし、iOS 27.1 以降の iPhone Duo で実行しま
 既定は `system` で SwiftUI が縦ボタンを装飾しアイコンを着色します。既存テーマの fill と色を使うには手順 3 の `enableNativeUI` 呼び出しだけを次に置き換え、Foldable の購読は維持します。
 
 ```ts
-const rail = await enableNativeUI({
-  controls: 'verticalOnly',
+const shell = await enableNativeUI({
   ionic: { verticalBars: { buttonProjection: 'source', buttonDefaultFill: 'solid' } },
 });
 ```
@@ -165,7 +211,7 @@ const rail = await enableNativeUI({
 | 症状 | 確認事項 |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | 通常レイアウト | Foldable の edge を確認。null なら意図的に通常レイアウト。 |
-| edge はあるが側面余白がない | `vertical-bars.css` を読み、`ion-app` マウント後に初期配置と `barPlacementChange` を適用。 |
+| edge はあるが側面余白がない | `vertical-bars.css` を読み、`ion-app` マウント後に初期配置と `layoutChange` を適用。 |
 | 余白はあるが操作が水平のまま | ランタイムを一度起動し、既存タブまたは固定ヘッダー・フッターの対応 `slot="icon-only"` 操作を使用。 |
 | 1 操作だけ水平のまま | アイコン slot、固定配置、除外を確認。[コントロール要件](vertical-bars.md#toolbar-actions)を参照。 |
 
@@ -193,19 +239,8 @@ Web レールのタブはアイコンを表示し、押してドラッグする�
 
 ## デバイスのレイアウトを解決する
 
-```ts
-import { Foldable } from '@erkamyaman/capacitor-foldable';
-import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
-import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
+手順3ですでにリゾルバーを接続しています。ここで別のデバイス購読を追加しないでください。この接続はアプリ所有のサービスや連携モジュールに置き、`ion-app` のマウント後に初期化します。ページは既存のマークアップと業務ハンドラーを維持します。
 
-const applyLayout = async () => setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+デバイスの位置と寸法は Foldable が報告します。`resolveVerticalBarsLayout` は `edge`、`inset`、`toolbarTop` を返す SDK 非依存のアダプターで、Native UI の起動・イベント購読・CSS 適用は行いません。Web レイアウトと既定値はテーマの `setVerticalBarsLayout`、投影とネイティブ利用可否は Native UI が担当します。`layoutChange` は edge と inset が変わらない画面変更も扱います。初回読み取りより先に購読し、アプリ破棄時に解除してください。
 
-await applyLayout();
-await Foldable.addListener('layoutChange', applyLayout);
-```
-
-アプリの既存の初期処理・デバイス変更ハンドラーから呼び出します。`layoutChange` には Foldable 8.5 以降が必要です。ディスプレイが変わっても edge と inset は変わらない場合があるため、`barPlacementChange` だけでは折りたたみを検出できません。
-
-SDK に依存しないこのリゾルバーは `edge`、`inset`、`toolbarTop` だけを返します。Native UI の起動、イベント購読、CSS の適用は行いません。読み取りが存在しない場合や失敗した場合は undefined のままとし、デフォルト値の責任を `setVerticalBarsLayout` に残します。`toolbarTop` を適用するには、対応するテーマ入力の拡張が必要です。
-
-プロバイダーのフレームと inset は、ブラウザーのビューポートの CSS ピクセルで指定しなければなりません。Foldable のポイントは通常の device-width、initial-scale=1 のビューポートと一致します。他の倍率では正規化したプロバイダーが必要です。テーマと同じく、`ion-app` または祖先にある最も近い `dir` が物理的なレールの側を決めます。`ion-app` がなければ、ドキュメントの方向を使います。
+読み取りが未実装または失敗した値は undefined のまま残し、適用するテーマの既定値を維持します。プロバイダーの位置と inset はブラウザービューポートの CSS ピクセルで指定します。Foldable のポイントは通常の device-width、initial-scale=1 に一致し、それ以外の倍率には正規化したプロバイダーが必要です。テーマと同じく、`ion-app` または祖先にある最も近い `dir` が物理的なレールの側を決めます。

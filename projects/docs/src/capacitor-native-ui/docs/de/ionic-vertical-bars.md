@@ -1,21 +1,21 @@
 ---
-title: "Vertical Bars hinzufügen und das Theme behalten"
-sourceRevision: "d055ca5078865c9269fb89a43fa1b4a29c2adde2c65277a981232a8feb7699cd"
+title: "Vertical Bars mit Ihrem bestehenden Theme"
+sourceRevision: "c6da276b06035b53c705516f42cd1adf7b1f1438a44cd25d62839dba502246cf"
 ---
 
-# Vertical Bars hinzufügen und das Theme behalten
+# Vertical Bars mit Ihrem bestehenden Theme
 
-Behalten Sie die bestehende Darstellung Ihrer App und ergänzen Sie Vertical Bars. Wählen Sie die Einrichtung anhand der Komponenten Ihrer App, unabhängig davon, ob Sie Angular, React, Vue oder ein anderes Framework verwenden.
+Vertical Bars gehört zur standardmäßigen Native-UI-Einrichtung. Mit dieser Anleitung behalten Sie das bestehende Web-Theme Ihrer App, statt das standardmäßige iOS-27-Theme-Preset zu übernehmen. Wählen Sie die Einrichtung nach den Komponenten Ihrer App, unabhängig davon, ob Sie Angular, React, Vue oder ein anderes Framework verwenden.
 
 Die [Funktionsweise der Projektion](../README.md#how-projection-works) erläutert die Beziehung zwischen Quell-DOM, projizierten Bedienelementen und Aktionen. Wählen Sie anschließend unten Ihre Einrichtung.
 
 ## Einrichtung auswählen
 
-| Ihre App | Einstieg | Ergänzungen |
+| Ihre App | Einstieg | Ergänzung |
 | --- | --- | --- |
-| Ionic-Komponenten mit eigenem Theme, Ionic-Standardstilen oder einem anderen Theme | [Ionic-Einrichtung unten](#try-it-in-your-existing-ionic-app) | Foldable-Gerätepositionierung, eigenständiges Seitenleisten-CSS und Ionic-Adapter für Native UI. Das bestehende Theme bleibt. |
-| Keine Ionic-Komponenten (reines HTML, React, Vue, Angular usw.) | [HTML-Einrichtung](framework-independent.md), danach deren [Geräteseitenleisten-Einrichtung](framework-independent.md#device-placement-for-vertical-bars) | `@rdlabo/capacitor-native-ui/core` und Foldable. Ihre App liefert das Seitenleistenlayout; kein Theme-Paket. |
-| Bereits iOS-27-Theme und Native UI | [Gerätepositionierung verbinden](vertical-bars.md#use-with-capacitor-foldable) | Bestehende Laufzeit wiederverwenden. Keine weitere starten. |
+| Ionic-Komponenten mit eigenem Theme, Ionic-Standardstilen oder einem anderen Theme | [Ionic-Einrichtung unten](#try-it-in-your-existing-ionic-app) | Foldable-Geräteplatzierung, eigenständiges Rail-CSS und Ionic-Native-UI-Adapter. Bestehendes Theme beibehalten. |
+| Keine Ionic-Komponenten (reines HTML, React, Vue, Angular usw.) | [HTML-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent), dann die [Geräte-Rail-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent#device-placement-for-vertical-bars) | `@rdlabo/capacitor-native-ui/core` und Foldable. Ihre App stellt das Rail-Layout bereit; kein Theme-Paket. |
+| Bereits iOS-27-Theme und Native UI im Einsatz | [Geräteplatzierung verbinden](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#use-with-capacitor-foldable) | Bestehende Runtime weiterverwenden. Keine weitere starten. |
 
 **Ohne Ionic folgen Sie statt der folgenden Schritte der HTML-Anleitung.** Sie benötigen weder `@rdlabo/ionic-theme-ios27` noch `vertical-bars.css`, `ion-app` oder Ionic-Navigationsanimationen. Explizit markierte HTML-Schaltflächen und Zurückschaltflächen werden unterstützt; beliebige HTML-Tabs werden nicht automatisch konvertiert. Eine Browservorschau benötigt einen anwendungsgestalteten `webHost`; native Seitenleistendarstellung benötigt zusätzlich unterstützte iOS-Hardware und -Software.
 
@@ -27,7 +27,7 @@ Unterstützung für iPhone Duo und Vertical Bars sind ab Version 2.0.0 stabil.
 
 ### 1. Das eigenständige Stylesheet installieren und laden
 
-Beginnen Sie mit Ihrer bestehenden Ionic-App (Ionic `>=8.8.1 <10`, Capacitor 8.5 oder neuer). Vorhandene Foldable-Installationen müssen die [Anforderung an die Positions-API](vertical-bars.md#use-with-capacitor-foldable) erfüllen: Version 8.3.3 oder neuer innerhalb von Version 8. Installieren Sie Native UI, das Layout-Stylesheet-Paket und das benötigte Gerätezustands-Plugin gemeinsam:
+Beginnen Sie mit Ihrer bestehenden Ionic-App (Ionic `>=8.8.1 <10`, Capacitor 8). Bestehende Foldable-Installationen müssen die [Gerätelayout-API-Anforderung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#use-with-capacitor-foldable) erfüllen: Version 8.5 oder neuer innerhalb von Version 8. Installieren Sie Native UI, das Layout-Stylesheet-Paket und das erforderliche Gerätezustands-Plugin zusammen:
 
 ```bash
 npm install @rdlabo/ionic-theme-ios27 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
@@ -41,7 +41,7 @@ Behalten Sie Ihre vorhandenen Theme-Imports bei. Ergänzen Sie in Ihrer globalen
 
 Die vollständigen iOS-27-Theme-Stylesheets sind nicht erforderlich. Verwenden Sie dieses Stylesheet statt Foldables `ionic-tabs.css`; beide zusammen würden dieselben Tabs verschieben.
 
-Wir verwenden [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable) als Standardgeräteintegration, weil es Position, Faltstellung und Änderungen bereitstellt und Layoutentscheidungen Ihrer App überlässt. Übergeben Sie seine logische Seitenleistenkante und den gemessenen Abstand an den Theme-Layouthelfer. Native UI prüft die native Seitenleistenverfügbarkeit unabhängig davon.
+Wir verwenden [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable) als standardmäßige Geräteintegration, weil es Platzierung, Haltung und Änderungen meldet und Layoutentscheidungen der App überlässt. Lösen Sie den Gerätebericht mit `resolveVerticalBarsLayout(Foldable)` auf und übergeben Sie die zurückgegebene Kante, den Einzug und den Werkzeugleistenursprung an den Layout-Helfer des Themes. Native UI prüft die native Rail-Verfügbarkeit unabhängig davon.
 
 ### 2. Navigationsanimation verbinden
 
@@ -87,7 +87,7 @@ Wenn Ihre Anwendung einen anderen Builder für `navAnimation` verwendet, umschli
 import type { AnimationBuilder } from '@ionic/core';
 import { withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
 
-// Den bereits von Ihrer App verwendeten Animationsbuilder übergeben.
+// Pass the animation builder your app already uses.
 const configureNavigation = (existingTransition: AnimationBuilder) => ({
   navAnimation: withNativeUITransition(existingTransition),
 });
@@ -99,36 +99,81 @@ Der Adapter behält die Animationsziele des Builders bei, einschließlich eines 
 
 ### 3. Geräteposition verbinden und Bedienelemente starten
 
-Abonnieren Sie nach dem Einbinden von `ion-app` Positionsänderungen, lesen Sie die Anfangsposition und starten Sie eine Laufzeit. Behalten Sie Ihr bestehendes `ion-app`-Markup; der Helfer setzt oder entfernt Layoutklassen anhand des Gerätezustands:
+Verwalten Sie Geräteinformationen in einem anwendungseigenen Service, getrennt von gerouteten Seitenkomponenten. Der Service löst die gemeldete Geometrie auf und übergibt sie an das Theme; Native UI besitzt die Projektion unabhängig davon. Erstellen Sie für Angular `src/app/vertical-bars-layout.service.ts`:
 
 ```ts
-import { Foldable, type BarPlacement } from '@erkamyaman/capacitor-foldable';
+import { DestroyRef, Injectable, inject } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
+import { Foldable } from '@erkamyaman/capacitor-foldable';
+import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
 import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
-import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const applyPlacement = ({ verticalBarEdge, inset }: BarPlacement) => setVerticalBarsLayout({ edge: verticalBarEdge, inset });
-const listener = await Foldable.addListener('barPlacementChange', applyPlacement);
-applyPlacement(await Foldable.getBarPlacement());
-const rail = await enableNativeUI({ controls: 'verticalOnly' });
+@Injectable({ providedIn: 'root' })
+export class VerticalBarsLayoutService {
+  readonly #destroyRef = inject(DestroyRef);
+
+  async initialize(): Promise<void> {
+    if (Capacitor.getPlatform() !== 'ios' || this.#destroyRef.destroyed) return;
+    const listener = await Foldable.addListener('layoutChange', () => {
+      void this.#applyLayout().catch((error: unknown) => {
+        console.error('Vertical Bars layout refresh failed', error);
+      });
+    });
+    if (this.#destroyRef.destroyed) {
+      await listener.remove();
+      return;
+    }
+    this.#destroyRef.onDestroy(() => {
+      void listener.remove().catch((error: unknown) => {
+        console.error('Vertical Bars listener cleanup failed', error);
+      });
+    });
+    await this.#applyLayout();
+  }
+
+  async #applyLayout(): Promise<void> {
+    const layout = await resolveVerticalBarsLayout(Foldable);
+    if (!this.#destroyRef.destroyed) setVerticalBarsLayout(layout);
+  }
+}
 ```
 
-| Geräteposition | Web-Layout |
-| --- | --- |
-| `leading` oder `trailing` | Reserviert den gemeldeten Abstand an dieser logischen Kante. Der Helfer berücksichtigt RTL. |
-| `null`, einschließlich Browser-Fallback | Stellt das gewöhnliche Layout wieder her; keine Seitenleiste wird erzwungen. |
-
-Entfernen Sie beim Auflösen der verantwortlichen Anwendungsinstanz ihren Listener und zerstören Sie die von ihr verwaltete Laufzeit:
+Initialisieren Sie ihn einmal aus dem bestehenden Bootstrap in `src/main.ts`, nachdem `ion-app` eingebunden wurde. Behalten Sie Stylesheet und Ionic-Konfiguration aus den Schritten 1 und 2. Starten Sie die standardmäßige Native-UI-Runtime und den Geräteservice aus dem Anwendungs-Bootstrap:
 
 ```ts
-await listener.remove();
-await rail.destroy();
+import { bootstrapApplication } from '@angular/platform-browser';
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
+import { VerticalBarsLayoutService } from './app/vertical-bars-layout.service';
+
+void bootstrapApplication(AppComponent, appConfig)
+  .then(async (app) => {
+    const shell = await enableNativeUI();
+    if (app.destroyed) {
+      await shell.destroy();
+      return;
+    }
+    app.onDestroy(() => {
+      void shell.destroy().catch((error: unknown) => console.error('Native UI cleanup failed', error));
+    });
+    await app.injector.get(VerticalBarsLayoutService).initialize();
+  })
+  .catch((error: unknown) => console.error('Application startup failed', error));
 ```
 
-Ist Native UI bereits aktiv, behalten Sie diese Laufzeit und ergänzen Sie nur das Positionsabonnement. Starten Sie keine zweite Laufzeit. Gemeinsame Konfiguration und anwendungseigenes CSS beschreibt die [Foldable-Integration](vertical-bars.md#use-with-capacitor-foldable).
+Integrieren Sie dies in Ihre bestehende Bootstrap-Kette; bootstrappen Sie keine zweite Anwendung und starten Sie keine zweite Native-UI-Runtime. Fehler beim ersten Abonnement oder Layoutabruf erreichen den Bootstrap-Fehlerhandler. Der Service entfernt seinen Gerätelistener bei der Zerstörung der Anwendung und ignoriert Layoutresultate, die nach der Entsorgung eintreffen. Der Anwendungseigentümer zerstört separat sein Native-UI-Handle. React- und Vue-Anwendungen sollten dieselbe Geräteintegration oberhalb gerouteter Seiten halten und über ihren Anwendungslebenszyklus bereinigen.
+
+| Gerätelayout | Web-Layout |
+| --- | --- |
+| `leading` oder `trailing` | Reserviert den gemessenen Einzug an der logischen Kante und wendet den Werkzeugleistenursprung an. |
+| `null`, einschließlich Browser-Fallback | Stellt gewöhnliches Layout wieder her; keine seitliche Rail wird erzwungen. |
+
+Der standardmäßige Service erzwingt keine Browser-Platzierung. Eine manuelle Kante ist nur für die [optionale Browser-Vorschau](#optional-browser-preview) vorgesehen. Ist Native UI bereits aktiv, integrieren Sie nur die Service-Initialisierung in den bestehenden Eigentümer; führen Sie den neuen Startaufruf nicht erneut aus. Für anwendungseigenes CSS siehe [Foldable-Integration](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#use-with-capacitor-foldable).
 
 ### Zeitpunkt des anfänglichen Layouts
 
-Führen Sie Schritt 3 im Anwendungsstamm aus, sobald `ion-app` eingebunden ist; warten Sie nicht auf Datenabfragen einer gerouteten Seite. `setVerticalBarsLayout()` benötigt dieses Element und speichert keine vor dem Einbinden gelieferten Positionen. Verwalten Sie Start und Bereinigung in derselben verantwortlichen Anwendungsinstanz, wie in den [Framework-Lebenszyklusbeispielen](setup.md#place-startup-in-your-frameworks-app-root) beschrieben.
+Führen Sie Schritt 3 aus Ihrem Anwendungs-Bootstrap aus, sobald `ion-app` eingebunden ist; warten Sie nicht auf Datenanfragen einer gerouteten Seite. `setVerticalBarsLayout()` benötigt dieses Element und speichert keine vor dem Einbinden übergebene Platzierung. Halten Sie Geräteinformationen in einem anwendungseigenen Service oder Integrationsmodul, getrennt von gerouteten Seitenhandlern. Start und Bereinigung gehören demselben Anwendungseigentümer, wie in den [Framework-Lebenszyklusbeispielen](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup#place-startup-in-your-frameworks-app-root) beschrieben.
 
 Nativer Start, Gerätepositionierung und Rendering der Bedienelemente sind asynchron. Die Auflösung von `enableNativeUI()` liefert das Laufzeithandle, garantiert jedoch keine bereits abgeschlossene Projektion. Früher Start vermeidet zusätzliche Wartezeiten der Anwendung; das anfängliche Web-Layout kann dennoch vor der nativen Projektion sichtbar sein.
 
@@ -153,8 +198,7 @@ Darstellungseinstellungen und lokale Überschreibungen beschreibt [Schaltfläche
 Der Standard ist `system`: SwiftUI gestaltet vertikale Schaltflächen und tönt ihre Symbole. Soll Ihr bestehendes Theme Füllung und Farben liefern, ersetzen Sie nur den `enableNativeUI`-Aufruf aus Schritt 3 durch Folgendes; behalten Sie das Foldable-Abonnement:
 
 ```ts
-const rail = await enableNativeUI({
-  controls: 'verticalOnly',
+const shell = await enableNativeUI({
   ionic: { verticalBars: { buttonProjection: 'source', buttonDefaultFill: 'solid' } },
 });
 ```
@@ -165,10 +209,10 @@ Der Standard `solid` passt zu gewöhnlichen Ionic-Schaltflächen. Innerhalb von 
 
 | Beobachtung | Prüfung |
 | --- | --- |
-| Gewöhnliches Layout | Von Foldable gemeldete Kante prüfen. null erhält bewusst das gewöhnliche Layout. |
-| Kante gemeldet, aber kein seitlicher Abstand | `vertical-bars.css` laden und Anfangsposition sowie `barPlacementChange`-Ereignisse nach dem Einbinden von `ion-app` anwenden. |
-| Abstand vorhanden, Bedienelemente bleiben horizontal | Laufzeit einmal starten. Bestehende Tabs oder unterstützte `slot="icon-only"`-Aktionen in einer fixierten Kopf-/Fußwerkzeugleiste verwenden. |
-| Eine Aktion bleibt horizontal | Symbol-Slot, feste Position und Ausschlüsse prüfen. Siehe [Anforderungen an Bedienelemente](vertical-bars.md#toolbar-actions). |
+| Gewöhnliches Layout | Von Foldable gemeldete Kante prüfen. Eine Kante von null behält absichtlich das gewöhnliche Layout. |
+| Gemeldete Kante, aber kein seitlicher Abstand | `vertical-bars.css` laden und erstes Layout sowie `layoutChange`-Ereignisse nach dem Einbinden von `ion-app` anwenden. |
+| Platz erscheint, aber Bedienelemente bleiben horizontal | Runtime einmal starten. Bestehende Tabs oder unterstützte Aktionen mit `slot="icon-only"` in einer festen Header-/Footer-Werkzeugleiste verwenden. |
+| Eine Aktion bleibt horizontal | Icon-Slot, feste Platzierung und Ausschlüsse prüfen. Siehe [Bedienelementanforderungen](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#toolbar-actions). |
 
 ## Optionale Browservorschau
 
@@ -194,19 +238,8 @@ Safe-Area-Behandlung, Overlays, RTL, Eignung von Bedienelementen, Web-Simulation
 
 ## Gerätelayout auflösen
 
-```ts
-import { Foldable } from '@erkamyaman/capacitor-foldable';
-import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
-import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
+Schritt 3 verbindet den Resolver bereits; ergänzen Sie hier kein weiteres Geräteabonnement. Halten Sie diese Verbindung in einem anwendungseigenen Service oder Integrationsmodul, das nach dem Einbinden von `ion-app` initialisiert wird. Geroutete Seiten behalten ihr ursprüngliches Markup und ihre Geschäftshandler.
 
-const applyLayout = async () => setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+Foldable meldet die Gerätegeometrie. `resolveVerticalBarsLayout` ist ein SDK-freier Adapter, der `edge`, `inset` und `toolbarTop` zurückgibt; er startet Native UI nicht, registriert keine Ereignisse und schreibt kein CSS. `setVerticalBarsLayout` des Themes besitzt Web-Layout und Standardwerte; Native UI besitzt die Projektion und prüft die native Verfügbarkeit unabhängig davon. `layoutChange` deckt Anzeigeänderungen ab, bei denen Kante und Einzug unverändert bleiben. Abonnieren Sie vor dem ersten Abruf und entfernen Sie den Listener beim Beenden der Anwendung.
 
-await applyLayout();
-await Foldable.addListener('layoutChange', applyLayout);
-```
-
-Rufen Sie dies vom bestehenden Initialisierungs- beziehungsweise Geräteänderungshandler der Anwendung auf. `layoutChange` erfordert Foldable 8.5 oder neuer. Kante und Einzug können beim Displaywechsel unverändert bleiben, sodass `barPlacementChange` allein Faltvorgänge übersieht.
-
-Der SDK-unabhängige Resolver liefert nur `edge`, `inset` und `toolbarTop`; er startet Native UI nicht, abonniert keine Ereignisse und wendet kein CSS an. Fehlende oder fehlgeschlagene Lesevorgänge bleiben undefined, damit `setVerticalBarsLayout` für Standardwerte zuständig bleibt. Das Anwenden von `toolbarTop` erfordert die entsprechende Erweiterung der Theme-Eingaben.
-
-Provider-Rahmen und Einzüge müssen CSS-Pixel des Browser-Viewports verwenden. Foldable-Punkte entsprechen dem üblichen Viewport mit device-width und initial-scale=1; andere Skalierungen erfordern einen normalisierten Provider. Das nächste `dir` an `ion-app` oder seinen Vorfahren bestimmt wie im Theme die physische Leistenseite; ohne `ion-app` wird die Dokumentrichtung verwendet.
+Fehlende oder fehlgeschlagene Abrufe bleiben undefiniert, damit das anwendende Theme seine Standardwerte behält. Provider-Frames und Einzüge verwenden CSS-Pixel des Browser-Viewports. Die Punkte von Foldable entsprechen dem üblichen Viewport mit device-width und initial-scale=1; andere Skalierungen benötigen einen normalisierten Provider. Das nächste `dir` auf `ion-app` oder seinen Vorfahren bestimmt die physische Rail-Seite passend zum Theme.

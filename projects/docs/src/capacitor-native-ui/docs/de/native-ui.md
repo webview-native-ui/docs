@@ -1,6 +1,6 @@
 ---
 title: "Native UI"
-sourceRevision: "e7a0981b12c0fdec689e3569b89a0486a3d9d7ba5085a5f502692dda09472203"
+sourceRevision: "4ca5282e4336b902be74a3df77389dc74be2af4721423f463347ac0403338185"
 ---
 
 # Native UI
@@ -18,16 +18,16 @@ Sie verwenden bereits das iOS-Theme? Folgen Sie [Native UI zum Theme hinzufügen
 Installieren Sie das native Paket als direkte Anwendungsabhängigkeit, damit Capacitor es erkennen kann:
 
 ```bash
-npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
 npx cap sync ios
 ```
 
-Behalten Sie Ihre Web-Stile und aktivieren Sie Native UI einmal beim Anwendungsstart. Das iOS-27-Theme ist optional:
+Verwenden Sie zuerst die [Standardeinrichtung](setup.md). Theme-Preset, Geräteservice und einziger Startaufruf enthalten Vertical Bars standardmäßig. Das Folgende ist die Runtime-API-Referenz und kein weiterer Startaufruf:
 
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-void enableNativeUI();
+const shell = await enableNativeUI();
 ```
 
 `enableNativeUI()` liest auch den wirksamen oberen linken Eckenradius der WebView und wendet ihn auf Seitenübergänge an. Um nur den Übergang zu konfigurieren, ohne native Bedienelemente zu aktivieren, rufen Sie Folgendes auf:
@@ -336,18 +336,18 @@ Fehler oder Timeouts notwendiger Start-Bridge-Aufrufe liefern ein Web-Fallback-H
 Für Diagnosen oder das Beenden der Anwendung:
 
 ```ts
-const shell = await enableNativeUI(); // wiederholte Aufrufe teilen die Laufzeit
-console.log(shell.getStatus()); // Zustand, Anzahl projizierter Bedienelemente, Aktualisierungsanzahl, Fehlergrund
-await shell.destroy(); // DOM wiederherstellen, native Bedienelemente entfernen und Listener/Cache freigeben
+const shell = await enableNativeUI(); // repeated calls share the runtime
+console.log(shell.getStatus()); // state, projected control count, update count, failure reason
+await shell.destroy(); // restore DOM, remove native controls and release listeners/cache
 ```
 
 Projektion wird durch die Start-API aktiviert. Partielle Einstellungen überschreiben Standardwerte:
 
 ```ts
-const shell = await enableNativeUI({ controls: { tabs: false } }); // automatische Ionic-Projektion außer Tabs
-await shell.disableVerticalControlArea(); // gewöhnliche native Bedienelemente behalten
+const shell = await enableNativeUI({ controls: { tabs: false } }); // automatic Ionic projection except tabs
+await shell.disableVerticalControlArea(); // retain ordinary native controls
 await shell.enableVerticalControlArea();
-await shell.destroy(); // gesamte Projektion beenden
+await shell.destroy(); // stop all projection
 ```
 
 Standardwerte, reine Seitenleistennutzung und Lebenszyklusmethoden finden Sie unter [alle Konfigurationsoptionen](configuration.md). Explizite HTML-Quellen ohne Ionic beschreibt die [frameworkunabhängige Einrichtung](framework-independent.md).
@@ -415,7 +415,7 @@ Natives Material und Aussehen der Bedienelemente folgen der laufenden iOS-Versio
 
 Die Unterstützung für iPhone Duo einschließlich eigenständiger Vertical Bars ist ab Version 2.0.0 stabil.
 
-Der eigenständige Vertical Control Area-Einstiegspunkt (`@rdlabo/capacitor-native-ui/vertical-bars`) arbeitet mit anwendungsseitigem Web-Layout. Das Theme-Paket bietet ein [optionales Seitenleisten-Stylesheet](/ionic-theme-ios27/docs/vertical-bars-layout), `@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css`, das ohne die vollständige iOS-27-Darstellung nutzbar ist. Rufen Sie dafür `enableNativeUI({ controls: 'verticalOnly' })` auf; die Standardauswahl zielt auf Bedienelemente im vertikalen Bereich. Apps, die bereits `enableNativeUI()` aufrufen, sollten diese eine Laufzeit behalten, statt beide zu starten. [Gerätelayout und Split Panes](/ionic-theme-ios27/docs/vertical-bars-layout) beschreibt die vollständige Einrichtung, einschließlich Scharnierstellung und Split-Pane-Layout für Apps ganz ohne diese Shell.
+Der eigenständige Vertical-Control-Area-Einstiegspunkt (`@rdlabo/capacitor-native-ui/vertical-bars`) funktioniert mit einem von der Anwendung bereitgestellten Web-Layout. Das Theme-Paket bietet ein [eigenständiges Rail-Stylesheet](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout), `@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css`, das ohne vollständiges iOS-27-Erscheinungsbild verwendet werden kann. Rufen Sie für diesen Anwendungsfall `enableNativeUI({ controls: 'verticalOnly' })` auf; seine Standardauswahl zielt auf Bedienelemente im vertikalen Bereich. Apps, die bereits `enableNativeUI()` aufrufen, sollten diese einzelne Runtime behalten, statt beide zu starten. [Gerätelayout und Split Panes](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout) beschreibt die vollständige Einrichtung einschließlich Scharnierhaltung und Split-Pane-Layout für Apps, die diese Shell überhaupt nicht verwenden.
 
 Vertical Bars verwendet eine SwiftUI-`TabView` und Werkzeugleiste in der Systemseitenleiste. Ionic bleibt Quelle für Beschriftungen, Symbole, Auswahl-/Deaktivierungszustand und Aktionen. Seitenleistenlayout, nativen Fallback und unterstützte Overlays beschreibt [Vertical Bars](vertical-bars.md).
 

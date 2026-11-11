@@ -1,7 +1,8 @@
 ---
 title: "Vertical Bars"
-sourceRevision: "133cf0f1f4727f2b669622ec9dce23935c01bd5b9f609b894c967aae909a0a5a"
+sourceRevision: "a43e5343874f8a7a01da73c6907fb90a5a433981aeabb5e45d160bc0626149e2"
 ---
+
 # Vertical Bars
 
 Vertical Bars déplace les contrôles Ionic admissibles ou boutons HTML explicitement marqués dans un rail latéral tout en conservant les éléments originaux comme sources des libellés, icônes et comportements. Il fonctionne avec le thème iOS ou un thème Ionic existant, indépendamment de la posture de charnière et de Native UI complet.
@@ -26,7 +27,7 @@ Installez Native UI et le plugin d’état Foldable requis comme dépendances di
 npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
 ```
 
-Pour Ionic, suivez la [configuration standard](ionic-vertical-bars.md) : chargez le CSS du rail, configurez la navigation, raccordez le placement initial Foldable et `barPlacementChange`, puis démarrez un runtime unique. L’[intégration ci-dessous](#use-with-capacitor-foldable) couvre aussi les runtimes existants et le CSS applicatif. Compilez le Web, exécutez `npx cap sync ios` et recompilez l’application native.
+Pour Ionic, suivez la [configuration standard](https://webview-native-ui.com/projects/capacitor-native-ui/docs/ionic-vertical-bars) : chargez le CSS du rail, configurez la navigation, puis connectez la disposition initiale de Foldable et ses événements `layoutChange` avant de démarrer un seul runtime. L’[intégration ci-dessous](#use-with-capacitor-foldable) couvre aussi les runtimes existants et le CSS appartenant à l’application. Compilez les ressources Web, exécutez `npx cap sync ios` et recompilez l’application native.
 
 Un runtime seul ne réserve pas d’espace Web. Conservez l’abonnement à l’appareil pour la configuration standard ; le placement manuel appartient à l’[aperçu navigateur facultatif](ionic-vertical-bars.md#optional-browser-preview). Si Native UI est déjà actif, réutilisez-le au lieu de démarrer un autre runtime.
 
@@ -38,33 +39,36 @@ Sur Capacitor iOS pris en charge, les contrôles admissibles utilisent le rendu 
 
 L’application ou le thème gère espacement Web, positionnement du rail et styles de repli. Le plugin lit la disposition et le placement Ionic fournis ; il ne réserve pas lui-même d’espace au contenu. Avec le thème iOS27, utilisez `setVerticalBarsLayout({ edge, inset })`. Les applications uniquement natives utilisent leur CSS ; aucun utilitaire du thème n’est requis. La disponibilité native provient des métriques de l’appareil, indépendamment de la disposition Web.
 
-La [feuille de style de rail facultative du thème](/ionic-theme-ios27/docs/vertical-bars-layout) fournit une disposition prête à l’emploi. Ses classes et variables n’imposent pas l’installation du package : l’application peut fournir un équivalent. Le runtime utilise actuellement `ios-theme-vertical-bars` sur `ion-app` pour identifier la disposition, quel que soit le fournisseur des styles.
+La [feuille de style de rail autonome du thème](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout) fournit une disposition prête à l’emploi. Ses classes et variables CSS n’imposent pas l’installation du package de thème : l’application peut fournir elle-même une disposition équivalente. Le runtime utilise actuellement la classe `ios-theme-vertical-bars` sur `ion-app` pour identifier la disposition du rail, quelle que soit l’origine des styles.
 
 ## Utiliser avec Capacitor Foldable
 
 [`@erkamyaman/capacitor-foldable`](https://github.com/erkamyaman/capacitor-foldable) est requis dans la configuration standard de Vertical Bars. Installez-le avec Native UI comme ci-dessus et raccordez son placement à votre disposition Web. Native UI ne s’abonne pas automatiquement à Foldable.
 
-Les exemples nécessitent Foldable **8.3.3 ou ultérieur dans la version 8**, qui inclut `BarPlacement.inset`. Si votre application utilise une version plus ancienne, mettez-la à jour avec `npm install @erkamyaman/capacitor-foldable@^8.3.3`, puis synchronisez et recompilez l’application native.
+Les exemples de placement nécessitent Foldable **8.5 ou ultérieur dans la version majeure 8**, qui comprend les notifications `layoutChange` lorsque les régions réservées changent, même si le bord et le retrait du rail restent identiques. Si votre application utilise une version plus ancienne, mettez-la à jour avec `npm install @erkamyaman/capacitor-foldable@^8.5`, puis synchronisez et recompilez l’application native.
 
-| Responsable | Responsabilité |
-| -------------------- | ------------------------------------------------------------------------------------------- |
-| Foldable | Signaler l’état initial et les changements ultérieurs de placement/posture. |
-| Application ou thème | Réserver l’espace Web et choisir la disposition selon le bord logique et le retrait mesuré. |
-| Native UI | Vérifier indépendamment la disponibilité du rail natif et projeter les sources admissibles. |
+| Propriétaire | Responsabilité |
+| --- | --- |
+| Foldable | Signaler la géométrie initiale de l’appareil et les changements ultérieurs de disposition et de posture. |
+| Application ou thème | Appliquer le bord, le retrait et l’origine de barre d’outils résolus à la disposition Web ; conserver les valeurs par défaut dans la disposition qui les applique. |
+| Native UI | Vérifier indépendamment la disponibilité du rail natif et projeter les contrôles sources compatibles. |
 
 ### Avec la disposition de rail Ionic du thème
 
 Après chargement de la [feuille de style du rail](../../theme-ios27/docs/vertical-bars-layout.md) et montage de `ion-app`, raccordez le placement et démarrez une seule fois le runtime :
 
 ```ts
-import { Foldable, type BarPlacement } from '@erkamyaman/capacitor-foldable';
+import { Foldable } from '@erkamyaman/capacitor-foldable';
+import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
 import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const applyPlacement = ({ verticalBarEdge, inset }: BarPlacement) => setVerticalBarsLayout({ edge: verticalBarEdge, inset });
-const listener = await Foldable.addListener('barPlacementChange', applyPlacement);
-applyPlacement(await Foldable.getBarPlacement());
-const rail = await enableNativeUI({ controls: 'verticalOnly' });
+const applyLayout = async () => {
+  setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+};
+const listener = await Foldable.addListener('layoutChange', () => void applyLayout());
+await applyLayout();
+const rail = await enableNativeUI();
 ```
 
 Si un runtime est actif, conservez-le et ajoutez seulement l’abonnement. `setVerticalBarsLayout` résout les bords logiques en RTL ; un bord null restaure la disposition ordinaire. Utilisez le retrait mesuré plutôt qu’une largeur fixe. Conservez la feuille du thème ; `ionic-tabs.css` de Foldable n’est pas nécessaire ici.
@@ -78,7 +82,7 @@ await rail.destroy();
 
 ### Avec du CSS applicatif ou sans Ionic
 
-Utilisez le même abonnement `getBarPlacement()` / `barPlacementChange`, mais appliquez bord et retrait à votre CSS plutôt que d’appeler `setVerticalBarsLayout`. Un bord null doit restaurer l’espacement ordinaire. Pour Ionic, conservez les classes de rail décrites ci-dessus ; pour HTML simple, utilisez `/core` et la [configuration du rail sur l’appareil](framework-independent.md#device-placement-for-vertical-bars). Ni Foldable ni Native UI ne fournit le CSS applicatif. Les marqueurs de rail HTML restent actifs indépendamment du CSS ; pour ramener ces sources à leur position originale avec un bord null, appelez `disableVerticalControlArea()`, puis `enableVerticalControlArea()` lorsqu’un bord revient. Sérialisez ces changements avec vos mises à jour de disposition.
+Utilisez la même connexion `resolveVerticalBarsLayout(Foldable)` / `layoutChange`, mais appliquez toutes les valeurs de disposition retournées (`edge`, `inset` et `toolbarTop`) via la disposition de votre application au lieu d’appeler `setVerticalBarsLayout`. Conservez cette intégration dans un service ou module appartenant à l’application, pas dans les pages routées. Un bord nul signifie que votre disposition doit rétablir son espacement ordinaire. Pour Ionic, conservez les classes de disposition du rail décrites ci-dessus ; pour le HTML simple, utilisez le point d’entrée `/core` et la [configuration du rail de l’appareil](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent#device-placement-for-vertical-bars). Ni Foldable ni Native UI ne fournissent le CSS de l’application. Les marqueurs explicites de rail HTML restent actifs indépendamment du CSS ; pour replacer ces sources à leur emplacement d’origine lorsque le bord est nul, appelez `disableVerticalControlArea()`, puis `enableVerticalControlArea()` lorsqu’un bord de rail revient. Sérialisez ces changements avec vos mises à jour de disposition.
 
 Séparez les mises à jour Web de la disponibilité native : ne passez pas le bord Foldable via l’option obsolète `nativeEdge`. Native UI lit lui-même cette capacité. Seul un aperçu facultatif dans le navigateur substitue un placement simulé à cet abonnement.
 
@@ -98,7 +102,7 @@ Les badges d’onglets proviennent d’un `ion-badge` visible dans le `ion-tab-b
 </ion-tab-button>
 ```
 
-La surface SwiftUI est découpée et ses interactions limitées au rail système. Le contenu Web reste visible et interactif hors de cette région physique. Le runtime actualise de façon optimiste la sélection avant de transmettre l’action à `ion-tab-button`, avec les mêmes protections d’événements et de révisions périmées que les autres contrôles. Les superpositions suivent la [disposition facultative du rail du thème](/ionic-theme-ios27/docs/vertical-bars-layout#reserve-the-vertical-rail) si cette feuille est utilisée ; les dispositions personnalisées relèvent de l’application.
+La surface SwiftUI est découpée et ses zones tactiles sont limitées au rail système. Le contenu Web reste visible et interactif hors de cette région physique. Le runtime met à jour la sélection de l’onglet de manière optimiste avant de transmettre l’action au `ion-tab-button` d’origine, avec les mêmes protections contre les événements et révisions obsolètes que les autres contrôles natifs. La disposition des overlays suit la [disposition de rail du thème](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout#reserve-the-vertical-rail) lorsque cette feuille de style est utilisée ; les dispositions personnalisées restent la responsabilité de l’application.
 
 ### Popovers natifs (Vertical Bars uniquement)
 
@@ -108,7 +112,6 @@ La présentation native se limite aux popovers ancrés aux `ion-button` accepté
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
 const rail = await enableNativeUI({
-  controls: 'verticalOnly',
   ionic: { verticalBars: { popover: true } },
 });
 ```
@@ -256,12 +259,12 @@ restent des exclusions, distinctes du réglage de groupement.
 ### Placement et apparence
 
 | Réglage | Valeurs | Responsabilité | S’applique à |
-| -------------------------- | ----------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `data-native-ui` | `button`, `back-button`, `button-submit`, `disabled` | Déclarer une source explicite ou exclure un sous-arbre. | [Sources explicites](framework-independent.md#2-mark-source-controls) ; `disabled` s’applique aussi aux ancêtres. |
-| `data-native-ui-placement` | `element`, `rail` | Choisir la position originale ou demander le rail. | Sources explicites ; `element` maintient aussi les contrôles Ionic automatiques à leur position originale. |
-| `data-vertical-bars` | `true`, `false` | Remplacer les défauts de sélection ou de groupement du rail. | Actions et groupes Ionic ci-dessus. |
-| `data-horizontal-bars` | `true`, `false` | Remplacer les défauts de sélection ou groupement ordinaires. | [Contrôles Ionic ordinaires](native-ui.md#toolbar-selection-and-grouping). |
-| `data-projection` | `system`, `source` | Choisir l’apparence native sans sélectionner d’action. | `ion-button` et `ion-menu-button` verticaux natifs ; hérité du `ion-buttons` le plus proche. |
+| --- | --- | --- | --- |
+| `data-native-ui` | `button`, `back-button`, `button-submit`, `disabled` | Déclarer une source explicite ou exclure un sous-arbre. | [Éléments sources explicites](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent#2-mark-source-controls) ; `disabled` s’applique aussi aux ancêtres. |
+| `data-native-ui-placement` | `element`, `rail` | Choisir la position d’origine de l’élément ou demander le rail. | Sources explicites ; `element` conserve aussi les contrôles Ionic automatiques à leur position d’origine. |
+| `data-vertical-bars` | `true`, `false` | Remplacer la sélection ou le regroupement du rail par défaut. | Actions et groupes Ionic listés ci-dessus. |
+| `data-horizontal-bars` | `true`, `false` | Remplacer la sélection ou le regroupement par défaut du placement ordinaire. | [Contrôles Ionic ordinaires](https://webview-native-ui.com/projects/capacitor-native-ui/docs/native-ui#toolbar-selection-and-grouping). |
+| `data-projection` | `system`, `source` | Choisir l’apparence native sans sélectionner une action. | `ion-button` et `ion-menu-button` verticaux natifs ; hérité du `ion-buttons` le plus proche. |
 
 Les attributs de sélection ne sont pas hérités. L’apparence suit la priorité bouton puis groupe décrite ci-dessous. Un attribut ne rend jamais compatible un balisage non pris en charge ni disponible un rail natif manquant.
 
@@ -279,7 +282,7 @@ Pour les actions natives verticales `ion-button` et `ion-menu-button`, choisisse
 | `'source'` | Projette le remplissage Ionic et les couleurs calculées compatibles décrits dans les [règles de remplissage source](#source-fill-rules). |
 
 ```ts
-const rail = await enableNativeUI({ controls: 'verticalOnly', ionic: { verticalBars: { buttonProjection: 'source' } } });
+const rail = await enableNativeUI({ ionic: { verticalBars: { buttonProjection: 'source' } } });
 ```
 
 `enableNativeUI()` et la fonction autonome `enableVerticalControlArea()` acceptent ces réglages dans `ionic.verticalBars`. Utilisez un seul runtime et détruisez-le avant redémarrage avec d’autres options. Les deux modes préservent actions, état désactivé et groupement. Les icônes désactivées utilisent l’apparence native désactivée. Ces réglages n’affectent ni contrôles horizontaux, ni sources, ni clones de repli Web ; comparez donc l’apparence sur iOS compatible.
@@ -327,8 +330,8 @@ Pour un `ion-button` résolu en `source`, le remplissage est choisi séparément
 `verticalBars.buttonDefaultFill` accepte `'solid'` ou `'glass'` ; omettre équivaut à `'glass'`. Utilisez `'solid'` pour le dessin de bouton Ionic par défaut ou `'glass'` pour du verre. Il s’applique à chaque bouton résolu en `source`, y compris une exception locale sous un réglage global `system`.
 
 ```ts
-// Garder le style système global ; les boutons source locaux utilisent le remplissage Ionic par défaut.
-const rail = await enableNativeUI({ controls: 'verticalOnly', ionic: { verticalBars: { buttonDefaultFill: 'solid' } } });
+// Keep system styling globally; local source buttons use Ionic's default fill.
+const rail = await enableNativeUI({ ionic: { verticalBars: { buttonDefaultFill: 'solid' } } });
 ```
 
 ```html
@@ -349,7 +352,7 @@ Dans `ion-buttons`, définissez explicitement `fill="solid"` pour projeter un ar
 
 ## Mouvement des Modal
 
-Les contrôles du rail d’une Modal conservent la propriété Native des sources pendant la présentation, le glissement, l’ajustement et la fermeture. Au repos, ils utilisent les contrôles Native actifs. Sous la limite réservée à la barre d’outils, le mouvement utilise des images portées par le dialogue Modal ; sur cette limite ou au-dessus, les contrôles Native actifs restent fixes. La présentation et la fermeture utilisent des images préparées pour leurs transitions. Ces règles s’appliquent aux boutons groupés comme à ceux projetés individuellement. Consultez le [déplacement du rail d’une Modal et le découpage du bord du verre](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/appearance#modal-rail-movement) pour les règles de présentation et la portée du découpage.
+Les contrôles du rail d’une Modal conservent la propriété Native des sources pendant la présentation, le glissement, l’ajustement et la fermeture. Au repos, ils utilisent les contrôles Native actifs. Sous la limite réservée à la barre d’outils, le mouvement utilise des images portées par le dialogue Modal ; sur cette limite ou au-dessus, les contrôles Native actifs restent fixes. La présentation et la fermeture utilisent des images préparées pour leurs transitions. Ces règles s’appliquent aux boutons groupés comme à ceux projetés individuellement. Consultez le [déplacement du rail d’une Modal et le découpage du bord du verre](https://webview-native-ui.com/projects/capacitor-native-ui/docs/appearance#modal-rail-movement) pour les règles de présentation et la portée du découpage.
 
 ## Barre d’onglets
 

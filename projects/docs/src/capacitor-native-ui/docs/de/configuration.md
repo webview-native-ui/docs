@@ -1,10 +1,11 @@
 ---
 title: "Native UI konfigurieren"
-sourceRevision: 6ae131fbc838b94e4a275911b28a910c3249ae733ea66dfa93d601ec76dac5e1
+sourceRevision: "874fe4b43b3bec975b14d096396048c4073b97927cb037fe8f7baf686e470ae4"
 ---
+
 # Native UI konfigurieren
 
-Dies ist die Einstellungsreferenz. Beginnen Sie mit der [Funktionsweise der Projektion](../README.md#how-projection-works), anschließend mit [Ionic-Einrichtung](setup.md) oder [HTML-Einrichtung](framework-independent.md) für die Installation.
+Verwenden Sie für die Installation die minimale [Standardeinrichtung](setup.md): `enableNativeUI()` enthält gewöhnliche Bedienelemente und Vertical Bars standardmäßig. Diese Seite ist die Einstellungsreferenz; kopieren Sie ihre erweiterten Optionen nicht als Installationsgrundgerüst. Beginnen Sie mit der [Funktionsweise der Projektion](https://webview-native-ui.com/projects/capacitor-native-ui/docs/readme#how-projection-works) und anschließend der [Ionic-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup) oder [HTML-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent).
 
 Rufen Sie `enableNativeUI()` einmal auf, nachdem das DOM Ihrer Anwendung eingebunden wurde. Ionic- und ausdrücklich markierte HTML-Bedienelemente verwenden dieselben Standard-Swift-Renderer. Das Theme ist optional; Web-Layout, Safe Areas und Abstände liegen bei Ihrer App oder Ihrem Theme.
 
@@ -93,9 +94,9 @@ Native Werkzeugleistenschaltflächen erhalten automatisch Darstellungskennungen.
 Setzen Sie optional `data-transition-id` auf einer einzelnen Schaltfläche, wenn sie beim Umordnen innerhalb der zugehörigen Fläche einer bestimmten Aktion folgen soll:
 
 ```html
-<!-- Ausgangsseite -->
+<!-- Source page -->
 <ion-button data-transition-id="edit">Edit</ion-button>
-<!-- Zielseite -->
+<!-- Destination page -->
 <ion-button data-transition-id="edit">Done</ion-button>
 ```
 
@@ -138,13 +139,13 @@ HTML unterstützt derzeit Schaltflächen und Zurückschaltflächen. Reader für 
 ## Häufige Konfigurationen
 
 ```ts
-// Ionic oder HTML: alle unterstützten Bedienelemente, Seitenleistenunterstützung standardmäßig aktiv.
+// Ionic or HTML: all supported controls, rail support enabled by default.
 const shell = await enableNativeUI();
 
-// Alternative: automatische Auswahl nur in der Seitenleiste.
+// Alternative: automatic selection only in the rail.
 const railOnly = await enableNativeUI({ controls: 'verticalOnly' });
 
-// Alternative: automatisch nur Tabs auswählen.
+// Alternative: automatically select only tabs.
 const tabsOnly = await enableNativeUI({
   controls: { buttonGroup: false, button: false, backButton: false, tabs: true, segment: false, fab: false },
 });
@@ -167,7 +168,6 @@ const shell = await enableNativeUI({
   verticalBars: {
     enabled: true,
     placement: {
-      edge: 'trailing',
       webHost: document.querySelector<HTMLElement>('#rail')!,
     },
   },
@@ -200,9 +200,9 @@ await shell.enableVerticalControlArea();
 Diese Methoden ändern `verticalBars.enabled` dieser Shell und erhalten Darstellung, Bedienelemente und Position. Vor dem Zuständigkeitswechsel lösen sie bestehende Projektionen auf, ohne eine weitere Shell zu erzeugen. Aufrufe werden serialisiert. Nach `destroy()` werden beide Methoden abgewiesen.
 
 ```ts
-const lease = await shell.suspend(); // vorübergehend alle Web-Bedienelemente wiederherstellen
+const lease = await shell.suspend(); // temporarily restore all Web controls
 await lease.resume();
-await shell.destroy(); // Shell stoppen und Quellen wiederherstellen
+await shell.destroy(); // stop the shell and restore sources
 ```
 
 Das Deaktivieren der Seitenleistenprojektion entfernt kein Anwendungs-CSS und ändert keine anwendungseigenen Abstände. Aktualisieren Sie bei Bedarf zugleich Ihr eigenes Layout.

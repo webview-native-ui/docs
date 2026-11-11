@@ -1,7 +1,8 @@
 ---
 title: "Apparence claire et sombre"
-sourceRevision: "956b6155b6e41dd0886309d91aa56755ba6c7582f6f4d480c93f534984e04ec4"
+sourceRevision: "f690f6d9b3a88896d6dd4dd1b409e277ee719d64099c6704b6742ffa0f47f598"
 ---
+
 # Apparence claire et sombre
 
 Native UI lit le style calculé de chaque élément source projeté et transmet son apparence claire/sombre au moteur natif. Configurez l’apparence dans votre CSS Web ; il n’existe pas d’option distincte de démarrage pour le mode sombre natif.
@@ -21,12 +22,12 @@ Les marqueurs du thème et les valeurs de fond Ionic sont prioritaires sur `colo
 
 ## Harmoniser avec votre thème Web
 
-| Configuration Web | Réglage nécessaire |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Thème iOS 27 | Chargez la [paire de mode sombre système, par classe ou permanent](../../theme-ios27/docs/setup.md#choose-one-dark-mode-pair) correspondante. Le thème fournit le marqueur d’apparence. |
-| Ionic avec un thème existant | Gardez `--ion-background-color-rgb` cohérent avec la palette active ; l’apparence native l’utilise en l’absence de marqueur du thème. |
-| HTML sans ces variables de thème | Définissez `color-scheme: light` ou `color-scheme: dark` selon le thème Web actif. |
-| Apparence HTML gérée par le système | Utilisez du CSS réactif au système ; sans mode unique sélectionné, l’apparence native utilise le réglage système. |
+| Configuration Web | Ce qu’il faut configurer |
+| --- | --- |
+| Thème iOS 27 | Sélectionnez la [feuille de style System, Class ou Always](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/configuration#dark-mode) correspondante. Le thème fournit le marqueur d’apparence. |
+| Ionic avec un thème existant | Gardez `--ion-background-color-rgb` cohérent avec la palette active ; l’apparence native l’utilise en l’absence de marqueur de thème. |
+| HTML sans ces variables de thème | Définissez `color-scheme: light` ou `color-scheme: dark` pour correspondre au thème Web actif. |
+| Apparence HTML gérée par le système | Utilisez du CSS réactif au système ; lorsqu’aucun schéma unique n’est sélectionné, l’apparence native utilise le réglage système. |
 
 Par exemple, une application HTML simple avec une classe de mode sombre manuel peut déclarer :
 

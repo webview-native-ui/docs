@@ -3,7 +3,7 @@ title: 設定
 ---
 # Native UIの設定
 
-設定のリファレンスです。まず[投影の仕組み](../README.md#how-projection-works)を読み、インストールは[Ionicの設定](setup.md)または[HTMLの設定](framework-independent.md)を参照してください。
+導入は最小の[標準設定](setup.md)から始めます。`enableNativeUI()` は通常のコントロールと Vertical Bars をデフォルトで有効にします。このページは設定リファレンスです。展開した設定オブジェクトを導入用の定型コードとしてコピーしないでください。まず[投影の仕組み](../README.md#how-projection-works)を読み、インストールは[Ionicの設定](setup.md)または[HTMLの設定](framework-independent.md)を参照してください。
 
 アプリのDOMがマウントされた後に `enableNativeUI()` を一度呼び出します。Ionicと明示的に指定したHTMLコントロールは、標準のSwiftレンダラーを共有します。テーマは任意です。Webレイアウト、セーフエリア、余白はアプリまたはテーマが管理します。
 
@@ -46,7 +46,7 @@ const shell = await enableNativeUI({
   },
   verticalBars: {
     enabled: true,
-    // 任意: placement: { edge: 'trailing', webHost: appOwnedHost },
+    // Optional: placement: { edge: 'trailing', webHost: appOwnedHost },
   },
   extensions: [],
   ionic: {
@@ -92,9 +92,9 @@ const shell = await enableNativeUI({
 対応するサーフェス内で順序を変えても特定のアクションを追跡したい場合は、個々のボタンに任意で `data-transition-id` を指定します。
 
 ```html
-<!-- 遷移元のページ -->
+<!-- Source page -->
 <ion-button data-transition-id="edit">Edit</ion-button>
-<!-- 遷移先のページ -->
+<!-- Destination page -->
 <ion-button data-transition-id="edit">Done</ion-button>
 ```
 
@@ -137,13 +137,13 @@ Vertical BarsはWebページの階層をSwiftUIの `NavigationStack` に反映�
 ## よく使う設定
 
 ```ts
-// IonicまたはHTML：対応する全コントロールとレールを既定で有効にします。
+// Ionic or HTML: all supported controls, rail support enabled by default.
 const shell = await enableNativeUI();
 
-// 別の設定例：レール内だけを自動選択します。
+// Alternative: automatic selection only in the rail.
 const railOnly = await enableNativeUI({ controls: 'verticalOnly' });
 
-// 別の設定例：タブだけを自動選択します。
+// Alternative: automatically select only tabs.
 const tabsOnly = await enableNativeUI({
   controls: { buttonGroup: false, button: false, backButton: false, tabs: true, segment: false, fab: false },
 });
@@ -166,7 +166,6 @@ const shell = await enableNativeUI({
   verticalBars: {
     enabled: true,
     placement: {
-      edge: 'trailing',
       webHost: document.querySelector<HTMLElement>('#rail')!,
     },
   },
@@ -199,9 +198,9 @@ await shell.enableVerticalControlArea();
 これらのメソッドは、表示、コントロール、配置を維持したまま、このshellの `verticalBars.enabled` を変更します。別のshellを作らず、既存の投影を終了してから表示の管理を引き渡します。呼び出しは直列化されます。`destroy()` 後にどちらのメソッドを呼んでも拒否されます。
 
 ```ts
-const lease = await shell.suspend(); // 一時的にすべてのWebコントロールを復元します
+const lease = await shell.suspend(); // temporarily restore all Web controls
 await lease.resume();
-await shell.destroy(); // shellを停止して投影元を復元します
+await shell.destroy(); // stop the shell and restore sources
 ```
 
 レールへの投影を無効にしても、アプリのCSSを削除したり、アプリが管理する余白を変えたりしません。必要に応じて、この設定とともにアプリ側のレイアウトも更新してください。
