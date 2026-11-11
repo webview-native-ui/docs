@@ -17,12 +17,37 @@ import { SeoService } from './seo.service';
         <p class="eyebrow" i18n="@@openSourceDocumentation">Open source documentation</p>
         <h1>{{ copy.title }}</h1>
         <p class="catalog-hero__lead">{{ copy.intro }}</p>
+        <div class="platform-outcomes">
+          <section><h2>{{ copy.iosBenefit }}</h2><p>{{ copy.iosDetail }}</p></section>
+          <section><h2>{{ copy.androidBenefit }}</h2><p>{{ copy.androidDetail }}</p></section>
+        </div>
         <h2>{{ copy.start }}</h2>
         <p class="catalog-hero__lead">{{ copy.startDescription }}</p>
-        <p><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a></p>
-
+        <p class="guide-actions"><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a><a href="#theme-preview-title">{{ copy.previewTitle }} ↓</a></p>
+        <nav class="setup-alternatives" [attr.aria-label]="copy.otherSetups">
+          <span>{{ copy.otherSetups }}</span>
+          <a [href]="guideHref('/guides/appearance')">{{ copy.themeOnly }}</a>
+          <a [href]="guideHref('/projects/capacitor-native-ui/docs/framework-independent')">{{ copy.htmlSetup }}</a>
+          <a [href]="guideHref('/projects/cordova-native-ui/docs/readme')">{{ copy.cordovaSetup }}</a>
+        </nav>
       </header>
 
+      <section class="theme-preview" aria-labelledby="theme-preview-title">
+        <h2 id="theme-preview-title">{{ copy.previewTitle }}</h2>
+        <p>{{ copy.previewScope }}</p>
+        <div class="theme-preview-grid">
+          <figure>
+            <img src="https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/c70beb9d1e5b39de696b2b2c47a3d9bc5ffcdfbe/screenshots/ios27-library.png" width="780" height="1688" loading="lazy" [alt]="copy.iosPreview" />
+            <figcaption>{{ copy.iosPreview }}</figcaption>
+            <a [href]="iosDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryIos }} ↗</a>
+          </figure>
+          <figure>
+            <img src="https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.1/screenshots/md3.png" width="1848" height="974" loading="lazy" [alt]="copy.androidPreview" />
+            <figcaption>{{ copy.androidPreview }}</figcaption>
+            <a [href]="androidDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryAndroid }} ↗</a>
+          </figure>
+        </div>
+      </section>
       <section class="guide-chapters" [attr.aria-label]="copy.guide">
         @for (chapter of chapters; track chapter.id) {
           <section class="guide-chapter">
@@ -84,6 +109,9 @@ export class PluginIndexComponent implements OnInit {
   protected readonly standardSetupLabel = STANDARD_SETUP_LABELS[resolveDocsLocale(this.#locale)];
   protected readonly standardSetupHref = localizedPublicPath(this.#locale, STANDARD_SETUP_PATH);
   protected readonly projectGroups = projectGroupsForLocale(this.#locale);
+
+  protected readonly iosDemoUrl = 'https://ionic-theme-ios27.rdlabo.dev/';
+  protected readonly androidDemoUrl = 'https://ionic-theme-md3.rdlabo.dev/';
 
   protected projectHref(project: ProjectSummary): string {
     return project.hostedUrl ?? localizedPublicPath(this.#locale, project.path);

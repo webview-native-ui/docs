@@ -1,19 +1,25 @@
 ---
 title: 'WebView Native UI Standardeinrichtung'
-sourceRevision: '2e86f1f775fa5f0b39b268a804555c9ee5ddfc3b3968bd4c8142ae29dd92df31'
+sourceRevision: '2d07f86743b5fd6d41c2e37b6a6d08966595e2ff8911c5f00f8ac30572c39519'
 ---
 
 # WebView Native UI Standardeinrichtung
 
 Diese standardmäßige Ionic-Einrichtung kombiniert native iOS-Steuerelemente einschließlich iPhone Duo / Vertical Bars mit Android Dynamic Color. Zustand, Routen und Ereignishandler bleiben bei Ihrer Anwendung.
 
+## Vor dem Start
+
+Verwenden Sie eine bestehende Ionic-App mit Capacitor 8 und Foldable ab 8.5 innerhalb von Version 8.
+
+Native iOS-Steuerelemente benötigen iOS 26+ und Xcode 26+. Android Dynamic Color benötigt Android 12+; ältere Geräte behalten die Standardpalette. Natives Rail-Rendering erfordert zusätzlich ein [unterstütztes Gerät und Betriebssystem](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering).
+
+Für andere Integrationen wählen Sie [HTML ohne Ionic](/projects/capacitor-native-ui/docs/framework-independent), [Cordova](/projects/cordova-native-ui/docs/readme) oder [nur Themes](/guides/appearance).
+
 ## 1. Pakete installieren
 
 ```sh
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
 ```
-
-Verwenden Sie eine bestehende Ionic-App mit Capacitor 8 und Foldable ab 8.5 innerhalb von Version 8.
 
 ## 2. Beide Themes konfigurieren
 
@@ -89,7 +95,7 @@ Erstellen Sie die Web-Assets, synchronisieren Sie und bauen und starten Sie ansc
 npx cap sync
 ```
 
-Native iOS-Steuerelemente benötigen iOS 26+ und Xcode 26+. Android Dynamic Color benötigt Android 12+; ältere Geräte behalten die Standardpalette. Natives Rail-Rendering erfordert zusätzlich ein [unterstütztes Gerät und Betriebssystem](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering). SwiftPM löst Engine automatisch auf; vorhandene CocoaPods-Projekte verwenden die [native Einrichtung](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
+SwiftPM löst Engine automatisch auf; vorhandene CocoaPods-Projekte verwenden die [native Einrichtung](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
 
 ## Einzelne Optionen
 

@@ -30,7 +30,7 @@ describe('PluginIndexComponent', () => {
     expect(TestBed.inject(Title).getTitle()).toBe(
       'WebView Native UI Documentation',
     );
-    expect(compiled.querySelector('h1')?.textContent).toContain('Web and native UI');
+    expect(compiled.querySelector('h1')?.textContent).toContain('iOS and Android design');
     expect(compiled.textContent).toContain('independent open-source initiative maintained by rdlabo');
     const categoryLinks = compiled.querySelectorAll<HTMLAnchorElement>('.category-nav a');
     expect(categoryLinks.length).toBe(projectGroupsForLocale('en').length);
@@ -126,6 +126,9 @@ describe('localized project links', () => {
     }).compileComponents();
     const fixture = TestBed.createComponent(PluginIndexComponent);
     fixture.detectChanges();
+    const demos = [...(fixture.nativeElement as HTMLElement).querySelectorAll<HTMLAnchorElement>('.theme-preview a')];
+    expect(demos.map(link => link.href)).toEqual(['https://ionic-theme-ios27.rdlabo.dev/', 'https://ionic-theme-md3.rdlabo.dev/']);
+    expect(demos.every(link => link.target === '_blank' && link.rel === 'noopener noreferrer')).toBe(true);
     const cards = [...(fixture.nativeElement as HTMLElement).querySelectorAll<HTMLAnchorElement>('.catalog-card')];
     const projects = projectGroupsForLocale(code).flatMap(({ projects }) => projects);
     expect(cards).toHaveLength(projects.length);

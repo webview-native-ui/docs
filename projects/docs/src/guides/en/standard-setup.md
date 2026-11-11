@@ -2,13 +2,19 @@
 
 This standard Ionic setup combines the plugin’s native controls on iOS, including iPhone Duo / Vertical Bars, with Android Dynamic Color. Your application keeps its state, routes and event handlers.
 
+## Before you start
+
+Use an existing Ionic app with Capacitor 8. Foldable must be version 8.5 or later within version 8.
+
+iOS native controls require iOS 26+ and Xcode 26+. Android Dynamic Color requires Android 12+; older devices retain the default palette. Native rail rendering additionally requires a [supported device and OS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering).
+
+For other integrations, choose [HTML without Ionic](/projects/capacitor-native-ui/docs/framework-independent), [Cordova](/projects/cordova-native-ui/docs/readme), or [themes only](/guides/appearance).
+
 ## 1. Install the packages
 
 ```sh
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
 ```
-
-Use an existing Ionic app with Capacitor 8. Foldable must be version 8.5 or later within version 8.
 
 ## 2. Configure both themes
 
@@ -84,7 +90,7 @@ Build the application’s Web assets, sync, then rebuild and run each native app
 npx cap sync
 ```
 
-iOS native controls require iOS 26+ and Xcode 26+. Android Dynamic Color requires Android 12+; older devices retain the default palette. Native rail rendering additionally requires a [supported device and OS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering). SwiftPM resolves Engine automatically; existing CocoaPods projects use [native project setup](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
+SwiftPM resolves Engine automatically; existing CocoaPods projects use [native project setup](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
 
 ## Individual options
 
