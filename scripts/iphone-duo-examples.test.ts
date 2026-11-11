@@ -43,21 +43,7 @@ for (const [project, page] of [
         }
       }
       if (project === 'capacitor-native-ui') {
-        const companion = readFileSync(
-          resolve('projects/docs/src/capacitor-native-ui/docs/ja/device-layout.md'),
-          'utf8',
-        );
-        const layoutModule = [...companion.matchAll(/^```ts\n([\s\S]*?)^```/gm)]
-          .map((match) => match[1])
-          .find((code) => code.includes('export async function connectDeviceLayout'))!;
-        assert.ok(layoutModule, 'The device connection must use the documented module');
-        writeFileSync(join(directory, 'device-layout.ts'), layoutModule);
-        const service = [...companion.matchAll(/^```ts\n([\s\S]*?)^```/gm)]
-          .map((match) => match[1])
-          .find((code) => code.includes('export class VerticalBarsLayoutService'))!;
-        assert.ok(service, 'The bootstrap must use the documented device-layout service');
         mkdirSync(join(directory, 'app'));
-        writeFileSync(join(directory, 'app/vertical-bars-layout.service.ts'), service);
         // These application-owned files are supplied by the existing app, not the plugin.
         writeFileSync(join(directory, 'app/app.component.ts'), 'export class AppComponent {}');
         writeFileSync(

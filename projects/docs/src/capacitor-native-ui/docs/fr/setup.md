@@ -1,6 +1,6 @@
 ---
 title: "Configurer Native UI dans une application Ionic"
-sourceRevision: "2060f6f26af79395d7b9276d93f9403ceaa19c85c5c49bef08fe0dae1a18576d"
+sourceRevision: "a1bfa6fa974d08d4b344fcfe2ab79aef6ba5177bd932e2dede4f56a114376f54"
 ---
 
 # Configurer Native UI dans une application Ionic
@@ -49,14 +49,11 @@ Après le montage de la structure de l’application, démarrez le runtime par d
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const shell = await enableNativeUI();
+await enableNativeUI();
 ```
 
-Connectez le [démarrage de l’application et la disposition de l’appareil](device-layout.md) pendant cette étape. Son module appartenant à l’application applique la disposition initiale de Foldable et les événements de changement via le thème, afin que la disposition Vertical Bars par défaut suive l’appareil.
 
-### Cycle de vie de l’application
-
-L’amorçage de l’application démarre et arrête Native UI. Le module de l’appareil possède son écouteur, le thème possède la disposition Web et les composants de page conservent leur état et leurs gestionnaires habituels. L’[amorçage Angular](device-layout.md#angular-bootstrap) et la [connexion de l’application indépendante du framework](device-layout.md#react-vue-and-other-application-owners) montrent le câblage complet du démarrage et de la libération.
+Avec Angular, appelez cette fonction après la résolution de `bootstrapApplication`. Avec React ou Vue, appelez-la après le rendu de la coque. Raccordez la disposition initiale de Foldable et les notifications `layoutChange` via `resolveVerticalBarsLayout` et `setVerticalBarsLayout` du thème ; voir les [exemples de démarrage et de disposition](device-layout.md).
 
 ## 4. Compiler, synchroniser et exécuter
 

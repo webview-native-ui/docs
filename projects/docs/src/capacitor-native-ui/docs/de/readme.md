@@ -1,6 +1,6 @@
 ---
 title: "Erste Schritte"
-sourceRevision: "294dfaa027e1c22d686c4ebb8105faf637aaa102874b3e951da613d32eb5e36d"
+sourceRevision: "1a81174b4fab6b7d08cd0ee915bf1b57b437bad51016f5d9a8a011107c758211"
 ---
 
 # Capacitor Native UI
@@ -22,12 +22,12 @@ Verwenden Sie das einzelne Stylesheet und das Preset `ios27ThemeConfig` des Them
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const shell = await enableNativeUI();
+await enableNativeUI();
 ```
 
-**Vertical Bars ist standardmäßig aktiviert**, zusammen mit gewöhnlichen Bedienelementen. Binden Sie den standardmäßigen Gerätelayout-Service ein: Unterstützte Geräte bestimmen die Rail-Platzierung, andere Geräte behalten das Web-Layout.
+**Vertical Bars ist zusammen mit den normalen Steuerelementen standardmäßig aktiviert.** Verbinden Sie Layoutmeldungen; unterstützte Geräte wählen die Rail-Platzierung, andere behalten das Web-Layout.
 
-Die [Ionic-Einrichtung](/docs/setup) beschreibt Stylesheet, Bootstrap, Geräteservice und native Buildschritte vollständig. Mit der [Einrichtung für bestehende Themes](/docs/ionic-vertical-bars) behalten Sie ein anderes Web-Theme; ohne Ionic verwenden Sie die [HTML-Einrichtung](/docs/framework-independent). Native UI ist weder für Anwendungszustand noch Routing oder Theme-Auswahl zuständig. Der Anwendungseigentümer zerstört sein Handle bei der Entsorgung.
+Folgen Sie der [Ionic-Einrichtung](setup.md) für Stylesheet, Start, Gerätelayout und nativen Build. Sie können [ein vorhandenes Theme](ionic-vertical-bars.md) oder [HTML ohne Ionic](framework-independent.md) verwenden. Zustand, Routing und Theme-Auswahl bleiben bei der Anwendung.
 
 ## Funktionsweise der Projektion
 

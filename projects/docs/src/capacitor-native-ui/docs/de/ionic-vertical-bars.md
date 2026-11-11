@@ -1,6 +1,6 @@
 ---
 title: "Vertical Bars mit Ihrem bestehenden Theme"
-sourceRevision: "ac403c26179085fc542ea822e28e2e9bfd88ffc7ed6a448bdfff759a60572c58"
+sourceRevision: "21e5bb8f36ac3e48f01de53362d670dd6321517e71879538c5e6c2bd2eeec47c"
 ---
 
 # Vertical Bars mit Ihrem bestehenden Theme
@@ -101,11 +101,11 @@ Der Adapter behält die Animationsziele des Builders bei, einschließlich eines 
 
 Verwenden Sie [Anwendungsstart und Gerätelayout](device-layout.md), um die standardmäßige `enableNativeUI()`-Runtime zu starten und Foldables erstes Layout sowie `layoutChange`-Ereignisse zu verbinden. Wenden Sie Stylesheet und Ionic-Animation aus den Schritten 1 und 2 als Theme-Konfiguration dieser Anwendung an.
 
-Der Anwendungseigentümer übernimmt Start und Entsorgung. Das Gerätemodul wendet `edge`, `inset` und `toolbarTop` über das Theme an; Native UI besitzt die Projektion und prüft die native Verfügbarkeit. Eine Kante von null stellt das gewöhnliche Layout wieder her.
+Starten Sie einmal nach dem Rendern der App-Shell. Übergeben Sie das Layout an das Theme; Native UI übernimmt die Projektion. Ein null-Rand stellt das normale Layout wieder her.
 
 ### Zeitpunkt des anfänglichen Layouts
 
-Führen Sie Schritt 3 aus Ihrem Anwendungs-Bootstrap aus, sobald `ion-app` eingebunden ist; warten Sie nicht auf Datenanfragen einer gerouteten Seite. `setVerticalBarsLayout()` benötigt dieses Element und speichert keine vor dem Einbinden übergebene Platzierung. Halten Sie Geräteinformationen in einem anwendungseigenen Service oder Integrationsmodul, getrennt von gerouteten Seitenhandlern. Start und Bereinigung gehören demselben Anwendungseigentümer, wie in den [Anwendungsstart und Gerätelayout](device-layout.md) beschrieben.
+Führen Sie Schritt 3 nach dem Rendern von `ion-app` aus. `setVerticalBarsLayout()` benötigt das gemountete Element. Verwenden Sie die [Start- und Layoutbeispiele](device-layout.md), ohne auf Datenabfragen der Seiten zu warten.
 
 Nativer Start, Gerätepositionierung und Rendering der Bedienelemente sind asynchron. Die Auflösung von `enableNativeUI()` liefert das Laufzeithandle, garantiert jedoch keine bereits abgeschlossene Projektion. Früher Start vermeidet zusätzliche Wartezeiten der Anwendung; das anfängliche Web-Layout kann dennoch vor der nativen Projektion sichtbar sein.
 

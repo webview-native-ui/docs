@@ -6,19 +6,17 @@ title: 移行
 
 ## 既存の iOS 設定を簡潔にする
 
-以前のガイドには、標準設定に不要なアプリ用の定型処理が含まれていました。新しいアプリは[現在の導入ガイド](setup.md)から始めてください。
+以前のガイドから `mountNativeUI()` ラッパーをコピーした場合は、ラッパーと破棄処理の接続を削除します。アプリのシェル描画後に次を呼びます。
 
-| 以前のガイドの構成 | 標準設定 |
-| --- | --- |
-| モジュールグローバルの `mountNativeUI()` 寿命管理キュー、ページ内でのネイティブ起動 | アプリの所有者からデフォルトの `enableNativeUI()` ランタイムを1つ起動し、その所有者とともに破棄します。 |
-| 手組みのページ切替や2つ目のナビゲーションラッパー | アプリの Ionic ルートを維持します。`ios27ThemeConfig` が連携済みの遷移を設定します。 |
-| 導入用の定型設定としての `controls: 'verticalOnly'` | オプションを省略すると通常のコントロールと Vertical Bars が両方有効です。明示的にレールだけを選ぶ場合にだけ維持します。 |
-| `getBarPlacement()` の直接対応付けと `barPlacementChange` だけの購読 | [デバイスモジュール](device-layout.md)で `layoutChange` を `resolveVerticalBarsLayout(Foldable)` へ接続し、`toolbarTop` も含めます。 |
-| デバイス設定で固定した `edge: 'trailing'` | デバイスが報告した配置を使います。固定配置は明示的なブラウザープレビュー用です。 |
+```ts
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-既存の状態と業務ハンドラーはアプリに維持します。ガイドの定型処理を置き換える際は、以前のランタイムを停止し、デバイス購読を解除してから新しい所有者を起動します。デバイス接続と Native UI ランタイムはそれぞれ1つに保ちます。独自の Web テーマを維持するアプリは[既存テーマのガイド](ionic-vertical-bars.md)に従ってください。
+await enableNativeUI();
+```
 
-選択・中断・独自ナビゲーションの API は、必要なアプリで引き続き利用できます。これらはリファレンス API であり、導入の前提ではありません。デバイスプロバイダーの API も有効です。リゾルバーはそれらを組み合わせ、edge だけの通知をレイアウト全体の更新として扱わないようにします。
+通常のコントロールと Vertical Bars はデフォルトで有効です。レールだけを意図的に使う場合を除き、`controls: 'verticalOnly'` は削除します。Ionic のルートは維持し、テーマ設定には `ios27ThemeConfig` を使います。
+
+デバイス配置は Foldable の `layoutChange` を購読し、その後で初期配置を `resolveVerticalBarsLayout(Foldable)` と `setVerticalBarsLayout` で適用します。`getBarPlacement()` の直接対応付けを置き換え、`toolbarTop` も反映します。[起動とデバイス配置の例](device-layout.md)を参照してください。
 
 ## 2.1.0 からの更新
 

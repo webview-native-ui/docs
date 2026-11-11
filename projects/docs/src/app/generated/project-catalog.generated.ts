@@ -974,7 +974,7 @@ export const PROJECTS_JA = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
-        "title": "アプリの起動とデバイス配置を接続する",
+        "title": "アプリの起動とデバイス配置",
         "navTitle": "アプリの起動とデバイス配置",
         "slug": "device-layout",
         "section": "ガイド",
@@ -1607,7 +1607,7 @@ export const PROJECTS_FR = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
-        "title": "Relier le démarrage de l’application et la disposition de l’appareil",
+        "title": "Démarrage et disposition de l’appareil",
         "navTitle": "Démarrage de l’application et disposition de l’appareil",
         "slug": "device-layout",
         "section": "Guides",
@@ -2240,7 +2240,7 @@ export const PROJECTS_DE = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
-        "title": "Anwendungsstart und Gerätelayout verbinden",
+        "title": "Anwendungsstart und Gerätelayout",
         "navTitle": "Anwendungsstart und Gerätelayout",
         "slug": "device-layout",
         "section": "Anleitungen",

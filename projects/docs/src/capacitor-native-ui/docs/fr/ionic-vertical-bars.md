@@ -1,6 +1,6 @@
 ---
 title: "Vertical Bars avec votre thème existant"
-sourceRevision: "ac403c26179085fc542ea822e28e2e9bfd88ffc7ed6a448bdfff759a60572c58"
+sourceRevision: "21e5bb8f36ac3e48f01de53362d670dd6321517e71879538c5e6c2bd2eeec47c"
 ---
 
 # Vertical Bars avec votre thème existant
@@ -101,11 +101,11 @@ L’adaptateur conserve les cibles d’animation du générateur, y compris tout
 
 Utilisez le [démarrage de l’application et la disposition de l’appareil](device-layout.md) pour démarrer le runtime `enableNativeUI()` par défaut et connecter la disposition initiale de Foldable et les événements `layoutChange`. Appliquez la feuille de style et l’animation Ionic des étapes 1 et 2 comme configuration du thème de cette application.
 
-Le propriétaire de l’application gère le démarrage et la libération. Le module de l’appareil applique `edge`, `inset` et `toolbarTop` via le thème ; Native UI possède la projection et vérifie la disponibilité native. Un bord nul rétablit la disposition ordinaire.
+Démarrez une fois après le rendu de la coque. Transmettez la disposition au thème ; Native UI gère la projection. Un bord nul rétablit la disposition ordinaire.
 
 ### Moment de la disposition initiale
 
-Exécutez l’étape 3 depuis l’amorçage de l’application dès le montage de `ion-app` ; n’attendez pas les requêtes de données d’une page routée. `setVerticalBarsLayout()` exige que cet élément existe et ne mémorise pas le placement fourni avant son montage. Conservez les rapports de l’appareil dans un service ou module d’intégration de l’application, distinct des gestionnaires des pages routées. Gardez le démarrage et le nettoyage auprès du même propriétaire de l’application, comme indiqué dans le [démarrage de l’application et la disposition de l’appareil](device-layout.md).
+Exécutez l’étape 3 après le rendu de `ion-app`. `setVerticalBarsLayout()` exige un élément monté. Utilisez les [exemples de démarrage et de disposition](device-layout.md), sans attendre les requêtes de données des pages.
 
 Le démarrage natif, le placement et le rendu sont asynchrones. La résolution de `enableNativeUI()` fournit le handle du runtime, sans garantir que les contrôles sont déjà projetés. Démarrer rapidement évite une attente ajoutée par l’application, mais la disposition Web initiale peut rester visible avant la projection native.
 

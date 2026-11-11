@@ -360,7 +360,7 @@ test('publishes separate theme and Native UI guides with current package APIs', 
     assert.match(setup.html, /layoutChange/);
     const deviceSetup = native.pages.find((page) => page.slug === 'device-layout')!;
     assert.match(deviceSetup.html, /resolveVerticalBarsLayout/);
-    assert.match(deviceSetup.html, /connectDeviceLayout/);
+    assert.match(deviceSetup.html, /layoutChange/);
     assert.ok(
       setup.html.includes(`href="${prefix}/projects/ionic-theme-ios27/docs/vertical-bars-layout`),
     );
