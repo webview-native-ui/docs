@@ -112,7 +112,7 @@ import { localizedPublicPath } from './locale-path';
       background: white;
       border: 1px solid #e2e8f0;
       border-radius: 10px;
-      box-shadow: 0 8px 24px #2a1b1414;
+      box-shadow: 0 8px 24px #17203314;
     }
     .language-option {
       display: flex;

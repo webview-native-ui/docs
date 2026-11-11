@@ -50,7 +50,7 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
               (activeHeadingChange)="activate($event)"
             >
               <nav
-                class="mb-5 flex flex-wrap items-center gap-2 text-sm text-[#796e68]"
+                class="mb-5 flex flex-wrap items-center gap-2 text-sm text-[#64748b]"
                 i18n-aria-label="@@breadcrumb"
                 aria-label="Breadcrumb"
               >
@@ -177,7 +177,7 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
                       @for (heading of tocHeadings(); track heading.id) {
                         <li [class.pl-3]="heading.level === 3">
                           <a
-                            class="block py-1 text-[0.82rem] leading-5 font-normal break-words text-[#6b625d] no-underline transition-colors hover:text-[#1767d2] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
+                            class="block py-1 text-[0.82rem] leading-5 font-normal break-words text-[#64748b] no-underline transition-colors hover:text-[#1767d2] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
                             [class.!text-[#1767d2]]="activeToc() === heading.id"
                             [href]="tocHref(doc, heading)"
                             >{{ heading.text }}</a

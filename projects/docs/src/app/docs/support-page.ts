@@ -17,7 +17,7 @@ import { SeoService } from './seo.service';
           >Help build a community around independent OSS</ng-container
         >
       </h1>
-      <p class="mt-8 max-w-2xl text-xl leading-9 text-[#675e59]">
+      <p class="mt-8 max-w-2xl text-xl leading-9 text-[#475569]">
         <ng-container i18n="@@supportIntro"
           >Monthly sponsorships start at $5 and support ongoing public OSS work. The long-term vision
           is a community of 100 monthly sponsors supporting the collection broadly rather than
@@ -34,7 +34,7 @@ import { SeoService } from './seo.service';
             >The first 10 monthly sponsors</ng-container
           >
         </h2>
-        <p class="mt-4 mb-0 max-w-2xl leading-7 text-[#6f6661]">
+        <p class="mt-4 mb-0 max-w-2xl leading-7 text-[#64748b]">
           <ng-container i18n="@@supportMilestoneDescription"
             >Small, recurring contributions create a broad base for independent open-source work.
             Every sponsorship supports the same public projects. Choose an amount that feels
@@ -57,7 +57,7 @@ import { SeoService } from './seo.service';
                 <ng-container i18n="@@pastSponsorsHeading">Past sponsors</ng-container>
               }
             </h2>
-            <p class="mt-3 mb-0 max-w-2xl leading-7 text-[#6f6661]">
+            <p class="mt-3 mb-0 max-w-2xl leading-7 text-[#64748b]">
               @if (group.id === 'current') {
                 <ng-container i18n="@@currentSponsorsDescription"
                   >Thank you to the people and organizations supporting rdlabo's open source
@@ -73,13 +73,13 @@ import { SeoService } from './seo.service';
               @for (sponsor of group.sponsors; track sponsor.login) {
                 <li>
                   <a
-                    class="flex min-h-24 items-center gap-4 rounded-2xl border border-[#e2e8f0] bg-white p-5 text-[#172033] no-underline transition hover:border-[#d8c4ba] hover:bg-[#f8fbff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
+                    class="flex min-h-24 items-center gap-4 rounded-2xl border border-[#e2e8f0] bg-white p-5 text-[#172033] no-underline transition hover:border-[#93c5fd] hover:bg-[#f8fbff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
                     [href]="sponsor.profileUrl"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      class="size-12 shrink-0 rounded-full bg-[#f3ebe7] object-cover"
+                      class="size-12 shrink-0 rounded-full bg-[#f1f5f9] object-cover"
                       [src]="sponsor.avatarUrl"
                       alt=""
                       width="48"
@@ -88,7 +88,7 @@ import { SeoService } from './seo.service';
                     />
                     <span class="min-w-0">
                       <strong class="block truncate font-semibold">{{ sponsor.name }}</strong>
-                      <span class="mt-1 block truncate text-sm text-[#766b65]"
+                      <span class="mt-1 block truncate text-sm text-[#64748b]"
                         >&#64;{{ sponsor.login }}</span
                       >
                     </span>
@@ -107,7 +107,7 @@ import { SeoService } from './seo.service';
           <h2 class="m-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]">
             <ng-container i18n="@@supportSponsorHeading">Join from $5 a month</ng-container>
           </h2>
-          <p class="mt-4 mb-0 max-w-xl leading-7 text-[#6f6661]">
+          <p class="mt-4 mb-0 max-w-xl leading-7 text-[#64748b]">
             <ng-container i18n="@@supportSponsorDescription"
               >Individual sponsorships do not unlock exclusive features, priority support, or a
               private roadmap. Your support helps keep the same libraries, documentation,
@@ -117,7 +117,7 @@ import { SeoService } from './seo.service';
         </div>
         <div class="border-t border-[#e2e8f0] p-7 sm:border-t-0 sm:border-l sm:p-10">
           <a
-            class="external-link inline-flex min-h-12 items-center justify-center rounded-full bg-[#1767d2] px-6 py-3 text-sm font-semibold text-white no-underline transition hover:bg-[#9f3417] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
+            class="external-link inline-flex min-h-12 items-center justify-center rounded-full bg-[#1767d2] px-6 py-3 text-sm font-semibold text-white no-underline transition hover:bg-[#1456b0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
             href="https://github.com/sponsors/rdlabo?metadata_campaign=docs-support"
             target="_blank"
             rel="noopener noreferrer"
@@ -127,7 +127,7 @@ import { SeoService } from './seo.service';
         </div>
       </section>
 
-      <p class="mt-10 max-w-2xl border-l-2 border-[#1767d2] pl-4 text-sm leading-6 text-[#675e59]">
+      <p class="mt-10 max-w-2xl border-l-2 border-[#1767d2] pl-4 text-sm leading-6 text-[#475569]">
         <ng-container i18n="@@supportIndependenceNotice"
           >Sponsorship supports independent open-source work maintained personally by
           rdlabo.</ng-container

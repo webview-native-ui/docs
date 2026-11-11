@@ -34,7 +34,7 @@ import { InteractiveDemo } from './docs-data';
           <ng-container i18n="@@interactiveDemo">Interactive demo</ng-container>
         </p>
         <a
-          class="external-link text-sm font-semibold text-[#1767d2] no-underline hover:text-[#923217]"
+          class="external-link text-sm font-semibold text-[#1767d2] no-underline hover:text-[#1456b0]"
           [href]="demo().url"
           target="_blank"
           rel="noopener noreferrer"
@@ -45,7 +45,7 @@ import { InteractiveDemo } from './docs-data';
       <div class="demo-viewport relative mx-auto mt-4 min-h-0 w-full max-w-[430px] flex-1">
         @if (loading()) {
           <div
-            class="absolute inset-0 z-10 flex items-center justify-center bg-[#f8fbff] text-sm text-[#796e68]"
+            class="absolute inset-0 z-10 flex items-center justify-center bg-[#f8fbff] text-sm text-[#64748b]"
             role="status"
             aria-live="polite"
           >
