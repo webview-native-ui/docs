@@ -24,10 +24,10 @@ import { SeoService } from './seo.service';
         </div>
         <figure class="app-showcase">
           <div class="showcase-screens">
-            <img class="showcase-library" src="/assets/showcase/library.jpg" width="390" height="844" [alt]="copy.showcaseLibrary" fetchpriority="high" />
-            <img class="showcase-player" src="/assets/showcase/now-playing.jpg" width="390" height="844" [alt]="copy.showcasePlayer" />
+            <div class="showcase-device"><p>iOS · Liquid Glass</p><div class="device-capture device-capture--iphone"><img class="showcase-library" src="/assets/showcase/iphone-library.jpg" width="690" height="1520" [alt]="copy.showcaseLibrary" fetchpriority="high" /></div><small>iPhone 15 Pro Max · iOS 27.2</small></div>
+            <div class="showcase-device"><p>Android · Material Design 3</p><div class="device-capture device-capture--pixel"><img src="/assets/showcase/pixel-library.jpg" width="1080" height="2400" [alt]="copy.showcaseAndroid" fetchpriority="high" /></div><small>Pixel 8a · Android 17</small></div>
           </div>
-          <figcaption><span id="theme-preview-title">{{ copy.showcaseCaption }}</span><a [href]="iosDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.showcaseExplore }} ↗</a></figcaption>
+          <figcaption><span id="theme-preview-title">{{ copy.showcaseCaption }}</span><a [href]="standardSetupHref">{{ standardSetupLabel }} →</a></figcaption>
         </figure>
       </header>
 
