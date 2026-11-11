@@ -1,7 +1,8 @@
 ---
 title: "Helle und dunkle Darstellung"
-sourceRevision: "956b6155b6e41dd0886309d91aa56755ba6c7582f6f4d480c93f534984e04ec4"
+sourceRevision: "f690f6d9b3a88896d6dd4dd1b409e277ee719d64099c6704b6742ffa0f47f598"
 ---
+
 # Helle und dunkle Darstellung
 
 Native UI liest den berechneten Stil jedes projizierten Quellelements und übermittelt dessen helle/dunkle Darstellung an den nativen Renderer. Konfigurieren Sie die Darstellung im Web-CSS; es gibt keine separate native Dunkelmodus-Startoption.
@@ -23,10 +24,10 @@ Theme-Kennzeichnungen und Ionic-Hintergrundwerte haben Vorrang vor `color-scheme
 
 | Web-Einrichtung | Konfiguration |
 | --- | --- |
-| iOS-27-Theme | Laden Sie das passende [System-, Class- oder Always-Dunkelmodus-Paar](../../theme-ios27/docs/setup.md#choose-one-dark-mode-pair). Das Theme liefert die Darstellungskennzeichnung. |
-| Ionic mit bestehendem Theme | Halten Sie `--ion-background-color-rgb` konsistent mit der aktiven Palette; ohne Theme-Kennzeichnung verwendet die native Darstellung diesen Wert. |
-| HTML ohne diese Theme-Variablen | Setzen Sie passend zum aktiven Web-Theme `color-scheme: light` oder `color-scheme: dark`. |
-| Systemgesteuerte HTML-Darstellung | Verwenden Sie CSS, das auf das System reagiert; ohne eindeutiges Schema fällt die native Darstellung auf die Systemeinstellung zurück. |
+| iOS-27-Theme | Passendes [System-, Class- oder Always-Stylesheet](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/configuration#dark-mode) wählen. Das Theme liefert den Darstellungsmarker. |
+| Ionic mit bestehendem Theme | `--ion-background-color-rgb` mit der aktiven Palette abstimmen; ohne Theme-Marker verwendet die native Darstellung diesen Wert. |
+| HTML ohne diese Theme-Variablen | `color-scheme: light` oder `color-scheme: dark` passend zum aktiven Web-Theme setzen. |
+| Vom System verwaltete HTML-Darstellung | Systemabhängiges CSS verwenden; wenn kein einzelnes Schema ausgewählt ist, verwendet die native Darstellung die Systemeinstellung. |
 
 Beispielsweise kann eine reine HTML-App mit manueller Dunkelmodusklasse Folgendes deklarieren:
 

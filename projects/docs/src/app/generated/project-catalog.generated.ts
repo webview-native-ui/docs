@@ -341,6 +341,13 @@ export const PROJECTS_EN = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
+        "title": "Application startup and device layout",
+        "navTitle": "Application startup and device layout",
+        "slug": "device-layout",
+        "section": "Guides",
+        "path": "/projects/capacitor-native-ui/docs/device-layout"
+      },
+      {
         "title": "Native UI without Ionic",
         "navTitle": "Native UI without Ionic",
         "slug": "framework-independent",
@@ -348,8 +355,8 @@ export const PROJECTS_EN = [
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
-        "title": "Add Vertical Bars while keeping your theme",
-        "navTitle": "Add Vertical Bars while keeping your theme",
+        "title": "Vertical Bars with your existing theme",
+        "navTitle": "Vertical Bars with your existing theme",
         "slug": "ionic-vertical-bars",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
@@ -967,6 +974,13 @@ export const PROJECTS_JA = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
+        "title": "アプリの起動とデバイス配置を接続する",
+        "navTitle": "アプリの起動とデバイス配置",
+        "slug": "device-layout",
+        "section": "ガイド",
+        "path": "/projects/capacitor-native-ui/docs/device-layout"
+      },
+      {
         "title": "Ionic なしで Native UI を使う",
         "navTitle": "Ionicを使わないNative UI",
         "slug": "framework-independent",
@@ -974,8 +988,8 @@ export const PROJECTS_JA = [
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
-        "title": "既存テーマを維持して Vertical Bars を追加する",
-        "navTitle": "既存テーマへのVertical Barsの追加",
+        "title": "既存テーマで使う Vertical Bars",
+        "navTitle": "既存テーマで使うVertical Bars",
         "slug": "ionic-vertical-bars",
         "section": "ガイド",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
@@ -1593,6 +1607,13 @@ export const PROJECTS_FR = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
+        "title": "Relier le démarrage de l’application et la disposition de l’appareil",
+        "navTitle": "Démarrage de l’application et disposition de l’appareil",
+        "slug": "device-layout",
+        "section": "Guides",
+        "path": "/projects/capacitor-native-ui/docs/device-layout"
+      },
+      {
         "title": "Native UI sans Ionic",
         "navTitle": "Native UI sans Ionic",
         "slug": "framework-independent",
@@ -1600,8 +1621,8 @@ export const PROJECTS_FR = [
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
-        "title": "Ajouter Vertical Bars en conservant votre thème",
-        "navTitle": "Ajouter Vertical Bars en conservant votre thème",
+        "title": "Vertical Bars avec votre thème existant",
+        "navTitle": "Vertical Bars avec votre thème existant",
         "slug": "ionic-vertical-bars",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
@@ -2219,6 +2240,13 @@ export const PROJECTS_DE = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
+        "title": "Anwendungsstart und Gerätelayout verbinden",
+        "navTitle": "Anwendungsstart und Gerätelayout",
+        "slug": "device-layout",
+        "section": "Anleitungen",
+        "path": "/projects/capacitor-native-ui/docs/device-layout"
+      },
+      {
         "title": "Native UI ohne Ionic",
         "navTitle": "Native UI ohne Ionic",
         "slug": "framework-independent",
@@ -2226,8 +2254,8 @@ export const PROJECTS_DE = [
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
-        "title": "Vertical Bars hinzufügen und das Theme behalten",
-        "navTitle": "Vertical Bars mit eigenem Theme hinzufügen",
+        "title": "Vertical Bars mit Ihrem bestehenden Theme",
+        "navTitle": "Vertical Bars mit Ihrem bestehenden Theme",
         "slug": "ionic-vertical-bars",
         "section": "Anleitungen",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"

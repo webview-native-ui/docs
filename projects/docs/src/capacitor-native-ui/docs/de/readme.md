@@ -1,12 +1,33 @@
 ---
 title: "Erste Schritte"
-sourceRevision: "2269ca687f2c56205745537237f10cc233b3c6b029361e54f3dcf330947d1242"
+sourceRevision: "294dfaa027e1c22d686c4ebb8105faf637aaa102874b3e951da613d32eb5e36d"
 ---
+
 # Capacitor Native UI
 
 Stellen Sie unterstützte Web-Bedienelemente unter iOS mit UIKit und SwiftUI dar, während Anwendungszustand, Routing und Handler in der WebView bleiben. Verwenden Sie bestehendes Ionic-Markup oder ausdrücklich gekennzeichnete HTML-Schaltflächen; eigene SwiftUI- oder Android-Compose-Inhalte lassen sich über experimentelle app-lokale Erweiterungen ergänzen.
 
-Native UI muss ausdrücklich aktiviert werden und wird ab Version 2.0.0 offiziell unterstützt. Standardbedienelemente unter Android, in Browsern, unter älterem iOS sowie nicht unterstützte Bedienelemente behalten ihre Web-Darstellung. Android unterstützt experimentelle app-lokale Compose-Erweiterungen. Behalten Sie Stile und Layout Ihrer Anwendung; das iOS-Theme ist optional.
+Native UI wird ausdrücklich aktiviert. Standardbedienelemente unter Android, in Browsern, unter älterem iOS und nicht unterstützte Bedienelemente bleiben im Web. Android unterstützt experimentelle app-lokale Compose-Erweiterungen. Behalten Sie Stile und Layout Ihrer Anwendung bei; das iOS-Theme ist optional.
+
+## Von npm installieren
+
+Installieren Sie für die standardmäßige Ionic-iOS-Einrichtung Native UI, das iOS-27-Theme und Foldable:
+
+```sh
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+```
+
+Verwenden Sie das einzelne Stylesheet und das Preset `ios27ThemeConfig` des Themes. Starten Sie anschließend eine Runtime, nachdem die App-Shell eingebunden wurde:
+
+```ts
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+
+const shell = await enableNativeUI();
+```
+
+**Vertical Bars ist standardmäßig aktiviert**, zusammen mit gewöhnlichen Bedienelementen. Binden Sie den standardmäßigen Gerätelayout-Service ein: Unterstützte Geräte bestimmen die Rail-Platzierung, andere Geräte behalten das Web-Layout.
+
+Die [Ionic-Einrichtung](/docs/setup) beschreibt Stylesheet, Bootstrap, Geräteservice und native Buildschritte vollständig. Mit der [Einrichtung für bestehende Themes](/docs/ionic-vertical-bars) behalten Sie ein anderes Web-Theme; ohne Ionic verwenden Sie die [HTML-Einrichtung](/docs/framework-independent). Native UI ist weder für Anwendungszustand noch Routing oder Theme-Auswahl zuständig. Der Anwendungseigentümer zerstört sein Handle bei der Entsorgung.
 
 ## Funktionsweise der Projektion
 
@@ -34,34 +55,13 @@ Blockierende Web-Overlays können vorbereitete Bilder nativer Schaltflächen, Se
 
 | Ziel | Einstieg |
 | --- | --- |
-| Bestehende Ionic-Bedienelemente nativ darstellen | [Ionic-Einrichtung](/docs/setup) |
-| Native Schaltflächen ohne Ionic verwenden | [HTML-Einrichtung](/docs/framework-independent) |
-| Ionic eine Seitenleiste hinzufügen und das Theme behalten | [Vertical Bars Schritt für Schritt](/docs/ionic-vertical-bars) |
-| Eine Seitenleiste ohne Ionic hinzufügen | [HTML-Seitenleiste einrichten](/docs/framework-independent) |
-| Native Bedienelemente zu einer bestehenden iOS-27-Theme-App hinzufügen | [Native UI zum Theme hinzufügen](/ionic-theme-ios27/docs/add-native-ui) |
-| Eigene SwiftUI- oder Android-Compose-Inhalte darstellen | [App-lokale Erweiterungen (experimentell)](/docs/native-ui-extensions) |
-
-## Von npm installieren
-
-Als Standardintegration für das Gerätelayout verwenden wir [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable), ein hervorragendes Community-Plugin von Erkam Yaman. Es stellt Ihrer Anwendung Faltzustand, Scharniergeometrie, Leistenposition und Änderungsereignisse bereit, damit Sie die Layoutreaktionen steuern können. Foldable meldet den Gerätezustand, das Theme stellt Web-Layout-Helfer bereit und Native UI projiziert Bedienelemente. Installieren Sie es neben dem verwendeten Paket und verbinden Sie anschließend seine Ereignisse mit Ihrer App.
-
-Installieren Sie Native UI und Foldable gemeinsam in Ihrer Capacitor-Anwendung:
-
-```sh
-npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
-```
-
-Wenn Sie auch das iOS-27-Theme verwenden, installieren oder aktualisieren Sie beide Pakete gemeinsam:
-
-```sh
-npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
-```
-
-Native UI, das Theme, Engine und Foldable werden unabhängig versioniert. Wählen Sie bei Verwendung des Themes eine Native UI-Version, die zur deklarierten Peer-Abhängigkeit des Themes passt. Native UI enthält die npm-Abhängigkeit Engine und bindet deren native Bibliotheken über SwiftPM und Maven ein. CocoaPods-Anwender benötigen zusätzlich die [Einrichtung des lokalen Engine-Pods](https://github.com/webview-native-ui/engine/blob/v1.0.0/docs/getting-started/capacitor.md#cocoapods-compatibility-through-npm). Deklarieren Sie Native UI als direkte Abhängigkeit, damit Capacitor das Plugin erkennen kann. Die Einrichtungsbefehle installieren Foldable als separate Anwendungsabhängigkeit. Die Installation dieser Pakete aktiviert keine nativen Bedienelemente; beim Anwendungsstart werden Projektion gewählt und Gerätelayout verbunden.
-
-Fahren Sie mit [Ionic-Einrichtung](/docs/setup), [HTML-Einrichtung](/docs/framework-independent) oder [Erweiterungen](/docs/native-ui-extensions) fort. Erstellen Sie nach der Startkonfiguration die Web-Assets Ihrer Anwendung, führen Sie `npx cap sync` aus und erstellen Sie die native App erneut. Ein Repository-Checkout oder Archivdownload ist nicht erforderlich.
-
-Sie migrieren von den in Theme 1.2.0 oder 1.2.1 enthaltenen nativen APIs? Die [Migrationsanleitung](/docs/migration) beschreibt Änderungen an Importen, Konfiguration und nativem Projekt.
+| Bestehende Ionic-Bedienelemente nativ rendern | [Ionic-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup) |
+| Native Schaltflächen ohne Ionic verwenden | [HTML-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent) |
+| Ein anderes Ionic-Theme mit Vertical Bars behalten | [Vertical Bars Schritt für Schritt](https://webview-native-ui.com/projects/capacitor-native-ui/docs/ionic-vertical-bars) |
+| Vertical Bars ohne Ionic verwenden | [HTML-Rail-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent) |
+| Native Bedienelemente zu einer bestehenden iOS-27-Theme-App hinzufügen | [Native UI zum Theme hinzufügen](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/add-native-ui) |
+| Android-Material-You-Farben lesen | [Android Dynamic Colors](/docs/dynamic-colors) |
+| Eigene SwiftUI- oder Android-Compose-Inhalte rendern | [App-lokale Erweiterungen (experimentell)](https://webview-native-ui.com/projects/capacitor-native-ui/docs/native-ui-extensions) |
 
 ## Anforderungen
 
@@ -125,7 +125,7 @@ Capacitor-Migrationen laufen vom Stammverzeichnis dieses Repositorys aus. `packa
 
 ### Swift Package-Nutzer
 
-Fügen Sie `https://github.com/webview-native-ui/capacitor-plugin.git` in Xcode hinzu und wählen Sie das Produkt `NativeUICore`, um `import NativeUICore` ohne Verknüpfung des Capacitor-Adapters zu verwenden. Wählen Sie vor Veröffentlichung dieser Änderung den Branch `refactor/extract-shared-core`. Beide Produkte teilen die Release-Tags des Repositorys; SwiftPM kann beim Auflösen der Paketabhängigkeiten weiterhin Capacitor herunterladen.
+Fügen Sie `https://github.com/webview-native-ui/capacitor-plugin.git` in Xcode hinzu und wählen Sie das Produkt `NativeUICore`, um `import NativeUICore` ohne Verknüpfung des Capacitor-Adapters zu verwenden. Beide Produkte teilen die Release-Tags des Repositorys; SwiftPM kann beim Auflösen der Paketabhängigkeiten trotzdem Capacitor abrufen.
 
 Capacitor-Apps verwenden weiterhin das Produkt `RdlaboCapacitorNativeUi` und `import NativeUIPlugin`. Dieses Modul exportiert Core erneut, sodass bestehende `NativeUI.register`-Aufrufe denselben Registrierungszustand wie der Adapter verwenden. Das Root-Manifest verwaltet beide Targets; es gibt kein separates verschachteltes Swift-Paket.
 
@@ -137,4 +137,4 @@ Lesen Sie Material You-Farben unter Android 12+ mit `getDynamicColorScheme()` un
 
 Das Plugin liefert helle und dunkle Farbschemata, ohne das Activity-Theme zu ändern oder Wallpaper-Berechtigungen anzufordern. Andere Plattformen melden `available: false`. Das Plugin wendet kein CSS an; Ionic-Anwendungen können `enableDynamicColors` aus `@rdlabo/ionic-theme-md3/dynamic-colors` verwenden.
 
-Die Anleitung zu [dynamischen Android-Farben](/docs/dynamic-colors) beschreibt Installation, API-Verträge, Änderungsbenachrichtigungen, Aufräumen und Ionic-Integration.
+[Android Dynamic Colors](/docs/dynamic-colors) beschreibt Installation, API-Verträge, Änderungsbenachrichtigungen, Bereinigung und Ionic-Integration.

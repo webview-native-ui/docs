@@ -1,6 +1,6 @@
 ---
 title: "Vertical Bars"
-sourceRevision: "133cf0f1f4727f2b669622ec9dce23935c01bd5b9f609b894c967aae909a0a5a"
+sourceRevision: "a43e5343874f8a7a01da73c6907fb90a5a433981aeabb5e45d160bc0626149e2"
 ---
 
 # Vertical Bars
@@ -27,7 +27,7 @@ Installieren Sie Native UI und das benötigte Foldable-Gerätezustands-Plugin al
 npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
 ```
 
-Folgen Sie für Ionic der [Standardeinrichtung](ionic-vertical-bars.md): Seitenleisten-CSS laden, Navigation konfigurieren und Foldables Anfangsposition sowie `barPlacementChange`-Ereignisse vor dem Start einer Laufzeit verbinden. Die [Integration unten](#use-with-capacitor-foldable) behandelt auch bestehende Laufzeiten und anwendungseigenes CSS. Erstellen Sie Web-Assets, führen Sie `npx cap sync ios` aus und erstellen Sie die native App erneut.
+Folgen Sie für Ionic der [Standardeinrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/ionic-vertical-bars): Rail-CSS laden, Navigation konfigurieren und dann Foldables erstes Layout sowie `layoutChange`-Ereignisse verbinden, bevor Sie eine Runtime starten. Die [Integration unten](#use-with-capacitor-foldable) behandelt auch bestehende Runtimes und anwendungseigenes CSS. Erstellen Sie Ihre Web-Assets, führen Sie `npx cap sync ios` aus und erstellen Sie die native App erneut.
 
 Eine Laufzeit allein reserviert keinen Web-Platz. Behalten Sie für die Standardeinrichtung das Geräteabonnement; manuelle Positionierung gehört zur [optionalen Browservorschau](ionic-vertical-bars.md#optional-browser-preview). Ist Native UI bereits aktiv, verwenden Sie sie wieder, statt eine weitere Laufzeit zu starten.
 
@@ -39,33 +39,36 @@ Unter unterstütztem Capacitor iOS werden geeignete Bedienelemente nativ mit Swi
 
 Anwendung oder Theme verantworten Web-Abstände, Seitenleistenposition und Fallback-Stile. Das Plugin liest das bereitgestellte Ionic-Layout und die Position; es reserviert selbst keinen Platz für Web-Inhalte. Verwenden Sie mit dem iOS27-Theme dessen Helfer `setVerticalBarsLayout({ edge, inset })`. Rein native Anwendungen verwenden eigenes CSS; kein Theme-Helfer nötig. Native Verfügbarkeit stammt unabhängig vom Web-Layout aus Gerätemetriken.
 
-Das [optionale Seitenleisten-Stylesheet des Themes](/ionic-theme-ios27/docs/vertical-bars-layout) liefert ein fertiges Layout. Seine Klassen und CSS-Variablen zwingen nicht zur Installation des Theme-Pakets: Anwendungen können ein gleichwertiges Layout selbst liefern. Die Laufzeit erkennt das Seitenleistenlayout derzeit anhand von `ios-theme-vertical-bars` auf `ion-app`, unabhängig vom Anbieter der Stile.
+Das [eigenständige Rail-Stylesheet des Themes](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout) stellt ein fertiges Layout bereit. Seine Klassen und CSS-Variablen verpflichten nicht zur Installation des Theme-Pakets: Anwendungen können ein entsprechendes Layout selbst bereitstellen. Die Runtime verwendet derzeit unabhängig vom Stilanbieter die Klasse `ios-theme-vertical-bars` auf `ion-app`, um das Rail-Layout zu erkennen.
 
 ## Mit Capacitor Foldable verwenden
 
 [`@erkamyaman/capacitor-foldable`](https://github.com/erkamyaman/capacitor-foldable) ist in der Standardkonfiguration von Vertical Bars erforderlich. Installieren Sie es wie oben mit Native UI und verbinden Sie seine Geräteposition mit Ihrem Web-Layout. Native UI abonniert Foldable nicht automatisch.
 
-Die Positionsbeispiele benötigen Foldable **8.3.3 oder neuer innerhalb von Version 8**, einschließlich `BarPlacement.inset`. Verwendet Ihre App eine ältere Version, aktualisieren Sie mit `npm install @erkamyaman/capacitor-foldable@^8.3.3` und synchronisieren sowie erstellen Sie die native App anschließend neu.
+Die Platzierungsbeispiele benötigen Foldable **8.5 oder neuer innerhalb von Version 8**. Diese Version enthält `layoutChange`-Benachrichtigungen bei Änderungen reservierter Bereiche, selbst wenn Rail-Kante und Einzug gleich bleiben. Aktualisieren Sie eine ältere Installation mit `npm install @erkamyaman/capacitor-foldable@^8.5`, synchronisieren Sie anschließend und erstellen Sie die native App erneut.
 
-| Zuständig | Verantwortung |
+| Verantwortlicher | Zuständigkeit |
 | --- | --- |
-| Foldable | Anfänglichen Gerätezustand und spätere Positions-/Faltstellungsänderungen melden. |
-| Anwendung oder Theme | Web-Platz reservieren und das Layout anhand gemeldeter logischer Kante und gemessenem Abstand wählen. |
-| Native UI | Native Seitenleistenverfügbarkeit unabhängig prüfen und geeignete Quellbedienelemente projizieren. |
+| Foldable | Erste Gerätegeometrie und spätere Layout-/Haltungsänderungen melden. |
+| Anwendung oder Theme | Aufgelöste Kante, Einzug und Werkzeugleistenursprung auf das Web-Layout anwenden; Standardwerte im anwendenden Layout halten. |
+| Native UI | Native Rail-Verfügbarkeit unabhängig prüfen und geeignete Quellbedienelemente projizieren. |
 
 ### Mit dem Ionic-Seitenleistenlayout des Themes
 
 Verbinden Sie nach dem Laden des [Seitenleisten-Stylesheets](../../theme-ios27/docs/vertical-bars-layout.md) und dem Einbinden von `ion-app` die Geräteposition und starten Sie die Laufzeit einmal:
 
 ```ts
-import { Foldable, type BarPlacement } from '@erkamyaman/capacitor-foldable';
+import { Foldable } from '@erkamyaman/capacitor-foldable';
+import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
 import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const applyPlacement = ({ verticalBarEdge, inset }: BarPlacement) => setVerticalBarsLayout({ edge: verticalBarEdge, inset });
-const listener = await Foldable.addListener('barPlacementChange', applyPlacement);
-applyPlacement(await Foldable.getBarPlacement());
-const rail = await enableNativeUI({ controls: 'verticalOnly' });
+const applyLayout = async () => {
+  setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+};
+const listener = await Foldable.addListener('layoutChange', () => void applyLayout());
+await applyLayout();
+const rail = await enableNativeUI();
 ```
 
 Ist bereits eine Laufzeit aktiv, behalten Sie sie und ergänzen Sie nur das Positionsabonnement. `setVerticalBarsLayout` löst logische Kanten für RTL auf; null als Kante stellt das gewöhnliche Web-Layout wieder her. Verwenden Sie den gemessenen Abstand statt einer festen Breite. Behalten Sie das Theme-Seitenleisten-Stylesheet; Foldables `ionic-tabs.css` ist für diese Integration nicht erforderlich.
@@ -79,7 +82,7 @@ await rail.destroy();
 
 ### Mit anwendungseigenem CSS oder ohne Ionic
 
-Verwenden Sie dasselbe Abonnement von `getBarPlacement()` / `barPlacementChange`, wenden Sie Kante und Abstand jedoch auf eigenes CSS an, statt `setVerticalBarsLayout` aufzurufen. null als Kante bedeutet, dass Ihr Layout gewöhnliche Abstände wiederherstellen sollte. Behalten Sie für Ionic die oben beschriebenen Seitenleistenklassen; für reines HTML verwenden Sie `/core` und die [Geräteseitenleisteneinrichtung](framework-independent.md#device-placement-for-vertical-bars). Weder Foldable noch Native UI liefert das Anwendungs-CSS. Explizite HTML-Seitenleistenmarkierungen bleiben unabhängig von CSS aktiv; um diese Quellen bei null als Kante an ihre ursprüngliche Position zurückzuführen, rufen Sie `disableVerticalControlArea()` auf und bei Rückkehr einer Kante `enableVerticalControlArea()`. Serialisieren Sie diese Änderungen mit Ihren Layoutaktualisierungen.
+Verwenden Sie dieselbe Verbindung über `resolveVerticalBarsLayout(Foldable)` / `layoutChange`, wenden Sie aber alle zurückgegebenen Layoutwerte (`edge`, `inset` und `toolbarTop`) über Ihr eigenes Anwendungslayout an, statt `setVerticalBarsLayout` aufzurufen. Halten Sie diese Integration in einem anwendungseigenen Service oder Modul, nicht in gerouteten Seiten. Eine Kante von null bedeutet, dass Ihr Layout gewöhnliche Abstände wiederherstellen sollte. Behalten Sie für Ionic die oben beschriebenen Rail-Layoutklassen; verwenden Sie für reines HTML den `/core`-Einstieg und die [Geräte-Rail-Einrichtung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/framework-independent#device-placement-for-vertical-bars). Weder Foldable noch Native UI liefert das CSS der Anwendung. Explizite HTML-Rail-Marker bleiben unabhängig von CSS aktiv; um diese Quellen bei einer Kante von null an ihre ursprüngliche Position zurückzugeben, rufen Sie `disableVerticalControlArea()` auf und bei zurückkehrender Rail-Kante `enableVerticalControlArea()`. Serialisieren Sie diese Änderungen mit Ihren Layoutaktualisierungen.
 
 Trennen Sie Web-Layoutaktualisierungen von nativer Verfügbarkeit: Übergeben Sie Foldables Kante nicht über die veraltete Option `nativeEdge`. Native UI liest diese Fähigkeit selbst. Nur eine optionale Browser-Layoutvorschau ersetzt dieses Abonnement durch simulierte Positionierung.
 
@@ -99,7 +102,7 @@ Tab-Badges stammen von einem sichtbaren `ion-badge` im ursprünglichen `ion-tab-
 </ion-tab-button>
 ```
 
-Die SwiftUI-Fläche wird auf die Systemseitenleiste zugeschnitten und nur dort auf Treffer geprüft. Web-Inhalt bleibt außerhalb dieses physischen Bereichs sichtbar und interaktiv. Die Laufzeit aktualisiert die Tab-Auswahl optimistisch, bevor sie die Aktion an das ursprüngliche `ion-tab-button` weiterleitet, mit demselben Ereignis- und Schutz vor veralteten Revisionen wie andere native Bedienelemente. Bei Verwendung des optionalen Stylesheets folgt das Overlay-Layout dem [Theme-Seitenleistenlayout](/ionic-theme-ios27/docs/vertical-bars-layout#reserve-the-vertical-rail); eigene Layouts bleiben Aufgabe der Anwendung.
+Die SwiftUI-Oberfläche wird auf die System-Rail zugeschnitten und auf Treffertests begrenzt. Web-Inhalt bleibt außerhalb dieses physischen Bereichs sichtbar und interaktiv. Die Runtime aktualisiert die Tab-Auswahl optimistisch, bevor sie die Aktion an das ursprüngliche `ion-tab-button` weiterleitet, mit demselben Ereignis- und Schutz gegen veraltete Revisionen wie bei anderen nativen Bedienelementen. Das Overlay-Layout folgt bei Verwendung des Stylesheets dem [Theme-Rail-Layout](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout#reserve-the-vertical-rail); eigene Layouts bleiben Aufgabe der Anwendung.
 
 ### Native Popover (nur Vertical Bars)
 
@@ -109,7 +112,6 @@ Native Popover-Darstellung ist auf Popover beschränkt, die an akzeptierten nati
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
 const rail = await enableNativeUI({
-  controls: 'verticalOnly',
   ionic: { verticalBars: { popover: true } },
 });
 ```
@@ -224,7 +226,7 @@ Ein `ion-back-button` bleibt auch innerhalb von `ion-buttons` eine Navigationsak
 
 ```html
 <ion-buttons data-vertical-bars="false">
-  <!-- Wird weiterhin projiziert, wenn backButton true ist. -->
+  <!-- Still projects when backButton is true. -->
   <ion-back-button></ion-back-button>
 </ion-buttons>
 ```
@@ -259,7 +261,7 @@ Wählen Sie für native vertikale `ion-button`- und `ion-menu-button`-Aktionen, 
 | `'source'` | Projiziert unterstützte Ionic-Füllung und berechnete Farben gemäß [Quellfüllregeln](#source-fill-rules). |
 
 ```ts
-const rail = await enableNativeUI({ controls: 'verticalOnly', ionic: { verticalBars: { buttonProjection: 'source' } } });
+const rail = await enableNativeUI({ ionic: { verticalBars: { buttonProjection: 'source' } } });
 ```
 
 `enableNativeUI()` und das eigenständige `enableVerticalControlArea()` akzeptieren diese Einstellungen innerhalb von `ionic.verticalBars`. Verwenden Sie eine Laufzeit und zerstören Sie sie vor einem Neustart mit anderen Optionen. Beide Modi erhalten Aktionen, Deaktivierungszustand und Gruppierung. Deaktivierte Symbole verwenden die native deaktivierte Darstellung. Diese Einstellungen betreffen keine horizontalen Bedienelemente, Quellelemente oder Web-Fallback-Klone; vergleichen Sie das native Aussehen daher unter unterstütztem iOS.
@@ -307,12 +309,12 @@ Für ein zu `source` aufgelöstes `ion-button` wird die Füllung unabhängig vom
 `verticalBars.buttonDefaultFill` akzeptiert `'solid'` oder `'glass'`; Auslassen entspricht `'glass'`. Verwenden Sie `'solid'` für Ionics Standardschaltflächendesign oder `'glass'` für ein Glasdesign. Dies gilt für jede zu `source` aufgelöste Schaltfläche, einschließlich lokaler Ausnahmen unter einer globalen `system`-Einstellung.
 
 ```ts
-// Systemgestaltung global behalten; lokale Quellschaltflächen verwenden Ionics Standardfüllung.
-const rail = await enableNativeUI({ controls: 'verticalOnly', ionic: { verticalBars: { buttonDefaultFill: 'solid' } } });
+// Keep system styling globally; local source buttons use Ionic's default fill.
+const rail = await enableNativeUI({ ionic: { verticalBars: { buttonDefaultFill: 'solid' } } });
 ```
 
 ```html
-<!-- In einer festen Werkzeugleiste außerhalb von ion-buttons: Fehlendes fill wird zu solid aufgelöst. -->
+<!-- In a fixed toolbar, outside ion-buttons: omitted fill resolves to solid. -->
 <ion-button data-projection="source" aria-label="Add">
   <ion-icon name="add-outline" slot="icon-only"></ion-icon>
 </ion-button>

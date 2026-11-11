@@ -4,7 +4,7 @@ title: Native UI
 
 # Native UI
 
-Native UI は **2.0.0 から正式サポート**されています。以前の Native UI Shell Preview はテーマの 1.2.0 と 1.2.1 に同梱されていました。このガイドは分離後のパッケージと改名後の API を説明します。[移行](migration.md#native-ui-naming-changes)を参照してください。アプリ内の[拡張](native-ui-extensions.md)は引き続き実験的です。
+Native UI は、対応する Web コントロールをネイティブ表示へ投影します。アプリ内の[拡張](native-ui-extensions.md)は引き続き実験的です。
 
 Native UI は Ionic アプリの Web コンテンツの周囲に、ネイティブのナビゲーションと操作コントロールを提供します。任意の Capacitor iOS プラグインが、対応する固定の Ionic コントロールを UIKit または SwiftUI とシステムの Liquid Glass で描画します。ページ内容、スクロール、アプリの状態、ルーティングは Ionic の WebView に残ります。
 
@@ -12,12 +12,14 @@ DOM とネイティブ表示の共有モデルは[投影の仕組み](../README.
 
 ## Native UI を有効にする
 
+まず[標準の導入手順](setup.md)に従ってください。テーマ設定、デバイスサービス、1つの起動呼び出しに Vertical Bars がデフォルトで含まれます。以下はランタイム API の参照例であり、追加の起動呼び出しではありません。
+
 iOS テーマを使用中なら[テーマに Native UI を追加する](/ionic-theme-ios27/docs/add-native-ui)に従ってください。その他の Web 外観では [Native UI のセットアップ](setup.md)を使用します。
 
 Capacitor が検出できるよう、ネイティブパッケージをアプリの直接依存としてインストールします。
 
 ```bash
-npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
 npx cap sync ios
 ```
 
@@ -26,7 +28,7 @@ npx cap sync ios
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-void enableNativeUI();
+const shell = await enableNativeUI();
 ```
 
 `enableNativeUI()` は WebView の実効的な左上の角丸半径も取得して画面遷移に適用します。ネイティブコントロールを有効にせず、遷移だけを設定するには次を呼び出します。
@@ -343,18 +345,18 @@ Web 表示を要求するすべてのオーバーレイが閉じてからネイ�
 診断やアプリ終了時:
 
 ```ts
-const shell = await enableNativeUI(); // 繰り返し呼び出してもランタイムを共有します
-console.log(shell.getStatus()); // 状態、投影コントロール数、更新数、失敗理由
-await shell.destroy(); // DOM を復元し、ネイティブコントロールを削除してリスナーとキャッシュを解放します
+const shell = await enableNativeUI(); // repeated calls share the runtime
+console.log(shell.getStatus()); // state, projected control count, update count, failure reason
+await shell.destroy(); // restore DOM, remove native controls and release listeners/cache
 ```
 
 投影は起動 API の呼び出しで有効になります。部分設定は既定値を上書きします。
 
 ```ts
-const shell = await enableNativeUI({ controls: { tabs: false } }); // タブ以外の Ionic を自動投影します
-await shell.disableVerticalControlArea(); // 通常のネイティブコントロールを維持します
+const shell = await enableNativeUI({ controls: { tabs: false } }); // automatic Ionic projection except tabs
+await shell.disableVerticalControlArea(); // retain ordinary native controls
 await shell.enableVerticalControlArea();
-await shell.destroy(); // すべての投影を停止します
+await shell.destroy(); // stop all projection
 ```
 
 既定値、レールのみの利用、ライフサイクルメソッドは[全設定オプション](configuration.md)を参照してください。Ionic なしの明示的 HTML ソースは[フレームワーク非依存の設定](framework-independent.md)を参照してください。

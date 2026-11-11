@@ -1,10 +1,11 @@
 ---
 title: "Native UI"
-sourceRevision: "e7a0981b12c0fdec689e3569b89a0486a3d9d7ba5085a5f502692dda09472203"
+sourceRevision: "16a0909425a31b1fdb9ca1b066159f289e4f49a04102a60bde35607781c551a1"
 ---
+
 # Native UI
 
-Native UI est **officiellement pris en charge depuis la version 2.0.0**. L’ancien Native UI Shell Preview était inclus dans les versions 1.2.0 et 1.2.1 du thème ; ce guide décrit le package séparé et son API renommée. Consultez la [migration](migration.md#native-ui-naming-changes). Les [extensions](native-ui-extensions.md) locales à l’application restent expérimentales.
+Native UI projette les contrôles Web pris en charge dans une présentation native. Les [extensions](native-ui-extensions.md) propres à l’application restent expérimentales.
 
 Native UI fournit des contrôles natifs de navigation et d’action autour du contenu Web d’une application Ionic. Le plugin Capacitor iOS facultatif affiche les contrôles Ionic fixes pris en charge avec UIKit ou SwiftUI et le matériau Liquid Glass du système. Contenu, défilement, état et routage restent dans la WebView Ionic.
 
@@ -17,16 +18,16 @@ Vous utilisez déjà le thème iOS ? Suivez [Ajouter Native UI à votre thème](
 Installez le package natif comme dépendance directe pour que Capacitor le découvre :
 
 ```bash
-npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
 npx cap sync ios
 ```
 
-Conservez vos styles Web et activez Native UI une seule fois au démarrage. Le thème iOS 27 est facultatif :
+Commencez par la [configuration standard](setup.md). Son préréglage de thème, son service de l’appareil et son unique appel de démarrage comprennent Vertical Bars par défaut. Ce qui suit est la référence de l’API du runtime, pas un nouvel appel de démarrage :
 
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-void enableNativeUI();
+const shell = await enableNativeUI();
 ```
 
 `enableNativeUI()` lit aussi le rayon effectif du coin supérieur gauche de la WebView et l’applique aux transitions. Pour configurer uniquement la transition sans activer les contrôles natifs, appelez :
@@ -40,14 +41,14 @@ await configureNativeTransition();
 ### Navigation et compilations natives
 
 | Configuration | Action |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| --- | --- |
 | `iosTransitionAnimation` du thème | Conservez-la ; les transitions natives sont déjà coordonnées. |
-| Animation Ionic par défaut ou personnalisée | Configurez l’[adaptateur de transition](migration.md#native-ui-transition-adapter). |
+| Animation Ionic par défaut ou personnalisée | Configurez l’[adaptateur de transition](https://webview-native-ui.com/projects/capacitor-native-ui/docs/migration#native-ui-transition-adapter). |
 | Plugin installé ou mis à jour | Exécutez `npx cap sync ios`, puis recompilez l’application native. |
-| SPM ou CocoaPods | Conservez votre gestionnaire de dépendances ; les deux sont pris en charge. |
-| Migration facultative CocoaPods vers SPM | Exécutez `npx cap spm-migration-assistant`, puis liez le package généré `CapApp-SPM` à la cible dans Xcode. |
-| Verre natif ordinaire | Nécessite Xcode 26+, Capacitor 8 et iOS 26+. |
-| Web, Android, SSR ou ancien iOS | Conservent l’implémentation Web. |
+| SPM ou CocoaPods | Conservez le gestionnaire de dépendances existant ; les deux sont pris en charge. |
+| Migration facultative de CocoaPods vers SPM | Exécutez `npx cap spm-migration-assistant`, puis liez le package généré `CapApp-SPM` à la cible de l’application dans Xcode. |
+| Effet de verre natif ordinaire | Nécessite Xcode 26+, Capacitor 8 et iOS 26+. |
+| Web, Android, SSR ou anciennes versions d’iOS | Conservez l’implémentation Web. |
 
 Aucun enregistrement par page, liste de composants, callback natif ou contrôleur de vue Swift n’est requis.
 
@@ -422,7 +423,7 @@ Le matériau et l’apparence des contrôles natifs suivent la version d’iOS e
 
 La prise en charge d’iPhone Duo, y compris Vertical Bars autonome, est stable à partir de la version 2.0.0.
 
-Le point d’entrée autonome Vertical Control Area (`@rdlabo/capacitor-native-ui/vertical-bars`) fonctionne avec une disposition Web fournie par l’application. Le thème propose une [feuille de style de rail facultative](/ionic-theme-ios27/docs/vertical-bars-layout), `@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css`, utilisable sans toute l’apparence iOS 27. Appelez `enableNativeUI({ controls: 'verticalOnly' })` pour ce cas ; sa sélection par défaut vise les contrôles de la zone verticale. Une application appelant déjà `enableNativeUI()` doit conserver ce runtime unique plutôt que démarrer les deux. Consultez [Disposition de l’appareil et panneaux divisés](/ionic-theme-ios27/docs/vertical-bars-layout) pour la configuration complète, y compris posture de charnière et panneaux pour les applications n’utilisant pas ce shell.
+Le point d’entrée autonome Vertical Control Area (`@rdlabo/capacitor-native-ui/vertical-bars`) fonctionne avec la disposition Web fournie par l’application. Le package de thème propose une [feuille de style de rail autonome](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout), `@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css`, utilisable sans charger toute l’apparence iOS 27. Appelez `enableNativeUI({ controls: 'verticalOnly' })` pour ce cas d’usage ; sa sélection par défaut cible les contrôles placés dans la zone verticale. Les applications qui appellent déjà `enableNativeUI()` doivent conserver cet unique runtime au lieu de démarrer les deux. Consultez [Disposition de l’appareil et panneaux divisés](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout) pour la configuration complète, y compris la posture de la charnière et la disposition à panneaux divisés pour les applications qui n’utilisent pas du tout ce shell.
 
 Vertical Bars utilise un `TabView` et une barre d’outils SwiftUI dans le rail système. Ionic reste la source des libellés, icônes, états sélectionné/désactivé et actions. Consultez [Vertical Bars](vertical-bars.md) pour la disposition du rail, le repli natif et les superpositions prises en charge.
 

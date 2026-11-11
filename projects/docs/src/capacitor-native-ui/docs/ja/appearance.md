@@ -22,7 +22,7 @@ Native UIは投影元の各要素の計算済みスタイルを読み取り、�
 
 | Web側の構成 | 設定内容 |
 | --- | --- |
-| iOS 27テーマ | 対応する[System、Class、Alwaysのダークモードの組み合わせ](../../theme-ios27/docs/setup.md#choose-one-dark-mode-pair)を読み込みます。テーマが表示マーカーを設定します。 |
+| iOS 27テーマ | 対応する[System、Class、Alwaysのスタイルシート](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/configuration#dark-mode)を読み込みます。テーマが表示マーカーを設定します。 |
 | 既存テーマを使うIonic | `--ion-background-color-rgb` を現在のパレットに合わせます。テーママーカーがない場合、ネイティブ表示はこの値を使います。 |
 | 上記のテーマ変数を使わないHTML | 現在のWebテーマに合わせて `color-scheme: light` または `color-scheme: dark` を設定します。 |
 | システムに追従するHTML表示 | システム設定に追従するCSSを使います。単一の配色が指定されていなければ、ネイティブ表示はシステム設定にフォールバックします。 |

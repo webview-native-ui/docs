@@ -1,7 +1,8 @@
 ---
 title: "Native UI ohne Ionic"
-sourceRevision: "03aae2abcdd809acacd73e43f15114762ed59cd2ea5ce743d238d694c354f6e4"
+sourceRevision: "4cd601ca51b4e76686aba2c65e422204fc2a00405a1fa97807a35538231f5917"
 ---
+
 # Native UI ohne Ionic
 
 Fügen Sie einer bestehenden Web-App native Schaltflächen ohne Ionic oder Theme-CSS hinzu. Belassen Sie Beschriftungen, Zustand und Klickhandler auf gewöhnlichen HTML-Elementen. Standardschaltflächen erfordern keine eigene Swift-Registrierung.
@@ -10,7 +11,7 @@ Verwenden Sie eine Capacitor-8-App mit iOS-Projekt, Xcode 26+ und einem iOS-26+-
 
 Beginnen Sie mit der [Funktionsweise der Projektion](../README.md#how-projection-works): Das HTML-Element bleibt die Quelle, während native Bedienelemente oder Web-Proxys seine Darstellung übernehmen.
 
-**Sie möchten nur Vertical Bars?** Folgen Sie zusätzlich zu den Schritten 1–4 der [Gerätepositionierung](#device-placement-for-vertical-bars). Verwenden Sie die Laufzeit aus Schritt 3 ohne feste Positionspräferenz. Entfernen Sie explizite Markierungen von Schaltflächen, die im Web bleiben sollen. Sie benötigen weder Ionic noch `@rdlabo/ionic-theme-ios27` oder `vertical-bars.css`.
+**Vertical Bars gehört zur Standardeinrichtung.** Folgen Sie zusätzlich zu den Schritten 1–4 unten der [Geräteplatzierung](#device-placement-for-vertical-bars). Verwenden Sie die Runtime aus Schritt 3 ohne feste Platzierungspräferenz weiter. Entfernen Sie explizite Marker von Schaltflächen, die im Web bleiben sollen. Sie benötigen weder Ionic noch `@rdlabo/ionic-theme-ios27` oder `vertical-bars.css`.
 
 Für Vertical Bars in einer App mit `ion-tabs`, `ion-toolbar` oder anderen Ionic-Komponenten und eigenem Theme verwenden Sie stattdessen die [Ionic-Einrichtung für Vertical Bars](ionic-vertical-bars.md#try-it-in-your-existing-ionic-app). Das Framework allein (Angular, React oder Vue) bestimmt nicht den passenden Adapter.
 
@@ -69,7 +70,7 @@ const shell = await enableNativeUI({
 });
 ```
 
-Rufen Sie die Funktion einmal auf, sobald der Quellstamm existiert. Behalten Sie das Handle und rufen Sie beim Auflösen dieses Stamms `await shell.destroy()` auf. Das Plugin ergänzt weder Seitenabstände noch Safe-Area-Regeln; behalten Sie Ihr Anwendungs-CSS. Für Angular, React oder Vue verwenden Sie die [App-Root-Lebenszyklusbeispiele](setup.md#place-startup-in-your-frameworks-app-root) mit dem `/core`-Import. Für animierte Navigation verwenden Sie [Aussetzung bis Abschluss und Abbruch](setup.md#navigation-without-the-theme).
+Rufen Sie die Funktion einmal auf, nachdem die Quellwurzel existiert. Behalten Sie das Handle und rufen Sie `await shell.destroy()` auf, wenn diese Wurzel entsorgt wird. Das Plugin ergänzt weder Seitenabstände noch Safe-Area-Regeln; behalten Sie das CSS Ihrer Anwendung. Verwenden Sie für Angular, React oder Vue [Anwendungsstart und Gerätelayout](device-layout.md) mit dem `/core`-Import und Ihrem eigenen Layout-Callback. Für animierte Navigation verwenden Sie die [Suspendierung bis zum Abschluss oder Abbruch](native-ui.md#custom-overlay-suspension).
 
 ### Benutzerdefinierte Overlays
 
@@ -81,7 +82,7 @@ Deklarieren Sie für ein eigenes HTML-Theme `color-scheme: light` oder `color-sc
 
 ## 4. Erstellen und unter iOS ausführen
 
-Führen Sie bei CocoaPods-Projekten zunächst die [Engine-Podfile-Einrichtung](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/setup#4-build-sync-and-run) durch. SwiftPM löst Engine automatisch auf.
+Schließen Sie bei CocoaPods-Projekten zuerst die [native Projekteinrichtung](configuration.md#native-project-setup) ab. SwiftPM löst Engine automatisch auf.
 
 Erstellen Sie Ihre Web-App, führen Sie `npx cap sync ios` aus und starten Sie das iOS-Projekt in Xcode. Mit der Konfiguration aus Schritt 3 erscheint Add an seiner Quellposition und ruft seinen ursprünglichen Klickhandler auf. Back fordert die vom Gerät gemeldete native Seitenleiste an, sofern verfügbar; verbinden Sie die folgende Gerätepositionierung, um Web-Abstände synchron zu halten. Im Browser bleibt dieselbe Schaltfläche eine gewöhnliche Web-Schaltfläche. Unmarkiertes HTML bleibt unverändert.
 
@@ -97,9 +98,12 @@ Verwenden Sie die Laufzeit aus Schritt 3 **ohne `verticalBars.placement`**. Nati
 
 Folgen Sie der [Foldable-Integration](vertical-bars.md#with-application-owned-css-or-without-ionic):
 
-1. Abonnieren Sie `barPlacementChange` und lesen Sie anschließend mit `getBarPlacement()` die anfängliche Kante und den Abstand.
-2. Wenden Sie Kante und Abstand auf das Anwendungs-CSS an. Bei null als Kante stellen Sie gewöhnliche Abstände wieder her und rufen `shell.disableVerticalControlArea()` auf; sobald eine Kante zurückkehrt, rufen Sie `shell.enableVerticalControlArea()` auf. Serialisieren Sie diese Änderungen zusammen mit Layoutaktualisierungen.
-3. Entfernen Sie bei der Bereinigung den Listener und zerstören Sie die von dieser Anwendung verwaltete Laufzeit.
+1. Verwenden Sie Foldable 8.5 oder neuer innerhalb von Version 8. Abonnieren Sie in einem anwendungseigenen Service oder Integrationsmodul `layoutChange` **vor** dem ersten Abruf und lösen Sie jeden Bericht mit `resolveVerticalBarsLayout(Foldable)` aus `@rdlabo/capacitor-native-ui/integration` auf. Bewahren Sie das zurückgegebene Listener-Handle auf.
+2. Wenden Sie `edge`, `inset` **und `toolbarTop`** des Resolvers über den bestehenden Layoutzustand und das CSS Ihrer Anwendung an. Reservieren Sie den Einzug auf der gemeldeten logischen Seite und positionieren Sie die Rail-Werkzeugleiste am gemeldeten Ursprung. Behalten Sie für undefinierte Felder Ihre eigenen Standardwerte bei; erfinden Sie keine Geräteabmessungen. Eine Anzeigeänderung kann `toolbarTop` ändern, ohne Kante oder Einzug zu ändern. Deshalb verwendet die standardmäßige Verbindung `layoutChange`.
+3. Stellen Sie bei einer Kante von null oder einer nicht verfügbaren Kante gewöhnliche Abstände wieder her und rufen Sie `shell.disableVerticalControlArea()` auf; kehrt eine Kante zurück, rufen Sie `shell.enableVerticalControlArea()` auf. Serialisieren Sie diese Änderungen mit den Layoutaktualisierungen Ihrer Anwendung.
+4. Rufen Sie beim Beenden der Anwendung `await listener.remove()` auf und zerstören Sie die Runtime, die dieser Anwendung gehört.
+
+Der Resolver liefert ausschließlich Werte: Er registriert keine Abonnements, schreibt kein CSS und startet Native UI nicht. Ihre Anwendung besitzt das Web-Layout; Native UI besitzt die Bedienelementprojektion. Weder Theme-Helfer noch Theme-Stylesheet sind erforderlich, und Geräterichtlinien gehören nicht in die Geschäftslogik einzelner Seiten.
 
 Behalten Sie die expliziten Quellmarkierungen aus Schritt 2; sie deklarieren Bedienelemente und ihre gewünschte Position. Entfernen Sie `data-native-ui="button"` von Add, um nur Back zu projizieren. `controls` deaktiviert keine expliziten Deklarationen. Ohne Web-Seitenleistenhost bleiben nicht verfügbare native Seitenleisten-Bedienelemente an ihren ursprünglichen Web-Positionen. Das Theme-Paket ist nicht erforderlich.
 
@@ -129,4 +133,4 @@ Der HTML-Adapter unterstützt derzeit Schaltflächen und Zurückschaltflächen. 
 
 ## Beispiel
 
-Das [reine HTML-Beispiel](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.4/examples/native-ui-html) zeigt Add, routerlose Home-/Details-/Back-Navigation, optionale Web-Seitenleistenprojektion und Bereinigung. Es verwendet weder Ionic noch Theme-CSS.
+Das [reine HTML-Beispiel](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.4/examples/native-ui-html) zeigt Add, routerlose Home-/Details-/Back-Navigation, optionale Web-Rail-Projektion und Bereinigung. Es verwendet weder Ionic noch Theme-CSS.

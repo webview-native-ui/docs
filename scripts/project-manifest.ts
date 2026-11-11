@@ -568,7 +568,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     shortName: 'Capacitor Native UI',
     packageName: '@rdlabo/capacitor-native-ui',
     repositoryUrl: 'https://github.com/webview-native-ui/capacitor-plugin',
-    englishDocsRef: '8588512d51324d9c6aab672da45a6598edf71927',
+    englishDocsRef: 'fc1678ee1f3f1c2d19565c8a1d8a5d5077052379',
     releaseNotesUrl: 'https://github.com/webview-native-ui/capacitor-plugin/releases/tag/v2.1.4',
     demoUrl: 'https://ionic-theme-ios27.rdlabo.dev/',
     category: 'capacitor-plugins',
@@ -591,7 +591,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'readme',
         file: 'readme.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: text('Ionic setup', 'Ionicの設定'),
@@ -599,10 +599,28 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         slug: 'setup',
         file: 'setup.md',
         headingAliases: {
-          'place-startup-in-your-frameworks-app-root': "place-startup-in-your-framework's-app-root",
+          'place-startup-in-your-frameworks-app-root': 'application-lifetime',
+          'navigation-without-the-theme': 'next-steps',
+          '2-enable-the-shell': '2.-configure-the-theme',
+          '3-coordinate-navigation': '3.-start-native-ui',
           '4-build-sync-and-run': '4.-build%2C-sync%2C-and-run',
         },
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
+      },
+      {
+        title: {
+          en: 'Application startup and device layout',
+          ja: 'アプリの起動とデバイス配置',
+          fr: 'Démarrage de l’application et disposition de l’appareil',
+          de: 'Anwendungsstart und Gerätelayout',
+        },
+        section: text('Guides', 'ガイド'),
+        slug: 'device-layout',
+        file: 'device-layout.md',
+        headingAliases: {
+          'react-vue-and-other-application-owners': 'react%2C-vue-and-other-application-owners',
+        },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: text('Native UI without Ionic', 'Ionicを使わないNative UI'),
@@ -610,43 +628,47 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         slug: 'framework-independent',
         file: 'framework-independent.md',
         headingAliases: { '2-mark-source-controls': '2.-mark-source-controls' },
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
-        title: text(
-          'Add Vertical Bars while keeping your theme',
-          '既存テーマへのVertical Barsの追加',
-        ),
+        title: {
+          en: 'Vertical Bars with your existing theme',
+          ja: '既存テーマで使うVertical Bars',
+          fr: 'Vertical Bars avec votre thème existant',
+          de: 'Vertical Bars mit Ihrem bestehenden Theme',
+        },
         section: text('Guides', 'ガイド'),
         slug: 'ionic-vertical-bars',
         file: 'ionic-vertical-bars.md',
         headingAliases: {
           '2-connect-your-navigation-animation': '2.-connect-your-navigation-animation',
+          '3-connect-device-placement-and-start-the-controls':
+            '3.-connect-device-placement-and-start-the-controls',
           'keep-ionics-default-animation': "keep-ionic's-default-animation",
           'use-the-themes-ios-animation': "use-the-theme's-ios-animation",
         },
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: text('Native UI', 'Native UI'),
         section: text('Guides', 'ガイド'),
         slug: 'native-ui',
         file: 'native-ui.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: text('Configuration', '設定'),
         section: text('Guides', 'ガイド'),
         slug: 'configuration',
         file: 'configuration.md',
-        updatedAt: { en: '2026-10-23', ja: '2026-10-23', fr: '2026-10-23', de: '2026-10-23' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: text('Light and dark appearance', 'ライト／ダーク表示'),
         section: text('Guides', 'ガイド'),
         slug: 'appearance',
         file: 'appearance.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: {
@@ -665,7 +687,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'vertical-bars',
         file: 'vertical-bars.md',
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
         title: text(
@@ -690,7 +712,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
           '2-replace-native-imports': '2.-replace-native-imports',
           '3-sync-the-native-project': '3.-sync-the-native-project',
         },
-        updatedAt: { en: '2026-11-09', ja: '2026-11-09', fr: '2026-11-09', de: '2026-11-09' },
+        updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
     ],
   },

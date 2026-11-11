@@ -1,7 +1,8 @@
 ---
 title: "Native UI sans Ionic"
-sourceRevision: "03aae2abcdd809acacd73e43f15114762ed59cd2ea5ce743d238d694c354f6e4"
+sourceRevision: "4cd601ca51b4e76686aba2c65e422204fc2a00405a1fa97807a35538231f5917"
 ---
+
 # Native UI sans Ionic
 
 Ajoutez des boutons natifs à une application Web existante sans Ionic ni CSS du thème. Conservez libellés, état et gestionnaires de clic sur des éléments HTML ordinaires. Les boutons standard n’exigent aucun enregistrement Swift personnalisé.
@@ -10,7 +11,7 @@ Utilisez une application Capacitor 8 avec un projet iOS, Xcode 26+ et un apparei
 
 Commencez par le [fonctionnement de la projection](../README.md#how-projection-works) : l’élément HTML reste la source tandis que les contrôles natifs ou mandataires Web assurent sa présentation.
 
-**Vous voulez seulement Vertical Bars ?** Suivez la [configuration du placement sur l’appareil](#device-placement-for-vertical-bars), avec les étapes 1 à 4 ci-dessous. Réutilisez le runtime de l’étape 3 sans préférence de placement fixe. Retirez les marqueurs explicites des boutons à conserver sur le Web. Vous n’avez besoin ni d’Ionic, ni de `@rdlabo/ionic-theme-ios27`, ni de `vertical-bars.css`.
+**Vertical Bars fait partie de la configuration standard.** Suivez la [configuration du placement de l’appareil](#device-placement-for-vertical-bars) en parallèle des étapes 1–4 ci-dessous. Réutilisez le runtime de l’étape 3 sans préférence de placement fixe. Retirez les marqueurs explicites des boutons à conserver sur le Web. Vous n’avez besoin ni d’Ionic, ni de `@rdlabo/ionic-theme-ios27`, ni de `vertical-bars.css`.
 
 Pour Vertical Bars dans une application utilisant `ion-tabs`, `ion-toolbar` ou d’autres composants Ionic avec un thème personnalisé, utilisez la [configuration Ionic de Vertical Bars](ionic-vertical-bars.md#try-it-in-your-existing-ionic-app). Le framework (Angular, React ou Vue) ne détermine pas à lui seul l’adaptateur à utiliser.
 
@@ -69,11 +70,11 @@ const shell = await enableNativeUI({
 });
 ```
 
-Appelez une seule fois après création de la racine source. Conservez le handle et appelez `await shell.destroy()` à la destruction de cette racine. Le plugin n’ajoute ni espacement de page ni règles de zone de sécurité ; conservez votre CSS. Pour Angular, React ou Vue, utilisez les [exemples de cycle de vie de la racine](setup.md#place-startup-in-your-frameworks-app-root) avec l’import `/core`. Pour la navigation animée, utilisez la [suspension jusqu’à la fin ou l’annulation](setup.md#navigation-without-the-theme).
+Appelez une seule fois après la création de la racine source. Conservez le handle et appelez `await shell.destroy()` lorsque cette racine est libérée. Le plugin n’ajoute ni marges de page ni règles de zone sûre ; conservez le CSS de l’application. Pour Angular, React ou Vue, utilisez le [démarrage de l’application et la disposition de l’appareil](device-layout.md) avec l’import `/core` et votre propre callback de disposition. Pour la navigation animée, utilisez la [suspension jusqu’à la fin ou à l’annulation](native-ui.md#custom-overlay-suspension).
 
 ### Superpositions personnalisées
 
-Avant de présenter une modale personnalisée qui rend l’arrière-plan non interactif, appelez `await shell.suspend({ covered: true })`, puis reprenez le jeton retourné après sa fermeture. Les images natives préparées conservent l’apparence de l’arrière-plan sans imposer de dimensions natives à votre HTML. Les images du rail sont ancrées à leurs mandataires dans votre `webHost` ; faire défiler la source d’origine ne les déplace donc pas. Leur largeur et leur hauteur proviennent de Native, même si les boutons source et mandataire ont des tailles CSS différentes. Appelez `shell.suspend()` sans options lorsque les contrôles doivent rester interactifs sur le Web. Consultez la [suspension pour superpositions personnalisées](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/native-ui#custom-overlay-suspension) pour le cycle de vie et le comportement de repli.
+Avant de présenter une modale personnalisée qui rend l’arrière-plan non interactif, appelez `await shell.suspend({ covered: true })`, puis reprenez le jeton retourné après sa fermeture. Les images natives préparées conservent l’apparence de l’arrière-plan sans imposer de dimensions natives à votre HTML. Les images du rail sont ancrées à leurs mandataires dans votre `webHost` ; faire défiler la source d’origine ne les déplace donc pas. Leur largeur et leur hauteur proviennent de Native, même si les boutons source et mandataire ont des tailles CSS différentes. Appelez `shell.suspend()` sans options lorsque les contrôles doivent rester interactifs sur le Web. Consultez la [suspension pour superpositions personnalisées](https://webview-native-ui.com/projects/capacitor-native-ui/docs/native-ui#custom-overlay-suspension) pour le cycle de vie et le comportement de repli.
 
 ### Harmoniser le thème HTML
 
@@ -81,7 +82,7 @@ Pour un thème HTML personnalisé, déclarez `color-scheme: light` ou `color-sch
 
 ## 4. Compiler et exécuter sur iOS
 
-Pour les projets CocoaPods, effectuez d’abord la [configuration du Podfile pour Engine](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/setup#4-build-sync-and-run). SwiftPM résout Engine automatiquement.
+Pour les projets CocoaPods, effectuez d’abord la [configuration du projet natif](configuration.md#native-project-setup). SwiftPM résout Engine automatiquement.
 
 Compilez l’application Web, exécutez `npx cap sync ios` et lancez le projet iOS depuis Xcode. Avec la configuration de l’étape 3, Add apparaît à sa position source et invoque son gestionnaire de clic original. Back demande le rail natif signalé par l’appareil lorsqu’il est disponible ; raccordez le placement ci-dessous pour synchroniser l’espacement Web. Dans le navigateur, ce même bouton reste Web. Le HTML non marqué reste inchangé.
 
@@ -97,9 +98,12 @@ Réutilisez le runtime de l’étape 3 **sans `verticalBars.placement`**. Native
 
 Suivez l’[intégration Foldable](vertical-bars.md#with-application-owned-css-or-without-ionic) :
 
-1. Abonnez-vous à `barPlacementChange`, puis lisez `getBarPlacement()` pour le bord et le retrait initiaux.
-2. Appliquez le bord et le retrait au CSS de votre application. Si le bord est null, restaurez l’espacement ordinaire et appelez `shell.disableVerticalControlArea()` ; lorsqu’un bord revient, appelez `shell.enableVerticalControlArea()`. Sérialisez ces changements avec les mises à jour de disposition.
-3. Au nettoyage, retirez l’écouteur et détruisez le runtime détenu par cette application.
+1. Utilisez Foldable 8.5 ou ultérieur dans la version majeure 8. Dans un service ou un module d’intégration appartenant à l’application, abonnez-vous à `layoutChange` **avant** la lecture initiale et résolvez chaque rapport avec `resolveVerticalBarsLayout(Foldable)` depuis `@rdlabo/capacitor-native-ui/integration`. Conservez le handle de l’écouteur retourné.
+2. Appliquez les valeurs `edge`, `inset` **et `toolbarTop`** du résolveur via l’état de disposition et le CSS existants de l’application. Réservez le retrait du côté logique signalé et placez la barre d’outils du rail à l’origine signalée. Préservez vos propres valeurs par défaut pour les champs non définis ; n’inventez pas de dimensions d’appareil. Un changement d’écran peut modifier `toolbarTop` sans modifier le bord ou le retrait, d’où l’utilisation de `layoutChange` pour la connexion standard.
+3. Lorsque le bord est nul ou indisponible, rétablissez l’espacement ordinaire et appelez `shell.disableVerticalControlArea()` ; lorsqu’un bord revient, appelez `shell.enableVerticalControlArea()`. Sérialisez ces modifications avec les mises à jour de disposition de l’application.
+4. À la destruction de l’application, appelez `await listener.remove()` et détruisez le runtime dont elle est propriétaire.
+
+Le résolveur fournit uniquement des valeurs : il ne crée pas d’abonnement, n’écrit pas de CSS et ne démarre pas Native UI. Votre application possède la disposition Web ; Native UI possède la projection des contrôles. Aucun helper ou feuille de style de thème n’est requis et aucune politique liée à l’appareil n’appartient aux gestionnaires métier des pages individuelles.
 
 Conservez les marqueurs sources explicites de l’étape 2 ; ils déclarent les contrôles et leur placement demandé. Pour projeter seulement Back, retirez `data-native-ui="button"` d’Add. `controls` ne désactive pas les déclarations explicites. Sans hôte de rail Web, les contrôles de rail natif indisponibles restent à leur position Web d’origine. Le package du thème n’est pas requis.
 
@@ -129,4 +133,4 @@ L’adaptateur HTML prend actuellement en charge les boutons et boutons de retou
 
 ## Exemple
 
-L’[exemple HTML simple](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.4/examples/native-ui-html) présente Add, une navigation Home/Details/Back sans routeur, la projection facultative dans un rail Web et le nettoyage. Il n’utilise ni Ionic ni CSS du thème.
+L’[exemple HTML simple](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.4/examples/native-ui-html) illustre Add, la navigation Home/Details/Back sans routeur, la projection facultative du rail Web et le nettoyage. Il n’utilise ni Ionic ni CSS de thème.

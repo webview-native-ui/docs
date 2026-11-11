@@ -5,7 +5,27 @@ title: はじめに
 
 アプリの状態、ルーティング、ハンドラーをWebViewに維持しながら、対応するWebコントロールをiOS上のUIKitとSwiftUIで描画します。既存のIonicマークアップや明示的に指定したHTMLボタンを使えます。独自のSwiftUIやAndroid Composeのコンテンツは、実験的なアプリ内拡張で追加できます。
 
-Native UIは明示的に有効化する機能で、2.0.0から正式にサポートされています。Android、ブラウザ、古いiOS、および未対応のコントロールでは、標準コントロールはWeb表示を維持します。Androidでは実験的なアプリ内Compose拡張を利用できます。アプリのスタイルとレイアウトはそのまま使え、iOSテーマは任意です。
+Native UIは明示的に有効化する機能です。Android、ブラウザ、古いiOS、および未対応のコントロールでは、標準コントロールはWeb表示を維持します。Androidでは実験的なアプリ内Compose拡張を利用できます。アプリのスタイルとレイアウトはそのまま使え、iOSテーマは任意です。
+
+## npmからインストールする
+
+標準の Ionic iOS 設定では、Native UI、iOS 27 テーマ、Foldable をインストールします。
+
+```sh
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+```
+
+テーマの単一スタイルシートと `ios27ThemeConfig` プリセットを使い、アプリのシェルがマウントされた後にランタイムを1つ起動します。
+
+```ts
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+
+const shell = await enableNativeUI();
+```
+
+**Vertical Bars は、通常のコントロールとともにデフォルトで有効です。** 標準のデバイス配置サービスを接続します。対応デバイスがレール配置を決め、それ以外は Web レイアウトを維持します。
+
+スタイルシート、bootstrap、デバイスサービス、ネイティブビルドは [Ionic 設定](setup.md)に従います。[既存テーマの設定](ionic-vertical-bars.md)では別の Web テーマを維持でき、[HTML 設定](framework-independent.md)では Ionic が不要です。Native UI はアプリの状態、ルーティング、テーマ選択を所有しません。ハンドルはアプリの所有者を破棄するときに破棄します。
 
 ## 投影の仕組み
 
@@ -27,7 +47,7 @@ Native UIは明示的に有効化する機能で、2.0.0から正式にサポー
 
 Native の所有権は、アニメーションや画像の有無とは独立して、ソースとその投影コンテキストに従います。投影が引き続き適格である限り、Modal の表示、ドラッグ、サイズ変更、画像の復元によって、受け付け済みのソースが Web に戻ることはありません。明示的な Web への引き渡し、未対応または拒否された投影、ランタイム障害、ソースまたはコンテキストの終了によって所有権を解放します。無効なボタンも Native が所有する同じコントロールのままで、入力が無効になります。
 
-操作を遮断する Web オーバーレイでは、ネイティブのボタン、セグメント、FAB、タブバーの準備済み画像をバックドロップの下に残せます。画像はキャプチャしたネイティブの外観を保持し、ネイティブ更新とまとめられた視覚的変更の後に準備されます。Liquid Glass の縁のハイライトなど、プラットフォームのキャプチャ結果はライブの合成表示と異なる場合があり、マテリアルをピクセル単位で同一に再現する保証はありません。タッチ中は準備を停止し、表示時はキャプチャやブリッジの応答を待たず、最後に完成した画像を使います。画像がなくても、受け付け済みの Native ソースを Web へ戻すことはありません。コントロールを保持するネイティブポップオーバーは、ネイティブ表示を維持します。移動、復元、適用除外については[ハンドオフの規則](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/appearance#temporary-images-beneath-web-overlays)を参照してください。この機能を有効にするにはネイティブアプリを再ビルドしてください。古いネイティブバイナリは従来の表示経路を維持します。
+操作を遮断する Web オーバーレイでは、ネイティブのボタン、セグメント、FAB、タブバーの準備済み画像をバックドロップの下に残せます。画像はキャプチャしたネイティブの外観を保持し、ネイティブ更新とまとめられた視覚的変更の後に準備されます。Liquid Glass の縁のハイライトなど、プラットフォームのキャプチャ結果はライブの合成表示と異なる場合があり、マテリアルをピクセル単位で同一に再現する保証はありません。タッチ中は準備を停止し、表示時はキャプチャやブリッジの応答を待たず、最後に完成した画像を使います。画像がなくても、受け付け済みの Native ソースを Web へ戻すことはありません。コントロールを保持するネイティブポップオーバーは、ネイティブ表示を維持します。移動、復元、適用除外については[ハンドオフの規則](https://webview-native-ui.com/projects/capacitor-native-ui/docs/appearance#temporary-images-beneath-web-overlays)を参照してください。この機能を有効にするにはネイティブアプリを再ビルドしてください。古いネイティブバイナリは従来の表示経路を維持します。
 
 ## 作りたいものから選ぶ
 
@@ -39,28 +59,6 @@ Native の所有権は、アニメーションや画像の有無とは独立し�
 | Ionicを使わずサイドレールを追加する | [HTMLレールの設定](/docs/framework-independent) |
 | iOS 27テーマを使用中のアプリにネイティブコントロールを追加する | [テーマへのNative UIの追加](/ionic-theme-ios27/docs/add-native-ui) |
 | 独自のSwiftUIまたはAndroid Composeコンテンツを表示する | [アプリ内拡張（実験的）](/docs/native-ui-extensions) |
-
-## npmからインストールする
-
-標準のデバイスレイアウト連携には、Erkam Yaman氏による優れたコミュニティプラグイン[Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable)を採用しています。折りたたみ状態、ヒンジの形状、バーの配置、変更イベントをアプリに提供し、レイアウトの応答をアプリ側で制御できます。Foldableはデバイス情報の取得、テーマはWebレイアウトヘルパー、Native UIはコントロールの投影を担当します。使用するパッケージと一緒にインストールし、アプリ内でイベントを接続してください。
-
-CapacitorアプリにNative UIとFoldableを一緒にインストールします。
-
-```sh
-npm install @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
-```
-
-iOS 27テーマも使う場合は、両パッケージを一緒にインストールまたは更新してください。
-
-```sh
-npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
-```
-
-Native UI、テーマ、Engine、Foldable はそれぞれ独立してバージョン管理されます。テーマを使う場合は、テーマが宣言する peer dependency と互換性のある Native UI バージョンを選んでください。Native UI は Engine の npm 依存関係を含み、SwiftPM と Maven を通じてネイティブライブラリをリンクします。CocoaPods を使う場合は[ローカルの Engine pod の設定](https://github.com/webview-native-ui/engine/blob/v1.0.0/docs/getting-started/capacitor.md#cocoapods-compatibility-through-npm)も必要です。Capacitor がプラグインを検出できるよう、Native UI を直接の依存関係として宣言してください。セットアップコマンドでは、Foldable もアプリの独立した依存関係としてインストールします。パッケージのインストールだけではネイティブコントロールは有効になりません。アプリの起動処理で投影を選択し、デバイスレイアウトを接続します。
-
-続いて[Ionicの設定](/docs/setup)、[HTMLの設定](/docs/framework-independent)、または[拡張](/docs/native-ui-extensions)を参照してください。起動処理の設定後、Webアセットをビルドし、`npx cap sync` を実行してネイティブアプリを再ビルドします。リポジトリのチェックアウトやアーカイブのダウンロードは不要です。
-
-テーマ1.2.0または1.2.1に含まれていたネイティブAPIから更新する場合は、[移行ガイド](/docs/migration)でimport、設定、ネイティブプロジェクトの変更を確認してください。
 
 ## 要件
 
@@ -124,7 +122,7 @@ Capacitor の移行は、このリポジトリルートから実行します。`
 
 ### Swift Package の利用者
 
-Xcode に `https://github.com/webview-native-ui/capacitor-plugin.git` を追加し、`NativeUICore` プロダクトを選ぶと、Capacitor アダプターをリンクせずに `import NativeUICore` を使えます。この変更がリリースされる前は、`refactor/extract-shared-core` ブランチを選択します。両プロダクトはリポジトリのリリースタグを共有します。SwiftPM はパッケージ依存関係の解決時に Capacitor を取得する場合があります。
+Xcode に `https://github.com/webview-native-ui/capacitor-plugin.git` を追加し、`NativeUICore` プロダクトを選ぶと、Capacitor アダプターをリンクせずに `import NativeUICore` を使えます。両プロダクトはリポジトリのリリースタグを共有します。SwiftPM はパッケージ依存関係の解決時に Capacitor を取得する場合があります。
 
 Capacitor アプリは引き続き `RdlaboCapacitorNativeUi` プロダクトと `import NativeUIPlugin` を使います。このモジュールは Core を再エクスポートするため、既存の `NativeUI.register` 呼び出しもアダプターと同じ登録状態を使います。ルートマニフェストが両ターゲットを管理し、別の入れ子の Swift パッケージはありません。
 
