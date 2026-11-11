@@ -198,3 +198,36 @@
     transition: none;
   }
 }
+/* The shared guide is the primary navigation; package navigation is a reference tool. */
+.docs-sidebar {
+  overflow-y: auto;
+}
+.guide-navigation {
+  display: grid;
+  gap: 2px;
+  padding: 16px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.guide-navigation a {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 6px;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.guide-navigation a:hover,
+.guide-navigation a[aria-current='page'] {
+  background: #eff6ff;
+  color: #1767d2;
+}
+.reference-navigation > summary {
+  padding: 16px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #64748b;
+}
+.reference-navigation .docs-navigation-columns {
+  height: max(400px, calc(100dvh - 500px));
+}

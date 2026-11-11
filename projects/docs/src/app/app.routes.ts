@@ -1,3 +1,4 @@
+import { GUIDE_CHAPTERS } from '../../../../shared/guide-navigation';
 import { Routes } from '@angular/router';
 import { DocsPageComponent } from './docs/docs-page';
 import { LandingPageComponent } from './docs/landing-page';
@@ -49,6 +50,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./docs/standard-setup-page').then((module) => module.StandardSetupPageComponent),
   },
+  ...GUIDE_CHAPTERS.map((chapter) => ({
+    path: `guides/${chapter.id}`,
+    data: { chapter: chapter.id },
+    loadComponent: () => import('./docs/guide-page').then((module) => module.GuidePageComponent),
+  })),
   ...projectLegacyRoutes,
   ...projectRoutes,
   { path: 'not-found', component: NotFoundComponent },

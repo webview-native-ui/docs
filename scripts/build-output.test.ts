@@ -1,3 +1,4 @@
+import { GUIDE_CHAPTERS } from '../shared/guide-navigation';
 import assert from 'node:assert/strict';
 import { access, readdir, readFile, stat } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -297,7 +298,7 @@ test('builds bounded search indexes for every published language with the compon
   assert.ok(files.includes('pagefind-component-ui.css'));
   const canonicalPages = PROJECTS_EN.filter((project) => !project.hostedUrl).reduce(
     (count, project) => count + 1 + project.pages.length,
-    3, // Home, standard setup and support pages.
+    3 + GUIDE_CHAPTERS.length, // Home, standard setup, support and shared guide chapters.
   );
   for (const { code } of PUBLISHED_DOCS_LOCALES) {
     assert.ok(
@@ -438,5 +439,47 @@ test('the portal owns combined setup while plugin guides keep feature boundaries
     assert.ok(entry.querySelector(`article a[href="${prefix}/standard-setup"]`));
     const home = await read('');
     assert.ok(home.querySelector(`main a[href="${prefix}/standard-setup"]`));
+  }
+});
+
+test('shared guides lead from the complete setup to localized package details', async () => {
+  for (const { code, subPath } of PUBLISHED_DOCS_LOCALES) {
+    const prefix = subPath ? `/${subPath}` : '';
+    const read = async (path: string) =>
+      new JSDOM(await readFile(`dist/docs/browser${path || '/'}/index.html`, 'utf8')).window
+        .document;
+    const home = await read(prefix);
+    assert.ok(home.querySelector('main .guide-chapters'));
+    assert.ok(home.querySelector('main #packages'));
+    for (const chapter of GUIDE_CHAPTERS) {
+      const path = `${prefix}/guides/${chapter.id}`;
+      assert.ok(home.querySelector(`main a[href="${path}"]`));
+      const doc = await read(path);
+      assert.equal(doc.querySelector('h1')?.textContent, chapter.title[code]);
+      assert.equal(
+        doc.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+        `https://webview-native-ui.com${path}`,
+      );
+      assert.ok(doc.querySelector(`.guide-navigation a[href="${path}"][aria-current="page"]`));
+      assert.ok(doc.querySelector(`main a[href="${prefix}/standard-setup"]`));
+      for (const link of doc.querySelectorAll<HTMLAnchorElement>('main a[href]')) {
+        const url = new URL(link.getAttribute('href')!, 'https://webview-native-ui.com');
+        if (url.origin !== 'https://webview-native-ui.com') continue;
+        assert.ok(
+          !subPath || url.pathname === prefix || url.pathname.startsWith(`${prefix}/`),
+          `${path}: locale lost ${url.pathname}`,
+        );
+        const target = await read(url.pathname);
+        if (url.hash)
+          assert.ok(
+            target.getElementById(decodeURIComponent(url.hash.slice(1))),
+            `${path}: ${url.href}`,
+          );
+      }
+    }
+    const native = await read(`${prefix}/guides/native-ui`);
+    assert.equal(native.querySelectorAll('main table tbody tr').length, 3);
+    const deepLink = await read(`${prefix}/projects/capacitor-native-ui/docs/configuration`);
+    assert.ok(deepLink.querySelector(`app-guide-context a[href="${prefix}/standard-setup"]`));
   }
 });

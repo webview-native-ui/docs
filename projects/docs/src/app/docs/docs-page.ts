@@ -1,3 +1,4 @@
+import { GuideContextComponent } from './guide-context';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
@@ -26,6 +27,7 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
 @Component({
   selector: 'app-docs-page',
   imports: [
+    GuideContextComponent,
     CodePanel,
     InteractiveDemoPanel,
     OssResourceLinksComponent,
@@ -39,6 +41,7 @@ import { canonicalHomePath, localizedFragmentPath, localizedPublicPath } from '.
     @if (project(); as proj) {
       @if (page(); as doc) {
         <div class="mx-auto max-w-[1500px] pb-16">
+          <app-guide-context />
           <div
             class="docs-page-layout"
             [class.with-code]="doc.codes.length > 0"

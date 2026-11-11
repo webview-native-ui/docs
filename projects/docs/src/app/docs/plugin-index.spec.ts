@@ -30,7 +30,7 @@ describe('PluginIndexComponent', () => {
     expect(TestBed.inject(Title).getTitle()).toBe(
       'WebView Native UI Documentation',
     );
-    expect(compiled.querySelector('h1')?.textContent).toContain('Documentation');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Web and native UI');
     expect(compiled.textContent).toContain('independent open-source initiative maintained by rdlabo');
     const categoryLinks = compiled.querySelectorAll<HTMLAnchorElement>('.category-nav a');
     expect(categoryLinks.length).toBe(projectGroupsForLocale('en').length);
@@ -39,7 +39,7 @@ describe('PluginIndexComponent', () => {
       expect(section?.querySelector('h2')?.textContent?.trim()).toBe(link.textContent?.trim());
     }
 
-    const cards = Array.from(compiled.querySelectorAll<HTMLAnchorElement>('li > a'));
+    const cards = Array.from(compiled.querySelectorAll<HTMLAnchorElement>('.catalog-grid li > a'));
     const groupedProjects = projectGroupsForLocale('en').flatMap((group) => group.projects);
     expect(cards.map((card) => card.getAttribute('href'))).toEqual(
       groupedProjects.map((project) => project.hostedUrl ?? project.path),
