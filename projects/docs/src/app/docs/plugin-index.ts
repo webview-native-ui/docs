@@ -1,3 +1,5 @@
+import { STANDARD_SETUP_LABELS, STANDARD_SETUP_PATH } from '../../../../../shared/standard-setup';
+import { resolveDocsLocale } from '../../../../../shared/docs-locales';
 import { Component, LOCALE_ID, OnInit, inject } from '@angular/core';
 import { projectGroupsForLocale, type ProjectSummary } from './docs-data';
 import { localizedPublicPath } from '../locale-path';
@@ -14,6 +16,7 @@ import { SeoService } from './seo.service';
         <p class="eyebrow" i18n="@@openSourceDocumentation">Open source documentation</p>
         <h1 i18n="@@documentationTitle">Documentation</h1>
         <p class="catalog-hero__lead" i18n="@@projectsIntro">Guides and API references for WebView Native UI and Ionic themes.</p>
+        <p><a class="catalog-card__cta" [href]="standardSetupHref">{{ standardSetupLabel }} →</a></p>
         <nav class="category-nav" aria-label="Project categories" i18n-aria-label="@@projectCategoriesNav">
           @for (group of projectGroups; track group.id) {
             <a [href]="'#category-' + group.id">
@@ -59,6 +62,8 @@ import { SeoService } from './seo.service';
 export class PluginIndexComponent implements OnInit {
   readonly #seo = inject(SeoService);
   readonly #locale = inject(LOCALE_ID);
+  protected readonly standardSetupLabel = STANDARD_SETUP_LABELS[resolveDocsLocale(this.#locale)];
+  protected readonly standardSetupHref = localizedPublicPath(this.#locale, STANDARD_SETUP_PATH);
   protected readonly projectGroups = projectGroupsForLocale(this.#locale);
 
   protected projectHref(project: ProjectSummary): string {

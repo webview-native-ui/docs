@@ -10,10 +10,15 @@ for (const [project, page] of [
   ['capacitor-native-ui', 'ionic-vertical-bars'],
   ['capacitor-native-ui', 'setup'],
   ['capacitor-native-ui', 'device-layout'],
+  ['portal', 'standard-setup'],
 ]) {
   test(`${page} examples compile against the installed release`, () => {
     const markdown = readFileSync(
-      resolve(`projects/docs/src/${project}/docs/ja/${page}.md`),
+      resolve(
+        project === 'portal'
+          ? 'projects/docs/src/guides/ja/standard-setup.md'
+          : `projects/docs/src/${project}/docs/ja/${page}.md`,
+      ),
       'utf8',
     );
     // Keep temporary modules beside node_modules so package exports resolve normally.

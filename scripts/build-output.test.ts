@@ -27,16 +27,23 @@ test('split theme and Native UI guides resolve localized links and heading fragm
         );
       }
     }
+    documents.set(
+      `${prefix}/standard-setup`,
+      new JSDOM(await readFile(`dist/docs/browser${prefix}/standard-setup/index.html`, 'utf8'))
+        .window.document,
+    );
     for (const [route, document] of documents) {
       for (const link of document.querySelectorAll<HTMLAnchorElement>('main a[href]')) {
         const url = new URL(link.getAttribute('href')!, `https://webview-native-ui.com${route}`);
         if (
           url.origin !== 'https://webview-native-ui.com' ||
-          !ids.some((id) => url.pathname.includes(`/projects/${id}/docs/`))
+          (!ids.some((id) => url.pathname.includes(`/projects/${id}/docs/`)) &&
+            !url.pathname.endsWith('/standard-setup'))
         )
           continue;
         assert.ok(
-          url.pathname.startsWith(`${prefix}/projects/`),
+          url.pathname.startsWith(`${prefix}/projects/`) ||
+            url.pathname === `${prefix}/standard-setup`,
           `${route}: wrong locale ${url.href}`,
         );
         const target = documents.get(url.pathname.replace(/\/$/, ''));
@@ -290,7 +297,7 @@ test('builds bounded search indexes for every published language with the compon
   assert.ok(files.includes('pagefind-component-ui.css'));
   const canonicalPages = PROJECTS_EN.filter((project) => !project.hostedUrl).reduce(
     (count, project) => count + 1 + project.pages.length,
-    2, // Home and support pages.
+    3, // Home, standard setup and support pages.
   );
   for (const { code } of PUBLISHED_DOCS_LOCALES) {
     assert.ok(
@@ -400,5 +407,36 @@ test('ships the WebView Native UI brand in all four languages and static 404 pag
     );
     home.window.close();
     missing.window.close();
+  }
+});
+
+test('the portal owns combined setup while plugin guides keep feature boundaries', async () => {
+  for (const { code, subPath } of PUBLISHED_DOCS_LOCALES) {
+    const prefix = subPath ? `/${subPath}` : '';
+    const read = async (path: string) =>
+      new JSDOM(await readFile(`dist/docs/browser${prefix}${path}/index.html`, 'utf8')).window
+        .document;
+    const guide = await read('/standard-setup');
+    const article = guide.querySelector('article')!;
+    for (const name of [
+      'enableDynamicColors',
+      'enableNativeUI',
+      'layoutChange',
+      'md3ThemeConfig',
+      'ios27ThemeConfig',
+    ])
+      assert.ok(article.textContent?.includes(name), `${code}: ${name}`);
+    assert.ok(
+      guide.querySelector(
+        `a[href="https://github.com/webview-native-ui/docs/edit/main/projects/docs/src/guides/${code}/standard-setup.md"]`,
+      ),
+    );
+    const single = await read('/projects/capacitor-native-ui/docs/setup');
+    assert.ok(single.querySelector('article')?.textContent?.includes('enableNativeUI'));
+    assert.ok(!single.querySelector('article')?.textContent?.includes('enableDynamicColors'));
+    const entry = await read('/projects/capacitor-native-ui/docs/readme');
+    assert.ok(entry.querySelector(`article a[href="${prefix}/standard-setup"]`));
+    const home = await read('');
+    assert.ok(home.querySelector(`main a[href="${prefix}/standard-setup"]`));
   }
 });

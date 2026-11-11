@@ -44,6 +44,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./docs/support-page').then(({ SupportPageComponent }) => SupportPageComponent),
   },
+  {
+    path: 'standard-setup',
+    loadComponent: () =>
+      import('./docs/standard-setup-page').then((module) => module.StandardSetupPageComponent),
+  },
   ...projectLegacyRoutes,
   ...projectRoutes,
   { path: 'not-found', component: NotFoundComponent },
