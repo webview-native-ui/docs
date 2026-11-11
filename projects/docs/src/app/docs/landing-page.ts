@@ -88,7 +88,7 @@ import { resolveDocsLocale } from '../../../../../shared/docs-locales';
                   <h3 class="m-0 pt-3 text-sm font-semibold text-slate-500">{{ group.section }}</h3>
                   <ul class="m-0 grid list-none gap-x-6 p-0 lg:grid-cols-2">
                     @for (page of group.pages; track page.path) {
-                      <li class="min-w-0"><a class="flex min-h-12 items-center justify-between gap-4 rounded-md px-3 py-3 text-sm no-underline hover:bg-[#fcf3ee] hover:text-[var(--rd-accent)] focus-visible:outline" [routerLink]="page.path"><span class="[overflow-wrap:anywhere]">{{ page.navTitle || page.title }}</span><span class="shrink-0 text-slate-400" aria-hidden="true">→</span></a></li>
+                      <li class="min-w-0"><a class="flex min-h-12 items-center justify-between gap-4 rounded-md px-3 py-3 text-sm no-underline hover:bg-[#eff6ff] hover:text-[var(--rd-accent)] focus-visible:outline" [routerLink]="page.path"><span class="[overflow-wrap:anywhere]">{{ page.navTitle || page.title }}</span><span class="shrink-0 text-slate-400" aria-hidden="true">→</span></a></li>
                     }
                   </ul>
                 </div>

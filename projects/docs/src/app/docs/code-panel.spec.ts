@@ -73,4 +73,43 @@ describe('CodePanel', () => {
       'beta',
     ]);
   });
+  it('connects tabs to panels and keeps only the selected tab in the tab sequence', () => {
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    const tabs = Array.from(element.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    expect(tabs.map((tab) => tab.tabIndex)).toEqual([0, -1]);
+    for (const tab of tabs) {
+      const panel = element.ownerDocument.getElementById(tab.getAttribute('aria-controls')!);
+      expect(panel?.getAttribute('role')).toBe('tabpanel');
+      expect(panel?.getAttribute('aria-labelledby')).toBe(tab.id);
+      expect(panel?.hidden).toBe(tab.getAttribute('aria-selected') !== 'true');
+    }
+  });
+
+  it('selects and focuses tabs with arrows, wrapping, Home and End', () => {
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    const tabs = Array.from(element.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    tabs[0].focus();
+    for (const [key, expected] of [
+      ['ArrowLeft', 1],
+      ['ArrowRight', 0],
+      ['End', 1],
+      ['Home', 0],
+    ] as const) {
+      const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+      element.ownerDocument.activeElement?.dispatchEvent(event);
+      fixture.detectChanges();
+      expect(event.defaultPrevented).toBe(true);
+      expect(element.ownerDocument.activeElement).toBe(tabs[expected]);
+      expect(tabs[expected].getAttribute('aria-selected')).toBe('true');
+      expect(tabs.map((tab) => tab.tabIndex)).toEqual(expected ? [-1, 0] : [0, -1]);
+      expect(
+        element.querySelector('[role="tabpanel"]:not([hidden])')?.getAttribute('aria-labelledby'),
+      ).toBe(tabs[expected].id);
+    }
+    const tabEvent = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    tabs[0].dispatchEvent(tabEvent);
+    expect(tabEvent.defaultPrevented).toBe(false);
+  });
 });

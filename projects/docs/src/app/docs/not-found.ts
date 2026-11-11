@@ -10,7 +10,7 @@ import { SeoService } from './seo.service';
       <h1 class="mt-5 mb-0 text-4xl font-semibold tracking-[-0.04em] text-[#172033] sm:text-6xl">
         <ng-container i18n="@@notFoundHeading">Page not found</ng-container>
       </h1>
-      <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-[#6f6661]">
+      <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-[#64748b]">
         <ng-container i18n="@@notFoundDescription"
           >The page may have moved while the documentation was being reorganized.</ng-container
         >

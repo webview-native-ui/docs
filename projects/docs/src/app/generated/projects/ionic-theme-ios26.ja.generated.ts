@@ -62,7 +62,7 @@ export const PROJECT = {
     {
       "title": "Ionic Theme iOS26",
       "navTitle": "はじめに",
-      "updatedAt": "2026-09-30",
+      "updatedAt": "2026-11-11",
       "slug": "readme",
       "file": "readme.md",
       "section": "クイックスタート",

@@ -120,6 +120,9 @@ export class App {
     () => this.pendingNavigation()?.url ?? this.currentUrl(),
   );
   protected readonly navigationAnimationReady = signal(false);
+  protected readonly skipToContentUrl = computed(
+    () => `${localizedPublicPath(this.#locale, this.currentUrl().split('#')[0])}#main-content`,
+  );
   protected readonly footerSupportUrl = localizedPublicPath(this.#locale, '/support');
   protected readonly canonicalHomePath = canonicalHomePath(this.#locale);
   protected readonly searchLanguage = resolveDocsLocale(this.#locale);

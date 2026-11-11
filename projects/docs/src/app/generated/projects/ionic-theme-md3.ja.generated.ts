@@ -24,7 +24,7 @@ export const PROJECT = {
     {
       "icon": "layers",
       "title": "iOS 26互換マークアップ",
-      "description": "プラットフォームをまたぎ `@rdlabo/ionic-theme-ios26` と同じHTML構造を共有します。"
+      "description": "プラットフォームをまたぎ @rdlabo/ionic-theme-ios26 と同じHTML構造を共有します。"
     },
     {
       "icon": "motion",

@@ -110,7 +110,7 @@
       <trans-unit id="relatedArticles"><source>Related articles</source><target>関連記事（英語）</target></trans-unit>
       <trans-unit id="relatedArticleLanguage"><source>English</source><target>英語</target></trans-unit>
       <trans-unit id="docsHomeNav"><source>docs</source><target>docs</target></trans-unit>
-      <trans-unit id="siteDescription"><source>Guides and API references for WebView Native UI Engine, Capacitor Native UI, and Ionic themes.</source><target>WebView Native UI Engine、Capacitor Native UI、Ionicテーマの導入ガイドとAPIリファレンス。</target></trans-unit>
+      <trans-unit id="siteDescription"><source>Guides and API references for Ionic themes, Capacitor and Cordova plugins, and WebView Native UI Engine.</source><target>Ionicテーマ、Capacitor・Cordovaプラグイン、WebView Native UI Engineの導入ガイドとAPIリファレンス。</target></trans-unit>
       <trans-unit id="supportEyebrow"><source>Community-supported open source</source><target>コミュニティで支えるオープンソース</target></trans-unit>
       <trans-unit id="supportHeading"><source>Help build a community around independent OSS</source><target>独立したOSSを支えるコミュニティへ</target></trans-unit>
       <trans-unit id="supportIntro"><source>Monthly sponsorships start at $5 and support ongoing public OSS work. The long-term vision is a community of 100 monthly sponsors supporting the collection broadly rather than depending on any single organization.</source><target>月額スポンサーは5ドルから、継続的な公開OSS活動を支えます。ひとつの組織に依存せず、100人の月額スポンサーがプロジェクト全体を広く支えるコミュニティを長期的な目標にしています。</target></trans-unit>
@@ -147,6 +147,8 @@
       <trans-unit id="footerSponsorsHeading" datatype="html"><source>Supported by our sponsors</source><target>スポンサーの皆さまに支えられています</target></trans-unit>
       <trans-unit id="footerSponsorsThanks" datatype="html"><source>Thank you for helping keep these projects open and maintained.</source><target>プロジェクトの公開と継続的なメンテナンスへのご支援、ありがとうございます。</target></trans-unit>
       <trans-unit id="footerBecomeSponsor" datatype="html"><source>Become a sponsor</source><target>スポンサーになる</target></trans-unit>
-    </body>
+    <trans-unit id="codeExample"><source>Code example</source><target>コード例</target></trans-unit>
+<trans-unit id="codeFiles"><source>Files</source><target>ファイル</target></trans-unit>
+</body>
   </file>
 </xliff>

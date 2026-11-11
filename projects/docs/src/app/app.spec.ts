@@ -99,6 +99,19 @@ describe('App', () => {
     fixture.destroy();
   });
 
+  it('keeps the skip link on the current document after navigation', async () => {
+    const fixture = TestBed.createComponent(App);
+    const router = TestBed.inject(Router);
+    const path = '/projects/capacitor-native-ui/docs/setup?from=search';
+    await router.navigateByUrl(`${path}#requirements-and-support`);
+    fixture.detectChanges();
+    const skipLink = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
+    expect(skipLink.getAttribute('href')).toBe(`${path}#main-content`);
+    await router.navigateByUrl('/support');
+    fixture.detectChanges();
+    expect(skipLink.getAttribute('href')).toBe('/support#main-content');
+  });
+
   it('preserves the logo, global links, footer, and complete library catalog', async () => {
     const fixture = TestBed.createComponent(App);
     await TestBed.inject(Router).navigateByUrl('/');
@@ -649,6 +662,11 @@ describe('App', () => {
     expect(docsHome.textContent?.trim()).toBe('docs');
     expect(allProjects.getAttribute('href')).toBe('/ja');
     expect(allProjects.getAttribute('aria-current')).toBe('page');
+    await router.navigateByUrl('/projects/capacitor-native-ui/docs/setup');
+    fixture.detectChanges();
+    expect(compiled.querySelector('a')?.getAttribute('href')).toBe(
+      '/ja/projects/capacitor-native-ui/docs/setup#main-content',
+    );
   });
 
   it('links the Japanese header brand to the documentation home in the same tab', async () => {

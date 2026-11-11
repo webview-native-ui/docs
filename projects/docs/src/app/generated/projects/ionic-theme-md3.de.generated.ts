@@ -24,7 +24,7 @@ export const PROJECT = {
     {
       "icon": "layers",
       "title": "Mit iOS 26 kompatibles Markup",
-      "description": "Plattformübergreifend dieselbe HTML-Struktur mit `@rdlabo/ionic-theme-ios26` verwenden."
+      "description": "Plattformübergreifend dieselbe HTML-Struktur mit @rdlabo/ionic-theme-ios26 verwenden."
     },
     {
       "icon": "motion",

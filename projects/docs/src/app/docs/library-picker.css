@@ -27,7 +27,7 @@
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: #796e68;
+  color: #64748b;
 }
 .library-group-label:first-child {
   margin-top: 4px;
@@ -41,7 +41,7 @@
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 13px;
-  color: #4e4642;
+  color: #475569;
   text-decoration: none;
   overflow-wrap: anywhere;
 }

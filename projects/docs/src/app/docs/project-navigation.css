@@ -18,7 +18,7 @@
   padding: 8px 0;
   border: 0;
   background: transparent;
-  color: #796e68;
+  color: #64748b;
   font: inherit;
   font-size: 12px;
   text-align: left;
@@ -44,7 +44,7 @@
   overflow-wrap: anywhere;
 }
 .project-navigation-title span {
-  color: #796e68;
+  color: #64748b;
   font-size: 11px;
   white-space: nowrap;
 }
@@ -59,7 +59,7 @@
   display: block;
   padding: 9px 12px;
   border-radius: 8px;
-  color: #6f6661;
+  color: #64748b;
   font-size: 13px;
   line-height: 1.5;
   text-decoration: none;
@@ -75,7 +75,7 @@
 }
 .project-navigation-section {
   margin: 24px 12px 5px;
-  color: #796e68;
+  color: #64748b;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.06em;

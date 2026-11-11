@@ -634,8 +634,8 @@ export const METADATA_FR: Readonly<Record<string, string>> = {
   Setup: 'Configuration',
   'Share Durable Object WebSocket patterns and table-agnostic offline replica contracts.':
     'Partagez des modèles WebSocket pour Durable Objects et des contrats de réplique hors ligne indépendants des tables.',
-  'Share one HTML structure with `@rdlabo/ionic-theme-ios26` across platforms.':
-    'Partagez une structure HTML unique avec `@rdlabo/ionic-theme-ios26` sur toutes les plateformes.',
+  'Share one HTML structure with @rdlabo/ionic-theme-ios26 across platforms.':
+    'Partagez une structure HTML unique avec @rdlabo/ionic-theme-ios26 sur toutes les plateformes.',
   'Share route guards, access capability state, auth headers, safe retries, and error hooks.':
     'Partagez les gardes de route, l’état des capacités d’accès, les en-têtes d’authentification, les nouvelles tentatives sûres et les hooks d’erreur.',
   'Shared application infrastructure for Ionic Angular projects.':

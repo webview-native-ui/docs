@@ -464,7 +464,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="siteDescription" datatype="html"><source>Guides and API references for WebView Native UI Engine, Capacitor Native UI, and Ionic themes.</source><target>Guides et références API pour WebView Native UI Engine, Capacitor Native UI et les thèmes Ionic.</target>
+      <trans-unit id="siteDescription" datatype="html"><source>Guides and API references for Ionic themes, Capacitor and Cordova plugins, and WebView Native UI Engine.</source><target>Guides et références API pour les thèmes Ionic, les plugins Capacitor et Cordova et WebView Native UI Engine.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">projects/docs/src/app/docs/plugin-index.ts</context>
           <context context-type="linenumber">65</context>
@@ -641,6 +641,8 @@
       <trans-unit id="footerSponsorsHeading" datatype="html"><source>Supported by our sponsors</source><target>Avec le soutien de nos sponsors</target></trans-unit>
       <trans-unit id="footerSponsorsThanks" datatype="html"><source>Thank you for helping keep these projects open and maintained.</source><target>Merci de nous aider à garder ces projets ouverts et à en assurer la maintenance.</target></trans-unit>
       <trans-unit id="footerBecomeSponsor" datatype="html"><source>Become a sponsor</source><target>Devenir sponsor</target></trans-unit>
-    </body>
+    <trans-unit id="codeExample"><source>Code example</source><target>Exemple de code</target></trans-unit>
+<trans-unit id="codeFiles"><source>Files</source><target>Fichiers</target></trans-unit>
+</body>
   </file>
 </xliff>
