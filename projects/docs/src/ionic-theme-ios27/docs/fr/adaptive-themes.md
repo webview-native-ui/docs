@@ -1,6 +1,6 @@
 ---
 title: "Utiliser les thèmes iOS 26, iOS 27 et MD3"
-sourceRevision: 5a844ab11008cd1c9a36cb9bca3555a9698674b567a43a3c1219f3fb0f05cbfc
+sourceRevision: "fd9030cfed768c0f016d9cce4071e73b69f57d35a925ae5ab5caab1a6f3848ad"
 ---
 # Utiliser les thèmes iOS 26, iOS 27 et MD3
 

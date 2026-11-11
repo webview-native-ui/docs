@@ -6,7 +6,54 @@ scrollActiveLine: []
 
 現在インストールしているバージョンより新しい節を、バージョンの昇順にすべて確認してください。例えば、1.x から 9.0.0 に更新する場合は、2.0.0 の移行手順を終えてから 9.0.0 の節を確認します。
 
-各節には、アプリケーションのコードまたは設定の変更が必要な項目のみを記載しています。
+バージョン別の節には、アプリケーションのコードまたは設定の変更が必要な項目を記載しています。次のセットアップの簡略化は任意です。
+
+## 任意: セットアップを簡略化する
+
+テーマスタイルシートと `md3ThemeConfig` を使うと、設定を簡略化できます。既存の個別スタイルシートのパスとアニメーションのエクスポートも引き続き使用できます。まとめたスタイルシートと設定オブジェクトは、それぞれ独立して導入できます。
+
+### テーマスタイルシートの import を置き換える
+
+```diff
+ @import '@ionic/core/css/palettes/dark.system.css';
+- @import '@rdlabo/ionic-theme-md3/dist/css/default-variables.css';
+- @import '@rdlabo/ionic-theme-md3/dist/css/ionic-theme-md3.css';
++ @import '@rdlabo/ionic-theme-md3/styles/theme.css';
+```
+
+アプリで既に選択している Ionic ダークパレットは維持してください。例はシステム連動ですが、クラスによる制御や常時ダークのアプリは、それぞれに対応するパレットを維持します。Ionic の基本スタイルをこれらの import の前、アプリ独自の上書きを後に置きます。MD3 は、これらのモードで共通のテーマスタイルシートを使用します。
+
+### アニメーションの設定を置き換える
+
+既に Material Design モードを使用しているアプリでは、手動の設定を次のように置き換えます。
+
+```diff
+- import { mdTransitionAnimation } from '@rdlabo/ionic-theme-md3';
++ import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+
+- const ionicConfig = {
+-   mode: 'md' as const,
+-   navAnimation: mdTransitionAnimation,
+- };
++ const ionicConfig = {
++   ...md3ThemeConfig,
++   // animated: false,
++ };
+```
+
+既存のフレームワーク初期化へ、このオブジェクトを渡します。テーマ設定は `mode: 'md'` と MD3 の画面遷移を指定します。プラットフォーム別に外観を選ぶアプリでは、選択したモードに対応する設定を選びます。
+
+```ts
+import { isPlatform } from '@ionic/core';
+import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+
+const ionicConfig = {
+  ...(isPlatform('ios') ? { mode: 'ios' as const } : md3ThemeConfig),
+  // animated: false,
+};
+```
+
+モードの選択はアプリが担当します。明示していたモードに対応するテーマ設定を選ぶことで、既存のモードを維持できます。アプリ独自の設定をスプレッドの後に置き、独自のアニメーションを優先してください。Ionic 標準の画面遷移を使うための、明示的な `navAnimation: undefined` も指定できます。フレームワーク別の import は[セットアップ](setup.md)、個別 API とテーマの併用は[設定ガイド](configuration.md)を参照してください。Dynamic Colors は、引き続き Ionic の[クラスによるパレット](dynamic-colors.md)を使用します。
 
 ## 9.2.0 への移行: Android Settings への整合
 

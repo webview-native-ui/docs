@@ -291,7 +291,7 @@ describe('App', () => {
       .click();
     fixture.detectChanges();
     compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="UI tools"]')!
+      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
       .click();
     fixture.detectChanges();
     compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
@@ -386,7 +386,7 @@ describe('App', () => {
     compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
     compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="UI tools"]')!
+      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
       .click();
     fixture.detectChanges();
     compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
@@ -477,7 +477,7 @@ describe('App', () => {
       compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
       fixture.detectChanges();
       compiled
-        .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="UI tools"]')!
+        .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
         .click();
       fixture.detectChanges();
       compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
@@ -568,7 +568,7 @@ describe('App', () => {
     compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
     compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="UI tools"]')!
+      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
       .click();
     fixture.detectChanges();
     const link = compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!;

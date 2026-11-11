@@ -1,6 +1,6 @@
 # WebView Native UI documentation
 
-Four-language documentation for Engine, Capacitor Native UI, Ionic Theme iOS27, iOS26, and MD3.
+Four-language documentation for Engine, Capacitor Native UI, Cordova Native UI, Ionic Theme iOS27, iOS26, and MD3.
 Production origin: https://webview-native-ui.com.
 
 Requires Node.js 24 and npm 11. Run `npm ci`, then `npm start` (English), `npm run start:ja`,
@@ -28,7 +28,21 @@ sources locally so a fresh checkout can build without already-published files in
 Generated modules and sitemap are committed; `workers/generated` is disposable.
 
 Public paths and npm package names remain unchanged. Related English articles remain on rdlabo.dev.
-Cordova setup is covered in Engine guides; a new standalone Cordova manual is outside this extraction.
+The catalog order is Themes, Capacitor plugins, Cordova plugins, then Developer tools.
+Cordova has its own getting-started guide and links to the shared Engine documentation.
+
+Published package versions checked against npm on 2026-11-11:
+
+| Package | Version |
+| --- | --- |
+| `@rdlabo/ionic-theme-ios27` | 2.1.3 |
+| `@rdlabo/ionic-theme-ios26` | 9.4.3 |
+| `@rdlabo/ionic-theme-md3` | 9.2.1 |
+| `@rdlabo/capacitor-native-ui` | 2.1.4 |
+| `@webview-native-ui/cordova-plugin` | 0.1.1 |
+| `@webview-native-ui/engine` | 1.0.4 |
+
+Cordova 0.1.1 bundles iOS27 theme 2.1.0; it does not inherit the standalone theme version.
 
 Cloudflare Workers Static Assets uses `wrangler.jsonc` and the `webview-native-ui-docs` service.
 Production deploys are manual via the environment-gated workflow after explicit approval.

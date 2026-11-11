@@ -198,14 +198,14 @@ test('canonicalizes renamed iOS 26 source and image links without losing its rel
       project,
       '[source](https://github.com/rdlabo-dev/ionic-theme-ios26/blob/main/src/index.ts) ![image](https://raw.githubusercontent.com/rdlabo-dev/ionic-theme-ios26/ios26-v9.2.0/screenshots/ios26.png)',
     ),
-    '[source](https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios26-v9.4.2/src/index.ts) ![image](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/ios26-v9.4.2/screenshots/ios26.png)',
+    '[source](https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios26-v9.4.3/src/index.ts) ![image](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/ios26-v9.4.3/screenshots/ios26.png)',
   );
   assert.equal(
     await pinPackageSourceLinks(
       { ...project, packageName: '@rdlabo/ionic-theme-ios27', releaseTagPrefix: 'ios27-v' },
-      '[iOS 26](https://github.com/rdlabo-dev/ionic-theme-ios26/blob/ios26-v9.4.2/src/index.ts)',
+      '[iOS 26](https://github.com/rdlabo-dev/ionic-theme-ios26/blob/ios26-v9.4.3/src/index.ts)',
     ),
-    '[iOS 26](https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios26-v9.4.2/src/index.ts)',
+    '[iOS 26](https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios26-v9.4.3/src/index.ts)',
   );
 });
 
@@ -217,7 +217,7 @@ test('resolves independently released packages at repository roots without chang
   for (const [name, directory, ref] of [
     ['ionic-theme-ios27', '', `v${packagePins['@rdlabo/ionic-theme-ios27']}`],
     ['capacitor-native-ui', '', `v${packagePins['@rdlabo/capacitor-native-ui']}`],
-    ['ionic-theme-ios26', '', 'ios26-v9.4.2'],
+    ['ionic-theme-ios26', '', 'ios26-v9.4.3'],
   ]) {
     const project = {
       repositoryUrl: `https://github.com/webview-native-ui/${name === 'capacitor-native-ui' ? 'capacitor-plugin' : 'ionic-theme-ios27'}`,

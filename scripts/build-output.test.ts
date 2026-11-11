@@ -13,7 +13,7 @@ import {
 } from '../projects/docs/src/app/generated/sponsors.generated';
 
 test('split theme and Native UI guides resolve localized links and heading fragments', async () => {
-  const ids = ['ionic-theme-ios27', 'capacitor-native-ui', 'ionic-theme-md3'];
+  const ids = projectDefinitions.filter((project) => !project.hostedUrl).map(({ id }) => id);
   for (const { subPath } of PUBLISHED_DOCS_LOCALES) {
     const prefix = subPath ? `/${subPath}` : '';
     const documents = new Map<string, Document>();

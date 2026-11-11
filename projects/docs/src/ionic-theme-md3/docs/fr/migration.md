@@ -1,13 +1,61 @@
 ---
 title: "Migration"
-sourceRevision: "c9a566bbe8c8f7d9e82e979376ca021c8fb262697714a6ac30a9f932c31f19fa"
+sourceRevision: "4ca2e7f0f7e12cf1411a07b4025c2b2e7a3145072713cef5e20353d374e18b3a"
 ---
 
 # Migration
 
 Examinez chaque section plus récente que la version installée, dans l’ordre croissant. Par exemple, pour passer de 1.x à 9.0.0, effectuez les étapes de migration 2.0.0 avant d’examiner 9.0.0.
 
-Chaque section répertorie uniquement les changements nécessitant une mise à jour du code ou de la configuration de l’application.
+Les sections versionnées répertorient les changements nécessitant une mise à jour du code ou de la configuration de l’application. La simplification de configuration ci-dessous est facultative.
+
+
+## Facultatif : simplifier la configuration
+
+La feuille de style du thème et `md3ThemeConfig` raccourcissent la configuration. Les chemins des feuilles de style individuelles et les exports d’animation existants restent pris en charge. Les applications peuvent adopter indépendamment la feuille de style et l’objet de configuration du thème.
+
+### Remplacer les imports des feuilles de style du thème
+
+```diff
+ @import '@ionic/core/css/palettes/dark.system.css';
+- @import '@rdlabo/ionic-theme-md3/dist/css/default-variables.css';
+- @import '@rdlabo/ionic-theme-md3/dist/css/ionic-theme-md3.css';
++ @import '@rdlabo/ionic-theme-md3/styles/theme.css';
+```
+
+Conservez la palette sombre Ionic que l’application sélectionne déjà. L’exemple utilise l’apparence système ; les applications contrôlées par classe et toujours sombres conservent leur palette correspondante. Gardez les styles de base d’Ionic avant ces imports et les personnalisations de l’application après ceux-ci. MD3 fournit une seule feuille de style du thème partagée par ces modes.
+
+### Remplacer le raccordement des animations
+
+Pour une application utilisant déjà le mode Material Design, remplacez la configuration manuelle comme suit.
+
+```diff
+- import { mdTransitionAnimation } from '@rdlabo/ionic-theme-md3';
++ import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+
+- const ionicConfig = {
+-   mode: 'md' as const,
+-   navAnimation: mdTransitionAnimation,
+- };
++ const ionicConfig = {
++   ...md3ThemeConfig,
++   // animated: false,
++ };
+```
+
+Transmettez l’objet à l’initialiseur existant de votre framework. La configuration du thème définit `mode: 'md'` et la transition MD3 correspondante. Pour une application qui choisit son apparence selon la plateforme, choisissez la configuration du mode sélectionné :
+
+```ts
+import { isPlatform } from '@ionic/core';
+import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+
+const ionicConfig = {
+  ...(isPlatform('ios') ? { mode: 'ios' as const } : md3ThemeConfig),
+  // animated: false,
+};
+```
+
+L’application gère la sélection du mode. Conservez un mode explicite existant en sélectionnant la configuration du thème correspondante. Placez les réglages de l’application après le spread pour que les animations personnalisées soient prioritaires, y compris un `navAnimation: undefined` explicite pour la transition par défaut d’Ionic. Consultez l’[installation](setup.md) pour les imports des frameworks et la [configuration](configuration.md) pour les API individuelles et la sélection des thèmes combinés. Dynamic Colors continue d’utiliser la [palette par classe](dynamic-colors.md) d’Ionic.
 
 ## Migration vers 9.2.0 : alignement sur Android Settings
 

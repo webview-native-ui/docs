@@ -1,6 +1,6 @@
 ---
 title: "Cordova のセットアップ"
-sourceRevision: "632cc17d693c442a94e91c595e10edb6c77e6f53158df62f69dca027ee1a7e0f"
+sourceRevision: "3da4022d906e1f5a52ee44ac27a4f0088d6e51b99ad7140b61090f2e5588e836"
 ---
 
 # Cordova のセットアップ
@@ -56,7 +56,7 @@ const ionicConfig = {
 };
 ```
 
-[Ionic のアニメーションを設定する](setup.md#3-configure-ionic-animations)に従い、フレームワークの既存の初期化処理を使います。Ionic を2回初期化しないでください。Android で Material Design モードを維持する場合は、これらの設定を iOS の設定にだけ適用します。`attachTabBarSearchable` などの他のヘルパーも `/theme` から利用できますが、インポートだけでは動作を自動で適用しません。
+[フレームワークの初期化](setup.md#3-pass-theme-configuration-to-ionic)に従い、フレームワークの既存の初期化処理を使います。Ionic を2回初期化しないでください。Android で Material Design モードを維持する場合は、これらの設定を iOS の設定にだけ適用します。`attachTabBarSearchable` などの他のヘルパーも `/theme` から利用できますが、インポートだけでは動作を自動で適用しません。
 
 ## 4. Cordova とアプリの準備後に Native UI を起動する
 

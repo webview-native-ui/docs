@@ -1,6 +1,6 @@
 ---
 title: "Configuration Cordova"
-sourceRevision: "632cc17d693c442a94e91c595e10edb6c77e6f53158df62f69dca027ee1a7e0f"
+sourceRevision: "3da4022d906e1f5a52ee44ac27a4f0088d6e51b99ad7140b61090f2e5588e836"
 ---
 
 # Configuration Cordova
@@ -56,7 +56,7 @@ const ionicConfig = {
 };
 ```
 
-Utilisez l’initialiseur existant de votre framework, comme expliqué dans [Configurer les animations Ionic](setup.md#3-configure-ionic-animations) ; n’initialisez pas Ionic deux fois. Pour conserver le mode Material Design sur Android, appliquez ces options uniquement à la configuration iOS. D’autres helpers, comme `attachTabBarSearchable`, sont aussi disponibles depuis `/theme` ; leur import ne les active pas automatiquement.
+Utilisez l’initialiseur existant de votre framework, comme expliqué dans [initialisation du framework](setup.md#3-pass-theme-configuration-to-ionic) ; n’initialisez pas Ionic deux fois. Pour conserver le mode Material Design sur Android, appliquez ces options uniquement à la configuration iOS. D’autres helpers, comme `attachTabBarSearchable`, sont aussi disponibles depuis `/theme` ; leur import ne les active pas automatiquement.
 
 ## 4. Démarrer Native UI quand Cordova et l’application sont prêts
 

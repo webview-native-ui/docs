@@ -7,7 +7,7 @@ import { PROJECT_LOADERS } from '../generated/project-loaders.generated';
 import { resolveDocsLocale } from '../../../../../shared/docs-locales';
 
 export type ProjectCategory =
-  'translations' | 'capacitor-plugins' | 'frontend-tools' | 'developer-tools';
+  'translations' | 'capacitor-plugins' | 'cordova-plugins' | 'frontend-tools' | 'developer-tools';
 export type ProjectIcon =
   'payments' | 'identity' | 'terminal' | 'ads' | 'lint' | 'server' | 'app' | 'theme' | 'docs';
 

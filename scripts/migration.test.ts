@@ -6,7 +6,8 @@ import { SITE_CONFIG } from '../projects/docs/src/app/site-config';
 
 test('the migration retains every original source and reviewed translation', async () => {
   const inventory = JSON.parse(await readFile('migration/source-inventory.json', 'utf8'));
-  assert.deepEqual(projectDefinitions.map(({ id }) => id).sort(), [...inventory.projects].sort());
+  for (const id of inventory.projects)
+    assert.ok(projectDefinitions.some((project) => project.id === id));
   assert.equal(SITE_CONFIG.origin, 'https://webview-native-ui.com');
   for (const file of inventory.files) {
     await access(file.path);

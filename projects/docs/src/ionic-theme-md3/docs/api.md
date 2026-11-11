@@ -2,7 +2,7 @@
 title: API
 ---
 
-Reference for the JavaScript API exported by `@rdlabo/ionic-theme-md3` v9.2.0. CSS entry points remain documented in the README.
+Reference for the JavaScript API exported by `@rdlabo/ionic-theme-md3` v9.2.1. CSS entry points remain documented in the README.
 
 ## Animation
 
@@ -85,3 +85,11 @@ interface DynamicColorTheme {
 `(toggle: HTMLElement) => Promise<() => void>`
 
 Adds Android Settings state icons to one rendered Ionic toggle. Ionic’s on/off labels take priority. The returned function removes the enhancement. See [Android Settings appearance](/docs/android-settings).
+
+## Theme configuration preset
+
+#### `constant` md3ThemeConfig
+
+`IonicConfig`
+
+A ready-to-spread Ionic configuration object. Spread `md3ThemeConfig` into your framework’s Ionic initialization, then override individual properties if needed. See [Theme setup](/docs/setup) and [Theme configuration](/docs/configuration).

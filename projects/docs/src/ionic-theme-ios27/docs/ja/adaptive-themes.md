@@ -56,7 +56,7 @@ npm install @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @erkamyaman/capa
 | `text-wrap: pretty` に対応し、`overflow-anchor: auto` に非対応 | iOS 26 テーマ。 |
 | いずれの機能にも非対応 | Ionic 標準の iOS 外観。 |
 
-この例はクラスによるダークモードを使用します。[対応する Ionic のダークパレット](https://ionicframework.com/docs/theming/dark-mode)も読み込んでください。システム連動または常時ダークモードでは、両方の `-dark-class` インポートを対応するバリアントに変更します。[ダークモードの組み合わせ](setup.md#choose-one-dark-mode-pair)を参照してください。`md-remove-ios-class-effect` は iOS 専用クラスが Material Design モードに影響するのを防ぎます。
+この例はクラスによるダークモードを使用します。[対応する Ionic のダークパレット](https://ionicframework.com/docs/theming/dark-mode)も読み込んでください。システム連動または常時ダークモードでは、両方の `-dark-class` インポートを対応するバリアントに変更します。[ダークモードの組み合わせ](configuration.md#dark-mode)を参照してください。`md-remove-ios-class-effect` は iOS 専用クラスが Material Design モードに影響するのを防ぎます。
 
 ## 3. アニメーションを設定する
 

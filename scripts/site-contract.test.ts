@@ -267,10 +267,7 @@ test('lists ionic theme packages and pins localized README imports', async () =>
     iosReadme,
     /\]\(https:\/\/docs\.rdlabo\.dev\/projects\/ionic-theme-ios26\/docs\/using-ion-item-group\)/,
   );
-  assert.match(
-    iosReadme,
-    /More info: https:\/\/docs\.rdlabo\.dev\/projects\/ionic-theme-ios26\/docs\/using-ion-item-group/,
-  );
+  assert.match(iosReadme, /ios26ThemeConfig/);
 
   assert.equal(yamlTitle(usingDocJa), 'ion-item-groupの使用方法');
   assert.notEqual(yamlTitle(usingDocJa), usingPage.title.en);

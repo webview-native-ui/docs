@@ -30,4 +30,10 @@ export const PROJECT_LOADERS = {
     fr: () => import('./projects/ionic-theme-md3.fr.generated').then((module) => module.PROJECT),
     de: () => import('./projects/ionic-theme-md3.de.generated').then((module) => module.PROJECT),
   },
+  "cordova-native-ui": {
+    en: () => import('./projects/cordova-native-ui.en.generated').then((module) => module.PROJECT),
+    ja: () => import('./projects/cordova-native-ui.ja.generated').then((module) => module.PROJECT),
+    fr: () => import('./projects/cordova-native-ui.fr.generated').then((module) => module.PROJECT),
+    de: () => import('./projects/cordova-native-ui.de.generated').then((module) => module.PROJECT),
+  },
 } as const;

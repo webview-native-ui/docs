@@ -434,67 +434,83 @@
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios27/docs/readme</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios27/docs/readme</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios27/docs/readme</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios27/docs/readme</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios27/docs/setup</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios27/docs/setup</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios27/docs/setup</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios27/docs/setup</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/projects/ionic-theme-ios27/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios27/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios27/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios27/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios27/docs/cordova</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios27/docs/cordova</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios27/docs/cordova</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios27/docs/cordova</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios27/docs/adaptive-themes</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios27/docs/adaptive-themes</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios27/docs/adaptive-themes</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios27/docs/adaptive-themes</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios27/docs/add-native-ui</loc>
@@ -610,19 +626,19 @@
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios27/docs/migration</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios27/docs/migration</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios27/docs/migration</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios27/docs/migration</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/capacitor-native-ui</loc>
@@ -839,6 +855,38 @@
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios26/docs/readme</loc>
   </url>
   <url>
+    <loc>https://webview-native-ui.com/projects/ionic-theme-ios26/docs/setup</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios26/docs/setup</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios26/docs/setup</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios26/docs/setup</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/projects/ionic-theme-ios26/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios26/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios26/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios26/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios26/docs/using-ion-item-group</loc>
     <lastmod>2026-09-06</lastmod>
   </url>
@@ -918,16 +966,19 @@
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios26/docs/migration</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios26/docs/migration</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios26/docs/migration</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios26/docs/migration</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios26/docs/e2e-testing</loc>
@@ -945,15 +996,19 @@
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-ios26/docs/api</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-ios26/docs/api</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-ios26/docs/api</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-ios26/docs/api</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3</loc>
@@ -969,67 +1024,99 @@
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/readme</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-md3/docs/readme</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-md3/docs/readme</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-md3/docs/readme</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/setup</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/ja/projects/ionic-theme-md3/docs/setup</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/fr/projects/ionic-theme-md3/docs/setup</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/de/projects/ionic-theme-md3/docs/setup</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/ja/projects/ionic-theme-md3/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/fr/projects/ionic-theme-md3/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/de/projects/ionic-theme-md3/docs/configuration</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/android-settings</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-md3/docs/android-settings</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-md3/docs/android-settings</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-md3/docs/android-settings</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/dynamic-colors</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-md3/docs/dynamic-colors</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-md3/docs/dynamic-colors</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-md3/docs/dynamic-colors</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/color-system</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-md3/docs/color-system</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-md3/docs/color-system</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-md3/docs/color-system</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/using-ion-item-group</loc>
@@ -1079,19 +1166,19 @@
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/migration</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-md3/docs/migration</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-md3/docs/migration</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-md3/docs/migration</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/e2e-testing</loc>
@@ -1111,18 +1198,46 @@
   </url>
   <url>
     <loc>https://webview-native-ui.com/projects/ionic-theme-md3/docs/api</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/ja/projects/ionic-theme-md3/docs/api</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/fr/projects/ionic-theme-md3/docs/api</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/projects/ionic-theme-md3/docs/api</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/projects/cordova-native-ui</loc>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/ja/projects/cordova-native-ui</loc>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/fr/projects/cordova-native-ui</loc>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/de/projects/cordova-native-ui</loc>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/projects/cordova-native-ui/docs/readme</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/ja/projects/cordova-native-ui/docs/readme</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/fr/projects/cordova-native-ui/docs/readme</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/de/projects/cordova-native-ui/docs/readme</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
 </urlset>

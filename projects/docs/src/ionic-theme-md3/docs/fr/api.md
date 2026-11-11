@@ -1,9 +1,9 @@
 ---
 title: API
-sourceRevision: "51faa9c97da38365c846c28f1bdb410d0615b95328c9f352e726f3d5c2bfd24d"
+sourceRevision: "da47167a99620f3b5a260eaf113addd8c5eccbde459a8ab23f8cb8e1a23cd8df"
 ---
 
-Référence de l’API JavaScript exportée par `@rdlabo/ionic-theme-md3` v9.2.0. Les points d’entrée CSS restent documentés dans le README.
+Référence de l’API JavaScript exportée par `@rdlabo/ionic-theme-md3` v9.2.1. Les points d’entrée CSS restent documentés dans le README.
 
 ## Animation
 
@@ -86,3 +86,12 @@ interface DynamicColorTheme {
 `(toggle: HTMLElement) => Promise<() => void>`
 
 Ajoute les icônes d’état Android Settings à un interrupteur Ionic déjà rendu. Les libellés activé/désactivé d’Ionic sont prioritaires. La fonction renvoyée supprime cet ajout. Consultez [Apparence Android Settings](/docs/android-settings).
+
+
+## Préréglage de configuration du thème
+
+#### `constant` md3ThemeConfig
+
+`IonicConfig`
+
+Un objet de configuration Ionic prêt à être déployé par spread. Déployez `md3ThemeConfig` par spread dans l’initialisation Ionic de votre framework, puis remplacez les propriétés individuelles si nécessaire. Consultez [Installer le thème](/docs/setup) et [Configurer le thème](/docs/configuration).

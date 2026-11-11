@@ -54,7 +54,7 @@ describe('PluginIndexComponent', () => {
     const japaneseProjects = projectsForLocale('ja');
     const englishProjects = projectsForLocale('en');
     expect(japaneseProjects).toHaveLength(projectCatalog.length);
-    expect(englishProjects).toHaveLength(5);
+    expect(englishProjects).toHaveLength(6);
     expect(japaneseProjects.flatMap((project) => project.pages)).toHaveLength(
       projectCatalog.flatMap((project) => project.pages).length,
     );

@@ -1,8 +1,8 @@
 ---
 title: "API"
-sourceRevision: "652de45684635ff0a9f30ed5aa6326a7c29122a7dd0c370754a1825bcca165e7"
+sourceRevision: "79853cf34609291a52db228805498ee3189d34947e4265451775be1ed5abbfc8"
 ---
-Referenz der von `@rdlabo/ionic-theme-ios26` v9.4.2 exportierten JavaScript-API. CSS- und Sass-Einstiegspunkte sind weiterhin im README dokumentiert.
+Referenz der von `@rdlabo/ionic-theme-ios26` v9.4.3 exportierten JavaScript-API. CSS- und Sass-Einstiegspunkte sind weiterhin im README dokumentiert.
 
 ## Effekte
 
@@ -71,3 +71,11 @@ Erstellt die iOS-Popover-Eintrittsanimation.
 `(baseEl: HTMLElement) => Animation`
 
 Erstellt die iOS-Popover-Austrittsanimation.
+
+## Voreinstellung für die Theme-Konfiguration
+
+#### `constant` ios26ThemeConfig
+
+`IonicConfig`
+
+Ein Ionic-Konfigurationsobjekt zur direkten Übernahme per Spread. Übernehmen Sie `ios26ThemeConfig` per Spread in die Ionic-Initialisierung Ihres Frameworks und überschreiben Sie anschließend bei Bedarf einzelne Eigenschaften. Siehe [Theme-Einrichtung](/docs/setup) und [Theme-Konfiguration](/docs/configuration).

@@ -1,6 +1,6 @@
 ---
 title: "Premiers pas"
-sourceRevision: "32d9efd42dbd30ea717a525ef4eaeb764d6f607c15b697769b5a95866928716c"
+sourceRevision: "6584c761ae6c6037a19ddd7567803500ce5b2cf8a33df543992228ac18c5368a"
 ---
 
 # Ionic Theme Material Design 3
@@ -9,7 +9,7 @@ Thème CSS/JS pour les applications Ionic, qui prend Android Settings comme réf
 
 <!-- rdlabo-docs-pick -->
 
-![Thème Ionic MD3 avec la palette Ionic par défaut sur Android 17](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.0/screenshots/md3.png)
+![Thème Ionic MD3 avec la palette Ionic par défaut sur Android 17](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.1/screenshots/md3.png)
 
 <!-- /rdlabo-docs-pick -->
 
@@ -19,63 +19,9 @@ Conçu pour être compatible avec `@rdlabo/ionic-theme-ios27`, afin qu’un mêm
 
 ## Installation
 
-Dans un projet Ionic existant :
+Utilisez le [guide d’installation](/docs/setup) pour installer le package, importer `@rdlabo/ionic-theme-md3/styles/theme.css` et déployer `md3ThemeConfig` par spread dans les options de votre initialiseur Ionic existant. Ionic `>=8.8.0 <10` est pris en charge. Les applications utilisant une ancienne version d’Ionic peuvent utiliser `@rdlabo/ionic-theme-md3@1.0.2`.
 
-```bash
-npm install @rdlabo/ionic-theme-md3
-```
-
-Remarque : **si vous utilisez @ionic/core@ < 8.8.0**, utilisez @rdlabo/ionic-theme-md3@1.0.2.
-
-Importez le thème dans le fichier CSS principal du projet (par exemple `src/styles.scss`) **après les styles de base d’Ionic**. Cet ordre permet d’appliquer la police MD par défaut tout en préservant la personnalisation `--ion-font-family` de l’application.
-
-```css
-@import '@rdlabo/ionic-theme-md3/dist/css/default-variables.css';
-@import '@rdlabo/ionic-theme-md3/dist/css/ionic-theme-md3.css';
-```
-
-### Configurer les animations
-
-Si vous avez installé uniquement le thème MD3, configurez son animation comme suit.
-
-```ts
-import { isPlatform } from '@ionic/core'; // ou @ionic/angular (Ionic 9), @ionic/angular/standalone (Ionic 8), @ionic/react, @ionic/vue
-import { mdTransitionAnimation } from '@rdlabo/ionic-theme-md3';
-
-// Angular
-provideIonicAngular({
-    ...
-    navAnimation: isPlatform('ios') ? undefined: mdTransitionAnimation,
-});
-
-// React
-setupIonicReact({
-    ...
-    navAnimation: isPlatform('ios') ? undefined: mdTransitionAnimation,
-});
-
-// Vue
-createApp(App)
-    .use(IonicVue, {
-        ...
-        navAnimation: isPlatform('ios') ? undefined: mdTransitionAnimation,
-})
-```
-
-### Vérifier le thème
-
-Testez sur Android. Pour un aperçu sur ordinateur, définissez le mode Ionic sur `md` dans la configuration d’initialisation actuelle de votre framework, par exemple `mode: 'md'`.
-
-Utilisez ce balisage pour prévisualiser l’apparence d’une liste groupée en retrait. Consultez [Utiliser ion-item-group](https://docs.rdlabo.dev/projects/ionic-theme-md3/docs/using-ion-item-group) pour la structure attendue par le thème.
-
-```html
-<ion-list mode="md" inset="true">
-  <ion-item-group>
-    <ion-item><ion-label>Notifications</ion-label></ion-item>
-    <ion-item><ion-label>Appearance</ion-label></ion-item>
-  </ion-item-group>
-</ion-list>
-```
+Pour les applications existantes, suivez la [simplification facultative de la configuration](/docs/migration#optional-simplify-the-setup). Pour les fichiers CSS individuels et les réglages d’animation, utilisez la [configuration](/docs/configuration).
 
 ### Apparence Android Settings
 
@@ -83,63 +29,14 @@ Le thème conserve la sémantique des couleurs Ionic et les polices définies pa
 
 Consultez [Apparence Android Settings](/docs/android-settings) pour l’installation, les polices de repli et les personnalisations des composants. Les utilisateurs existants doivent lire les [notes de migration 9.2.0](/docs/migration#migrating-to-9.2.0%3A-android-settings-alignment) concernant les dimensions des barres d’outils, listes et interrupteurs.
 
-### Facultatif : utiliser ensemble les thèmes MD3 et iOS 27
+### Facultatif : utiliser les thèmes MD3 et iOS 27 ensemble
 
-Installez le thème iOS 27 pour styliser les deux modes Ionic dans la même application.
-
-Les versions actuelles des deux thèmes nécessitent `@ionic/core` 8.8.1 ou une version ultérieure. Mettez Ionic à niveau avant cette configuration si votre application utilise 8.8.0 ou une version antérieure.
-
-```bash
-npm install @rdlabo/ionic-theme-ios27
-```
-
-Si votre feuille de style globale utilise Sass, initialisez les thèmes dans cet ordre :
-
-```scss
-@use '@rdlabo/ionic-theme-ios27/src/styles/default-variables.scss' as ios27-vars;
-@use '@rdlabo/ionic-theme-ios27/src/styles/ionic-theme-ios27.scss';
-@use '@rdlabo/ionic-theme-ios27/src/styles/ionic-theme-ios27-dark-class.scss';
-@use '@rdlabo/ionic-theme-ios27/src/styles/md-remove-ios-class-effect.scss';
-@use '@rdlabo/ionic-theme-md3/dist/css/default-variables.css' as md3-vars;
-@use '@rdlabo/ionic-theme-md3/dist/css/ionic-theme-md3.css';
-```
-
-Cet exemple utilise le mode sombre par classe d’Ionic. Votre feuille de style globale doit également charger la palette sombre correspondante, comme `@ionic/angular/css/palettes/dark.class.css` pour Angular. Avec `dark-system` ou `dark-always`, sélectionnez la même variante pour la palette Ionic et le thème iOS 27. Consultez la [documentation du mode sombre d’Ionic](https://ionicframework.com/docs/theming/dark-mode). Les espaces de noms explicites `ios27-vars` et `md3-vars` empêchent les deux modules de variables d’utiliser le même espace de noms par défaut.
-
-Configurez les deux implémentations de transition lorsque les deux thèmes sont installés :
-
-```ts
-import { isPlatform } from '@ionic/core'; // ou @ionic/angular (Ionic 9), @ionic/angular/standalone (Ionic 8), @ionic/react, @ionic/vue
-import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@rdlabo/ionic-theme-ios27';
-import { mdTransitionAnimation } from '@rdlabo/ionic-theme-md3';
-
-// Angular
-provideIonicAngular({
-    ...
-    navAnimation: isPlatform('ios') ? iosTransitionAnimation : mdTransitionAnimation,
-    popoverEnter: isPlatform('ios') ? popoverEnterAnimation : undefined,
-    popoverLeave: isPlatform('ios') ? popoverLeaveAnimation : undefined,
-});
-
-// React
-setupIonicReact({
-    ...
-    navAnimation: isPlatform('ios') ? iosTransitionAnimation : mdTransitionAnimation,
-    popoverEnter: isPlatform('ios') ? popoverEnterAnimation : undefined,
-    popoverLeave: isPlatform('ios') ? popoverLeaveAnimation : undefined,
-});
-
-// Vue
-createApp(App)
-    .use(IonicVue, {
-        ...
-        navAnimation: isPlatform('ios') ? iosTransitionAnimation : mdTransitionAnimation,
-        popoverEnter: isPlatform('ios') ? popoverEnterAnimation : undefined,
-        popoverLeave: isPlatform('ios') ? popoverLeaveAnimation : undefined,
-    });
-```
+Suivez la [configuration combinée des thèmes](/docs/configuration#use-md3-and-ios-27-together) pour l’ordre des feuilles de style et la sélection des animations selon la plateforme.
 
 ## Documentation
+
+- [Installation](/docs/setup) — installer et configurer le thème avec sa feuille de style et son objet de configuration.
+- [Configuration](/docs/configuration) — feuilles de style individuelles, animations et maintien de la sélection existante du mode.
 
 - [Couleurs dynamiques Android](/docs/dynamic-colors) — configuration facultative Material You, apparence claire/sombre, cycle de vie et correspondance des rôles.
 - [Système de couleurs](/docs/color-system) — palette Ionic par défaut, rôles Material facultatifs et attribution des couleurs aux composants.
@@ -147,7 +44,7 @@ createApp(App)
 - [Utiliser ion-item-group](https://docs.rdlabo.dev/projects/ionic-theme-md3/docs/using-ion-item-group) — balisage commun des listes en retrait pour iOS 27 et MD3.
 - [Balisage particulier](https://docs.rdlabo.dev/projects/ionic-theme-md3/docs/special-markup) — combinaisons facultatives de composants utilisées par la démo.
 - [ESLint](https://docs.rdlabo.dev/projects/ionic-theme-md3/docs/eslint) — vérifier la structure des listes avec les règles ESLint.
-- [Migration](https://docs.rdlabo.dev/projects/ionic-theme-md3/docs/migration) — changements nécessaires lors de la mise à jour du balisage.
+- [Migration](/docs/migration) — simplification facultative de la configuration et étapes de mise à niveau propres à chaque version.
 
 ## Projets connexes
 
