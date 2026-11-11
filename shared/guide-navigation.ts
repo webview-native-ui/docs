@@ -521,41 +521,29 @@ export const GUIDE_COPY = {
     fr: 'Thèmes pour Ionic · Intégrations natives pour Capacitor et Cordova',
     de: 'Themes für Ionic · Native Integrationen für Capacitor und Cordova',
   },
-  compareTitle: {
-    en: 'One screen. See what the theme changes.',
-    ja: '同じ画面で、テーマの違いを見る。',
-    fr: 'Un écran. Découvrez ce que le thème change.',
-    de: 'Ein Bildschirm. Sehen Sie, was das Theme verändert.',
+  showcaseLibrary: {
+    en: 'Photo library with an edge-to-edge gallery and floating navigation, built with the iOS 27 theme.',
+    ja: '写真が画面いっぱいに広がり、ナビゲーションが浮かぶ、iOS 27テーマのライブラリー画面。',
+    fr: 'Photothèque plein écran avec navigation flottante, réalisée avec le thème iOS 27.',
+    de: 'Fotogalerie mit randfüllenden Bildern und schwebender Navigation, gestaltet mit dem iOS-27-Theme.',
   },
-  compareDescription: {
-    en: 'The same settings, content and controls, rendered with the same Ionic mode. Try the switches and save button in either preview.',
-    ja: '同じ設定画面・同じ内容・同じIonicモードで比較できます。スイッチや保存ボタンを、両方の画面で操作してみてください。',
-    fr: 'Les mêmes réglages, contenus et contrôles dans le même mode Ionic. Essayez les interrupteurs et le bouton d’enregistrement dans les deux aperçus.',
-    de: 'Dieselben Einstellungen, Inhalte und Steuerelemente im selben Ionic-Modus. Probieren Sie Schalter und Speichern in beiden Vorschauen aus.',
+  showcasePlayer: {
+    en: 'Now Playing demo with album artwork and playback controls.',
+    ja: 'アルバムアートと再生コントロールを備えたNow Playingデモ。',
+    fr: 'Démo Now Playing avec pochette et commandes de lecture.',
+    de: 'Now-Playing-Demo mit Albumcover und Wiedergabesteuerung.',
   },
-  compareSwipe: {
-    en: 'Swipe horizontally to compare the same screen before and after applying the theme.',
-    ja: '横にスワイプして、同じ画面のテーマ適用前後を比べてください。',
-    fr: 'Balayez horizontalement pour comparer le même écran avant et après application du thème.',
-    de: 'Wische horizontal, um denselben Bildschirm vor und nach Anwendung des Themes zu vergleichen.',
+  showcaseCaption: {
+    en: 'Built with Ionic + the iOS 27 theme. Screens from the Web demo.',
+    ja: 'IonicとiOS 27テーマで作った画面。Webデモより。',
+    fr: 'Réalisé avec Ionic et le thème iOS 27. Écrans de la démo Web.',
+    de: 'Mit Ionic und dem iOS-27-Theme erstellt. Ansichten der Web-Demo.',
   },
-  baselineLabel: {
-    en: 'Standard Ionic',
-    ja: '標準Ionic',
-    fr: 'Ionic standard',
-    de: 'Standard-Ionic',
-  },
-  previewMode: {
-    en: 'Platform to compare',
-    ja: '比較するプラットフォーム',
-    fr: 'Plateforme à comparer',
-    de: 'Plattform vergleichen',
-  },
-  previewScope: {
-    en: 'Live Web theme preview. Native controls and Android device colors are shown by the native app, not by this comparison.',
-    ja: '実際のWebテーマを使ったプレビューです。ネイティブコントロールとAndroid端末の配色は、この比較ではなくネイティブアプリで確認できます。',
-    fr: 'Aperçu utilisant les vrais thèmes Web. Les contrôles natifs et couleurs Android se vérifient dans l’application native, pas dans cette comparaison.',
-    de: 'Live-Vorschau der Web-Themes. Native Steuerelemente und Android-Gerätefarben werden in der nativen App geprüft, nicht in diesem Vergleich.',
+  showcaseExplore: {
+    en: 'Explore the demo',
+    ja: 'デモを見てみる',
+    fr: 'Découvrir la démo',
+    de: 'Demo entdecken',
   },
   previewTitle: {
     en: 'Try the themes',
