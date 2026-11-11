@@ -84,18 +84,7 @@
               "localize": false,
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "assets": [
-                {
-                  "glob": "**/*",
-                  "input": "projects/docs/public"
-                },
-                {
-                  "glob": "**/*",
-                  "input": ".angular/theme-preview",
-                  "output": "/previews/theme/"
-                }
-              ]
+              "sourceMap": true
             },
             "ja": {
               "localize": ["ja"]

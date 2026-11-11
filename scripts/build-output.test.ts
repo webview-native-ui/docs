@@ -484,56 +484,26 @@ test('shared guides lead from the complete setup to localized package details', 
   }
 });
 
-test('theme comparison ships real release assets and keeps one shared screen across locales', async () => {
-  const previewRoot = 'dist/docs/browser/previews/theme';
-  const markup = await readFile(`${previewRoot}/index.html`, 'utf8');
-  const preview = new JSDOM(markup).window.document;
-  assert.equal(preview.querySelector('meta[name="robots"]')?.getAttribute('content'), 'noindex');
-  assert.equal(preview.querySelector('[data-pagefind-body]'), null);
-  for (const element of preview.querySelectorAll('[src], link[href]')) {
-    const asset = element.getAttribute('src') ?? element.getAttribute('href');
-    assert.ok(
-      asset?.startsWith('/previews/theme/'),
-      'assets must survive slashless production redirects',
-    );
-    await access(`dist/docs/browser${asset}`);
-  }
-  for (const [source, target] of [
-    ['@rdlabo/ionic-theme-ios27/dist/styles/class.css', 'ios27.css'],
-    ['@rdlabo/ionic-theme-md3/dist/styles/theme.css', 'md3.css'],
-  ]) {
-    assert.equal(
-      await readFile(`${previewRoot}/vendor/${target}`, 'utf8'),
-      await readFile(`node_modules/${source}`, 'utf8'),
-    );
-  }
-  const source = await readFile(`${previewRoot}/preview.js`, 'utf8');
-  for (const match of source.matchAll(/from ['"](.+?)['"]/g))
-    await access(join(previewRoot, match[1]));
-  for (const { code, subPath } of PUBLISHED_DOCS_LOCALES) {
+test('home showcases real app screens and preserves navigation in every locale', async () => {
+  for (const { subPath } of PUBLISHED_DOCS_LOCALES) {
     const html = await readFile(join('dist/docs/browser', subPath, 'index.html'), 'utf8');
     const doc = new JSDOM(html).window.document;
-    const frames = [...doc.querySelectorAll<HTMLIFrameElement>('main app-theme-comparison iframe')];
-    assert.equal(frames.length, 2);
-    const sources = frames.map(
-      (frame) => new URL(frame.getAttribute('src')!, 'https://webview-native-ui.com'),
-    );
-    assert.equal(sources[0].pathname, '/previews/theme/index.html');
-    assert.equal(sources[0].pathname, sources[1].pathname);
-    assert.deepEqual(
-      sources.map((url) => url.searchParams.get('theme')),
-      ['off', 'on'],
-    );
-    assert.ok(
-      sources.every(
-        (url) => url.searchParams.get('mode') === 'ios' && url.searchParams.get('lang') === code,
-      ),
-    );
+    assert.equal(doc.querySelectorAll('main iframe').length, 0);
+    const images = [...doc.querySelectorAll<HTMLImageElement>('.app-showcase img')];
+    assert.equal(images.length, 2);
+    for (const image of images) {
+      assert.ok(image.alt.length > 20);
+      await access(join('dist/docs/browser', image.getAttribute('src')!));
+    }
     assert.equal(doc.querySelectorAll('main .category-nav a').length, 3);
     assert.equal(doc.querySelectorAll('#category-plugins .catalog-card').length, 2);
-    assert.ok(doc.getElementById('category-capacitor-plugins'));
-    assert.ok(doc.getElementById('category-cordova-plugins'));
-    assert.equal(doc.querySelectorAll('main img[src*="screenshots/"]').length, 0);
+    for (const anchor of [
+      'theme-preview-title',
+      'theme-demos',
+      'category-capacitor-plugins',
+      'category-cordova-plugins',
+    ])
+      assert.ok(doc.getElementById(anchor));
   }
 });
 

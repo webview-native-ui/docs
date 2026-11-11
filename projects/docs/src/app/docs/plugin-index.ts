@@ -1,4 +1,3 @@
-import { ThemeComparisonComponent } from './theme-comparison';
 import { guideChaptersForLocale, guideCopyForLocale } from '../../../../../shared/guide-navigation';
 import { STANDARD_SETUP_LABELS, STANDARD_SETUP_PATH } from '../../../../../shared/standard-setup';
 import { resolveDocsLocale } from '../../../../../shared/docs-locales';
@@ -11,7 +10,7 @@ import { SeoService } from './seo.service';
 
 @Component({
   selector: 'app-project-index',
-  imports: [ProjectIconComponent, ThemeComparisonComponent],
+  imports: [ProjectIconComponent],
   template: `
     <div class="catalog">
       <header class="catalog-hero">
@@ -20,10 +19,16 @@ import { SeoService } from './seo.service';
           <h1>{{ copy.title }}</h1>
           <p class="catalog-hero__lead">{{ copy.heroDefinition }}</p>
           <p class="hero-audience">{{ copy.heroAudience }}</p>
-          <p class="guide-actions"><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a><a href="#theme-preview-title">{{ copy.previewTitle }} ↓</a></p>
+          <p class="guide-actions"><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a><a href="#theme-demos">{{ copy.previewTitle }} ↓</a></p>
           <p class="hero-setup-note">{{ copy.standardAudience }}</p>
         </div>
-        <app-theme-comparison />
+        <figure class="app-showcase">
+          <div class="showcase-screens">
+            <img class="showcase-library" src="/assets/showcase/library.jpg" width="390" height="844" [alt]="copy.showcaseLibrary" fetchpriority="high" />
+            <img class="showcase-player" src="/assets/showcase/now-playing.jpg" width="390" height="844" [alt]="copy.showcasePlayer" />
+          </div>
+          <figcaption><span id="theme-preview-title">{{ copy.showcaseCaption }}</span><a [href]="iosDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.showcaseExplore }} ↗</a></figcaption>
+        </figure>
       </header>
 
       <section class="experience-explanation" aria-labelledby="how-it-fits">
@@ -48,7 +53,7 @@ import { SeoService } from './seo.service';
             <a [href]="guideHref('/projects/capacitor-native-ui/docs/framework-independent')">{{ copy.htmlSetup }}</a>
             <a [href]="guideHref('/projects/cordova-native-ui/docs/readme')">{{ copy.cordovaSetup }}</a>
           </nav>
-          <nav class="theme-preview" [attr.aria-label]="copy.previewTitle">
+          <nav id="theme-demos" class="theme-preview" [attr.aria-label]="copy.previewTitle">
             <a [href]="iosDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryIos }} ↗</a>
             <a [href]="androidDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryAndroid }} ↗</a>
           </nav>
