@@ -1,6 +1,6 @@
 ---
 title: "Android Settings-Darstellung"
-sourceRevision: "db537a7e09e3d5127c5cb9ae308630319b0515ce624bf754930b0539f46ffa9e"
+sourceRevision: "c25e4375d55e2cd7fbe81530b3c2632e3d36aac95a590a20952d5e7967bbbe36"
 ---
 
 # Android Settings-Darstellung
@@ -79,4 +79,4 @@ Der Helfer fügt ein Style-Element in das Shadow DOM des öffentlichen handle-Pa
 
 ## Aktualisierung und Überprüfung
 
-Lesen Sie zu Abmessungsänderungen die [Migrationshinweise](migration.md#migrating-to-9.2.0%3A-android-settings-alignment) und zu Größen das [Markup gruppierter Listen](using-ion-item-group.md). Explizites Ionic-`color`, deaktivierter Zustand, Interaktion und lokale Anpassungen behalten ihre Bedeutung. Der [Messbericht](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.1/docs/validation/android17-pixel-pass1-2026-11-09.md) trennt physische Gerätenachweise von Browser-Regressionstests; er behauptet weder vollständige Rastergleichheit noch native Tablet-Abnahme.
+Lesen Sie zu Abmessungsänderungen die [Migrationshinweise](migration.md#migrating-to-9.2.0%3A-android-settings-alignment) und zu Größen das [Markup gruppierter Listen](using-ion-item-group.md). Explizites Ionic-`color`, deaktivierter Zustand, Interaktion und lokale Anpassungen behalten ihre Bedeutung. Der [Messbericht](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.2.2/docs/validation/android17-pixel-pass1-2026-11-09.md) trennt physische Gerätenachweise von Browser-Regressionstests; er behauptet weder vollständige Rastergleichheit noch native Tablet-Abnahme.

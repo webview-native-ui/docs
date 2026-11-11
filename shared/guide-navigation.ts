@@ -230,19 +230,19 @@ export const GUIDE_CHAPTERS = [
     paragraphs: {
       en: [
         'Device adaptation is part of standard setup, including iPhone Duo support. The Foldable subscription supplies the initial layout and later changes; the resolver and theme apply the matching placement.',
-        'Read this chapter to understand the supported device and OS combinations or to customize layout. Ordinary devices retain Web layout when native rail placement is not supported.',
+        'This chapter explains how device reports become layout updates. Follow the detailed guides below for supported devices, OS requirements and configuration options. Devices without native rail placement retain ordinary Web layout.',
       ],
       ja: [
         'iPhone Duoを含むデバイスへの対応は標準導入に含まれます。Foldableの購読で初期レイアウトとその後の変更を受け取り、resolverとテーマで配置を反映します。',
-        'この章では対応デバイス・OSの条件と、レイアウトを調整する方法を説明します。ネイティブのレール配置に対応しないデバイスではWebレイアウトを維持します。',
+        'この章では、デバイスの通知が画面の配置に反映されるまでの流れを説明します。対応端末・OSの条件や個別設定は、この後の詳細ガイドを参照してください。ネイティブのレール配置に対応しないデバイスでは、通常のWebレイアウトを維持します。',
       ],
       fr: [
         'L’adaptation aux appareils, y compris iPhone Duo, fait partie de la configuration standard. L’abonnement Foldable fournit la disposition initiale et ses changements ; le résolveur et le thème appliquent le placement adapté.',
-        'Ce chapitre explique les appareils et systèmes compatibles ainsi que la personnalisation de la disposition. Les appareils sans placement natif des rails conservent la disposition Web.',
+        'Ce chapitre explique comment les rapports de l’appareil deviennent des mises à jour de disposition. Consultez les guides détaillés ci-dessous pour les appareils et systèmes compatibles ainsi que les options de configuration. Les appareils sans placement natif des rails conservent la disposition Web ordinaire.',
       ],
       de: [
         'Die Geräteanpassung einschließlich iPhone Duo gehört zur Standardeinrichtung. Das Foldable-Abonnement liefert das anfängliche Layout und spätere Änderungen; Resolver und Theme wenden die passende Platzierung an.',
-        'Dieses Kapitel erklärt unterstützte Geräte und Betriebssysteme sowie Layout-Anpassungen. Geräte ohne native Rail-Platzierung behalten das Web-Layout.',
+        'Dieses Kapitel erklärt, wie Gerätemeldungen das Layout aktualisieren. Die folgenden Detailanleitungen beschreiben unterstützte Geräte, Betriebssystemanforderungen und Konfigurationsoptionen. Geräte ohne native Rail-Platzierung behalten das normale Web-Layout.',
       ],
     },
     links: [
@@ -422,20 +422,20 @@ export const GUIDE_CHAPTERS = [
     },
     paragraphs: {
       en: [
-        'Use standard setup as the target, then follow the migration guide for the packages already installed. Check the theme and plugin guides together when your application uses both.',
-        'Application state, routing and event handlers remain in the application. Ordinary startup belongs at the app shell; introduce custom lifecycle management only when your application actually replaces that shell. iOS 26 documentation remains available for existing users.',
+        'Start with the migration guides for the packages your app already uses. Theme-only, HTML and Cordova apps can keep their existing integration. Use standard setup when adopting the combined Ionic + Capacitor configuration; if you already use both a theme and the plugin, review both migration guides.',
+        'Application state, routing and event handlers remain in the application. If you use Native UI, keep its ordinary startup at the app shell. The iOS 26 documentation remains available for apps using that theme.',
       ],
       ja: [
-        '標準導入を移行先の構成として確認し、現在使っているパッケージの移行ガイドへ進みます。テーマとプラグインを併用している場合は、両方の変更点を確認します。',
-        '状態・ルーティング・イベント処理は引き続きアプリが担当します。通常の初期化はアプリシェルで行い、独自のライフサイクル管理はシェル自体を置き換えるアプリで必要な場合に扱います。iOS 26のドキュメントも維持します。',
+        '現在使っているパッケージの移行ガイドから始めます。テーマだけのアプリ、HTML、Cordovaは、それぞれの構成を維持して更新できます。Ionic + Capacitorの統合構成を新たに採用する場合は標準導入を参照し、すでにテーマとプラグインを併用している場合は両方の移行ガイドを確認します。',
+        '状態・ルーティング・イベント処理は引き続きアプリが担当します。Native UIを使う場合の通常の初期化は、アプリシェルで行います。iOS 26テーマを利用するアプリ向けのドキュメントも維持します。',
       ],
       fr: [
-        'Prenez la configuration standard comme cible, puis consultez la migration des paquets déjà installés. Vérifiez les guides du thème et du plugin si vous utilisez les deux.',
-        'L’état, les routes et les événements restent dans l’application. L’initialisation ordinaire se fait au niveau du shell ; une gestion de cycle de vie particulière ne concerne que les applications qui le remplacent. La documentation iOS 26 reste accessible.',
+        'Commencez par les guides de migration des paquets déjà utilisés. Les applications avec un thème seul, HTML ou Cordova peuvent conserver leur intégration. Consultez la configuration standard pour adopter l’ensemble Ionic + Capacitor ; si vous utilisez déjà un thème et le plugin, vérifiez leurs deux guides de migration.',
+        'L’état, les routes et les événements restent dans l’application. Si vous utilisez Native UI, conservez son initialisation ordinaire au niveau du shell. La documentation iOS 26 reste disponible pour les applications utilisant ce thème.',
       ],
       de: [
-        'Verwenden Sie die Standardeinrichtung als Ziel und folgen Sie dann den Migrationsanleitungen der installierten Pakete. Prüfen Sie Theme und Plugin gemeinsam, wenn Ihre App beide nutzt.',
-        'Zustand, Routing und Ereignisbehandlung bleiben in der Anwendung. Die normale Initialisierung erfolgt in der App-Shell; eigene Lebenszyklusverwaltung ist nur bei deren Austausch relevant. Die iOS-26-Dokumentation bleibt verfügbar.',
+        'Beginnen Sie mit den Migrationsanleitungen der bereits verwendeten Pakete. Apps mit Themes allein, HTML oder Cordova können ihre bestehende Integration beibehalten. Nutzen Sie die Standardeinrichtung, wenn Sie die gemeinsame Ionic- und Capacitor-Konfiguration übernehmen möchten. Verwenden Sie bereits Theme und Plugin, prüfen Sie beide Migrationsanleitungen.',
+        'Zustand, Routing und Ereignisbehandlung bleiben in der Anwendung. Wenn Sie Native UI verwenden, erfolgt die normale Initialisierung weiterhin in der App-Shell. Die iOS-26-Dokumentation bleibt für Apps mit diesem Theme verfügbar.',
       ],
     },
     links: [
@@ -479,10 +479,10 @@ export const GUIDE_CHAPTERS = [
     sections: [
       {
         title: {
-          en: 'Keep app behavior, replace integration wiring',
-          ja: 'アプリの動作を保ち、接続部分を更新する',
-          fr: 'Conserver le comportement, remplacer l’intégration',
-          de: 'App-Verhalten erhalten, Integration aktualisieren',
+          en: 'For Native UI, update the integration wiring',
+          ja: 'Native UIを使う場合は接続部分を更新する',
+          fr: 'Pour Native UI, mettre à jour l’intégration',
+          de: 'Für Native UI die Integration aktualisieren',
         },
         body: {
           en: 'Keep routes, state and event handlers. If an earlier guide introduced a mountNativeUI wrapper solely for ordinary startup, remove that wrapper and its teardown wiring. Start once at the app shell and keep the default controls. For device layout, replace direct placement mapping with the resolver in the existing layout subscription rather than adding a second listener.',
@@ -499,10 +499,10 @@ export const GUIDE_CHAPTERS = [
           de: 'Das Gesamtergebnis prüfen',
         },
         body: {
-          en: 'After updating compatible packages, build the Web assets, sync Capacitor and rebuild the native applications. Check ordinary phone layout and supported rail devices, existing actions and routes, both appearance modes and color fallback. Cordova bundles its integration through its own plugin release; follow that package’s instructions instead of applying the Capacitor commands.',
-          ja: '互換性のあるパッケージへ更新したら、Webアセットのビルド・Capacitorのsync・ネイティブアプリの再ビルドを行います。通常のスマートフォンとレール対応端末、既存の操作と画面遷移、ライト・ダーク両モード、配色のフォールバックを確認します。Cordovaは専用プラグインのリリースに統合が含まれるため、Capacitorのコマンドを流用せずそのパッケージの手順に従います。',
-          fr: 'Après mise à jour des paquets compatibles, compilez les ressources Web, synchronisez Capacitor et recompilez les applications natives. Vérifiez téléphones ordinaires, appareils à rail, actions et routes existantes, les deux modes et les couleurs de repli. Cordova fournit son intégration dans sa propre version du plugin ; suivez ses instructions plutôt que les commandes Capacitor.',
-          de: 'Nach dem Update kompatibler Pakete bauen Sie die Web-Assets, synchronisieren Capacitor und bauen die nativen Apps neu. Prüfen Sie normale Smartphones und Rail-Geräte, bestehende Aktionen und Routen, beide Erscheinungsmodi und Fallback-Farben. Cordova bündelt die Integration in eigenen Plugin-Releases; folgen Sie dessen Anleitung statt den Capacitor-Befehlen.',
+          en: 'For Capacitor apps, update compatible packages, build the Web assets, sync Capacitor and rebuild the native applications. Check ordinary phone layout and supported rail devices, existing actions and routes, both appearance modes and color fallback. Cordova bundles its integration through its own plugin release; follow that package’s instructions instead of applying the Capacitor commands.',
+          ja: 'Capacitorアプリでは、互換性のあるパッケージへ更新し、Webアセットのビルド・Capacitorのsync・ネイティブアプリの再ビルドを行います。通常のスマートフォンとレール対応端末、既存の操作と画面遷移、ライト・ダーク両モード、配色のフォールバックを確認します。Cordovaは専用プラグインのリリースに統合が含まれるため、Capacitorのコマンドを流用せずそのパッケージの手順に従います。',
+          fr: 'Pour les applications Capacitor, mettez à jour les paquets compatibles, compilez les ressources Web, synchronisez Capacitor et recompilez les applications natives. Vérifiez téléphones ordinaires, appareils à rail, actions et routes existantes, les deux modes et les couleurs de repli. Cordova fournit son intégration dans sa propre version du plugin ; suivez ses instructions plutôt que les commandes Capacitor.',
+          de: 'Für Capacitor-Apps aktualisieren Sie die kompatiblen Pakete, bauen die Web-Assets, synchronisieren Capacitor und bauen die nativen Apps neu. Prüfen Sie normale Smartphones und Rail-Geräte, bestehende Aktionen und Routen, beide Erscheinungsmodi und Fallback-Farben. Cordova bündelt die Integration in eigenen Plugin-Releases; folgen Sie dessen Anleitung statt den Capacitor-Befehlen.',
         },
       },
     ],

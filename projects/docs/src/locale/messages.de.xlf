@@ -83,8 +83,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="allProjectsNav" datatype="html">
-        <source>All projects</source>
-        <target>Alle Projekte</target>
+        <source>Documentation overview</source>
+        <target>Dokumentationsübersicht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">projects/docs/src/app/app.html</context>
           <context context-type="linenumber">155,156</context>
@@ -293,8 +293,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="viewDemo" datatype="html">
-        <source>Demo</source>
-        <target>Demo</target>
+        <source>Try the Web theme</source>
+        <target>Web-Theme ausprobieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">projects/docs/src/app/docs/landing-page.ts</context>
           <context context-type="linenumber">39,40</context>
@@ -401,8 +401,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backToProjects" datatype="html">
-        <source>Browse projects</source>
-        <target>Projekte durchsuchen</target>
+        <source>Back to documentation</source>
+        <target>Zur Dokumentation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">projects/docs/src/app/docs/not-found.ts</context>
           <context context-type="linenumber">22,24</context>
@@ -584,7 +584,7 @@
       </trans-unit>
       <trans-unit id="supportSponsorDescription" datatype="html">
         <source>Individual sponsorships do not unlock exclusive features, priority support, or a private roadmap. Your support helps keep the same libraries, documentation, compatibility updates, and releases available to everyone.</source>
-        <target>Einzelne Unterstützungsbeiträge schalten weder exklusive Funktionen noch bevorzugten Support oder eine private Roadmap frei. Ihre Unterstützung hilft dabei, dieselben Bibliotheken, Dokumentation, Kompatibilitätsaktualisierungen und Releases für alle verfügbar zu halten.</target>
+        <target>Sponsorings von Einzelpersonen schalten weder exklusive Funktionen noch bevorzugten Support oder eine private Roadmap frei. Ihre Unterstützung hilft dabei, dieselben Bibliotheken, Dokumentation, Kompatibilitätsaktualisierungen und Releases für alle verfügbar zu halten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">projects/docs/src/app/docs/support-page.ts</context>
           <context context-type="linenumber">112,114</context>
@@ -639,10 +639,12 @@
       <trans-unit id="docsResources"><source>Resources</source><target>Ressourcen</target></trans-unit>
       <trans-unit id="supportRail"><source>Sponsor</source><target>Fördern</target></trans-unit>
       <trans-unit id="footerSponsorsHeading" datatype="html"><source>Supported by our sponsors</source><target>Unterstützt von unseren Sponsoren</target></trans-unit>
-      <trans-unit id="footerSponsorsThanks" datatype="html"><source>Thank you for helping keep these projects open and maintained.</source><target>Danke, dass ihr uns helft, diese Projekte offen zugänglich zu halten und zu pflegen.</target></trans-unit>
+      <trans-unit id="footerSponsorsThanks" datatype="html"><source>Thank you for helping keep these projects open and maintained.</source><target>Danke, dass Sie uns helfen, diese Projekte offen zugänglich zu halten und zu pflegen.</target></trans-unit>
       <trans-unit id="footerBecomeSponsor" datatype="html"><source>Become a sponsor</source><target>Sponsor werden</target></trans-unit>
     <trans-unit id="codeExample"><source>Code example</source><target>Codebeispiel</target></trans-unit>
 <trans-unit id="codeFiles"><source>Files</source><target>Dateien</target></trans-unit>
+      <trans-unit id="combinedSetupContext"><source>Ionic + Capacitor standard setup</source><target>Standardeinrichtung für Ionic + Capacitor</target></trans-unit>
+      <trans-unit id="webThemeDemoScope"><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source><target>Die Browser-Demo zeigt das Theme-Design und Web-Interaktionen. Native Steuerelemente und Android-Gerätefarben benötigen die native App auf einem unterstützten Gerät.</target></trans-unit>
 </body>
   </file>
 </xliff>

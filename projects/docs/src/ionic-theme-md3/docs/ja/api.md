@@ -3,7 +3,7 @@ title: API
 sourceRevision: "da47167a99620f3b5a260eaf113addd8c5eccbde459a8ab23f8cb8e1a23cd8df"
 ---
 
-`@rdlabo/ionic-theme-md3` v9.2.1 が公開するJavaScript APIのリファレンスです。CSSエントリーポイントはREADMEで説明します。
+`@rdlabo/ionic-theme-md3` v9.2.2 が公開するJavaScript APIのリファレンスです。CSSエントリーポイントはREADMEで説明します。
 
 ## アニメーション
 

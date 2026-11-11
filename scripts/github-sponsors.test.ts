@@ -40,8 +40,10 @@ test('fetches only valid public sponsors and sorts by tier without publishing am
   };
   const fetchImplementation: typeof fetch = async (_input, init) => {
     const body = JSON.parse(String(init?.body)) as {
+      query: string;
       variables: { activeOnly: boolean; cursor: string | null };
     };
+    assert.match(body.query, /includePrivate:\s*false/);
     const { activeOnly, cursor } = body.variables;
     requests.push({ activeOnly, cursor });
     const nodes = activeOnly

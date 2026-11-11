@@ -19,7 +19,7 @@ import { SeoService } from './seo.service';
         [href]="canonicalHomePath"
         class="mt-8 inline-flex rounded-full bg-[#1767d2] px-6 py-3 text-sm font-semibold text-white no-underline transition hover:bg-[#0b4da9] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
       >
-        <ng-container i18n="@@backToProjects">Browse projects</ng-container>
+        <ng-container i18n="@@backToProjects">Back to documentation</ng-container>
       </a>
     </section>
   `,

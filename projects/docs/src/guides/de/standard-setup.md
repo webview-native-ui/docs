@@ -1,6 +1,6 @@
 ---
 title: 'WebView Native UI Standardeinrichtung'
-sourceRevision: '2d07f86743b5fd6d41c2e37b6a6d08966595e2ff8911c5f00f8ac30572c39519'
+sourceRevision: '7fcf8d7e1460bbd5798e4542392a783f93f1e248c800994b3031a6407b21d95c'
 ---
 
 # WebView Native UI Standardeinrichtung
@@ -96,6 +96,13 @@ npx cap sync
 ```
 
 SwiftPM löst Engine automatisch auf; vorhandene CocoaPods-Projekte verwenden die [native Einrichtung](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
+
+## Das Ergebnis auf jeder Plattform prüfen
+
+- Unter iOS 26 oder neuer werden unterstützte Steuerelemente nativ dargestellt und verwenden die bestehenden Web-Ereignishandler. Das iOS-Theme gestaltet den übrigen Web-Inhalt.
+- Unter Android 12 oder neuer verwendet Material Design 3 die Dynamic-Color-Palette des Geräts. Die Steuerelemente bleiben Web-Elemente. Ältere Android-Versionen verwenden die Theme-Palette.
+- Auf Geräten mit nativen Rails folgt Vertical Bars den Änderungen des Gerätelayouts. Andere Geräte behalten das normale Web-Layout.
+- Im Browser lassen sich Web-Themes und das Verhalten der App prüfen. Testen Sie native Steuerelemente, Gerätefarben und geräteabhängige Rails in den nativen Apps.
 
 ## Einzelne Optionen
 

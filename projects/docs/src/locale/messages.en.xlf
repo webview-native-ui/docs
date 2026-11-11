@@ -87,7 +87,7 @@
         <note category="location">projects/docs/src/app/docs/docs-page.ts:61,62</note>
       </notes>
       <segment>
-        <source>All projects</source>
+        <source>Documentation overview</source>
       </segment>
     </unit>
     <unit id="homeRail">
@@ -314,7 +314,7 @@
         <note category="location">projects/docs/src/app/docs/landing-page.ts:39,40</note>
       </notes>
       <segment>
-        <source>Demo</source>
+        <source>Try the Web theme</source>
       </segment>
     </unit>
     <unit id="viewSource">
@@ -419,7 +419,7 @@
         <note category="location">projects/docs/src/app/docs/not-found.ts:22,24</note>
       </notes>
       <segment>
-        <source>Browse projects</source>
+        <source>Back to documentation</source>
       </segment>
     </unit>
     <unit id="notFoundTitle">
@@ -680,5 +680,7 @@
         <source>Switch language</source>
       </segment>
     </unit>
+    <unit id="combinedSetupContext"><segment><source>Ionic + Capacitor standard setup</source></segment></unit>
+    <unit id="webThemeDemoScope"><segment><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source></segment></unit>
   </file>
 </xliff>

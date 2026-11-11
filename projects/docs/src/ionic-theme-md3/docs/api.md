@@ -2,7 +2,7 @@
 title: API
 ---
 
-Reference for the JavaScript API exported by `@rdlabo/ionic-theme-md3` v9.2.1. CSS entry points remain documented in the README.
+Reference for the JavaScript API exported by `@rdlabo/ionic-theme-md3` v9.2.2. CSS entry points remain documented in the README.
 
 ## Animation
 

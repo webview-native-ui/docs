@@ -12,3 +12,21 @@ https://webview-native-ui.com. Keep `/projects/<slug>` and en/ja/fr/de URL paths
 - Verify with `npm run fmt:check`, `npm run lint`, `npm test`, `npm run build`, and `npm run seo:audit` (Node 24).
 - Production uses `wrangler.jsonc`. The optional Markdown/agent router uses a separate Worker and config; see `workers/README.md`. Never copy production secrets into files.
 - Deploy only after explicit approval. The workflow is manual and production-environment gated. The migration source's redirects must be deployed only after this site is live and verified.
+
+## Whole-site review criteria
+
+- Review equivalent entry paths together: homepage, chapter, project landing, package README,
+  setup, migration and translations. A corrected homepage does not establish correctness elsewhere.
+- The portal owns the combined Ionic + Capacitor standard setup. Package guides own their
+  individual capabilities and options. Preserve theme-only, existing-theme, HTML and Cordova paths.
+- Standard Native UI setup includes ordinary controls, Vertical Bars and device-layout
+  notifications. Keep app startup simple; do not add exceptional root teardown machinery to
+  ordinary installation examples.
+- Identify what each platform can actually do. Label browser theme previews separately from
+  native-device demonstrations, and document the provenance of screenshots.
+- Show every current public sponsor, excluding private sponsorships. Do not limit recognition
+  by count or tier. Refresh sponsor data before production builds and fail on retrieval errors.
+- Check public package versions and the source-document diff when refreshing package docs;
+  do not update version labels independently of their installed package.
+- Preserve historical URLs and verify destinations, canonical URLs and heading fragments.
+  Run the checks on generated output as well as source files.

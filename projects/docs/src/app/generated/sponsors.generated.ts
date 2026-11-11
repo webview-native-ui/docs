@@ -7,6 +7,12 @@ export const CURRENT_SPONSORS = [
     "profileUrl": "https://github.com/stripe"
   },
   {
+    "login": "luisbytes",
+    "name": "luisbytes",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/137983537?u=13d0b42f83f3a9ccbf6a0c9314e156979cded93e&v=4",
+    "profileUrl": "https://github.com/luisbytes"
+  },
+  {
     "login": "langy",
     "name": "Adam Lang",
     "avatarUrl": "https://avatars.githubusercontent.com/u/713141?u=a3ffa165af3d80b19f68fc99ae5514f26c03af07&v=4",
@@ -22,9 +28,9 @@ export const CURRENT_SPONSORS = [
 
 export const PAST_SPONSORS = [
   {
-    login: 'featers',
-    name: 'BackResto',
-    avatarUrl: 'https://avatars.githubusercontent.com/u/98342106?v=4',
-    profileUrl: 'https://github.com/featers',
-  },
+    "login": "featers",
+    "name": "BackResto",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/98342106?v=4",
+    "profileUrl": "https://github.com/featers"
+  }
 ] as const;

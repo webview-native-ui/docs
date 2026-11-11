@@ -33,6 +33,18 @@ test('split theme and Native UI guides resolve localized links and heading fragm
       new JSDOM(await readFile(`dist/docs/browser${prefix}/standard-setup/index.html`, 'utf8'))
         .window.document,
     );
+    const themeSetup = documents.get(`${prefix}/projects/ionic-theme-ios27/docs/add-native-ui`)!;
+    for (const oldAnchor of [
+      'optional%3A-vertical-bars',
+      'optional-vertical-bars',
+      '%E4%BB%BB%E6%84%8F%3A-vertical-bars',
+      'facultatif-%3A-vertical-bars',
+    ]) {
+      assert.ok(
+        themeSetup.getElementById(oldAnchor),
+        `${prefix}: preserve legacy anchor ${oldAnchor}`,
+      );
+    }
     for (const [route, document] of documents) {
       for (const link of document.querySelectorAll<HTMLAnchorElement>('main a[href]')) {
         const url = new URL(link.getAttribute('href')!, `https://webview-native-ui.com${route}`);
@@ -74,26 +86,37 @@ test('places locale-specific static 404 pages in the browser output', async () =
   }
 });
 
-test('prerenders current and past public sponsors in both locales', async () => {
-  const [english, japanese] = await Promise.all([
-    readFile(new URL('../dist/docs/browser/support/index.html', import.meta.url), 'utf8'),
-    readFile(new URL('../dist/docs/browser/ja/support/index.html', import.meta.url), 'utf8'),
-  ]);
-
-  for (const html of [english, japanese]) {
-    for (const sponsor of [...CURRENT_SPONSORS, ...PAST_SPONSORS]) {
-      assert.match(html, new RegExp(`href="${sponsor.profileUrl}"`));
+test('every locale renders all public sponsors in support and the footer', async () => {
+  for (const { subPath } of PUBLISHED_DOCS_LOCALES) {
+    const root = join('dist/docs/browser', subPath);
+    for (const page of ['index.html', 'support/index.html']) {
+      const html = await readFile(join(root, page), 'utf8');
+      const doc = new JSDOM(html).window.document;
+      const footer = [
+        ...doc.querySelectorAll<HTMLAnchorElement>('app-footer-sponsors .sponsors__person'),
+      ];
+      assert.deepEqual(
+        footer.map((link) => link.href),
+        CURRENT_SPONSORS.map((sponsor) => sponsor.profileUrl),
+      );
+      assert.doesNotMatch(html, /monthlyPriceInDollars/);
+      if (page.startsWith('support')) {
+        for (const [id, sponsors] of [
+          ['current', CURRENT_SPONSORS],
+          ['past', PAST_SPONSORS],
+        ] as const) {
+          const links = [
+            ...doc.querySelectorAll<HTMLAnchorElement>(
+              `[aria-labelledby="${id}-sponsors-heading"] li a`,
+            ),
+          ];
+          assert.deepEqual(
+            links.map((link) => link.href),
+            sponsors.map((sponsor) => sponsor.profileUrl),
+          );
+        }
+      }
     }
-    assert.match(html, /(?:Sponsor from \$5\/month|月5ドルから支援する)/);
-    assert.doesNotMatch(html, /monthlyPriceInDollars/);
-  }
-  if (CURRENT_SPONSORS.length > 0) {
-    assert.match(english, />Current sponsors</);
-    assert.match(japanese, />現在のスポンサー</);
-  }
-  if (PAST_SPONSORS.length > 0) {
-    assert.match(english, />Past sponsors</);
-    assert.match(japanese, />過去のスポンサー</);
   }
 });
 
@@ -158,10 +181,10 @@ test('prerendered docs mark current location and hide empty search hosts', async
     docPage,
     /href="\/projects\/ionic-theme-md3"(?![^>]*\/docs\/)[^>]*aria-current="page"|aria-current="page"[^>]*href="\/projects\/ionic-theme-md3"(?![^>]*\/docs\/)/,
   );
-  assert.match(japaneseLanding, /関連記事（英語）/);
+  assert.match(japaneseLanding, /関連記事/);
   assert.match(japaneseLanding, /related-article-lang[^>]*>英語</);
   assert.match(japaneseLanding, /lang="en"/);
-  assert.doesNotMatch(landing, /関連記事（英語）/);
+  assert.doesNotMatch(landing, /関連記事/);
   const landingDom = new JSDOM(landing);
   assert.equal(landingDom.window.document.querySelector('.related-article-lang'), null);
   landingDom.window.close();

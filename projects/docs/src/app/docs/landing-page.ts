@@ -37,9 +37,12 @@ import { resolveDocsLocale } from '../../../../../shared/docs-locales';
                 <a class="project-button project-button--primary" [routerLink]="firstPage.path" i18n="@@getStarted">Get started</a>
               }
               @if (p.demoUrl) {
-                <a class="project-button project-button--secondary external-link" [href]="p.demoUrl" target="_blank" rel="noopener noreferrer" i18n="@@viewDemo">Demo</a>
+                <a class="project-button project-button--secondary external-link" [href]="p.demoUrl" target="_blank" rel="noopener noreferrer" i18n="@@viewDemo">Try the Web theme</a>
               }
             </div>
+            @if (p.demoUrl) {
+              <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600" i18n="@@webThemeDemoScope">The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</p>
+            }
             <div class="project-resources">
               <a class="external-link" [href]="p.repositoryBrowseUrl ?? p.repositoryUrl" target="_blank" rel="noopener noreferrer">
                 <ng-container i18n="@@viewSource">View source</ng-container>

@@ -1,6 +1,6 @@
 ---
 title: 'WebView Native UI 標準導入'
-sourceRevision: '2d07f86743b5fd6d41c2e37b6a6d08966595e2ff8911c5f00f8ac30572c39519'
+sourceRevision: '7fcf8d7e1460bbd5798e4542392a783f93f1e248c800994b3031a6407b21d95c'
 ---
 
 # WebView Native UI 標準導入
@@ -96,6 +96,13 @@ npx cap sync
 ```
 
 SwiftPM は Engine を自動解決します。既存の CocoaPods 構成は[ネイティブプロジェクト設定](/projects/capacitor-native-ui/docs/configuration#native-project-setup)を参照してください。
+
+## 各プラットフォームで結果を確認する
+
+- iOS 26以降では、対応するコントロールがネイティブ表示になり、既存のWebイベントハンドラーで動作します。残りのWebコンテンツにはiOSテーマが適用されます。
+- Android 12以降では、Material Design 3に端末のDynamic Colorが反映されます。コントロールはWebのままです。古いAndroidではテーマの既定色を使います。
+- ネイティブレールに対応するデバイスでは、配置の変更にVertical Barsが追従します。それ以外のデバイスでは通常のWebレイアウトを維持します。
+- ブラウザーで確認できるのはWebテーマとアプリの動作です。ネイティブコントロール、端末の配色、デバイスに応じたレールはネイティブアプリで確認してください。
 
 ## 個別のオプション
 

@@ -8,7 +8,7 @@ Android Settings を視覚的な基準とし、Ionic のコンポーネント AP
 
 <!-- rdlabo-docs-pick -->
 
-![Android 17 で Ionic 標準パレットを使った MD3 テーマ](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.1/screenshots/md3.png)
+![Android 17 で Ionic 標準パレットを使った MD3 テーマ](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.2/screenshots/md3.png)
 
 <!-- /rdlabo-docs-pick -->
 

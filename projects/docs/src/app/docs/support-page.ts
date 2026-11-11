@@ -11,7 +11,7 @@ import { SeoService } from './seo.service';
         <ng-container i18n="@@supportEyebrow">Community-supported open source</ng-container>
       </p>
       <h1
-        class="mt-5 mb-0 max-w-3xl text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-[#172033]"
+        class="text-balance mt-5 mb-0 max-w-3xl text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-[#172033]"
       >
         <ng-container i18n="@@supportHeading"
           >Help build a community around independent OSS</ng-container
@@ -25,11 +25,18 @@ import { SeoService } from './seo.service';
         >
       </p>
 
+      <a
+        class="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-[#1767d2] px-6 py-3 text-sm font-semibold text-white no-underline hover:bg-[#1456b0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1767d2]"
+        href="https://github.com/sponsors/rdlabo?metadata_campaign=docs-support"
+        target="_blank"
+        rel="noopener noreferrer"
+      ><ng-container i18n="@@becomeSponsor">Sponsor from $5/month</ng-container></a>
+
       <section class="mt-14 rounded-3xl border border-[#e2e8f0] bg-[#f8fbff] p-7 sm:p-10">
         <p class="m-0 text-sm font-semibold tracking-[0.16em] text-[#1767d2] uppercase">
           <ng-container i18n="@@supportMilestoneEyebrow">Current milestone</ng-container>
         </p>
-        <h2 class="mt-4 mb-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]">
+        <h2 class="text-balance mt-4 mb-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]">
           <ng-container i18n="@@supportMilestoneHeading"
             >The first 10 monthly sponsors</ng-container
           >
@@ -49,7 +56,7 @@ import { SeoService } from './seo.service';
           <section class="mt-14" [attr.aria-labelledby]="group.id + '-sponsors-heading'">
             <h2
               [id]="group.id + '-sponsors-heading'"
-              class="m-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]"
+              class="text-balance m-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]"
             >
               @if (group.id === 'current') {
                 <ng-container i18n="@@currentSponsorsHeading">Current sponsors</ng-container>
@@ -104,7 +111,7 @@ import { SeoService } from './seo.service';
         class="mt-14 overflow-hidden rounded-3xl border border-[#e2e8f0] bg-[#f8fbff] sm:grid sm:grid-cols-[1fr_auto] sm:items-center"
       >
         <div class="p-7 sm:p-10">
-          <h2 class="m-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]">
+          <h2 class="text-balance m-0 text-2xl font-semibold tracking-[-0.035em] text-[#172033]">
             <ng-container i18n="@@supportSponsorHeading">Join from $5 a month</ng-container>
           </h2>
           <p class="mt-4 mb-0 max-w-xl leading-7 text-[#64748b]">

@@ -21,6 +21,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Refresh and verify public sponsor data
+        run: npm run sponsors:generate
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - run: npm run fmt:check
       - run: npm run lint
       - run: npm test
