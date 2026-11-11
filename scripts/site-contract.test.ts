@@ -406,7 +406,7 @@ test('imported portal links stay in the current tab', () => {
 
 test('Native UI Japanese guides preserve the released executable examples', async () => {
   const project = projectDefinitions.find((entry) => entry.id === 'capacitor-native-ui')!;
-  assert.equal(project.category, 'capacitor-plugins');
+  assert.equal(project.category, 'plugins');
   for (const page of project.pages) {
     const [english, japanese] = await Promise.all([
       englishGuideSource(project, page.file),

@@ -7,7 +7,7 @@ export const PROJECT = {
   "packageName": "@webview-native-ui/cordova-plugin",
   "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
   "releaseNotesUrl": "https://github.com/webview-native-ui/cordova-plugin/releases/tag/v0.1.1",
-  "category": "cordova-plugins",
+  "category": "plugins",
   "icon": "app",
   "version": "0.1.1",
   "description": "Native UI pour Cordova, avec HTML standard et intégration facultative du thème Ionic.",

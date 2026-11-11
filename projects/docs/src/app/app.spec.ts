@@ -297,9 +297,7 @@ describe('App', () => {
       true,
     );
     compiled
-      .querySelector<HTMLButtonElement>(
-        '.docs-rail-categories button[aria-label="Capacitor plugins"]',
-      )!
+      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Plugins"]')!
       .click();
     fixture.detectChanges();
     compiled

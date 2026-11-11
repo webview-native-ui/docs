@@ -470,21 +470,11 @@ export class App {
   }
 
   protected categoryIcon(category: ProjectCategory): ProjectIcon {
-    return category === 'capacitor-plugins' || category === 'cordova-plugins'
-      ? 'app'
-      : category === 'frontend-tools'
-        ? 'theme'
-        : 'server';
+    return category === 'plugins' ? 'app' : category === 'frontend-tools' ? 'theme' : 'server';
   }
 
   protected categoryLabel(category: ProjectCategory): string {
-    return category === 'capacitor-plugins'
-      ? 'Capacitor'
-      : category === 'frontend-tools'
-        ? 'Themes'
-        : category === 'cordova-plugins'
-          ? 'Cordova'
-          : $localize`:@@developerToolsRail:Dev`;
+    return this.categoryTitle(category);
   }
 
   #sidebarContainsFocus(): boolean {

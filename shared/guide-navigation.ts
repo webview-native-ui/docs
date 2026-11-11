@@ -509,6 +509,78 @@ export const GUIDE_CHAPTERS = [
   },
 ] as const;
 export const GUIDE_COPY = {
+  heroDefinition: {
+    en: 'Open-source themes and native controls for apps built with Web technologies.',
+    ja: 'Web技術で作るアプリ向けの、テーマとネイティブUIのオープンソースライブラリ群です。',
+    fr: 'Des thèmes et contrôles natifs open source pour les applications créées avec les technologies Web.',
+    de: 'Open-Source-Themes und native Steuerelemente für Apps mit Web-Technologien.',
+  },
+  heroAudience: {
+    en: 'Themes for Ionic · Native integrations for Capacitor and Cordova',
+    ja: 'Ionic向けテーマ · Capacitor／Cordova向けネイティブ連携',
+    fr: 'Thèmes pour Ionic · Intégrations natives pour Capacitor et Cordova',
+    de: 'Themes für Ionic · Native Integrationen für Capacitor und Cordova',
+  },
+  compareTitle: {
+    en: 'One screen. See what the theme changes.',
+    ja: '同じ画面で、テーマの違いを見る。',
+    fr: 'Un écran. Découvrez ce que le thème change.',
+    de: 'Ein Bildschirm. Sehen Sie, was das Theme verändert.',
+  },
+  compareDescription: {
+    en: 'The same settings, content and controls, rendered with the same Ionic mode. Try the switches and save button in either preview.',
+    ja: '同じ設定画面・同じ内容・同じIonicモードで比較できます。スイッチや保存ボタンを、両方の画面で操作してみてください。',
+    fr: 'Les mêmes réglages, contenus et contrôles dans le même mode Ionic. Essayez les interrupteurs et le bouton d’enregistrement dans les deux aperçus.',
+    de: 'Dieselben Einstellungen, Inhalte und Steuerelemente im selben Ionic-Modus. Probieren Sie Schalter und Speichern in beiden Vorschauen aus.',
+  },
+  compareSwipe: {
+    en: 'Swipe horizontally to compare the same screen before and after applying the theme.',
+    ja: '横にスワイプして、同じ画面のテーマ適用前後を比べてください。',
+    fr: 'Balayez horizontalement pour comparer le même écran avant et après application du thème.',
+    de: 'Wische horizontal, um denselben Bildschirm vor und nach Anwendung des Themes zu vergleichen.',
+  },
+  baselineLabel: {
+    en: 'Standard Ionic',
+    ja: '標準Ionic',
+    fr: 'Ionic standard',
+    de: 'Standard-Ionic',
+  },
+  previewMode: {
+    en: 'Platform to compare',
+    ja: '比較するプラットフォーム',
+    fr: 'Plateforme à comparer',
+    de: 'Plattform vergleichen',
+  },
+  previewScope: {
+    en: 'Live Web theme preview. Native controls and Android device colors are shown by the native app, not by this comparison.',
+    ja: '実際のWebテーマを使ったプレビューです。ネイティブコントロールとAndroid端末の配色は、この比較ではなくネイティブアプリで確認できます。',
+    fr: 'Aperçu utilisant les vrais thèmes Web. Les contrôles natifs et couleurs Android se vérifient dans l’application native, pas dans cette comparaison.',
+    de: 'Live-Vorschau der Web-Themes. Native Steuerelemente und Android-Gerätefarben werden in der nativen App geprüft, nicht in diesem Vergleich.',
+  },
+  previewTitle: {
+    en: 'Try the themes',
+    ja: 'テーマを試す',
+    fr: 'Essayer les thèmes',
+    de: 'Themes ausprobieren',
+  },
+  howTitle: {
+    en: 'Your Web app, with platform UI.',
+    ja: 'Webで作る画面に、プラットフォームのUIを。',
+    fr: 'Votre application Web, avec l’interface de la plateforme.',
+    de: 'Ihre Web-App mit Plattform-UI.',
+  },
+  guideTitle: {
+    en: 'Understand, then customize.',
+    ja: '仕組みを理解して、必要な部分を調整する。',
+    fr: 'Comprendre, puis personnaliser.',
+    de: 'Verstehen und anpassen.',
+  },
+  standardAudience: {
+    en: 'Standard setup: Ionic + Capacitor 8',
+    ja: '標準導入：Ionic + Capacitor 8',
+    fr: 'Configuration standard : Ionic + Capacitor 8',
+    de: 'Standardeinrichtung: Ionic + Capacitor 8',
+  },
   title: {
     en: 'WebView Native UI',
     ja: 'WebView Native UI',
@@ -622,18 +694,6 @@ export const GUIDE_COPY = {
     ja: 'Cordovaでの導入',
     fr: 'Intégration Cordova',
     de: 'Cordova-Integration',
-  },
-  previewTitle: {
-    en: 'See the themes before you install',
-    ja: '導入前にテーマを試す',
-    fr: 'Découvrez les thèmes avant l’installation',
-    de: 'Themes vor der Installation ansehen',
-  },
-  previewScope: {
-    en: 'These screenshots and browser demos show theme styling and Web interactions. Native controls, native rails and Android device colors need a native app on a supported device; they are not demonstrated by the browser previews.',
-    ja: '画面例とブラウザーデモでは、テーマの見た目とWeb側の操作を確認できます。ネイティブコントロール・ネイティブのレール・Android端末の配色は対応端末のネイティブアプリで確認する機能で、ブラウザープレビューの対象には含みません。',
-    fr: 'Ces captures et démos dans le navigateur montrent le style des thèmes et les interactions Web. Les contrôles et rails natifs ainsi que les couleurs Android nécessitent une application native sur un appareil compatible ; les aperçus Web ne les démontrent pas.',
-    de: 'Die Screenshots und Browser-Demos zeigen Theme-Design und Web-Interaktionen. Native Steuerelemente, native Rails und Android-Gerätefarben benötigen eine native App auf einem unterstützten Gerät und werden in den Browser-Vorschauen nicht demonstriert.',
   },
   iosPreview: {
     en: 'iOS 27 theme: Library screen',

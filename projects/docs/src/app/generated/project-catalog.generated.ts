@@ -7,16 +7,10 @@ export const PROJECT_CATEGORIES_EN = [
     "order": 10
   },
   {
-    "id": "capacitor-plugins",
-    "label": "Capacitor plugins",
-    "description": "Native controls for Ionic and HTML apps through Capacitor.",
+    "id": "plugins",
+    "label": "Plugins",
+    "description": "Choose the native UI integration for your app: Capacitor or Cordova.",
     "order": 20
-  },
-  {
-    "id": "cordova-plugins",
-    "label": "Cordova plugins",
-    "description": "Native UI adapters and bundled theme integration for Cordova apps.",
-    "order": 30
   },
   {
     "id": "developer-tools",
@@ -320,7 +314,7 @@ export const PROJECTS_EN = [
     "shortName": "Capacitor Native UI",
     "packageName": "@rdlabo/capacitor-native-ui",
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
-    "category": "capacitor-plugins",
+    "category": "plugins",
     "icon": "app",
     "version": "2.1.4",
     "description": "Native UI, Android Dynamic Color and custom native content for WebView apps.",
@@ -615,7 +609,7 @@ export const PROJECTS_EN = [
     "shortName": "Cordova Native UI",
     "packageName": "@webview-native-ui/cordova-plugin",
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
-    "category": "cordova-plugins",
+    "category": "plugins",
     "icon": "app",
     "version": "0.1.1",
     "description": "Native UI for Cordova, with standard HTML and optional Ionic theme integration.",
@@ -640,16 +634,10 @@ export const PROJECT_CATEGORIES_JA = [
     "order": 10
   },
   {
-    "id": "capacitor-plugins",
-    "label": "Capacitorプラグイン",
-    "description": "Capacitorを通じてIonic・HTMLアプリへネイティブコントロールを提供します。",
+    "id": "plugins",
+    "label": "プラグイン",
+    "description": "アプリの構成に合わせて、Capacitor版・Cordova版を選べます。",
     "order": 20
-  },
-  {
-    "id": "cordova-plugins",
-    "label": "Cordovaプラグイン",
-    "description": "Cordovaアプリ向けのNative UIアダプターと同梱テーマ連携です。",
-    "order": 30
   },
   {
     "id": "developer-tools",
@@ -953,7 +941,7 @@ export const PROJECTS_JA = [
     "shortName": "Capacitor Native UI",
     "packageName": "@rdlabo/capacitor-native-ui",
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
-    "category": "capacitor-plugins",
+    "category": "plugins",
     "icon": "app",
     "version": "2.1.4",
     "description": "WebViewアプリ向けのNative UI、Android Dynamic Color、独自ネイティブコンテンツ。",
@@ -1248,7 +1236,7 @@ export const PROJECTS_JA = [
     "shortName": "Cordova Native UI",
     "packageName": "@webview-native-ui/cordova-plugin",
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
-    "category": "cordova-plugins",
+    "category": "plugins",
     "icon": "app",
     "version": "0.1.1",
     "description": "標準HTMLと任意のIonicテーマ連携に対応するCordova向けNative UI。",
@@ -1273,16 +1261,10 @@ export const PROJECT_CATEGORIES_FR = [
     "order": 10
   },
   {
-    "id": "capacitor-plugins",
-    "label": "Plugins Capacitor",
-    "description": "Contrôles natifs pour les applications Ionic et HTML via Capacitor.",
+    "id": "plugins",
+    "label": "Plugins",
+    "description": "Choisissez l’intégration native adaptée à votre application : Capacitor ou Cordova.",
     "order": 20
-  },
-  {
-    "id": "cordova-plugins",
-    "label": "Plugins Cordova",
-    "description": "Adaptateurs Native UI et intégration du thème fourni pour les applications Cordova.",
-    "order": 30
   },
   {
     "id": "developer-tools",
@@ -1586,7 +1568,7 @@ export const PROJECTS_FR = [
     "shortName": "Capacitor Native UI",
     "packageName": "@rdlabo/capacitor-native-ui",
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
-    "category": "capacitor-plugins",
+    "category": "plugins",
     "icon": "app",
     "version": "2.1.4",
     "description": "Native UI, Dynamic Color Android et contenu natif personnalisé pour les applications WebView.",
@@ -1881,7 +1863,7 @@ export const PROJECTS_FR = [
     "shortName": "Cordova Native UI",
     "packageName": "@webview-native-ui/cordova-plugin",
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
-    "category": "cordova-plugins",
+    "category": "plugins",
     "icon": "app",
     "version": "0.1.1",
     "description": "Native UI pour Cordova, avec HTML standard et intégration facultative du thème Ionic.",
@@ -1906,16 +1888,10 @@ export const PROJECT_CATEGORIES_DE = [
     "order": 10
   },
   {
-    "id": "capacitor-plugins",
-    "label": "Capacitor-Plugins",
-    "description": "Native Steuerelemente für Ionic- und HTML-Apps über Capacitor.",
+    "id": "plugins",
+    "label": "Plugins",
+    "description": "Wählen Sie die native UI-Integration für Ihre App: Capacitor oder Cordova.",
     "order": 20
-  },
-  {
-    "id": "cordova-plugins",
-    "label": "Cordova-Plugins",
-    "description": "Native-UI-Adapter und Integration des mitgelieferten Themes für Cordova-Apps.",
-    "order": 30
   },
   {
     "id": "developer-tools",
@@ -2219,7 +2195,7 @@ export const PROJECTS_DE = [
     "shortName": "Capacitor Native UI",
     "packageName": "@rdlabo/capacitor-native-ui",
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
-    "category": "capacitor-plugins",
+    "category": "plugins",
     "icon": "app",
     "version": "2.1.4",
     "description": "Native UI, Android Dynamic Color und eigene native Inhalte für WebView-Apps.",
@@ -2514,7 +2490,7 @@ export const PROJECTS_DE = [
     "shortName": "Cordova Native UI",
     "packageName": "@webview-native-ui/cordova-plugin",
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
-    "category": "cordova-plugins",
+    "category": "plugins",
     "icon": "app",
     "version": "0.1.1",
     "description": "Native UI für Cordova mit Standard-HTML und optionaler Ionic-Theme-Integration.",
