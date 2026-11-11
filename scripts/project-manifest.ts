@@ -568,7 +568,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     shortName: 'Capacitor Native UI',
     packageName: '@rdlabo/capacitor-native-ui',
     repositoryUrl: 'https://github.com/webview-native-ui/capacitor-plugin',
-    englishDocsRef: '40a788baf2f0126af7d25b0de22a6846a5bdbbcc',
+    englishDocsRef: 'e38b16d52856ba7ae01e3f026112c235f8b667ef',
     releaseNotesUrl: 'https://github.com/webview-native-ui/capacitor-plugin/releases/tag/v2.1.4',
     demoUrl: 'https://ionic-theme-ios27.rdlabo.dev/',
     category: 'capacitor-plugins',

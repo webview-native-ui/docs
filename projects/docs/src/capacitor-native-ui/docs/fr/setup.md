@@ -1,6 +1,6 @@
 ---
 title: "Configurer Native UI dans une application Ionic"
-sourceRevision: "a1bfa6fa974d08d4b344fcfe2ab79aef6ba5177bd932e2dede4f56a114376f54"
+sourceRevision: "c24a68fae4ae36e0f30982c0700fa3e54da972bb90c5a2fc05acf8fa2dc5051b"
 ---
 
 # Configurer Native UI dans une application Ionic
@@ -53,7 +53,23 @@ await enableNativeUI();
 ```
 
 
-Avec Angular, appelez cette fonction après la résolution de `bootstrapApplication`. Avec React ou Vue, appelez-la après le rendu de la coque. Raccordez la disposition initiale de Foldable et les notifications `layoutChange` via `resolveVerticalBarsLayout` et `setVerticalBarsLayout` du thème ; voir les [exemples de démarrage et de disposition](device-layout.md).
+La configuration standard comprend aussi cette connexion de disposition après le rendu de `ion-app`. Elle applique les espacements iPhone Duo / Vertical Bars et suit les changements d’écran actif :
+
+```ts
+import { Foldable } from '@erkamyaman/capacitor-foldable';
+import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
+import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
+
+const updateLayout = async () => {
+  setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+};
+
+void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))
+  .then(updateLayout)
+  .catch(console.error);
+```
+
+Avec Angular, appelez `enableNativeUI()` après la résolution de `bootstrapApplication` et placez le code de disposition dans le callback `afterNextRender` existant de la coque. Avec React ou Vue, exécutez les deux après le rendu de la coque. Ces étapes comprennent les contrôles ordinaires et Vertical Bars adapté à l’appareil, sans option de rail supplémentaire.
 
 ## 4. Compiler, synchroniser et exécuter
 
