@@ -334,8 +334,8 @@ export const PROJECTS_EN = [
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
-        "title": "Standard Ionic setup",
-        "navTitle": "Standard Ionic setup",
+        "title": "Ionic setup",
+        "navTitle": "Ionic setup",
         "slug": "setup",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/setup"
@@ -967,8 +967,8 @@ export const PROJECTS_JA = [
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
-        "title": "iOS Native UI と Android Dynamic Color を導入する",
-        "navTitle": "Ionicの標準導入",
+        "title": "Ionic アプリで Native UI をセットアップする",
+        "navTitle": "Ionicの設定",
         "slug": "setup",
         "section": "ガイド",
         "path": "/projects/capacitor-native-ui/docs/setup"
@@ -1600,8 +1600,8 @@ export const PROJECTS_FR = [
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
-        "title": "Configurer Native UI iOS et Dynamic Color Android",
-        "navTitle": "Configuration Ionic standard",
+        "title": "Configurer Native UI dans une application Ionic",
+        "navTitle": "Configuration Ionic",
         "slug": "setup",
         "section": "Guides",
         "path": "/projects/capacitor-native-ui/docs/setup"
@@ -2233,8 +2233,8 @@ export const PROJECTS_DE = [
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
-        "title": "iOS Native UI und Android Dynamic Color einrichten",
-        "navTitle": "Standardmäßige Ionic-Einrichtung",
+        "title": "Native UI in einer Ionic-App einrichten",
+        "navTitle": "Ionic-Einrichtung",
         "slug": "setup",
         "section": "Anleitungen",
         "path": "/projects/capacitor-native-ui/docs/setup"

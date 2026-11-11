@@ -509,6 +509,13 @@ test('all published internal document links resolve within this standalone site'
     const prefix = locale === 'en' ? '' : `/${locale}`;
     paths.add(prefix);
     paths.add(`${prefix}/support`);
+    paths.add(`${prefix}/standard-setup`);
+    const { STANDARD_SETUP } =
+      await import('../projects/docs/src/app/generated/standard-setup.generated');
+    documents.push({
+      name: `standard-setup/${locale}`,
+      html: STANDARD_SETUP[locale as keyof typeof STANDARD_SETUP].html,
+    });
     for (const definition of projectDefinitions) {
       const { PROJECT } = await import(
         `../projects/docs/src/app/generated/projects/${definition.id}.${locale}.generated.ts`

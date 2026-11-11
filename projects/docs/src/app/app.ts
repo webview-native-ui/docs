@@ -1,3 +1,4 @@
+import { STANDARD_SETUP_PATH, STANDARD_SETUP_LABELS } from '../../../../shared/standard-setup';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Component,
@@ -130,6 +131,10 @@ export class App {
     const path = this.currentUrl().split(/[?#]/)[0];
     return path === '/' || path === '/projects';
   });
+  protected readonly standardSetupLabel = STANDARD_SETUP_LABELS[resolveDocsLocale(this.#locale)];
+  protected readonly isStandardSetup = computed(
+    () => this.currentUrl().split(/[?#]/)[0] === STANDARD_SETUP_PATH,
+  );
   protected readonly isSupport = computed(() => this.currentUrl().split(/[?#]/)[0] === '/support');
   protected readonly activeProject = computed(() => this.#projectForUrl(this.currentUrl()));
   protected readonly navigationProject = computed(() => this.#projectForUrl(this.navigationUrl()));

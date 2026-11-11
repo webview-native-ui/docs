@@ -1,21 +1,14 @@
 ---
 title: "Capacitor Native UI"
-sourceRevision: "00f6528542dd4a1a7d25155d5b882f1fcba0f952002c4bfa21b745c83434594b"
+sourceRevision: "6b71e7c15aabcd36aa31f342d7285eca9fc6d8baf823c4ef16845167f055f22d"
 ---
 
 # Capacitor Native UI
 
 Capacitor Native UI bietet native Steuerelemente, Gerätefarben und eigene native Inhalte für WebView-Anwendungen.
 
-## Standardeinrichtung: iOS Native UI und Android Dynamic Color
 
-Beginnen Sie mit der gemeinsamen Einrichtung beider Plattformfunktionen in einer Ionic-App. Die Standardeinrichtung enthält iPhone Duo / Vertical Bars und Layoutänderungen unter iOS sowie Material-You-Farben auf unterstützten Android-Geräten.
-
-```sh
-npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
-```
-
-Die [Standardeinrichtung](setup.md) enthält Theme-Presets, Stylesheets und den vollständigen Startcode.
+Folgen Sie für eine Ionic-App mit iOS Native UI und Android Dynamic Color der [WebView Native UI Standardeinrichtung](https://webview-native-ui.com/standard-setup).
 
 ## Einzelne Leitfäden
 
@@ -25,7 +18,7 @@ Das Plugin rendert unterstützte Ionic- und HTML-Steuerelemente unter iOS nativ.
 
 | Ihre Anwendung | Leitfaden |
 | --- | --- |
-| Ionic mit dem standardmäßigen iOS-27-Theme | [Standardeinrichtung](setup.md) |
+| Ionic mit dem standardmäßigen iOS-27-Theme | [Ionic-Einrichtung](setup.md) |
 | Ionic mit vorhandenem Web-Theme | [Einrichtung mit vorhandenem Theme](ionic-vertical-bars.md) |
 | HTML ohne Ionic | [HTML-Einrichtung](framework-independent.md) |
 

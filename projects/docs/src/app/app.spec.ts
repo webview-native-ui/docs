@@ -748,7 +748,7 @@ describe('App', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     expect(currentLinks()).toHaveLength(1);
-    expect(currentLinks()[0]?.textContent?.trim()).toBe('Standard Ionic setup');
+    expect(currentLinks()[0]?.textContent?.trim()).toBe('Ionic setup');
     expect(
       compiled
         .querySelector<HTMLAnchorElement>('a[href="/projects/capacitor-native-ui"]')

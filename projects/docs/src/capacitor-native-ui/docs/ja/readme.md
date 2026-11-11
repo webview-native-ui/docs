@@ -6,15 +6,8 @@ title: "Capacitor Native UI"
 
 Capacitor Native UI は、WebView アプリにネイティブコントロール、端末の配色、独自のネイティブコンテンツを提供します。
 
-## 標準導入：iOS Native UI と Android Dynamic Color
 
-Ionic アプリでは、両プラットフォームの機能をまとめて設定するところから始めます。標準導入には iOS の iPhone Duo / Vertical Bars と配置変更への追従、対応する Android 端末の Material You 配色が含まれます。
-
-```sh
-npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
-```
-
-テーマのプリセット、スタイルシート、必要な起動コード一式は[標準導入](setup.md)にまとめています。
+iOS Native UI と Android Dynamic Color をまとめた Ionic アプリの導入は、[WebView Native UI 標準導入](https://webview-native-ui.com/standard-setup)を参照してください。
 
 ## 個別のガイド
 
@@ -24,7 +17,7 @@ npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-
 
 | アプリの構成 | ガイド |
 | --- | --- |
-| Ionic と標準の iOS 27 テーマ | [標準導入](setup.md) |
+| Ionic と標準の iOS 27 テーマ | [Ionic の設定](setup.md) |
 | Ionic と既存の Web テーマ | [既存テーマの設定](ionic-vertical-bars.md) |
 | Ionic を使わない HTML | [HTML の設定](framework-independent.md) |
 

@@ -1,3 +1,4 @@
+import { generateStandardSetup } from './standard-setup';
 import { access, mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
 import fm from 'front-matter';
@@ -259,6 +260,14 @@ function localizeProject(project: ProjectDefinition, locale: Locale, version: st
 
 function rewriteInternalLinks(html: string, project: ProjectDefinition, locale: Locale): string {
   const localePrefix = docsLocalePrefix(locale);
+  html = html.replace(
+    /<a\b[^>]*\bhref="https:\/\/webview-native-ui\.com(\/standard-setup(?:#[^" ]*)?)"[^>]*>/g,
+    (tag, path: string) =>
+      tag
+        .replace(`https://webview-native-ui.com${path}`, `${localePrefix}${path}`)
+        .replace(/ target="_blank"/g, '')
+        .replace(/ rel="[^"]*"/g, ''),
+  );
   let rewritten = html.replace(
     /<a\b[^>]*\bhref="https:\/\/(?:docs\.rdlabo\.dev|webview-native-ui\.com)(\/projects\/([^/"#?]+)[^" ]*)"[^>]*>/g,
     (tag, path: string, slug: string) =>
@@ -801,6 +810,7 @@ async function main(): Promise<void> {
     Locale,
     any[]
   >;
+  await generateStandardSetup(root);
   const agentMarkdownByPath: Record<string, string> = {};
   for (const project of projectDefinitions) {
     let englishProject: any;
@@ -932,6 +942,7 @@ async function main(): Promise<void> {
   const canonicalPaths = [
     '/',
     '/support',
+    '/standard-setup',
     ...catalogs.en
       .filter((project) => !project.hostedUrl)
       .flatMap((project) => [project.path, ...project.pages.map((page: any) => page.path)]),
