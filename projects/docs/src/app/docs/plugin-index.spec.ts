@@ -30,7 +30,7 @@ describe('PluginIndexComponent', () => {
     expect(TestBed.inject(Title).getTitle()).toBe(
       'WebView Native UI Documentation',
     );
-    expect(compiled.querySelector('h1')?.textContent).toContain('iOS and Android design');
+    expect(compiled.querySelector('h1')?.textContent).toContain('WebView Native UI');
     expect(compiled.textContent).toContain('independent open-source initiative maintained by rdlabo');
     const categoryLinks = compiled.querySelectorAll<HTMLAnchorElement>('.category-nav a');
     expect(categoryLinks.length).toBe(projectGroupsForLocale('en').length);
