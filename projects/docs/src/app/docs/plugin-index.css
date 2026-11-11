@@ -77,11 +77,16 @@ h1 { margin: .8rem 0 0; color: var(--rd-ink); font-size: clamp(2.4rem, 4.5vw, 4r
 .legacy-category-anchor { display: block; height: 0; scroll-margin-top: 90px; }
 
 .app-showcase { margin: 0; min-width: 0; }
-.showcase-screens { position: relative; min-height: 530px; padding: 20px 12px 22px; display: flex; align-items: start; justify-content: center; gap: 20px; border-radius: 32px; background: radial-gradient(ellipse at 25% 20%, #e3eaf4, transparent 65%), radial-gradient(ellipse at 80% 85%, #eedfe9, transparent 65%); }
-.showcase-screens img { width: calc(50% - 18px); max-width: 240px; height: auto; border: 1px solid #ffffffb3; border-radius: 24px; box-shadow: 0 20px 40px #17203324, 0 2px 8px #17203312; }
-.showcase-player { margin-top: 55px; }
-.app-showcase figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; margin: 1rem 8px 0; color: #64748b; font-size: .75rem; line-height: 1.7; }
+.showcase-screens { padding: 0 12px; display: flex; align-items: start; justify-content: center; gap: 20px; border-radius: 32px; }
+.showcase-device { flex: 1; min-width: 0; max-width: 240px; text-align: center; }
+.showcase-device p { margin: 0 0 .75rem; font-size: .8rem; font-weight: 600; color: var(--rd-ink); }
+.showcase-device small { display: block; margin-top: .75rem; color: var(--rd-muted); font-size: .65rem; }
+.device-capture { position: relative; width: 100%; aspect-ratio: 658 / 1428; overflow: hidden; border-radius: 26px; }
+.device-capture--iphone img { position: absolute; display: block; width: 104.863%; max-width: none; height: auto; left: -2.432%; top: -5.322%; }
+.device-capture--pixel { aspect-ratio: 1080 / 2400; }
+.device-capture--pixel img { display: block; width: 100%; height: auto; }
+.app-showcase figcaption { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1rem; margin: 1rem 0 0; color: #64748b; font-size: .75rem; line-height: 1.7; text-align: center; }
 .app-showcase figcaption a { color: var(--rd-accent); white-space: nowrap; }
 #theme-preview-title, #theme-demos { scroll-margin-top: 90px; }
 @media (max-width: 1279px) { .app-showcase { max-width: 620px; width: 100%; margin-inline: auto; } }
-@media (max-width: 639px) { .showcase-screens { min-height: 0; gap: 12px; padding: 16px 6px 20px; border-radius: 20px; } .showcase-screens img { width: calc(50% - 10px); border-radius: 15px; } .showcase-player { margin-top: 35px; } }
+@media (max-width: 639px) { .catalog-hero { gap: 1.25rem; } .hero-audience, .hero-setup-note { display: none; } .catalog-hero__lead { font-size: 1rem; line-height: 1.65; } .showcase-screens { gap: 12px; padding: 0; } .device-capture { border-radius: 14px; } .showcase-device p { font-size: .65rem; } .showcase-device small { font-size: .55rem; } }
