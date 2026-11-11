@@ -1,8 +1,25 @@
 ---
 title: "Migration"
-sourceRevision: "5e81ee4cba053730d861acf21e890711ac63f36439bbf2bd5f0847cffb1b69b4"
+sourceRevision: "52f8e5f0ab170361615f3bf1084ad047ed5d70880b5f89e2720e7d4e89e55dd8"
 ---
+
 # Migration
+
+## Simplifier une configuration iOS existante
+
+Les exemples des guides précédents comprenaient une structure d’application inutile pour la configuration standard. Suivez le [guide d’installation actuel](setup.md) pour une nouvelle application.
+
+| Approche des guides précédents | Configuration standard |
+| --- | --- |
+| File globale de cycle de vie `mountNativeUI()` au niveau du module ou démarrage natif dans les composants de page | Démarrez un seul runtime `enableNativeUI()` par défaut depuis le propriétaire de l’application et libérez-le avec ce propriétaire. |
+| Changements de page écrits manuellement ou seconde enveloppe de navigation | Conservez les routes Ionic de l’application ; `ios27ThemeConfig` fournit la transition coordonnée. |
+| `controls: 'verticalOnly'` comme code d’installation obligatoire | Omettez l’option pour activer ensemble les contrôles ordinaires et Vertical Bars. Conservez-la uniquement pour une sélection intentionnellement limitée au rail. |
+| Correspondance directe de `getBarPlacement()` avec uniquement `barPlacementChange` | Connectez `layoutChange` via `resolveVerticalBarsLayout(Foldable)` dans le [module de l’appareil](device-layout.md), en incluant `toolbarTop`. |
+| `edge: 'trailing'` fixe dans la configuration de l’appareil | Utilisez le placement signalé par l’appareil. Le placement fixe sert à un aperçu intentionnel dans le navigateur. |
+
+Conservez l’état et les gestionnaires métier existants dans l’application. Lorsque vous remplacez la structure des anciens guides, arrêtez son runtime et retirez son écouteur de l’appareil avant de démarrer le nouveau propriétaire. Conservez une seule connexion à l’appareil et un seul runtime Native UI. Les applications gardant un thème Web personnalisé utilisent le [guide pour un thème existant](ionic-vertical-bars.md).
+
+Les API de sélection, de suspension et de navigation personnalisée restent disponibles pour les applications qui en ont besoin ; ce sont des API de référence, pas des prérequis d’installation. Les API du fournisseur d’appareil restent valides ; le résolveur les compose au lieu de traiter une notification de bord seul comme une mise à jour complète de la disposition.
 
 ## Mise à niveau depuis 2.1.0
 
@@ -47,7 +64,7 @@ Si votre application traduit directement `getBarPlacement()` en `setVerticalBars
 
 Remplacez l’ancien écouteur de placement au lieu d’ajouter un second chemin de mise à jour. Conservez `await listener.remove()` dans le nettoyage existant de l’application. Si vous avez déjà un gestionnaire `layoutChange`, appelez le résolveur à cet endroit. Conservez le raccordement `foldStateChange` / `applyFoldStateClasses` pour la posture ; le résolveur fournit uniquement la géométrie du rail.
 
-Utilisez directement la disposition de rail indiquée, sans la conditionner à `isDeviceFoldable()`, à un nom d’appareil ou à des heuristiques de taille de viewport. Supprimez les contournements qui fixaient le haut de la barre d’outils pour imiter la géométrie de l’appareil. Les personnalisations CSS intentionnelles restent prises en charge. Les valeurs par défaut restent dans `setVerticalBarsLayout` du thème, pas dans le résolveur. La valeur par défaut pour l’écran externe est de 174px ; la géométrie fournie par l’appareil peut donner l’origine de l’écran interne, 124px. Consultez les [valeurs de disposition et le comportement de repli](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/vertical-bars-layout#apply-device-layout-values).
+Utilisez directement la disposition de rail indiquée, sans la conditionner à `isDeviceFoldable()`, à un nom d’appareil ou à des heuristiques de taille de viewport. Supprimez les contournements qui fixaient le haut de la barre d’outils pour imiter la géométrie de l’appareil. Les personnalisations CSS intentionnelles restent prises en charge. Les valeurs par défaut restent dans `setVerticalBarsLayout` du thème, pas dans le résolveur. La valeur par défaut pour l’écran externe est de 174px ; la géométrie fournie par l’appareil peut donner l’origine de l’écran interne, 124px. Consultez les [valeurs de disposition et le comportement de repli](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout#apply-device-layout-values).
 
 ### Corrections des modales et apparence des boutons d’envoi
 

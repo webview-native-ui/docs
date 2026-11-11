@@ -1,11 +1,11 @@
 ---
 title: "Native UI"
-sourceRevision: "4ca5282e4336b902be74a3df77389dc74be2af4721423f463347ac0403338185"
+sourceRevision: "16a0909425a31b1fdb9ca1b066159f289e4f49a04102a60bde35607781c551a1"
 ---
 
 # Native UI
 
-Native UI wird **ab Version 2.0.0 offiziell unterstützt**. Die frühere Native UI Shell Preview war in den Theme-Versionen 1.2.0 und 1.2.1 enthalten; diese Anleitung beschreibt das separate Paket und seine umbenannte API. Siehe [Migration](migration.md#native-ui-naming-changes). App-lokale [Erweiterungen](native-ui-extensions.md) bleiben experimentell.
+Native UI projiziert unterstützte Web-Bedienelemente in eine native Darstellung. App-lokale [Erweiterungen](native-ui-extensions.md) bleiben experimentell.
 
 Native UI ergänzt eine Ionic-App um native Navigations- und Aktionsbedienelemente rund um ihre Web-Inhalte. Das optionale Capacitor-iOS-Plugin stellt unterstützte fixierte Ionic-Bedienelemente mit UIKit oder SwiftUI und dem systemeigenen Liquid Glass-Material dar. Seiteninhalt, Scrollen, Anwendungszustand und Routing bleiben in Ionics WebView.
 

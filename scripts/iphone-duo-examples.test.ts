@@ -9,6 +9,7 @@ for (const [project, page] of [
   ['ionic-theme-ios27', 'vertical-bars-layout'],
   ['capacitor-native-ui', 'ionic-vertical-bars'],
   ['capacitor-native-ui', 'setup'],
+  ['capacitor-native-ui', 'device-layout'],
 ]) {
   test(`${page} examples compile against the installed release`, () => {
     const markdown = readFileSync(
@@ -43,9 +44,14 @@ for (const [project, page] of [
       }
       if (project === 'capacitor-native-ui') {
         const companion = readFileSync(
-          resolve('projects/docs/src/capacitor-native-ui/docs/ja/ionic-vertical-bars.md'),
+          resolve('projects/docs/src/capacitor-native-ui/docs/ja/device-layout.md'),
           'utf8',
         );
+        const layoutModule = [...companion.matchAll(/^```ts\n([\s\S]*?)^```/gm)]
+          .map((match) => match[1])
+          .find((code) => code.includes('export async function connectDeviceLayout'))!;
+        assert.ok(layoutModule, 'The device connection must use the documented module');
+        writeFileSync(join(directory, 'device-layout.ts'), layoutModule);
         const service = [...companion.matchAll(/^```ts\n([\s\S]*?)^```/gm)]
           .map((match) => match[1])
           .find((code) => code.includes('export class VerticalBarsLayoutService'))!;
@@ -60,7 +66,11 @@ for (const [project, page] of [
         );
       }
       for (const code of examples) {
-        const filename = join(directory, `${index++}.mts`);
+        const filename = join(
+          directory,
+          ...(code.includes("from '../device-layout'") ? ['app'] : []),
+          `${index++}.mts`,
+        );
         writeFileSync(filename, code);
         const program = ts.createProgram([filename], {
           target: ts.ScriptTarget.ES2022,

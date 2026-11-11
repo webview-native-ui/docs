@@ -1,13 +1,13 @@
 ---
 title: "Premiers pas"
-sourceRevision: "86498bb9ba6e7371b638d198b8620630ce7e52320c9f6e9f61b234eb1178d18f"
+sourceRevision: "294dfaa027e1c22d686c4ebb8105faf637aaa102874b3e951da613d32eb5e36d"
 ---
 
 # Capacitor Native UI
 
 Affichez les contrôles Web pris en charge avec UIKit et SwiftUI sur iOS, tout en conservant l’état, le routage et les gestionnaires de l’application dans la WebView. Utilisez le balisage Ionic existant ou des boutons HTML explicites ; des extensions expérimentales propres à l’application permettent d’ajouter du contenu SwiftUI ou Android Compose personnalisé.
 
-Native UI s’active explicitement et est officiellement pris en charge depuis la version 2.0.0. Sur Android, dans les navigateurs et sur les anciennes versions d’iOS, les contrôles standard restent Web, tout comme les contrôles non pris en charge. Android prend en charge les extensions Compose expérimentales locales à l’application. Conservez les styles et la disposition de votre application ; le thème iOS est facultatif.
+Native UI s’active explicitement. Sur Android, dans les navigateurs et sur les anciennes versions d’iOS, les contrôles standard et les contrôles non pris en charge conservent leur présentation Web. Android prend en charge les extensions Compose expérimentales propres à l’application. Conservez les styles et la disposition de votre application ; le thème iOS est facultatif.
 
 ## Installer depuis npm
 
@@ -25,7 +25,7 @@ import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 const shell = await enableNativeUI();
 ```
 
-**Vertical Bars est activé par défaut**, avec les contrôles ordinaires. Connectez le service standard de disposition de l’appareil ; les appareils compatibles choisissent le placement du rail et les autres conservent la disposition Web. Ne démarrez pas de runtime distinct pour le rail et ne copiez pas de code de rendu ou de navigation de bas niveau dans les composants de page.
+**Vertical Bars est activé par défaut**, avec les contrôles ordinaires. Connectez le service standard de disposition de l’appareil ; les appareils compatibles choisissent le placement du rail et les autres conservent la disposition Web.
 
 Suivez la [configuration Ionic](/docs/setup) pour la feuille de style, l’amorçage, le service de l’appareil et la compilation native. Conservez un autre thème Web avec [la configuration pour un thème existant](/docs/ionic-vertical-bars), ou utilisez la [configuration HTML](/docs/framework-independent) sans Ionic. Native UI ne gère ni l’état de l’application, ni son routage, ni le choix du thème. Le propriétaire de l’application détruit son handle lorsqu’il est libéré.
 

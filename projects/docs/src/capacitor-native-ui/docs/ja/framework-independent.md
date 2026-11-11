@@ -71,7 +71,7 @@ const shell = await enableNativeUI({
 });
 ```
 
-ソースルートが存在してから一度呼びます。ハンドルを保持し、ルート破棄時に `await shell.destroy()` を呼んでください。プラグインはページ余白やセーフエリア規則を追加しないため、アプリの CSS を維持します。Angular・React・Vue は `/core` インポートで[アプリルートのライフサイクル例](setup.md#place-startup-in-your-frameworks-app-root)を使用します。アニメーション付き遷移は[完了・キャンセルまでの中断](setup.md#navigation-without-the-theme)を参照してください。
+ソースルートが存在してから一度呼びます。ハンドルを保持し、ルート破棄時に `await shell.destroy()` を呼んでください。プラグインはページ余白やセーフエリア規則を追加しないため、アプリの CSS を維持します。Angular・React・Vue は `/core` インポートで[アプリの起動とデバイス配置](device-layout.md)を使用します。アニメーション付き遷移は[完了・キャンセルまでの中断](native-ui.md#custom-overlay-suspension)を参照してください。
 
 ### カスタムオーバーレイ
 
@@ -83,7 +83,7 @@ const shell = await enableNativeUI({
 
 ## 4. iOS でビルドして実行する
 
-CocoaPods プロジェクトでは、まず [Engine の Podfile 設定](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup#4-build-sync-and-run)を完了してください。SwiftPM は Engine を自動で解決します。
+CocoaPods プロジェクトでは、まず [Engine の Podfile 設定](configuration.md#native-project-setup)を完了してください。SwiftPM は Engine を自動で解決します。
 
 Web アプリをビルドして `npx cap sync ios` を実行し、Xcode から iOS プロジェクトを起動します。手順 3 の設定では Add はソース位置に描画され、元のクリックハンドラーを実行します。Back は利用可能ならデバイスが報告するネイティブレールを要求します。Web の余白を同期するため後述のデバイス配置を接続してください。ブラウザーでは同じボタンが通常の Web ボタンのままです。マーカーのない HTML は変わりません。
 

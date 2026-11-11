@@ -1,6 +1,6 @@
 ---
 title: "Vertical Bars mit Ihrem bestehenden Theme"
-sourceRevision: "c6da276b06035b53c705516f42cd1adf7b1f1438a44cd25d62839dba502246cf"
+sourceRevision: "ac403c26179085fc542ea822e28e2e9bfd88ffc7ed6a448bdfff759a60572c58"
 ---
 
 # Vertical Bars mit Ihrem bestehenden Theme
@@ -99,81 +99,13 @@ Der Adapter behält die Animationsziele des Builders bei, einschließlich eines 
 
 ### 3. Geräteposition verbinden und Bedienelemente starten
 
-Verwalten Sie Geräteinformationen in einem anwendungseigenen Service, getrennt von gerouteten Seitenkomponenten. Der Service löst die gemeldete Geometrie auf und übergibt sie an das Theme; Native UI besitzt die Projektion unabhängig davon. Erstellen Sie für Angular `src/app/vertical-bars-layout.service.ts`:
+Verwenden Sie [Anwendungsstart und Gerätelayout](device-layout.md), um die standardmäßige `enableNativeUI()`-Runtime zu starten und Foldables erstes Layout sowie `layoutChange`-Ereignisse zu verbinden. Wenden Sie Stylesheet und Ionic-Animation aus den Schritten 1 und 2 als Theme-Konfiguration dieser Anwendung an.
 
-```ts
-import { DestroyRef, Injectable, inject } from '@angular/core';
-import { Capacitor } from '@capacitor/core';
-import { Foldable } from '@erkamyaman/capacitor-foldable';
-import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
-import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
-
-@Injectable({ providedIn: 'root' })
-export class VerticalBarsLayoutService {
-  readonly #destroyRef = inject(DestroyRef);
-
-  async initialize(): Promise<void> {
-    if (Capacitor.getPlatform() !== 'ios' || this.#destroyRef.destroyed) return;
-    const listener = await Foldable.addListener('layoutChange', () => {
-      void this.#applyLayout().catch((error: unknown) => {
-        console.error('Vertical Bars layout refresh failed', error);
-      });
-    });
-    if (this.#destroyRef.destroyed) {
-      await listener.remove();
-      return;
-    }
-    this.#destroyRef.onDestroy(() => {
-      void listener.remove().catch((error: unknown) => {
-        console.error('Vertical Bars listener cleanup failed', error);
-      });
-    });
-    await this.#applyLayout();
-  }
-
-  async #applyLayout(): Promise<void> {
-    const layout = await resolveVerticalBarsLayout(Foldable);
-    if (!this.#destroyRef.destroyed) setVerticalBarsLayout(layout);
-  }
-}
-```
-
-Initialisieren Sie ihn einmal aus dem bestehenden Bootstrap in `src/main.ts`, nachdem `ion-app` eingebunden wurde. Behalten Sie Stylesheet und Ionic-Konfiguration aus den Schritten 1 und 2. Starten Sie die standardmäßige Native-UI-Runtime und den Geräteservice aus dem Anwendungs-Bootstrap:
-
-```ts
-import { bootstrapApplication } from '@angular/platform-browser';
-import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
-import { AppComponent } from './app/app.component';
-import { appConfig } from './app/app.config';
-import { VerticalBarsLayoutService } from './app/vertical-bars-layout.service';
-
-void bootstrapApplication(AppComponent, appConfig)
-  .then(async (app) => {
-    const shell = await enableNativeUI();
-    if (app.destroyed) {
-      await shell.destroy();
-      return;
-    }
-    app.onDestroy(() => {
-      void shell.destroy().catch((error: unknown) => console.error('Native UI cleanup failed', error));
-    });
-    await app.injector.get(VerticalBarsLayoutService).initialize();
-  })
-  .catch((error: unknown) => console.error('Application startup failed', error));
-```
-
-Integrieren Sie dies in Ihre bestehende Bootstrap-Kette; bootstrappen Sie keine zweite Anwendung und starten Sie keine zweite Native-UI-Runtime. Fehler beim ersten Abonnement oder Layoutabruf erreichen den Bootstrap-Fehlerhandler. Der Service entfernt seinen Gerätelistener bei der Zerstörung der Anwendung und ignoriert Layoutresultate, die nach der Entsorgung eintreffen. Der Anwendungseigentümer zerstört separat sein Native-UI-Handle. React- und Vue-Anwendungen sollten dieselbe Geräteintegration oberhalb gerouteter Seiten halten und über ihren Anwendungslebenszyklus bereinigen.
-
-| Gerätelayout | Web-Layout |
-| --- | --- |
-| `leading` oder `trailing` | Reserviert den gemessenen Einzug an der logischen Kante und wendet den Werkzeugleistenursprung an. |
-| `null`, einschließlich Browser-Fallback | Stellt gewöhnliches Layout wieder her; keine seitliche Rail wird erzwungen. |
-
-Der standardmäßige Service erzwingt keine Browser-Platzierung. Eine manuelle Kante ist nur für die [optionale Browser-Vorschau](#optional-browser-preview) vorgesehen. Ist Native UI bereits aktiv, integrieren Sie nur die Service-Initialisierung in den bestehenden Eigentümer; führen Sie den neuen Startaufruf nicht erneut aus. Für anwendungseigenes CSS siehe [Foldable-Integration](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#use-with-capacitor-foldable).
+Der Anwendungseigentümer übernimmt Start und Entsorgung. Das Gerätemodul wendet `edge`, `inset` und `toolbarTop` über das Theme an; Native UI besitzt die Projektion und prüft die native Verfügbarkeit. Eine Kante von null stellt das gewöhnliche Layout wieder her.
 
 ### Zeitpunkt des anfänglichen Layouts
 
-Führen Sie Schritt 3 aus Ihrem Anwendungs-Bootstrap aus, sobald `ion-app` eingebunden ist; warten Sie nicht auf Datenanfragen einer gerouteten Seite. `setVerticalBarsLayout()` benötigt dieses Element und speichert keine vor dem Einbinden übergebene Platzierung. Halten Sie Geräteinformationen in einem anwendungseigenen Service oder Integrationsmodul, getrennt von gerouteten Seitenhandlern. Start und Bereinigung gehören demselben Anwendungseigentümer, wie in den [Framework-Lebenszyklusbeispielen](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup#place-startup-in-your-frameworks-app-root) beschrieben.
+Führen Sie Schritt 3 aus Ihrem Anwendungs-Bootstrap aus, sobald `ion-app` eingebunden ist; warten Sie nicht auf Datenanfragen einer gerouteten Seite. `setVerticalBarsLayout()` benötigt dieses Element und speichert keine vor dem Einbinden übergebene Platzierung. Halten Sie Geräteinformationen in einem anwendungseigenen Service oder Integrationsmodul, getrennt von gerouteten Seitenhandlern. Start und Bereinigung gehören demselben Anwendungseigentümer, wie in den [Anwendungsstart und Gerätelayout](device-layout.md) beschrieben.
 
 Nativer Start, Gerätepositionierung und Rendering der Bedienelemente sind asynchron. Die Auflösung von `enableNativeUI()` liefert das Laufzeithandle, garantiert jedoch keine bereits abgeschlossene Projektion. Früher Start vermeidet zusätzliche Wartezeiten der Anwendung; das anfängliche Web-Layout kann dennoch vor der nativen Projektion sichtbar sein.
 
@@ -195,7 +127,7 @@ Behalten Sie bestehende Klickhandler, Routing und Formularzuordnungen. Aktionen 
 
 Darstellungseinstellungen und lokale Überschreibungen beschreibt [Schaltflächendarstellung auswählen](vertical-bars.md#choose-button-appearance).
 
-Der Standard ist `system`: SwiftUI gestaltet vertikale Schaltflächen und tönt ihre Symbole. Soll Ihr bestehendes Theme Füllung und Farben liefern, ersetzen Sie nur den `enableNativeUI`-Aufruf aus Schritt 3 durch Folgendes; behalten Sie das Foldable-Abonnement:
+Standard ist `system`: SwiftUI gestaltet vertikale Schaltflächen und färbt ihre Icons. Soll Ihr bestehendes Theme Füllung und Farben liefern, setzen Sie die Optionen am bestehenden Startaufruf der Anwendung; behalten Sie die Geräteverbindung:
 
 ```ts
 const shell = await enableNativeUI({

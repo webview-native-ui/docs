@@ -341,6 +341,13 @@ export const PROJECTS_EN = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
+        "title": "Application startup and device layout",
+        "navTitle": "Application startup and device layout",
+        "slug": "device-layout",
+        "section": "Guides",
+        "path": "/projects/capacitor-native-ui/docs/device-layout"
+      },
+      {
         "title": "Native UI without Ionic",
         "navTitle": "Native UI without Ionic",
         "slug": "framework-independent",
@@ -965,6 +972,13 @@ export const PROJECTS_JA = [
         "slug": "setup",
         "section": "ガイド",
         "path": "/projects/capacitor-native-ui/docs/setup"
+      },
+      {
+        "title": "アプリの起動とデバイス配置を接続する",
+        "navTitle": "アプリの起動とデバイス配置",
+        "slug": "device-layout",
+        "section": "ガイド",
+        "path": "/projects/capacitor-native-ui/docs/device-layout"
       },
       {
         "title": "Ionic なしで Native UI を使う",
@@ -1593,6 +1607,13 @@ export const PROJECTS_FR = [
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
+        "title": "Relier le démarrage de l’application et la disposition de l’appareil",
+        "navTitle": "Démarrage de l’application et disposition de l’appareil",
+        "slug": "device-layout",
+        "section": "Guides",
+        "path": "/projects/capacitor-native-ui/docs/device-layout"
+      },
+      {
         "title": "Native UI sans Ionic",
         "navTitle": "Native UI sans Ionic",
         "slug": "framework-independent",
@@ -2217,6 +2238,13 @@ export const PROJECTS_DE = [
         "slug": "setup",
         "section": "Anleitungen",
         "path": "/projects/capacitor-native-ui/docs/setup"
+      },
+      {
+        "title": "Anwendungsstart und Gerätelayout verbinden",
+        "navTitle": "Anwendungsstart und Gerätelayout",
+        "slug": "device-layout",
+        "section": "Anleitungen",
+        "path": "/projects/capacitor-native-ui/docs/device-layout"
       },
       {
         "title": "Native UI ohne Ionic",

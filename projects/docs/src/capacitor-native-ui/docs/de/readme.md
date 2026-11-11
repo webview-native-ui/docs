@@ -1,13 +1,13 @@
 ---
 title: "Erste Schritte"
-sourceRevision: "86498bb9ba6e7371b638d198b8620630ce7e52320c9f6e9f61b234eb1178d18f"
+sourceRevision: "294dfaa027e1c22d686c4ebb8105faf637aaa102874b3e951da613d32eb5e36d"
 ---
 
 # Capacitor Native UI
 
 Stellen Sie unterstützte Web-Bedienelemente unter iOS mit UIKit und SwiftUI dar, während Anwendungszustand, Routing und Handler in der WebView bleiben. Verwenden Sie bestehendes Ionic-Markup oder ausdrücklich gekennzeichnete HTML-Schaltflächen; eigene SwiftUI- oder Android-Compose-Inhalte lassen sich über experimentelle app-lokale Erweiterungen ergänzen.
 
-Native UI muss ausdrücklich aktiviert werden und wird ab Version 2.0.0 offiziell unterstützt. Standardbedienelemente unter Android, in Browsern, unter älterem iOS sowie nicht unterstützte Bedienelemente behalten ihre Web-Darstellung. Android unterstützt experimentelle app-lokale Compose-Erweiterungen. Behalten Sie Stile und Layout Ihrer Anwendung; das iOS-Theme ist optional.
+Native UI wird ausdrücklich aktiviert. Standardbedienelemente unter Android, in Browsern, unter älterem iOS und nicht unterstützte Bedienelemente bleiben im Web. Android unterstützt experimentelle app-lokale Compose-Erweiterungen. Behalten Sie Stile und Layout Ihrer Anwendung bei; das iOS-Theme ist optional.
 
 ## Von npm installieren
 
@@ -25,7 +25,7 @@ import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 const shell = await enableNativeUI();
 ```
 
-**Vertical Bars ist standardmäßig aktiviert**, zusammen mit gewöhnlichen Bedienelementen. Binden Sie den standardmäßigen Gerätelayout-Service ein: Unterstützte Geräte bestimmen die Rail-Platzierung, andere Geräte behalten das Web-Layout. Starten Sie keine separate Rail-Runtime und kopieren Sie keinen systemnahen Renderer- oder Navigationscode in Seitenkomponenten.
+**Vertical Bars ist standardmäßig aktiviert**, zusammen mit gewöhnlichen Bedienelementen. Binden Sie den standardmäßigen Gerätelayout-Service ein: Unterstützte Geräte bestimmen die Rail-Platzierung, andere Geräte behalten das Web-Layout.
 
 Die [Ionic-Einrichtung](/docs/setup) beschreibt Stylesheet, Bootstrap, Geräteservice und native Buildschritte vollständig. Mit der [Einrichtung für bestehende Themes](/docs/ionic-vertical-bars) behalten Sie ein anderes Web-Theme; ohne Ionic verwenden Sie die [HTML-Einrichtung](/docs/framework-independent). Native UI ist weder für Anwendungszustand noch Routing oder Theme-Auswahl zuständig. Der Anwendungseigentümer zerstört sein Handle bei der Entsorgung.
 

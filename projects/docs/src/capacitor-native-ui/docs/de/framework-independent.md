@@ -1,6 +1,6 @@
 ---
 title: "Native UI ohne Ionic"
-sourceRevision: "7289fee8b8517ebb9897860c75db34fb8443277b3ee80c6d17e863d7f47bbb97"
+sourceRevision: "4cd601ca51b4e76686aba2c65e422204fc2a00405a1fa97807a35538231f5917"
 ---
 
 # Native UI ohne Ionic
@@ -70,7 +70,7 @@ const shell = await enableNativeUI({
 });
 ```
 
-Rufen Sie die Funktion einmal auf, sobald der Quellstamm existiert. Behalten Sie das Handle und rufen Sie beim Auflösen dieses Stamms `await shell.destroy()` auf. Das Plugin ergänzt weder Seitenabstände noch Safe-Area-Regeln; behalten Sie Ihr Anwendungs-CSS. Für Angular, React oder Vue verwenden Sie die [App-Root-Lebenszyklusbeispiele](setup.md#place-startup-in-your-frameworks-app-root) mit dem `/core`-Import. Für animierte Navigation verwenden Sie [Aussetzung bis Abschluss und Abbruch](setup.md#navigation-without-the-theme).
+Rufen Sie die Funktion einmal auf, nachdem die Quellwurzel existiert. Behalten Sie das Handle und rufen Sie `await shell.destroy()` auf, wenn diese Wurzel entsorgt wird. Das Plugin ergänzt weder Seitenabstände noch Safe-Area-Regeln; behalten Sie das CSS Ihrer Anwendung. Verwenden Sie für Angular, React oder Vue [Anwendungsstart und Gerätelayout](device-layout.md) mit dem `/core`-Import und Ihrem eigenen Layout-Callback. Für animierte Navigation verwenden Sie die [Suspendierung bis zum Abschluss oder Abbruch](native-ui.md#custom-overlay-suspension).
 
 ### Benutzerdefinierte Overlays
 
@@ -82,7 +82,7 @@ Deklarieren Sie für ein eigenes HTML-Theme `color-scheme: light` oder `color-sc
 
 ## 4. Erstellen und unter iOS ausführen
 
-Führen Sie bei CocoaPods-Projekten zunächst die [Engine-Podfile-Einrichtung](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/setup#4-build-sync-and-run) durch. SwiftPM löst Engine automatisch auf.
+Schließen Sie bei CocoaPods-Projekten zuerst die [native Projekteinrichtung](configuration.md#native-project-setup) ab. SwiftPM löst Engine automatisch auf.
 
 Erstellen Sie Ihre Web-App, führen Sie `npx cap sync ios` aus und starten Sie das iOS-Projekt in Xcode. Mit der Konfiguration aus Schritt 3 erscheint Add an seiner Quellposition und ruft seinen ursprünglichen Klickhandler auf. Back fordert die vom Gerät gemeldete native Seitenleiste an, sofern verfügbar; verbinden Sie die folgende Gerätepositionierung, um Web-Abstände synchron zu halten. Im Browser bleibt dieselbe Schaltfläche eine gewöhnliche Web-Schaltfläche. Unmarkiertes HTML bleibt unverändert.
 

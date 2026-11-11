@@ -100,81 +100,13 @@ const configureNavigation = (existingTransition: AnimationBuilder) => ({
 
 ### 3. デバイス配置を接続してコントロールを起動する
 
-デバイス情報の連携は、ルーティングされるページから分離したアプリ所有のサービスへ置きます。サービスは報告された位置と寸法を解決してテーマへ渡し、Native UI は独立して投影を担当します。Angular では `src/app/vertical-bars-layout.service.ts` を作成します。
+[アプリの起動とデバイス配置](device-layout.md)に従い、デフォルトの `enableNativeUI()` ランタイムを起動し、Foldable の初期配置と `layoutChange` イベントを接続します。アプリのテーマ設定には、手順1・2のスタイルシートと Ionic アニメーションを適用します。
 
-```ts
-import { DestroyRef, Injectable, inject } from '@angular/core';
-import { Capacitor } from '@capacitor/core';
-import { Foldable } from '@erkamyaman/capacitor-foldable';
-import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
-import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
-
-@Injectable({ providedIn: 'root' })
-export class VerticalBarsLayoutService {
-  readonly #destroyRef = inject(DestroyRef);
-
-  async initialize(): Promise<void> {
-    if (Capacitor.getPlatform() !== 'ios' || this.#destroyRef.destroyed) return;
-    const listener = await Foldable.addListener('layoutChange', () => {
-      void this.#applyLayout().catch((error: unknown) => {
-        console.error('Vertical Bars layout refresh failed', error);
-      });
-    });
-    if (this.#destroyRef.destroyed) {
-      await listener.remove();
-      return;
-    }
-    this.#destroyRef.onDestroy(() => {
-      void listener.remove().catch((error: unknown) => {
-        console.error('Vertical Bars listener cleanup failed', error);
-      });
-    });
-    await this.#applyLayout();
-  }
-
-  async #applyLayout(): Promise<void> {
-    const layout = await resolveVerticalBarsLayout(Foldable);
-    if (!this.#destroyRef.destroyed) setVerticalBarsLayout(layout);
-  }
-}
-```
-
-`ion-app` がマウントされた後に、既存の `src/main.ts` の bootstrap から一度初期化します。手順1・2のスタイルシートと Ionic 設定を維持し、デフォルトの Native UI ランタイムとデバイスサービスをアプリの起動時に接続します。
-
-```ts
-import { bootstrapApplication } from '@angular/platform-browser';
-import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
-import { AppComponent } from './app/app.component';
-import { appConfig } from './app/app.config';
-import { VerticalBarsLayoutService } from './app/vertical-bars-layout.service';
-
-void bootstrapApplication(AppComponent, appConfig)
-  .then(async (app) => {
-    const shell = await enableNativeUI();
-    if (app.destroyed) {
-      await shell.destroy();
-      return;
-    }
-    app.onDestroy(() => {
-      void shell.destroy().catch((error: unknown) => console.error('Native UI cleanup failed', error));
-    });
-    await app.injector.get(VerticalBarsLayoutService).initialize();
-  })
-  .catch((error: unknown) => console.error('Application startup failed', error));
-```
-
-既存の bootstrap へ統合し、別のアプリや2つ目のランタイムを起動しないでください。初期の購読・配置エラーは bootstrap のエラーハンドラーへ渡ります。サービスはアプリ破棄時に購読を解除し、破棄後に到着した配置は適用しません。Native UI のハンドルはアプリの所有者が別に破棄します。React と Vue もデバイス連携をルーティングされるページの外へ置き、アプリの寿命に合わせて解除します。
-
-| デバイス配置 | Web レイアウト |
-| --- | --- |
-| `leading` または `trailing` | 論理方向の計測インセットを確保し、ツールバーの原点を適用します。 |
-| ブラウザーのフォールバックを含む `null` | 通常レイアウトへ戻し、レールを強制しません。 |
-
-標準サービスはブラウザーへ固定配置を強制しません。手動の edge は[ブラウザープレビュー](#optional-browser-preview)専用です。Native UI が起動済みなら、サービス初期化だけを既存の所有者へ統合し、新しい起動呼び出しを再実行しないでください。独自 CSS は [Foldable 連携](vertical-bars.md#use-with-capacitor-foldable)を参照します。
+起動と破棄はアプリの所有者が担当します。デバイスモジュールは `edge`、`inset`、`toolbarTop` をテーマ経由で適用し、Native UI は投影とネイティブ利用可否を担当します。edge が null なら通常のレイアウトへ戻します。
 
 ### 初期レイアウトのタイミング
 
-`ion-app` がマウントされたらアプリルートから速やかに手順 3 を実行し、ページのデータ要求を待たないでください。`setVerticalBarsLayout()` は要素の存在が必要で、マウント前の配置を保存しません。[フレームワークのライフサイクル例](setup.md#place-startup-in-your-frameworks-app-root)に沿い、同じアプリ所有元で起動と終了を管理します。
+`ion-app` がマウントされたらアプリルートから速やかに手順 3 を実行し、ページのデータ要求を待たないでください。`setVerticalBarsLayout()` は要素の存在が必要で、マウント前の配置を保存しません。[アプリの起動とデバイス配置](device-layout.md)に沿い、同じアプリ所有元で起動と終了を管理します。
 
 ネイティブ起動、デバイス配置、描画は非同期です。`enableNativeUI()` の解決はハンドルの取得であり、投影完了の保証ではありません。速やかに起動するとアプリ側の待機は避けられますが、ネイティブ投影前に初期の Web レイアウトが見える場合があります。
 

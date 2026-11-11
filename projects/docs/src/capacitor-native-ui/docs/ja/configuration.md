@@ -242,3 +242,23 @@ WebViewの開発者コンソールを開き、`[Native UI]` で絞り込みま�
 単独の `enableVerticalControlArea()` は、選択の既定値を `'verticalOnly'` にします。その `setPlacement()` ヘルパーは非推奨のWeb CSSアダプターです。Webレイアウトにはテーマの `setVerticalBarsLayout({ edge, inset })` を使ってください。ネイティブ機能の利用可否はプラグインのデバイス情報から取得されます。
 
 パッケージの分割、削除されたオプション、部分指定時のコントロールの既定値変更については、[1.2.1からの更新](migration.md)を参照してください。
+
+## ネイティブプロジェクト設定
+
+SwiftPM は Engine を自動解決します。既存の CocoaPods アプリでは、導入済み Native UI が必要とする Engine のバージョンをインストールします。
+
+```sh
+npm install "@webview-native-ui/engine@$(node -p "require('./node_modules/@rdlabo/capacitor-native-ui/package.json').dependencies['@webview-native-ui/engine']")"
+```
+
+`ios/App/Podfile` の既存アプリターゲットで、生成される `def capacitor_pods` ブロックの外へ Engine を追加します。
+
+```ruby
+target 'App' do
+  capacitor_pods
+  pod 'WebViewNativeUIEngine', :path => '../../node_modules/@webview-native-ui/engine'
+  # Keep your other application pods here.
+end
+```
+
+プロジェクト構成に応じてパスを調整し、Native UI の更新時にもバージョンを揃えます。これは CocoaPods の互換設定であり、アプリの UI ロジックではありません。

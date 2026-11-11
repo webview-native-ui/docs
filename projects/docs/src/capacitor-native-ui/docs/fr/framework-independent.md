@@ -1,6 +1,6 @@
 ---
 title: "Native UI sans Ionic"
-sourceRevision: "7289fee8b8517ebb9897860c75db34fb8443277b3ee80c6d17e863d7f47bbb97"
+sourceRevision: "4cd601ca51b4e76686aba2c65e422204fc2a00405a1fa97807a35538231f5917"
 ---
 
 # Native UI sans Ionic
@@ -70,7 +70,7 @@ const shell = await enableNativeUI({
 });
 ```
 
-Appelez une seule fois après création de la racine source. Conservez le handle et appelez `await shell.destroy()` à la destruction de cette racine. Le plugin n’ajoute ni espacement de page ni règles de zone de sécurité ; conservez votre CSS. Pour Angular, React ou Vue, utilisez les [exemples de cycle de vie de la racine](setup.md#place-startup-in-your-frameworks-app-root) avec l’import `/core`. Pour la navigation animée, utilisez la [suspension jusqu’à la fin ou l’annulation](setup.md#navigation-without-the-theme).
+Appelez une seule fois après la création de la racine source. Conservez le handle et appelez `await shell.destroy()` lorsque cette racine est libérée. Le plugin n’ajoute ni marges de page ni règles de zone sûre ; conservez le CSS de l’application. Pour Angular, React ou Vue, utilisez le [démarrage de l’application et la disposition de l’appareil](device-layout.md) avec l’import `/core` et votre propre callback de disposition. Pour la navigation animée, utilisez la [suspension jusqu’à la fin ou à l’annulation](native-ui.md#custom-overlay-suspension).
 
 ### Superpositions personnalisées
 
@@ -82,7 +82,7 @@ Pour un thème HTML personnalisé, déclarez `color-scheme: light` ou `color-sch
 
 ## 4. Compiler et exécuter sur iOS
 
-Pour les projets CocoaPods, effectuez d’abord la [configuration du Podfile pour Engine](https://webview-native-ui.com/projects/capacitor-native-ui/docs/setup#4-build-sync-and-run). SwiftPM résout Engine automatiquement.
+Pour les projets CocoaPods, effectuez d’abord la [configuration du projet natif](configuration.md#native-project-setup). SwiftPM résout Engine automatiquement.
 
 Compilez l’application Web, exécutez `npx cap sync ios` et lancez le projet iOS depuis Xcode. Avec la configuration de l’étape 3, Add apparaît à sa position source et invoque son gestionnaire de clic original. Back demande le rail natif signalé par l’appareil lorsqu’il est disponible ; raccordez le placement ci-dessous pour synchroniser l’espacement Web. Dans le navigateur, ce même bouton reste Web. Le HTML non marqué reste inchangé.
 
