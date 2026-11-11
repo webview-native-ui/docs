@@ -1,6 +1,6 @@
 ---
 title: "Native UI in einer Ionic-App einrichten"
-sourceRevision: "2060f6f26af79395d7b9276d93f9403ceaa19c85c5c49bef08fe0dae1a18576d"
+sourceRevision: "a1bfa6fa974d08d4b344fcfe2ab79aef6ba5177bd932e2dede4f56a114376f54"
 ---
 
 # Native UI in einer Ionic-App einrichten
@@ -49,14 +49,11 @@ Starten Sie nach dem Einbinden der App-Shell die standardmäßige Runtime:
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const shell = await enableNativeUI();
+await enableNativeUI();
 ```
 
-Verbinden Sie im Rahmen dieses Schritts [Anwendungsstart und Gerätelayout](device-layout.md). Das anwendungseigene Modul wendet Foldables erstes Layout und Änderungsereignisse über das Theme an, sodass das standardmäßige Vertical-Bars-Layout dem Gerät folgt.
 
-### Lebensdauer der Anwendung
-
-Der Anwendungs-Bootstrap startet und stoppt Native UI. Das Gerätemodul besitzt seinen Listener, das Theme das Web-Layout; Seitenkomponenten behalten ihren normalen Zustand und ihre Handler. Der [Angular-Bootstrap](device-layout.md#angular-bootstrap) und die [frameworkunabhängige Anwendungsverbindung](device-layout.md#react-vue-and-other-application-owners) zeigen die vollständige Verdrahtung von Start und Entsorgung.
+Rufen Sie dies unter Angular nach Abschluss von `bootstrapApplication` auf, unter React oder Vue nach dem Rendern der App-Shell. Verbinden Sie Foldables anfängliches Layout und `layoutChange` über `resolveVerticalBarsLayout` und `setVerticalBarsLayout` des Themes; siehe [Start- und Layoutbeispiele](device-layout.md).
 
 ## 4. Erstellen, synchronisieren und ausführen
 

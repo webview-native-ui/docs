@@ -1,131 +1,62 @@
 ---
-title: アプリの起動とデバイス配置を接続する
+title: "アプリの起動とデバイス配置"
 ---
 
-# アプリの起動とデバイス配置を接続する
+# アプリの起動とデバイス配置
 
-ランタイムとデバイス配置をアプリ単位で一度接続します。Native UI はコントロールの投影、テーマは Web レイアウト、アプリは Foldable のデバイス情報とレイアウトの接続を担当します。標準テーマのプリセットでも既存の Web テーマでも同じ接続を使えます。
+アプリのシェル描画後に Native UI を一度起動します。Foldable の配置通知をテーマへ渡して、Web の余白をデバイスに合わせます。
 
-## デバイス配置モジュール
+## デバイス配置
 
-`src/device-layout.ts` を作成します。このアプリ所有のモジュールは、コンポーネントやルーターの状態を持ちません。初回読み取りより先に購読し、リゾルバーの値を適用します。所有者を停止するときに購読を解除します。
+`ion-app` の描画後に `layoutChange` を購読し、その後で初期配置を取得します。
 
 ```ts
-import { Capacitor } from '@capacitor/core';
 import { Foldable } from '@erkamyaman/capacitor-foldable';
 import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
+import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
 
-export async function connectDeviceLayout(
-  applyLayout: (layout: Awaited<ReturnType<typeof resolveVerticalBarsLayout>>) => void,
-): Promise<() => Promise<void>> {
-  if (Capacitor.getPlatform() !== 'ios') return async () => {};
-  let active = true;
-  const refresh = async () => {
-    const layout = await resolveVerticalBarsLayout(Foldable);
-    if (active) applyLayout(layout);
-  };
-  const listener = await Foldable.addListener('layoutChange', () => {
-    void refresh().catch((error: unknown) => console.error('Device layout refresh failed', error));
-  });
-  try {
-    await refresh();
-  } catch (error) {
-    active = false;
-    await listener.remove();
-    throw error;
-  }
-  return async () => {
-    active = false;
-    await listener.remove();
-  };
-}
+const updateLayout = async () => {
+  setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+};
+
+void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))
+  .then(updateLayout)
+  .catch(console.error);
 ```
 
-Web レイアウトはコールバックが所有します。Ionic テーマを使う場合は `setVerticalBarsLayout` を渡し、HTML アプリは独自の CSS・レイアウト更新処理と Native UI の `/core` エントリーを使います。デバイスモジュール自体はテーマやフレームワークを import しません。
-
-Foldable 8.5 以降のバージョン8を使います。リゾルバーは `edge`、`inset`、`toolbarTop` をビューポートの CSS ピクセルで返します。edge が null なら通常のレイアウトへ戻し、利用できない値はテーマの既定値を維持します。デバイスの位置と寸法と、ネイティブ描画の利用可否は別の入力です。
+Foldable 8.5 以降のバージョン8を使います。リゾルバーは `edge`、`inset`、`toolbarTop` をビューポートの CSS ピクセルで返します。テーマが Web レイアウトへ適用し、edge が null の場合は通常配置に戻します。Native UI は別途コントロールの投影を担当します。
 
 ## Angular bootstrap
 
-デバイスの接続はルートサービスで所有します。`src/app/vertical-bars-layout.service.ts` を作成します。
-
-```ts
-import { DestroyRef, Injectable, inject } from '@angular/core';
-import { connectDeviceLayout } from '../device-layout';
-import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
-
-@Injectable({ providedIn: 'root' })
-export class VerticalBarsLayoutService {
-  readonly #destroyRef = inject(DestroyRef);
-
-  async initialize(): Promise<void> {
-    const disconnect = await connectDeviceLayout(setVerticalBarsLayout);
-    if (this.#destroyRef.destroyed) {
-      await disconnect();
-      return;
-    }
-    this.#destroyRef.onDestroy(() => {
-      void disconnect().catch((error: unknown) => console.error('Device layout cleanup failed', error));
-    });
-  }
-}
-```
-
-アプリの既存の `src/main.ts` で、サービスと Native UI を接続します。`appConfig` が Ionic のプリセットとルートを設定し、`AppComponent` がアプリのシェルと router outlet を構成します。
+`src/main.ts` で Angular の起動後に Native UI を起動します。
 
 ```ts
 import { bootstrapApplication } from '@angular/platform-browser';
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
-import { VerticalBarsLayoutService } from './app/vertical-bars-layout.service';
 
 void bootstrapApplication(AppComponent, appConfig)
-  .then(async (app) => {
-    const shell = await enableNativeUI();
-    if (app.destroyed) {
-      await shell.destroy();
-      return;
-    }
-    app.onDestroy(() => {
-      void shell.destroy().catch((error: unknown) => console.error('Native UI cleanup failed', error));
-    });
-    await app.injector.get(VerticalBarsLayoutService).initialize();
+  .then(() => {
+    void enableNativeUI().catch(console.error);
   })
-  .catch((error: unknown) => console.error('Application startup failed', error));
+  .catch(console.error);
 ```
 
-アプリはランタイムのハンドルを所有し、終了時に破棄します。ルートサービスはデバイス購読を解除します。ページコンポーネントは既存の状態と操作ハンドラーを維持します。
+上の配置コードはアプリシェルの既存の `afterNextRender` コールバックへ置きます。Ionic のルートとページのハンドラーはそのまま使います。追加のサービスやライフサイクルラッパーは不要です。
 
-## React・Vue などのアプリ所有者
+## React、Vue とその他のフレームワーク
 
-アプリのシェルがマウントされた後に、同じ `connectDeviceLayout` モジュールをアプリの起動から使います。連携自体はフレームワークに依存しません。
+アプリのシェル描画後に Native UI を一度起動し、上の配置コードを接続します。
 
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
-import { connectDeviceLayout } from './device-layout';
-import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
 
-export async function startApplicationNativeUI(): Promise<() => Promise<void>> {
-  const shell = await enableNativeUI();
-  try {
-    const disconnect = await connectDeviceLayout(setVerticalBarsLayout);
-    return async () => {
-      try {
-        await disconnect();
-      } finally {
-        await shell.destroy();
-      }
-    };
-  } catch (error) {
-    await shell.destroy();
-    throw error;
-  }
-}
+void enableNativeUI().catch(console.error);
 ```
 
-アプリのマウント後の起動処理から、この関数を一度 await します。返された破棄関数を保持し、アプリをアンマウントする前に await して呼び出します。React の開発用 Strict Mode は effect を再マウントする場合があります。このアプリ単位の起動はアプリの所有者へ置き、ページごとや再マウントされる effect から繰り返し起動しないでください。Vue でもページの寿命ではなく、アプリの所有者を使います。ブラウザー・サーバー描画環境では、ドキュメントが存在した後にだけ呼び出します。
+ページではなく、マウント後のアプリ起動処理から呼びます。HTML アプリでは `/core` エントリーを使い、`setVerticalBarsLayout` の代わりに独自の CSS 更新処理を使います。
 
-## デバイスの動作確認
+## デバイス動作の確認
 
-レール対応デバイスで使用する画面を切り替え、Web コンテンツの余白とツールバー原点が一緒に更新されることを確認します。レールのないデバイスでは通常のレイアウトが有効です。ブラウザープレビューでは Web レイアウトを確認し、ネイティブレールの描画は対応 iOS デバイスと OS で確認してください。
+対応レール端末でアクティブなディスプレイを切り替え、Web コンテンツの余白とツールバーの起点が一緒に変わることを確認します。レールのない端末では通常配置を使います。ブラウザーでは Web レイアウトを確認でき、ネイティブレールの描画には対応 iOS 端末と OS が必要です。

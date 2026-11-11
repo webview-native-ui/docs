@@ -20,12 +20,12 @@ npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @erkamyaman/ca
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const shell = await enableNativeUI();
+await enableNativeUI();
 ```
 
-**Vertical Bars は、通常のコントロールとともにデフォルトで有効です。** 標準のデバイス配置サービスを接続します。対応デバイスがレール配置を決め、それ以外は Web レイアウトを維持します。
+**Vertical Bars は通常のコントロールとともにデフォルトで有効です。** 配置通知を接続すると、対応デバイスがレール配置を決め、それ以外は通常の Web レイアウトを使います。
 
-スタイルシート、bootstrap、デバイスサービス、ネイティブビルドは [Ionic 設定](setup.md)に従います。[既存テーマの設定](ionic-vertical-bars.md)では別の Web テーマを維持でき、[HTML 設定](framework-independent.md)では Ionic が不要です。Native UI はアプリの状態、ルーティング、テーマ選択を所有しません。ハンドルはアプリの所有者を破棄するときに破棄します。
+スタイルシート、起動、デバイス配置、ネイティブビルドは [Ionic 設定](setup.md)を参照してください。[既存テーマ](ionic-vertical-bars.md)や [Ionic を使わない HTML](framework-independent.md)でも利用できます。アプリの状態、ルーティング、テーマ選択はアプリで管理します。
 
 ## 投影の仕組み
 

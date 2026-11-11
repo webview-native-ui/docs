@@ -48,14 +48,11 @@ const ionicConfig = {
 ```ts
 import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-const shell = await enableNativeUI();
+await enableNativeUI();
 ```
 
-この手順には[アプリの起動とデバイス配置の接続](device-layout.md)も含まれます。アプリ所有のモジュールが Foldable の初期配置と変更イベントをテーマへ適用し、デフォルトの Vertical Bars レイアウトをデバイスに追従させます。
 
-### アプリの寿命
-
-アプリの bootstrap が Native UI を起動・停止します。デバイスモジュールは購読、テーマは Web レイアウト、ページコンポーネントは通常の状態とハンドラーを所有します。具体的な起動・破棄の接続は [Angular bootstrap](device-layout.md#angular-bootstrap) と[フレームワーク非依存のアプリ連携](device-layout.md#react-vue-and-other-application-owners)を参照してください。
+Angular では `bootstrapApplication` の完了後、React や Vue ではアプリシェルの描画後に呼びます。Foldable の初期配置と `layoutChange` 通知を `resolveVerticalBarsLayout` とテーマの `setVerticalBarsLayout` で接続します。[起動とデバイス配置の例](device-layout.md)を参照してください。
 
 ## 4. ビルド・同期して実行する
 

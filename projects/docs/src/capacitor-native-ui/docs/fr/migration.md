@@ -1,25 +1,23 @@
 ---
 title: "Migration"
-sourceRevision: "52f8e5f0ab170361615f3bf1084ad047ed5d70880b5f89e2720e7d4e89e55dd8"
+sourceRevision: "4b8de5860de00367ba770c30161d8e38cca109862c6c957365ae5f82c0e83218"
 ---
 
 # Migration
 
 ## Simplifier une configuration iOS existante
 
-Les exemples des guides précédents comprenaient une structure d’application inutile pour la configuration standard. Suivez le [guide d’installation actuel](setup.md) pour une nouvelle application.
+Si vous avez copié un wrapper `mountNativeUI()` d’un ancien guide, supprimez-le ainsi que son raccordement de nettoyage. Après le rendu de la coque de l’application, appelez :
 
-| Approche des guides précédents | Configuration standard |
-| --- | --- |
-| File globale de cycle de vie `mountNativeUI()` au niveau du module ou démarrage natif dans les composants de page | Démarrez un seul runtime `enableNativeUI()` par défaut depuis le propriétaire de l’application et libérez-le avec ce propriétaire. |
-| Changements de page écrits manuellement ou seconde enveloppe de navigation | Conservez les routes Ionic de l’application ; `ios27ThemeConfig` fournit la transition coordonnée. |
-| `controls: 'verticalOnly'` comme code d’installation obligatoire | Omettez l’option pour activer ensemble les contrôles ordinaires et Vertical Bars. Conservez-la uniquement pour une sélection intentionnellement limitée au rail. |
-| Correspondance directe de `getBarPlacement()` avec uniquement `barPlacementChange` | Connectez `layoutChange` via `resolveVerticalBarsLayout(Foldable)` dans le [module de l’appareil](device-layout.md), en incluant `toolbarTop`. |
-| `edge: 'trailing'` fixe dans la configuration de l’appareil | Utilisez le placement signalé par l’appareil. Le placement fixe sert à un aperçu intentionnel dans le navigateur. |
+```ts
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
 
-Conservez l’état et les gestionnaires métier existants dans l’application. Lorsque vous remplacez la structure des anciens guides, arrêtez son runtime et retirez son écouteur de l’appareil avant de démarrer le nouveau propriétaire. Conservez une seule connexion à l’appareil et un seul runtime Native UI. Les applications gardant un thème Web personnalisé utilisent le [guide pour un thème existant](ionic-vertical-bars.md).
+await enableNativeUI();
+```
 
-Les API de sélection, de suspension et de navigation personnalisée restent disponibles pour les applications qui en ont besoin ; ce sont des API de référence, pas des prérequis d’installation. Les API du fournisseur d’appareil restent valides ; le résolveur les compose au lieu de traiter une notification de bord seul comme une mise à jour complète de la disposition.
+Les contrôles ordinaires et Vertical Bars sont activés par défaut. Supprimez `controls: 'verticalOnly'` sauf si vous souhaitez uniquement le rail. Conservez les routes Ionic et utilisez `ios27ThemeConfig` pour la configuration du thème.
+
+Pour la disposition, abonnez-vous à `layoutChange` de Foldable, puis appliquez la disposition initiale avec `resolveVerticalBarsLayout(Foldable)` et `setVerticalBarsLayout`. Cela remplace le mappage direct de `getBarPlacement()` et inclut `toolbarTop`. Voir les [exemples de démarrage et de disposition](device-layout.md).
 
 ## Mise à niveau depuis 2.1.0
 
