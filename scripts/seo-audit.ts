@@ -341,7 +341,12 @@ export function expectedJsonLdTypes(pageUrl: string, siteName: string): readonly
     if (path === '/') return ['WebSite'];
     const localPath = unlocalizedDocsPath(path);
     if (localPath === '/') return ['WebPage'];
-    if (localPath === '/support' || localPath === '/standard-setup') return ['BreadcrumbList'];
+    if (
+      localPath === '/support' ||
+      localPath === '/standard-setup' ||
+      localPath.startsWith('/guides/')
+    )
+      return ['BreadcrumbList'];
     if (/^\/projects\/[^/]+$/.test(localPath)) {
       return ['BreadcrumbList'];
     }

@@ -103,150 +103,109 @@
     i18n-aria-label="@@documentation"
     aria-label="Documentation"
   >
-    <div class="docs-navigation-columns">
-      <div class="docs-rail">
-        <nav
-          class="docs-rail-categories"
-          aria-label="Choose a library"
-          i18n-aria-label="@@chooseLibrary"
+    <nav class="guide-navigation" [attr.aria-label]="guideCopy.guide">
+      <a [href]="canonicalHomePath" [attr.aria-current]="isIndex() ? 'page' : null">{{
+        guideCopy.overview
+      }}</a>
+      <a
+        [href]="guideHref('/standard-setup')"
+        [attr.aria-current]="isStandardSetup() ? 'page' : null"
+        >{{ standardSetupLabel }}</a
+      >
+      @for (chapter of guideChapters; track chapter.id) {
+        <a
+          [href]="guideHref(chapter.path)"
+          [attr.aria-current]="isGuide(chapter.path) ? 'page' : null"
+          >{{ chapter.title }}</a
         >
-          <button
-            type="button"
-            class="docs-rail-button"
-            aria-label="Browse all libraries"
-            i18n-aria-label="@@browseAllLibraries"
-            aria-controls="docs-navigation-pane"
-            [attr.aria-pressed]="selectedCategory() === ''"
-            [class.is-active]="!selectedCategory()"
-            (click)="openLibraryPicker('', $event)"
+      }
+      <a
+        routerLink="/support"
+        [attr.aria-current]="isSupport() ? 'page' : null"
+        i18n="@@supportRail"
+        >Sponsor</a
+      >
+    </nav>
+    <details class="reference-navigation" [open]="!!navigationProject() || libraryPickerOpen()">
+      <summary>{{ guideCopy.reference }}</summary>
+      <div class="docs-navigation-columns">
+        <div class="docs-rail">
+          <nav
+            class="docs-rail-categories"
+            aria-label="Choose a library"
+            i18n-aria-label="@@chooseLibrary"
           >
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" />
-              <rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" />
-              <rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" />
-              <rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" />
-            </svg>
-            <span i18n="@@librariesRail">Libraries</span>
-          </button>
-          @for (group of projectGroups; track group.id) {
             <button
               type="button"
               class="docs-rail-button"
-              [class.is-active]="selectedCategory() === group.id"
-              [attr.aria-label]="group.label"
-              [attr.title]="group.label"
+              aria-label="Browse all libraries"
+              i18n-aria-label="@@browseAllLibraries"
               aria-controls="docs-navigation-pane"
-              [attr.aria-pressed]="selectedCategory() === group.id"
-              (click)="openLibraryPicker(group.id, $event)"
+              [attr.aria-pressed]="selectedCategory() === ''"
+              [class.is-active]="!selectedCategory()"
+              (click)="openLibraryPicker('', $event)"
             >
-              <app-project-icon [kind]="categoryIcon(group.id)" />
-              <span>{{ categoryLabel(group.id) }}</span>
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" />
+                <rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" />
+                <rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" />
+                <rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" />
+              </svg>
+              <span i18n="@@librariesRail">Libraries</span>
             </button>
-          }
-        </nav>
-        <nav
-          class="docs-rail-global"
-          aria-label="Primary navigation"
-          i18n-aria-label="@@primaryNavigation"
-        >
-          <a
-            class="docs-rail-button"
-            [href]="canonicalHomePath"
-            (click)="navigateHome($event)"
-            [attr.aria-current]="isIndex() ? 'page' : null"
-            aria-label="All projects"
-            i18n-aria-label="@@allProjectsNav"
-          >
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="m2 7 6-5 6 5v7H9.5V9h-3v5H2V7Z"
-                stroke="currentColor"
-                stroke-linejoin="round"
-              /></svg
-            ><span i18n="@@homeRail">Home</span>
-          </a>
-          <a
-            class="docs-rail-button"
-            routerLink="/standard-setup"
-            [class.is-active]="isStandardSetup()"
-            [attr.aria-current]="isStandardSetup() ? 'page' : null"
-          >
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M3 2.5h10v11H3v-11ZM5.5 5h5M5.5 8h5M5.5 11h3"
-                stroke="currentColor"
-                stroke-linecap="round"
-              />
-            </svg>
-            <span>{{ standardSetupLabel }}</span>
-          </a>
-          <a
-            class="docs-rail-button"
-            href="https://rdlabo.dev/articles"
-            aria-label="Articles"
-            i18n-aria-label="@@articlesNav"
-          >
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M3 2.5h10v11H3v-11ZM5.5 5h5M5.5 7.5h5M5.5 10h3.5"
-                stroke="currentColor"
-                stroke-linecap="round"
-              /></svg
-            ><span i18n="@@articlesNav">Articles</span>
-          </a>
-          <a
-            class="docs-rail-button"
-            routerLink="/support"
-            [class.is-active]="isSupport()"
-            [attr.aria-current]="isSupport() ? 'page' : null"
-            aria-label="Sponsor"
-            i18n-aria-label="@@supportNav"
-          >
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M8 13.5S2.5 10.2 2.5 5.8A2.8 2.8 0 0 1 8 4.9a2.8 2.8 0 0 1 5.5.9C13.5 10.2 8 13.5 8 13.5Z"
-                stroke="currentColor"
-                stroke-linejoin="round"
-              /></svg
-            ><span i18n="@@supportRail">Sponsor</span>
-          </a>
-        </nav>
-      </div>
-      <div id="docs-navigation-pane" class="docs-navigation-pane">
-        <div
-          class="docs-navigation-track"
-          [class.is-detail]="!showingLibraries()"
-          [class.animate-ready]="navigationAnimationReady()"
-        >
-          <div
-            class="docs-navigation-slide"
-            [attr.inert]="!showingLibraries() ? '' : null"
-            [attr.aria-hidden]="!showingLibraries() ? 'true' : null"
-          >
-            <app-library-picker
-              [groups]="projectGroups"
-              [category]="libraryCategory()"
-              [activeProjectId]="navigationProject()?.id"
-              [activePath]="navigationUrl()"
-              (selected)="selectProject($event)"
-            />
-          </div>
-          <div
-            class="docs-navigation-slide"
-            [attr.inert]="showingLibraries() ? '' : null"
-            [attr.aria-hidden]="showingLibraries() ? 'true' : null"
-          >
-            @if (navigationProject(); as project) {
-              <app-project-navigation
-                [project]="project"
-                [categoryLabel]="categoryTitle(project.category)"
-                (backToLibraries)="openLibraryPicker(project.category)"
-              />
+            @for (group of projectGroups; track group.id) {
+              <button
+                type="button"
+                class="docs-rail-button"
+                [class.is-active]="selectedCategory() === group.id"
+                [attr.aria-label]="group.label"
+                [attr.title]="group.label"
+                aria-controls="docs-navigation-pane"
+                [attr.aria-pressed]="selectedCategory() === group.id"
+                (click)="openLibraryPicker(group.id, $event)"
+              >
+                <app-project-icon [kind]="categoryIcon(group.id)" />
+                <span>{{ categoryLabel(group.id) }}</span>
+              </button>
             }
+          </nav>
+        </div>
+        <div id="docs-navigation-pane" class="docs-navigation-pane">
+          <div
+            class="docs-navigation-track"
+            [class.is-detail]="!showingLibraries()"
+            [class.animate-ready]="navigationAnimationReady()"
+          >
+            <div
+              class="docs-navigation-slide"
+              [attr.inert]="!showingLibraries() ? '' : null"
+              [attr.aria-hidden]="!showingLibraries() ? 'true' : null"
+            >
+              <app-library-picker
+                [groups]="projectGroups"
+                [category]="libraryCategory()"
+                [activeProjectId]="navigationProject()?.id"
+                [activePath]="navigationUrl()"
+                (selected)="selectProject($event)"
+              />
+            </div>
+            <div
+              class="docs-navigation-slide"
+              [attr.inert]="showingLibraries() ? '' : null"
+              [attr.aria-hidden]="showingLibraries() ? 'true' : null"
+            >
+              @if (navigationProject(); as project) {
+                <app-project-navigation
+                  [project]="project"
+                  [categoryLabel]="categoryTitle(project.category)"
+                  (backToLibraries)="openLibraryPicker(project.category)"
+                />
+              }
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </details>
   </aside>
   @if (navigationError()) {
     <div class="docs-load-error" role="alert">

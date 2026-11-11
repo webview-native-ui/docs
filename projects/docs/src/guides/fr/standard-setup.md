@@ -1,19 +1,25 @@
 ---
 title: 'Configuration standard WebView Native UI'
-sourceRevision: '2e86f1f775fa5f0b39b268a804555c9ee5ddfc3b3968bd4c8142ae29dd92df31'
+sourceRevision: '2d07f86743b5fd6d41c2e37b6a6d08966595e2ff8911c5f00f8ac30572c39519'
 ---
 
 # Configuration standard WebView Native UI
 
 Cette configuration Ionic standard associe les contrôles natifs iOS, y compris iPhone Duo / Vertical Bars, à Dynamic Color Android. L’application conserve son état, ses routes et ses gestionnaires.
 
+## Avant de commencer
+
+Utilisez une application Ionic existante avec Capacitor 8 et Foldable 8.5 ou ultérieur dans la version 8.
+
+Les contrôles iOS exigent iOS 26+ et Xcode 26+. Dynamic Color Android nécessite Android 12+ ; les appareils plus anciens conservent la palette par défaut. Le rail natif exige aussi un [appareil et un OS compatibles](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering).
+
+Pour les autres intégrations, choisissez [HTML sans Ionic](/projects/capacitor-native-ui/docs/framework-independent), [Cordova](/projects/cordova-native-ui/docs/readme) ou [les thèmes seuls](/guides/appearance).
+
 ## 1. Installer les paquets
 
 ```sh
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
 ```
-
-Utilisez une application Ionic existante avec Capacitor 8 et Foldable 8.5 ou ultérieur dans la version 8.
 
 ## 2. Configurer les deux thèmes
 
@@ -89,7 +95,7 @@ Compilez les ressources Web, synchronisez, puis recompilez et lancez chaque appl
 npx cap sync
 ```
 
-Les contrôles iOS exigent iOS 26+ et Xcode 26+. Dynamic Color Android nécessite Android 12+ ; les appareils plus anciens conservent la palette par défaut. Le rail natif exige aussi un [appareil et un OS compatibles](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering). SwiftPM résout Engine automatiquement ; les projets CocoaPods existants suivent la [configuration native](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
+SwiftPM résout Engine automatiquement ; les projets CocoaPods existants suivent la [configuration native](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
 
 ## Options individuelles
 

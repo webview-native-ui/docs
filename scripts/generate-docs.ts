@@ -1,3 +1,4 @@
+import { GUIDE_CHAPTERS } from '../shared/guide-navigation';
 import { generateStandardSetup } from './standard-setup';
 import { access, mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
@@ -943,6 +944,7 @@ async function main(): Promise<void> {
     '/',
     '/support',
     '/standard-setup',
+    ...GUIDE_CHAPTERS.map((chapter) => `/guides/${chapter.id}`),
     ...catalogs.en
       .filter((project) => !project.hostedUrl)
       .flatMap((project) => [project.path, ...project.pages.map((page: any) => page.path)]),

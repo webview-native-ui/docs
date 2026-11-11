@@ -1,19 +1,25 @@
 ---
 title: 'WebView Native UI 標準導入'
-sourceRevision: '2e86f1f775fa5f0b39b268a804555c9ee5ddfc3b3968bd4c8142ae29dd92df31'
+sourceRevision: '2d07f86743b5fd6d41c2e37b6a6d08966595e2ff8911c5f00f8ac30572c39519'
 ---
 
 # WebView Native UI 標準導入
 
 標準の Ionic 構成では、iPhone Duo / Vertical Bars を含む iOS のネイティブコントロールと、Android の Dynamic Color をまとめて設定します。アプリの状態、ルート、イベントハンドラーはそのまま使います。
 
+## 導入前に確認する
+
+Capacitor 8 の既存の Ionic アプリを使います。Foldable はバージョン8の8.5以降が必要です。
+
+iOS のネイティブコントロールは iOS 26 以降と Xcode 26 以降が必要です。Android Dynamic Color は Android 12 以降で利用でき、古い端末は既定の配色を維持します。ネイティブレールには追加の[対応端末と OS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering)が必要です。
+
+別の構成では、[Ionicを使わないHTML](/projects/capacitor-native-ui/docs/framework-independent)、[Cordova](/projects/cordova-native-ui/docs/readme)、[テーマだけの導入](/guides/appearance)を参照してください。
+
 ## 1. パッケージをインストールする
 
 ```sh
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
 ```
-
-Capacitor 8 の既存の Ionic アプリを使います。Foldable はバージョン8の8.5以降が必要です。
 
 ## 2. 両方のテーマを設定する
 
@@ -89,7 +95,7 @@ Web アセットをビルドして同期し、各ネイティブアプリを再�
 npx cap sync
 ```
 
-iOS のネイティブコントロールは iOS 26 以降と Xcode 26 以降が必要です。Android Dynamic Color は Android 12 以降で利用でき、古い端末は既定の配色を維持します。ネイティブレールには追加の[対応端末と OS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering)が必要です。SwiftPM は Engine を自動解決します。既存の CocoaPods 構成は[ネイティブプロジェクト設定](/projects/capacitor-native-ui/docs/configuration#native-project-setup)を参照してください。
+SwiftPM は Engine を自動解決します。既存の CocoaPods 構成は[ネイティブプロジェクト設定](/projects/capacitor-native-ui/docs/configuration#native-project-setup)を参照してください。
 
 ## 個別のオプション
 

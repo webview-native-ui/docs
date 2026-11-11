@@ -1,3 +1,4 @@
+import { GUIDE_CHAPTERS } from '../shared/guide-navigation';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
 import { readFile } from 'node:fs/promises';
@@ -510,6 +511,7 @@ test('all published internal document links resolve within this standalone site'
     paths.add(prefix);
     paths.add(`${prefix}/support`);
     paths.add(`${prefix}/standard-setup`);
+    for (const chapter of GUIDE_CHAPTERS) paths.add(`${prefix}/guides/${chapter.id}`);
     const { STANDARD_SETUP } =
       await import('../projects/docs/src/app/generated/standard-setup.generated');
     documents.push({

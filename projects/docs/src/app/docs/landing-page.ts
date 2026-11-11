@@ -1,3 +1,4 @@
+import { GuideContextComponent } from './guide-context';
 import { isPlatformBrowser } from '@angular/common';
 import { Component, LOCALE_ID, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -11,11 +12,12 @@ import { resolveDocsLocale } from '../../../../../shared/docs-locales';
 
 @Component({
   selector: 'app-landing-page',
-  imports: [RouterLink, SafeHtmlPipe, ProjectIconComponent],
+  imports: [GuideContextComponent, RouterLink, SafeHtmlPipe, ProjectIconComponent],
   styleUrl: './landing-page.css',
   template: `
     @if (project(); as p) {
       <article class="project-landing">
+          <app-guide-context />
         <span aria-hidden="true" class="sr-only" data-pagefind-ignore [attr.data-pagefind-filter]="'project:' + p.id">{{ p.shortName }}</span>
         <span aria-hidden="true" class="sr-only" data-pagefind-ignore [attr.data-pagefind-filter]="'category:' + p.category">{{ p.category }}</span>
         <div class="project-identity">

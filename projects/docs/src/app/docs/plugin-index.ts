@@ -1,3 +1,4 @@
+import { guideChaptersForLocale, guideCopyForLocale } from '../../../../../shared/guide-navigation';
 import { STANDARD_SETUP_LABELS, STANDARD_SETUP_PATH } from '../../../../../shared/standard-setup';
 import { resolveDocsLocale } from '../../../../../shared/docs-locales';
 import { Component, LOCALE_ID, OnInit, inject } from '@angular/core';
@@ -14,9 +15,50 @@ import { SeoService } from './seo.service';
     <div class="catalog">
       <header class="catalog-hero">
         <p class="eyebrow" i18n="@@openSourceDocumentation">Open source documentation</p>
-        <h1 i18n="@@documentationTitle">Documentation</h1>
-        <p class="catalog-hero__lead" i18n="@@projectsIntro">Guides and API references for WebView Native UI and Ionic themes.</p>
-        <p><a class="catalog-card__cta" [href]="standardSetupHref">{{ standardSetupLabel }} →</a></p>
+        <h1>{{ copy.title }}</h1>
+        <p class="catalog-hero__lead">{{ copy.intro }}</p>
+        <div class="platform-outcomes">
+          <section><h2>{{ copy.iosBenefit }}</h2><p>{{ copy.iosDetail }}</p></section>
+          <section><h2>{{ copy.androidBenefit }}</h2><p>{{ copy.androidDetail }}</p></section>
+        </div>
+        <h2>{{ copy.start }}</h2>
+        <p class="catalog-hero__lead">{{ copy.startDescription }}</p>
+        <p class="guide-actions"><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a><a href="#theme-preview-title">{{ copy.previewTitle }} ↓</a></p>
+        <nav class="setup-alternatives" [attr.aria-label]="copy.otherSetups">
+          <span>{{ copy.otherSetups }}</span>
+          <a [href]="guideHref('/guides/appearance')">{{ copy.themeOnly }}</a>
+          <a [href]="guideHref('/projects/capacitor-native-ui/docs/framework-independent')">{{ copy.htmlSetup }}</a>
+          <a [href]="guideHref('/projects/cordova-native-ui/docs/readme')">{{ copy.cordovaSetup }}</a>
+        </nav>
+      </header>
+
+      <section class="theme-preview" aria-labelledby="theme-preview-title">
+        <h2 id="theme-preview-title">{{ copy.previewTitle }}</h2>
+        <p>{{ copy.previewScope }}</p>
+        <div class="theme-preview-grid">
+          <figure>
+            <img src="https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/c70beb9d1e5b39de696b2b2c47a3d9bc5ffcdfbe/screenshots/ios27-library.png" width="780" height="1688" loading="lazy" [alt]="copy.iosPreview" />
+            <figcaption>{{ copy.iosPreview }}</figcaption>
+            <a [href]="iosDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryIos }} ↗</a>
+          </figure>
+          <figure>
+            <img src="https://raw.githubusercontent.com/webview-native-ui/ionic-theme-md3/v9.2.1/screenshots/md3.png" width="1848" height="974" loading="lazy" [alt]="copy.androidPreview" />
+            <figcaption>{{ copy.androidPreview }}</figcaption>
+            <a [href]="androidDemoUrl" target="_blank" rel="noopener noreferrer">{{ copy.tryAndroid }} ↗</a>
+          </figure>
+        </div>
+      </section>
+      <section class="guide-chapters" [attr.aria-label]="copy.guide">
+        @for (chapter of chapters; track chapter.id) {
+          <section class="guide-chapter">
+            <h2><a [href]="guideHref(chapter.path)">{{ chapter.title }} →</a></h2>
+            <p>{{ chapter.description }}</p>
+          </section>
+        }
+      </section>
+      <section id="packages" class="package-reference-intro">
+        <h2>{{ copy.reference }}</h2>
+        <p>{{ copy.referenceDescription }}</p>
         <nav class="category-nav" aria-label="Project categories" i18n-aria-label="@@projectCategoriesNav">
           @for (group of projectGroups; track group.id) {
             <a [href]="'#category-' + group.id">
@@ -24,8 +66,7 @@ import { SeoService } from './seo.service';
             </a>
           }
         </nav>
-      </header>
-
+      </section>
       @for (group of projectGroups; track group.id) {
         <section class="catalog-group" [id]="'category-' + group.id" [attr.aria-labelledby]="'heading-' + group.id">
           <header class="catalog-group__heading">
@@ -62,9 +103,15 @@ import { SeoService } from './seo.service';
 export class PluginIndexComponent implements OnInit {
   readonly #seo = inject(SeoService);
   readonly #locale = inject(LOCALE_ID);
+  protected readonly copy = guideCopyForLocale(this.#locale);
+  protected readonly chapters = guideChaptersForLocale(this.#locale);
+  protected guideHref(path: string): string { return localizedPublicPath(this.#locale, path); }
   protected readonly standardSetupLabel = STANDARD_SETUP_LABELS[resolveDocsLocale(this.#locale)];
   protected readonly standardSetupHref = localizedPublicPath(this.#locale, STANDARD_SETUP_PATH);
   protected readonly projectGroups = projectGroupsForLocale(this.#locale);
+
+  protected readonly iosDemoUrl = 'https://ionic-theme-ios27.rdlabo.dev/';
+  protected readonly androidDemoUrl = 'https://ionic-theme-md3.rdlabo.dev/';
 
   protected projectHref(project: ProjectSummary): string {
     return project.hostedUrl ?? localizedPublicPath(this.#locale, project.path);
@@ -72,7 +119,7 @@ export class PluginIndexComponent implements OnInit {
 
   ngOnInit(): void {
     const homeTitle = $localize`:@@docsHomeTitle:WebView Native UI Documentation`;
-    const description = $localize`:@@siteDescription:Guides and API references for Ionic themes, Capacitor and Cordova plugins, and WebView Native UI Engine.`;
+    const description = this.copy.intro;
     this.#seo.setPage({
       title: homeTitle,
       description,

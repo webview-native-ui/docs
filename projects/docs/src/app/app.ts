@@ -1,3 +1,4 @@
+import { guideChaptersForLocale, guideCopyForLocale } from '../../../../shared/guide-navigation';
 import { STANDARD_SETUP_PATH, STANDARD_SETUP_LABELS } from '../../../../shared/standard-setup';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
@@ -131,6 +132,14 @@ export class App {
     const path = this.currentUrl().split(/[?#]/)[0];
     return path === '/' || path === '/projects';
   });
+  protected readonly guideCopy = guideCopyForLocale(this.#locale);
+  protected readonly guideChapters = guideChaptersForLocale(this.#locale);
+  protected guideHref(path: string): string {
+    return localizedPublicPath(this.#locale, path);
+  }
+  protected isGuide(path: string): boolean {
+    return this.currentUrl().split(/[?#]/)[0] === path;
+  }
   protected readonly standardSetupLabel = STANDARD_SETUP_LABELS[resolveDocsLocale(this.#locale)];
   protected readonly isStandardSetup = computed(
     () => this.currentUrl().split(/[?#]/)[0] === STANDARD_SETUP_PATH,
@@ -428,6 +437,15 @@ export class App {
 
   #focusLibraryList(): void {
     const sidebar = this.docsSidebar?.nativeElement;
+    const reference = sidebar?.querySelector<HTMLDetailsElement>('.reference-navigation');
+    if (!reference?.open) {
+      this.#focusNavigationLink(
+        sidebar?.querySelector<HTMLAnchorElement>(
+          '.guide-navigation [aria-current="page"], .guide-navigation a',
+        ),
+      );
+      return;
+    }
     const currentProject = this.navigationProject();
     const selected = currentProject
       ? sidebar?.querySelector<HTMLAnchorElement>(`#project-link-${currentProject.id}`)
@@ -504,12 +522,13 @@ export class App {
     const elements = [
       button,
       ...Array.from(
-        sidebar.querySelectorAll<HTMLElement>('a[href], button, input, [tabindex]'),
+        sidebar.querySelectorAll<HTMLElement>('a[href], button, input, summary, [tabindex]'),
       ).filter(
         (element) =>
           element.tabIndex >= 0 &&
           !element.matches(':disabled') &&
-          !element.closest('[inert], [hidden], [aria-hidden="true"]'),
+          !element.closest('[inert], [hidden], [aria-hidden="true"]') &&
+          (!element.closest('details:not([open])') || element.tagName === 'SUMMARY'),
       ),
     ];
     const index = elements.indexOf(this.#document.activeElement as HTMLElement);

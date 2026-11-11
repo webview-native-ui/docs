@@ -135,9 +135,8 @@ describe('App', () => {
         project.path,
       );
     }
-    expect(
-      compiled.querySelector('a[href="https://rdlabo.dev/articles"]')?.textContent?.trim(),
-    ).toBe('Articles');
+    expect(compiled.querySelector('.guide-navigation a[href="/standard-setup"]')).not.toBeNull();
+    expect(compiled.querySelector('.reference-navigation')?.hasAttribute('open')).toBe(false);
     expect(compiled.querySelector('app-project-navigation')).toBeNull();
     expect(compiled.querySelector('footer')?.textContent).toContain(
       'Web and Native UI. One experience. Maintained by rdlabo',
@@ -653,9 +652,7 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const brand = compiled.querySelector<HTMLAnchorElement>('header a.docs-brand')!;
     const docsHome = compiled.querySelector<HTMLAnchorElement>('header a.docs-home-link')!;
-    const allProjects = compiled.querySelector<HTMLAnchorElement>(
-      'nav[aria-label="Primary navigation"] > a',
-    )!;
+    const allProjects = compiled.querySelector<HTMLAnchorElement>('.guide-navigation > a')!;
     expect(brand.getAttribute('href')).toBe('/ja');
     expect(brand.target).toBe('');
     expect(docsHome.getAttribute('href')).toBe('/ja');
@@ -732,7 +729,7 @@ describe('App', () => {
     await router.navigateByUrl('/');
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(currentLinks().map((link) => link.textContent?.trim())).toEqual(['Home']);
+    expect(currentLinks().map((link) => link.textContent?.trim())).toEqual(['Overview']);
 
     await router.navigateByUrl('/support');
     fixture.detectChanges();
@@ -782,7 +779,7 @@ describe('App', () => {
     await fixture.whenStable();
     expect(button.getAttribute('aria-expanded')).toBe('true');
     expect(menu.hasAttribute('inert')).toBe(false);
-    expect(document.activeElement).toBe(menu.querySelector('.library-picker-list a'));
+    expect(document.activeElement).toBe(menu.querySelector('.guide-navigation a'));
 
     button.click();
     fixture.detectChanges();
@@ -796,7 +793,7 @@ describe('App', () => {
     await fixture.whenStable();
     expect(button.getAttribute('aria-expanded')).toBe('true');
     expect(menu.hasAttribute('inert')).toBe(false);
-    expect(document.activeElement).toBe(menu.querySelector('.library-picker-list a'));
+    expect(document.activeElement).toBe(menu.querySelector('.guide-navigation a'));
 
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     fixture.detectChanges();
@@ -821,12 +818,13 @@ describe('App', () => {
     const controls = [
       button,
       ...Array.from(
-        sidebar.querySelectorAll<HTMLElement>('a[href], button, input, [tabindex]'),
+        sidebar.querySelectorAll<HTMLElement>('a[href], button, input, summary, [tabindex]'),
       ).filter(
         (element) =>
           element.tabIndex >= 0 &&
           !element.matches(':disabled') &&
-          !element.closest('[inert], [hidden], [aria-hidden="true"]'),
+          !element.closest('[inert], [hidden], [aria-hidden="true"]') &&
+          (!element.closest('details:not([open])') || element.tagName === 'SUMMARY'),
       ),
     ];
     button.focus();
@@ -879,7 +877,7 @@ describe('App', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     for (const frame of frames.slice(previousFrameCount)) frame(0);
-    expect(document.activeElement).toBe(compiled.querySelector('.library-picker-list a'));
+    expect(document.activeElement).toBe(compiled.querySelector('.guide-navigation a'));
   });
 
   it('reveals the current document when opening or reselecting its library after the viewport shrinks', async () => {
