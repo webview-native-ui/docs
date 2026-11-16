@@ -8,7 +8,7 @@ Ionic アプリに iOS26 のデザインを適用する CSS・JavaScript テー�
 
 <!-- rdlabo-docs-pick -->
 
-![Liquid Glass のタブバー、リスト、コントロールを使う iOS 26 テーマ](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/ios26-v9.4.3/screenshots/ios26.png)
+![Liquid Glass のタブバー、リスト、コントロールを使う iOS 26 テーマ](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/ios26-v9.5.0/screenshots/ios26.png)
 
 <!-- /rdlabo-docs-pick -->
 

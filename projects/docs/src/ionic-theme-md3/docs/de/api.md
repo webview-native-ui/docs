@@ -1,9 +1,9 @@
 ---
 title: API
-sourceRevision: "ad472863defb709d6e94b51b25c9a5d99baf4c63d390667aa75b2a1b6c5f5a29"
+sourceRevision: "8b90aa3e684fdc511bdebd5cb5d359937b9e33a762e950c7cbca34010fae8df6"
 ---
 
-Referenz der von `@rdlabo/ionic-theme-md3` v9.2.2 exportierten JavaScript-API. Die CSS-Einstiegspunkte sind weiterhin in der README dokumentiert.
+Referenz der von `@rdlabo/ionic-theme-md3` v9.3.0 exportierten JavaScript-API. Die CSS-Einstiegspunkte sind weiterhin in der README dokumentiert.
 
 ## Animation
 

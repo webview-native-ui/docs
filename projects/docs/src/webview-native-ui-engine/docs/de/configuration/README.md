@@ -1,7 +1,8 @@
 ---
 title: "Registrierungseinstellungen"
-sourceRevision: "5a4a235c962fd595c64e6772b34dcffc282cd14995b0d32f51eb6436fa812c6f"
+sourceRevision: "12ed6d5fd957aeeb3d02a7d7b7f6b2037abd4b1f0c9e83f781742a8f5c9443d2"
 ---
+
 # Eine native Registrierung konfigurieren
 
 Beginnen Sie mit der [grundlegenden Initialisierung](../getting-started/initialization.md). Die folgenden Einstellungen gehören zu derselben Registrierung; ergänzen Sie nur, was Ihre Komponente benötigt.
@@ -15,7 +16,7 @@ Optional bedeutet, dass ein Standardwert vorhanden ist, nicht dass eine verände
 | `receiveListeners` | Keine Plugin-Ereignisse werden abonniert. Die anfängliche Darstellungsabsicht ergibt sich aus der Sichtbarkeit der nativen Ansicht; die interne DOM- und Scroll-Verarbeitung läuft weiterhin. | Eine Tab-Auswahl verändert das hervorgehobene Element: Verbinden Sie `update`, um Bildpunkte und gebundene Werte zu aktualisieren, `projection` für Darstellungswechsel und `match` für die Zuordnung zu einzelnen Oberflächen. Siehe [Ereignisverknüpfung](events.md#choose-successful-update-and-presentation-events) und die `receive`-Weiterleitung im Cordova-Leitfaden. |
 | `readValues` | Keine Werte werden von Native ins DOM gelesen. | Ein nativer Schalter verändert sich, während sein Fallback verborgen ist: Lesen Sie seinen aktuellen Zustand, damit der Fallback nicht mit dem alten Wert zurückkehrt. Siehe [Wertbindungen](values.md). |
 | `values` | Mit `readValues` werden alle zurückgegebenen Schlüssel zu `data-native-ui-value-*`-Attributen. Ohne `readValues` erfolgt keine Übertragung. | Ein benutzerdefiniertes Element rendert anhand von `checked` statt anhand von Attributen: Ordnen Sie diesen Schlüssel seiner Host-Eigenschaft zu. Dadurch werden keine Anwendungsereignisse erzeugt. |
-| `captureDelayMs` | Bilder werden nach einem Debounce von 50 ms vorbereitet. | Eine Tab-Hervorhebung wird beim Eintreffen des Auswahlereignisses noch animiert: Warten Sie auf das abgeschlossene Erscheinungsbild. Siehe [Aufnahmezeitpunkt](capture.md); dies verzögert nicht das Öffnen des Overlays. |
+| `captureDelayMs` | 50 ms für die Stabilisierung der Aufnahme vorsehen. | Eine Tab-Hervorhebung wird beim Eintreffen des Auswahlereignisses noch animiert: Warten Sie auf das abgeschlossene Erscheinungsbild. Siehe [Aufnahmezeitpunkt](capture.md); dies verzögert nicht das Öffnen des Overlays. |
 | `canCapture` | Gibt true zurück; Geometrie- und Plattformprüfungen der Engine gelten weiterhin. | Ein SDK wechselt von aufnehmbaren statischen Inhalten zu eingeschränktem Video: Verhindern Sie eine unzulässige Aufnahme. Geben Sie die Aufnahmefähigkeit des aktuellen Inhalts zurück. |
 | `failedFallback` | Der gewöhnliche Web-Fallback wird verwendet, wenn kein geeignetes Bild verfügbar ist. | Eine SDK-Ansicht hat keinen brauchbaren Web-Ersatz: Belassen Sie sie während automatischer Bewegung nur dann nativ, wenn der Renderer ihre Positionierung weiterführt. Explizite Web-Abdeckung und `none` haben weiterhin Vorrang. Siehe [Fehlerstrategie](../reference/projection.md#native-surface-requirements). |
 | `allowedOrigins` | Capacitor: gebündelte `server.url` oder lokaler Hostname/Scheme; localhost-Standardwerte ohne Serverkonfiguration der App. Cordova: localhost-Standardwerte. | Für programmatische Konfiguration oder einen enger gefassten vertrauenswürdigen Origin überschreiben. Unter Android vor der Navigation bei `install` festlegen; Registrierungen erben dies. Siehe [Origin-Abgleich](../reference/projection.md). |

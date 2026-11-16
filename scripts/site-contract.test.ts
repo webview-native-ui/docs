@@ -306,7 +306,7 @@ test('separates iOS 26 and iOS 27 documentation, source branches, and screenshot
     assert.equal(project.demoUrl, 'https://ionic-theme-ios27.rdlabo.dev/');
     assert.equal(
       project.releaseNotesUrl,
-      `https://github.com/webview-native-ui/ionic-theme-ios27/releases/tag/v${project.version}`,
+      `https://github.com/webview-native-ui/ionic-theme-ios27/releases/tag/ios27-v${project.version}`,
     );
     assert.ok((project.overviewHtml.match(/<img /g) ?? []).length > 0);
     assert.doesNotMatch(project.overviewHtml, /&lt;img|src="\.\//);
@@ -315,7 +315,7 @@ test('separates iOS 26 and iOS 27 documentation, source branches, and screenshot
       const definition = projectDefinitions.find(({ id }) => id === project.id)!;
       assert.ok(
         image.src.includes(
-          `/${definition.englishDocsAssetsRef ?? `v${project.version}`}/screenshots/`,
+          `/${definition.englishDocsAssetsRef ?? `ios27-v${project.version}`}/screenshots/`,
         ),
       );
     }

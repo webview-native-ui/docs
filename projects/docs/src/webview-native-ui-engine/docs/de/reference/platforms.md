@@ -1,7 +1,8 @@
 ---
 title: "Aufnahme- und Plattformgrenzen"
-sourceRevision: "8eb1f3724fb2d18a870996ca5d8d103ca56bbdf93f142d60d3ee1feb02c1a437"
+sourceRevision: "891cb6ad80bfbe123910d1b52cc2250e45a441b1635de2c36766defd4f66ea9a"
 ---
+
 # Aufnahme- und Plattformgrenzen
 
 Wählen Sie Aufnahme- und Fallback-Einstellungen für die tatsächliche native Oberfläche. Beginnen Sie mit dem [Projektionsvertrag](projection.md) und dem [Konfigurationsleitfaden](../configuration/README.md); diese Referenz beschreibt Plattformverhalten und Grenzen, keine zusätzlichen Einrichtungsschritte.
@@ -26,9 +27,11 @@ Android verwendet eine Gradle-Android-Bibliothek, die über Maven als AAR statt 
 android/gradlew -p android testDebugUnitTest assembleRelease connectedDebugAndroidTest publishReleasePublicationToVerificationRepository
 ```
 
-`NativeUIClippedView` ist ein untergeordneter Helfer, der vom Aufrufer gelieferte Position und Beschneidung anwendet, ohne unveränderte Abmessungen zurückzusetzen. `NativeUIProjection` verwaltet Bildübergabe und Wiederherstellung; es verwendet diesen Helfer nicht für das Renderer-Layout. Das konsumierende Plugin verwaltet normale native Platzierung und Größenaktualisierungen. Android behauptet keine native Overflow-Bindung nach WKWebView-Art. Übergeordnete Registrierungen teilen einen nicht konsumierenden Window-Touch-Beobachter: Down verhindert die Übernahme laufender Aufnahmen, Up/Cancel/Fokusverlust erlaubt wieder Vorbereitung, und Bereinigung entfernt nur diese Registrierung. Vorhandene Callback-Zustellung und Rückgabewerte bleiben erhalten.
+`NativeUIClippedView` ist ein Low-Level-Helfer für vom Aufrufer gelieferte Positionierung und Clipping, ohne unveränderte Maße zurückzusetzen. `NativeUIProjection` verwaltet Bildübergabe und Wiederherstellung; es verwendet diesen Helfer nicht für das Renderer-Layout. Normale native Platzierung und Größenänderungen liegen beim konsumierenden Plugin. Android beansprucht keine native Overflow-Bindung nach WKWebView-Art. High-Level-Registrierungen teilen einen Window-Beobachter, der ursprüngliche SDK-Eingaben erhält und beim Abbau nur die jeweilige Registrierung entfernt.
 
 `NativeUISnapshots` bereitet zusammengesetzte PixelCopy-Bilder und lokale PNG-Dateien vor und führt Cover/Restore anschließend aus diesem Cache aus. Encoding läuft außerhalb des UI-Threads; pro Besitzer läuft nur eine Vorbereitung. Melden Sie visuelle Änderungen und Interaktion und geben Sie Token bei der Bereinigung frei. Alle View-/Lebenszyklusaufrufe laufen auf dem UI-Thread. Revision, Eignung und Fallback-Richtlinie bleiben beim Plugin.
+
+Zur SDK-Eingabereihenfolge, eigenen Window-Beobachtung, ausstehenden visuellen Invalidierung und Bereinigung siehe [Aufnahme vor der Interaktion](../advanced/preinteraction-capture.md). Dieser Vertrag gilt auch für SDK-Registrierungen; eigene Hosts leiten das vollständige Ereigniswörterbuch weiter, statt einen zweiten Touch-Beobachter zu pflegen.
 
 Nachdem vorbereitete Web-Pixel angezeigt oder entfernt wurden, prüft `NativeUIWebReadiness.prepare` Bereitschaft für einen nachfolgenden WebView-Zeichenvorgang. Das Prädikat `current` muss besitzende Sitzung, Quellgeneration und Bildrevision validieren. Die temporäre native Kopie überdeckt diese asynchrone Übergabe; der Overlay-Start selbst wartet nicht. Weder Bridge-Bestätigung noch dieser Callback beweist die Darstellung auf dem physischen Display.
 
@@ -36,11 +39,7 @@ Ein undurchsichtiges Bild kann zwischen Übergaben unter einer undurchsichtigen 
 
 ### Durchscheinende Android-Flächen
 
-Erfassen Sie die zusammengesetzten Fensterpixel einschließlich Hintergrund, statt die durchscheinende Ansicht auf eine leere Bitmap zu zeichnen. Behalten Sie das vorbereitete Web-Bild dekodiert, aber ausgeblendet. Bei der Übergabe installiert `cover(token, window, reference, views)` eine temporäre undurchsichtige Bildkopie vor dem Ausblenden dieser nativen Ansichten im selben UI-Durchlauf. Zeigen Sie das Web-Bild, bestätigen Sie Web-Zeichenbereitschaft und entfernen Sie dann die Eintrittskopie. Das Overlay startet sofort; Bild-Encoding liegt niemals auf diesem Pfad.
-
-Installieren Sie bei der Rückkehr mit `restore` die vorbereitete Rückkehrkopie, stellen Sie darunter die nativen Ansichten wieder her, blenden Sie das Web-Bild aus und entfernen Sie die Rückkehrkopie nach Web-Zeichenbereitschaft. So werden aktive durchscheinende native Pixel nicht über ihrem eigenen Snapshot zusammengesetzt. Validieren Sie Token und aktuelle Flächengeneration in jedem asynchronen Callback. Die temporäre Kopie ist nicht interaktiv und begrenzt; Bereinigung gibt beide Kopien und gecachte Ressourcen frei.
-
-Dies erhält den aufgenommenen Hintergrund, keine fortlaufend veränderte Szene hinter dem Bild. Hintergrundänderungen müssen den Cache über dieselben visuellen Änderungsbenachrichtigungen wie Inhaltsaktualisierungen invalidieren. Video und nicht unterstützte Aufnahmeflächen behalten die Fallback-Richtlinie des Verbrauchers.
+Verwenden Sie COMPOSITED für durchscheinende Oberflächen und invalidieren Sie bei Hintergrundänderungen. Eintrittskopien verhindern, dass sich das aktive Steuerelement mit seinem eigenen Web-Bild mischt; Rückkehrkopien verdecken die native Wiederherstellung. Aufrufreihenfolge und Bereinigung beschreibt [native Übergabe](../advanced/native-handoff.md). Diese Bilder erhalten den aufgenommenen Hintergrund, kein Live-Video oder eine ständig wechselnde Szene.
 
 Verbraucher-Integrationstests gehören in deren jeweilige Repositorys. Engine-CI prüft Browser-, Swift- und Android-Verträge, ohne einen benachbarten Renderer-Checkout vorauszusetzen.
 

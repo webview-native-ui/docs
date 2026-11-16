@@ -1,7 +1,8 @@
 ---
 title: "Choisir une API avancée"
-sourceRevision: "36b669fe0fe5d7f321ae97def344d07b379feb38f23ffd5579bce18341b4d4ed"
+sourceRevision: "a9d93a094557880d1c338b5495ad9cf3782e319b2f2aa728b87258d609391804"
 ---
+
 # API avancées
 
 L’enregistrement de base gère déjà les mesures, la capture et la confirmation du transfert. N’ajoutez pas un second gestionnaire de projection pour le même hôte. Utilisez les API suivantes lorsque votre moteur de rendu gère déjà le travail correspondant et doit le coordonner :
@@ -14,6 +15,7 @@ L’enregistrement de base gère déjà les mesures, la capture et la confirmati
 | S’adapter à un modèle de propriété existant que les helpers de surface ne peuvent pas exprimer | `createWebProjectionScope` / `createWebProjection` ; consultez la [projection de bas niveau](web-projection.md). |
 | Sérialiser des mises à jour d’état remplaçables et récupérer après une confirmation perdue | `createNativeUpdateQueue` ; consultez l’[ordonnancement des mises à jour et la récupération](update-queue.md). |
 | Implémenter le pont natif d’un moteur de rendu personnalisé | Méthodes `handle` du gestionnaire d’instantanés ; consultez le [transfert natif](native-handoff.md). |
+| Faire défiler un flux avec un glissement commençant sur une vue SDK | `NativeUIScrollHosting` ; voir [hébergement du défilement natif](native-scroll-hosting.md). |
 
 Ce sont des choix d’intégration, pas des étapes supplémentaires pour terminer une configuration `NativeUIProjection` normale. Conservez les actions métier, les interactions SDK et les notifications applicatives dans le plugin consommateur.
 

@@ -1,7 +1,8 @@
 ---
 title: "Erste Schritte"
-sourceRevision: "e0cb1e5d66f43833d78bf2f23945d89821bba9fbfe7e62a451fb632edbe114b2"
+sourceRevision: "635f8fc3732f288be4f1da7339ad66108f22c8e9b2592057ff6545a2806f4c5d"
 ---
+
 # Über die WebView hinaus.
 
 **Native UI nahtlos in Web-Apps integrieren.**
@@ -40,6 +41,8 @@ Das Plugin stellt eine native Ansicht und einen DOM-Container bereit, der ihren 
 Wenn die Web-Ebene die Darstellung übernehmen muss, zeigt die Engine ein vorbereitetes Bild der nativen Komponente in diesem Container an. Sobald die native Darstellung wieder möglich ist, koordiniert sie die Platzierung und Wiederherstellung der interaktiven Ansicht.
 
 Das Bild ist eine vorübergehende visuelle Projektion, kein zweites interaktives Steuerelement. Es leitet keine Klicks weiter und spielt keine Live-Videos ab. Aufnahmebedingungen und plattformspezifische Darstellungsgrenzen gelten weiterhin, einschließlich abweichender Liquid Glass-Glanzlichter. Ist kein geeignetes Bild verfügbar, verwendet die Integration ihren konfigurierten Web-Fallback. Lesen Sie vor der Auswahl einer Komponente die [Konzepte und Grenzen](docs/concepts.md) und die [Plattformunterstützung](docs/reference/platforms.md).
+
+Unter iOS 26 und neuer ist für Liquid-Glass-Aufnahmen standardmäßig eine experimentelle Umgehung mit einer **privaten Apple-API** aktiv. Prüfen Sie vor dem Einsatz dieser Version die Risiken und [deaktivieren Sie sie bei Bedarf](docs/experimental/glass-capture.md).
 
 ## Mit der Entwicklung beginnen
 

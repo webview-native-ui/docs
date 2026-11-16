@@ -218,6 +218,7 @@ export function rewriteRepositoryResourceLinks(
   markdown: string,
   repositoryUrl: string,
   ref: string,
+  publishedSlugs?: ReadonlySet<string>,
 ): string {
   // Earlier guide normalization may already have changed demo/*.md to /docs/demo/*.
   // Leave code examples untouched, including prompt text containing Markdown links.
@@ -234,6 +235,15 @@ export function rewriteRepositoryResourceLinks(
         const hashIndex = relative.indexOf('#');
         let path = hashIndex < 0 ? relative : relative.slice(0, hashIndex);
         const hash = hashIndex < 0 ? '' : relative.slice(hashIndex);
+        if (
+          normalized &&
+          publishedSlugs &&
+          !publishedSlugs.has(path) &&
+          path !== 'api' &&
+          !/^(?:demo\/|scripts\/|src\/|CONTRIBUTING|LICENSE|test-execution-time)/.test(path)
+        ) {
+          return `](${repositoryUrl}/blob/${ref}/docs/${path}.md${hash})`;
+        }
         if (normalized && path === 'README') {
           path = 'docs/README.md';
         } else if (/^test-execution-time(?:\.md)?$/.test(path)) {

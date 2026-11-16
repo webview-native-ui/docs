@@ -56,6 +56,19 @@ test('repository resources retain pinned upstream targets instead of nonexistent
   );
 });
 
+test('new upstream guides link to the released source until the portal hosts them', () => {
+  const result = rewriteRepositoryResourceLinks(
+    '[capture](/docs/advanced/preinteraction-capture#window-integration) [setup](/docs/readme) [API](/docs/api) [script](/docs/scripts/check)',
+    'https://github.com/webview-native-ui/engine',
+    'v1.0.10',
+    new Set(['readme']),
+  );
+  assert.equal(
+    result,
+    '[capture](https://github.com/webview-native-ui/engine/blob/v1.0.10/docs/advanced/preinteraction-capture.md#window-integration) [setup](/docs/readme) [API](/docs/api) [script](https://github.com/webview-native-ui/engine/blob/v1.0.10/scripts/check.md)',
+  );
+});
+
 test('keeps Overview through Documentation and drops preamble, Index, and API', () => {
   const markdown = `<p align="center">badge</p>
 

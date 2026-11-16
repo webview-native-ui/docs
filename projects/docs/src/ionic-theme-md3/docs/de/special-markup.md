@@ -1,6 +1,6 @@
 ---
 title: "Besonderes Markup"
-sourceRevision: "3728e6e1b03ebd988f193aafaf6d13fc5c05cd2337a964e7d3752d16f74d0d72"
+sourceRevision: "bca33665f4a0cd2593c3cf038f0f7f0c9311760c592aecee00ad193226d2680b"
 ---
 
 # Besonderes Markup
@@ -17,6 +17,46 @@ Verwenden Sie `type="submit"` für eine echte Formularübermittlung. Ist eine Ü
 ```
 
 Explizite Ionic-Farben, der deaktivierte Zustand und `fill="clear"` / `fill="outline"` behalten ihre normale Bedeutung. Die Klasse erzwingt keine andere Füllung.
+
+## Badges für Toolbar-Schaltflächen
+
+Platzieren Sie `ion-badge` direkt in einem `ion-button` innerhalb von `ion-toolbar`. Einzelne Schaltflächen und Schaltflächen in `ion-buttons` werden unterstützt. Ein leeres Badge zeigt einen Ungelesen-Indikator; Text wie `3` oder `99+` zeigt eine Anzahl. Für einen Indikator muss `<ion-badge></ion-badge>` vollständig leer bleiben, ohne Leerzeichen oder Zeilenumbrüche zwischen den Tags.
+
+Einzelne Toolbar-Schaltfläche:
+
+```html preview
+<ion-toolbar>
+  <ion-button slot="end" aria-label="Notifications">
+    <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+    <ion-badge>3</ion-badge>
+  </ion-button>
+</ion-toolbar>
+```
+
+Gruppierte Toolbar-Schaltflächen mit leeren, numerischen und breiten Badges:
+
+```html preview
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button aria-label="Unread notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge></ion-badge>
+    </ion-button>
+    <ion-button aria-label="3 notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>3</ion-badge>
+    </ion-button>
+    <ion-button aria-label="99 or more notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>99+</ion-badge>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+Wählen Sie über die Badge-Eigenschaft `color` eine Ionic-Farbe. `hidden`, `display: none` oder das Entfernen des Badges blendet es ohne Änderung des Aktionslayouts aus. Nehmen Sie den Benachrichtigungszustand in die barrierefreie Beschriftung der Aktion auf.
+
+Die Gestaltung gilt nur für direkte Badge-Kinder von Toolbar-Schaltflächen. Badges in Tabs, außerhalb von Toolbars oder in weiteren Kindelementen behalten ihr bisheriges Styling. Theme-Opt-outs an Toolbar, Gruppe, Schaltfläche oder Badge bleiben unterstützt.
 
 ## Empfohlene Overlay-Aktionen
 

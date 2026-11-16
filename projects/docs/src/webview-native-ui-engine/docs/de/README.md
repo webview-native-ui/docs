@@ -1,7 +1,8 @@
 ---
 title: "Dokumentationsübersicht"
-sourceRevision: "89d93b28716c579e0f214dd6295f82a48c0db142e66d1fbcb768d8accb6ac73f"
+sourceRevision: "339bb3e513fd876e35a512576514f1ade9a934f38ffb77152486abd6bd7e0fdd"
 ---
+
 # Dokumentation
 
 Entwickeln Sie Web-gesteuerte Ansichten mit nativen Steuerelementen und Funktionen. Diese Leitfäden erklären, wie Sie die Engine in ein Plugin integrieren, damit Web UI und Native UI koexistieren können. Beginnen Sie mit [dem gemeinsamen Modell](concepts.md): wie eine native Komponente in ein Web-Layout eingebunden ist, welche Ebene sie darstellt und wie die Interaktion zur aktiven Ansicht zurückkehrt. Scrollen und Overlays sind Beispiele dieser Koordination, keine getrennten Integrationsmodelle.
@@ -65,3 +66,7 @@ Prüfen Sie mit diesen Seiten Verträge und unterstütztes Verhalten bei der Imp
 ## Beiträge
 
 [Entwicklung und Veröffentlichungen](maintenance.md) beschreibt Repository-Struktur, lokale Prüfung, CI und Veröffentlichung. Für die Verwendung der Engine ist dies nicht erforderlich.
+
+Zur Aufnahme bei nativem Kontakt, Window-Integration und zu Zeitereignissen siehe [Aufnahme vor der Interaktion](advanced/preinteraction-capture.md).
+
+Die standardmäßig aktive Umgehung über eine private API für Liquid-Glass-Aufnahmen beim iOS-Kaltstart und ihre Deaktivierung beschreibt [experimentelle Glass-Aufnahme](experimental/glass-capture.md). Dies ist keine von Apple unterstützte API.

@@ -1,7 +1,8 @@
 ---
 title: "ドキュメント概要"
-sourceRevision: "89d93b28716c579e0f214dd6295f82a48c0db142e66d1fbcb768d8accb6ac73f"
+sourceRevision: "339bb3e513fd876e35a512576514f1ade9a934f38ffb77152486abd6bd7e0fdd"
 ---
+
 # ドキュメント
 
 ネイティブのコントロールや機能を備えた、Web主体の画面を構築できます。このガイドでは、Web UIとNative UIを共存させるためにEngineをプラグインへ組み込む方法を説明します。まず[共通のモデル](concepts.md)で、ネイティブコンポーネントをWebレイアウト内に配置する仕組み、表示を担うレイヤー、ライブビューへの操作の復帰を理解してください。スクロールとオーバーレイは、この連携の例であり、別々の組み込みモデルではありません。
@@ -65,3 +66,7 @@ sourceRevision: "89d93b28716c579e0f214dd6295f82a48c0db142e66d1fbcb768d8accb6ac73
 ## 貢献
 
 [開発とリリース](maintenance.md)では、リポジトリ構成、ローカル検証、CI、公開を扱います。Engineの利用には必須ではありません。
+
+ネイティブへの接触時の取得、Window連携、タイミングイベントは[操作前キャプチャ](advanced/preinteraction-capture.md)を参照してください。
+
+iOSのコールド起動時のLiquid Glassキャプチャに対する、既定で有効な非公開APIの回避策と無効化方法は[実験的なGlassキャプチャ](experimental/glass-capture.md)を参照してください。AppleがサポートするAPIではありません。

@@ -1,7 +1,8 @@
 ---
 title: "Funktionen"
-sourceRevision: "ce97c2752a2658e17c02a97a4e72c9ba241e17d99f3bfbcc3d3588f25eec60bc"
+sourceRevision: "32202243b31dd709b70ccffb8055fd0059e18e7213a5a6255ac63792ccb7752f"
 ---
+
 # Funktionen
 
 Passen Sie das Theme mit CSS-Variablen und Sass-Mixins an oder übernehmen Sie es schrittweise für einzelne Komponenten. Markupspezifische Aktivierungen sind unter [Spezielles Markup und Klassen](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/special-markup) dokumentiert.
@@ -9,7 +10,7 @@ Passen Sie das Theme mit CSS-Variablen und Sass-Mixins an oder übernehmen Sie e
 ## CSS-Variablen
 
 Zur Anpassung der Standard-Styles der Bibliothek an Ihr Design stehen mehrere CSS-Variablen bereit. Einzelheiten finden Sie in dieser Datei:
-https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios26-v9.4.3/src/styles/default-variables.scss
+https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios26-v9.5.0/src/styles/default-variables.scss
 
 ## Liquid-Glass-Mixin
 

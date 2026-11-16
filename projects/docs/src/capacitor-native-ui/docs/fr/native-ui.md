@@ -1,6 +1,6 @@
 ---
 title: "Native UI"
-sourceRevision: "16a0909425a31b1fdb9ca1b066159f289e4f49a04102a60bde35607781c551a1"
+sourceRevision: "f0c3ea52e9520a91d3d7f28af905984251021184c2648235fa79fb4b9efd1b1b"
 ---
 
 # Native UI
@@ -37,6 +37,18 @@ import { configureNativeTransition } from '@rdlabo/capacitor-native-ui';
 
 await configureNativeTransition();
 ```
+
+### Défilement inertiel sous iOS
+
+Par défaut, les actions des contrôles natifs arrêtent le défilement inertiel WebView en cours, y compris dans `ion-content`. Pour conserver l’inertie lors de l’activation d’un contrôle natif :
+
+```ts
+await enableNativeUI({ stopScrollOnActivate: false });
+```
+
+Cela annule uniquement l’inertie en cours, sans verrouiller le défilement ni programmer sa reprise. Le prochain geste démarre un nouveau défilement là où le contenu est interactif. Les superpositions conservent leurs règles ; les fermer ne rejoue pas l’inertie annulée. Android et le repli Web restent inchangés. Comme pour les autres paramètres de démarrage, il faut détruire le handle actif et en créer un nouveau pour modifier cette option.
+
+Avec Engine 1.0.7, la préparation des captures utilise le même réglage. Avec `true` par défaut, les captures au repos attendent la stabilisation du défilement ; le contact natif arrête l’inertie avant toute nouvelle mesure et acquisition de pixels. `false` désactive l’arrêt avant capture et à l’activation. Les captures échouées ou périmées conservent le repli Web normal.
 
 ### Navigation et compilations natives
 

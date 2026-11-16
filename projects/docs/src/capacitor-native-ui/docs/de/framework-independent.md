@@ -1,6 +1,6 @@
 ---
 title: "Native UI ohne Ionic"
-sourceRevision: "6c7da5b1931e776a2f089d61ea2049e09dc8bc8608816339c794576962212eb5"
+sourceRevision: "a6172b548291a69409584199fbc6a6445ce833ef0c3b7fc725eb440defb83f28"
 ---
 
 # Native UI ohne Ionic
@@ -136,4 +136,4 @@ Der HTML-Adapter unterstützt derzeit Schaltflächen und Zurückschaltflächen. 
 
 ## Beispiel
 
-Das [reine HTML-Beispiel](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.4/examples/native-ui-html) zeigt Add, routerlose Home-/Details-/Back-Navigation, optionale Web-Rail-Projektion und Bereinigung. Es verwendet weder Ionic noch Theme-CSS.
+Das [reine HTML-Beispiel](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.9/examples/native-ui-html) zeigt Add, routerlose Home-/Details-/Back-Navigation, optionale Web-Rail-Projektion und Bereinigung. Es verwendet weder Ionic noch Theme-CSS.

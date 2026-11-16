@@ -1,7 +1,8 @@
 ---
 title: "Limites de capture et des plateformes"
-sourceRevision: "8eb1f3724fb2d18a870996ca5d8d103ca56bbdf93f142d60d3ee1feb02c1a437"
+sourceRevision: "891cb6ad80bfbe123910d1b52cc2250e45a441b1635de2c36766defd4f66ea9a"
 ---
+
 # Limites de capture et des plateformes
 
 Choisissez les paramètres de capture et de repli en fonction de la surface native réelle. Commencez par le [contrat de projection](projection.md) et le [guide de configuration](../configuration/README.md) ; cette référence décrit les comportements et limites des plateformes, pas des étapes de configuration supplémentaires.
@@ -26,9 +27,11 @@ Android utilise une bibliothèque Gradle Android, distribuée sous forme d’AAR
 android/gradlew -p android testDebugUnitTest assembleRelease connectedDebugAndroidTest publishReleasePublicationToVerificationRepository
 ```
 
-`NativeUIClippedView` est un helper de bas niveau qui applique la position et le découpage fournis par l’appelant sans réinitialiser les dimensions inchangées. `NativeUIProjection` gère le transfert vers l’image et la restauration ; il n’utilise pas ce helper pour mettre en page le moteur de rendu. Le plugin consommateur gère le placement natif normal et les changements de taille. Android ne revendique pas de liaison overflow native de type WKWebView. Les enregistrements de haut niveau partagent un observateur tactile de fenêtre non consommant : down annule l’adoption d’une capture en cours, up/cancel/perte de focus autorise de nouveau la préparation, et le démontage supprime uniquement cet enregistrement. La distribution des callbacks et les valeurs de retour existantes sont préservées.
+`NativeUIClippedView` est un outil de bas niveau appliquant la position et le clipping fournis par l’appelant sans réinitialiser les dimensions inchangées. `NativeUIProjection` gère les transferts et restaurations d’images ; il n’utilise pas cet outil pour disposer le moteur de rendu. Le plugin consommateur gère le placement et la taille natifs habituels. Android ne revendique pas de liaison d’overflow natif de type WKWebView. Les enregistrements de haut niveau partagent un observateur Window préservant l’entrée SDK originale et supprimant uniquement leur propre enregistrement au démontage.
 
 `NativeUISnapshots` prépare des images PixelCopy composites et des fichiers PNG locaux, puis couvre et restaure à partir de ce cache. L’encodage s’exécute hors du thread UI ; une seule préparation s’exécute par propriétaire. Notifiez les changements visuels et les interactions, puis libérez les jetons au démontage. Tous les appels de vue et de cycle de vie s’exécutent sur le thread UI. Le plugin conserve la gestion des révisions, de l’admissibilité et de la politique de repli.
+
+Pour l’ordre des entrées SDK, l’observation Window personnalisée, l’invalidation visuelle en attente et le nettoyage, consultez la [capture avant interaction](../advanced/preinteraction-capture.md). Ce contrat est partagé avec les enregistrements SDK ; les hôtes personnalisés transmettent le dictionnaire complet d’événements au lieu de maintenir un second observateur tactile.
 
 Après l’affichage ou le retrait des pixels Web préparés, `NativeUIWebReadiness.prepare` vérifie la disponibilité pour un dessin ultérieur de la WebView. Son prédicat `current` doit valider la session propriétaire, la génération de source et la révision de l’image. La copie native temporaire couvre ce transfert asynchrone ; le démarrage de la superposition lui-même n’attend pas. Ni la confirmation du pont ni ce callback ne prouvent la présentation sur l’écran physique.
 
@@ -36,11 +39,7 @@ Une image opaque peut rester sous une vue native opaque entre les transferts, ma
 
 ### Surfaces Android translucides
 
-Capturez les pixels composites de la fenêtre, arrière-plan compris, plutôt que de dessiner la vue translucide sur un bitmap vide. Gardez l’image Web préparée décodée, mais masquée. Lors du transfert, `cover(token, window, reference, views)` installe une copie d’image opaque temporaire avant de masquer ces vues natives dans le même tour UI. Révélez l’image Web, confirmez la disponibilité du dessin Web, puis retirez la copie d’entrée. La superposition démarre immédiatement ; l’encodage d’image n’est jamais sur ce chemin.
-
-Pour le retour, installez la copie de retour préparée avec `restore`, restaurez les vues natives sous celle-ci, masquez l’image Web et retirez la copie de retour après la disponibilité du dessin Web. Cela évite de composer les pixels natifs translucides actifs sur leur propre instantané. Validez le jeton et la génération actuelle de la surface à chaque callback asynchrone. La copie temporaire est non interactive et limitée ; le démontage libère les deux copies et les ressources en cache.
-
-Cela préserve l’arrière-plan capturé, pas une scène en changement continu derrière l’image. Les changements d’arrière-plan doivent invalider le cache via les mêmes notifications de changement visuel que les mises à jour du contenu. Les vidéos et les surfaces de capture non prises en charge conservent la politique de repli du consommateur.
+Utilisez COMPOSITED pour les surfaces translucides et invalidez la capture lorsque l’arrière-plan change. Les copies d’entrée évitent que le contrôle vivant se compose sur sa propre image Web ; les copies de retour couvrent la restauration native. L’ordre des appels et le nettoyage sont définis dans le [transfert natif](../advanced/native-handoff.md). Ces images conservent l’arrière-plan capturé, pas une vidéo ni une scène changeant en continu.
 
 Les tests d’intégration des consommateurs appartiennent à leurs dépôts respectifs. La CI de l’Engine teste ses contrats navigateur, Swift et Android sans exiger de checkout d’un moteur de rendu voisin.
 

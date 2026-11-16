@@ -1,7 +1,8 @@
 ---
 title: "Eine erweiterte API auswählen"
-sourceRevision: "36b669fe0fe5d7f321ae97def344d07b379feb38f23ffd5579bce18341b4d4ed"
+sourceRevision: "a9d93a094557880d1c338b5495ad9cf3782e319b2f2aa728b87258d609391804"
 ---
+
 # Erweiterte APIs
 
 Die grundlegende Registrierung übernimmt bereits Messung, Aufnahme und Übergabebestätigung. Fügen Sie keinen zweiten Projektionsmanager für denselben Host hinzu. Verwenden Sie die folgenden APIs, wenn Ihr Renderer die jeweilige Arbeit bereits übernimmt und sie koordinieren muss:
@@ -14,6 +15,7 @@ Die grundlegende Registrierung übernimmt bereits Messung, Aufnahme und Übergab
 | Ein bestehendes Zuständigkeitsmodell abbilden, das Oberflächenhelfer nicht ausdrücken können | `createWebProjectionScope` / `createWebProjection`; siehe [untergeordnete Web-Projektion](web-projection.md). |
 | Ersetzbare Zustandsaktualisierungen serialisieren und eine verlorene Bestätigung wiederherstellen | `createNativeUpdateQueue`; siehe [Aktualisierungsplanung und Wiederherstellung](update-queue.md). |
 | Die native Bridge für einen eigenen Renderer implementieren | `handle`-Methoden der Snapshot-Manager; siehe [native Übergabe](native-handoff.md). |
+| Einen Feed mit einer auf einer SDK-Ansicht beginnenden Ziehgeste scrollen | `NativeUIScrollHosting`; siehe [natives Scroll-Hosting](native-scroll-hosting.md). |
 
 Dies sind Integrationsentscheidungen, keine zusätzlichen Schritte zum Abschluss einer normalen `NativeUIProjection`-Einrichtung. Belassen Sie Geschäftsaktionen, SDK-Interaktion und Anwendungsbenachrichtigungen im konsumierenden Plugin.
 

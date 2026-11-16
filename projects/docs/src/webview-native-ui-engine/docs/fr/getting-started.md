@@ -1,7 +1,8 @@
 ---
 title: "Premiers pas"
-sourceRevision: "e0cb1e5d66f43833d78bf2f23945d89821bba9fbfe7e62a451fb632edbe114b2"
+sourceRevision: "635f8fc3732f288be4f1da7339ad66108f22c8e9b2592057ff6545a2806f4c5d"
 ---
+
 # Au-delà de la WebView.
 
 **Intégrez Native UI de façon fluide aux applications Web.**
@@ -40,6 +41,8 @@ Le plugin fournit une vue native et un conteneur DOM qui définit sa place dans 
 Lorsque la couche Web doit prendre en charge la présentation, l’Engine affiche une image préparée du composant natif dans ce conteneur. Lorsque la présentation native peut reprendre, il coordonne le placement et la restauration de la vue interactive.
 
 L’image est une projection visuelle temporaire, pas un second contrôle interactif. Elle ne transmet pas les clics et ne lit pas de vidéo en direct. Les conditions d’éligibilité de capture et les limites de rendu des plateformes restent applicables, notamment les différences de reflets de Liquid Glass. Lorsqu’aucune image adaptée n’est disponible, l’intégration utilise son repli Web configuré. Consultez les [concepts et limites](docs/concepts.md) et la [prise en charge des plateformes](docs/reference/platforms.md) avant de choisir un composant.
+
+Sous iOS 26 et versions ultérieures, un contournement expérimental utilisant une **API privée Apple** est activé par défaut pour capturer Liquid Glass. Évaluez les risques et [désactivez-le si nécessaire](docs/experimental/glass-capture.md) avant d’adopter cette version.
 
 ## Commencer à développer
 

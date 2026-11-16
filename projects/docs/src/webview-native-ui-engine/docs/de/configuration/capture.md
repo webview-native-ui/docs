@@ -1,13 +1,14 @@
 ---
 title: "Aufnahmezeitpunkt"
-sourceRevision: "d96661854c40b245d82c079e1106470993dadb679ce6a90d2a0e9c3f4f056788"
+sourceRevision: "d8fdcbd1f3e1cbbf7c658054109d1ceca1c924c0b9c2800d05ca8111d7904a23"
 ---
+
 # Den Aufnahmezeitpunkt konfigurieren
 
-Verwenden Sie diese Einstellung, wenn eine erfolgreiche Zustandsänderung vor dem Ende ihrer visuellen Animation gemeldet wird. Beispielsweise kann ein Tab-Auswahlereignis eintreffen, während die Hervorhebung noch vergrößert ist; eine sofortige Aufnahme würde diese Zwischenform unter dem nächsten Web-Overlay bewahren. Verzögern Sie die Vorbereitung im Hintergrund, bis das Steuerelement zur Ruhe kommt. Behalten Sie den Standard bei, wenn das gemessene Erscheinungsbild bereits stabil ist; eine längere Verzögerung hält auch das vorherige Bild länger verfügbar.
+Verwenden Sie `captureDelayMs`, wenn eine native Aktualisierung vor der visuellen Stabilisierung gemeldet wird, etwa bei der Hervorhebung eines Tabs. Die optionale Registrierungseinstellung gilt für Capacitor, Cordova und die Low-Level-Optionen von `createWebProjection`. Standard sind **50 Millisekunden**; der Wert muss endlich, nicht negativ und höchstens 2.147.483.647 ms sein, die Timer-Grenze des Browsers.
 
-`captureDelayMs` ist eine optionale Registrierungseinstellung für Capacitor und Cordova. Der Standard beträgt **50 Millisekunden** unter iOS, Android und in den Optionen der tieferen API `createWebProjection`. Werte müssen endlich und nicht negativ sein. Sie verwendet den bestehenden Debounce: Eine neue Aktualisierung oder Interaktion startet die Vorbereitung nach dem Ende der Aktivität neu. Sie fügt keinen zweiten Timer hinzu und verzögert die Darstellung des Overlays nicht.
+Auf nativen Hosts mit Kontakterkennung wird die Anfrage sofort aktiviert und die native Geometrie während der konfigurierten Wartezeit abgetastet. Ein Kontakt kann die Anfrage vor Ablauf dieser Zeit vorziehen. Andere Hosts entprellen die Vorbereitung auf Web-Seite. Ein stabiles Rechteck beweist nicht das Ende einer visuellen Animation.
 
-Bis neue Bildpunkte bereitstehen, bleibt das letzte abgeschlossene Bild verfügbar. Ist noch kein fertiges Bild vorhanden, gilt der normale Web-Fallback. Das Öffnen eines Overlays während des Debounce wartet nicht auf eine neue Aufnahme. Eine längere Verzögerung verlängert daher auch den Zeitraum, in dem nach einer Aktualisierung das vorherige Erscheinungsbild verwendet werden kann.
+Bis neue Bildpunkte bereitstehen, kann das zuvor fertiggestellte Bild abhängig von Quellbesitz und Layoutgültigkeit weiter verwendbar sein. Ein Overlay verwendet ein geeignetes Bild oder den Web-Fallback und wartet nicht auf die Entprellung im Ruhezustand. Eine längere Verzögerung kann daher die frühere Darstellung länger erhalten.
 
-Eine Empfehlung als Ausgangspunkt für **Liquid Glass-Auswahlanimationen einer UITabBar sind 600 ms**. Bei Simulatorvergleichen mit iOS 27.0 auf dem iPhone und iOS 27.1 auf Duo nahm 50 ms eine vergrößerte Auswahl auf, bei 300 ms blieb noch eine kleine Restveränderung, und 600 ms entsprach dem bei 1000 ms beobachteten abgeschlossenen Erscheinungsbild. Dies ist eine Empfehlung für diese Interaktion, kein Zeitvertrag von Apple und keine allgemeine Liquid Glass-Dauer. Messen Sie Auswahl, erneute Auswahl und aufeinanderfolgende Aktualisierungen Ihres Steuerelements, bevor Sie einen Wert wählen. Für ständig wechselnde Inhalte ist kein stabiler Snapshot garantiert.
+Wählen Sie die Verzögerung anhand von Auswahl, erneuter Auswahl und aufeinanderfolgenden Aktualisierungen des Steuerelements. Es gibt keine universelle Liquid-Glass-Animationsdauer; bei ständig wechselndem Inhalt ist kein stabiles Bild garantiert. Aufnahmereihenfolge, Interaktionsregeln und Zeitereignisse sind unter [Aufnahme vor der Interaktion](../advanced/preinteraction-capture.md) beschrieben.
