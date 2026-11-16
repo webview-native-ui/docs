@@ -1,7 +1,8 @@
 ---
 title: "Balisage et classes particuliers"
-sourceRevision: "1cf00d7a1d33ef40392eeef516073a5372ddb011225b1cb8bf71da061f8cbded"
+sourceRevision: "6f02d48fe23aef1123b4419535cf0704c579902cbbb274e4eb9cb0ab77aee9d4"
 ---
+
 # Balisage et classes particuliers
 
 La plupart du balisage Ionic fonctionne sans modification. Les combinaisons ci-dessous sont des options du thème à activer explicitement.
@@ -22,6 +23,46 @@ Les boutons d’envoi pleins de couleur primaire utilisent `--ion-color-primary-
 ```
 
 Utilisez `.button-submit` lorsque le bouton doit recevoir le même traitement mais ne peut pas utiliser `type="submit"`.
+
+## Badges des boutons de barre d’outils
+
+Placez `ion-badge` directement dans un `ion-button` d’un `ion-toolbar`. Les boutons autonomes et ceux placés dans `ion-buttons` sont pris en charge. Un badge vide indique un élément non lu ; un texte tel que `3` ou `99+` affiche un nombre. Pour un indicateur, gardez `<ion-badge></ion-badge>` entièrement vide, sans espace ni saut de ligne entre les balises.
+
+Bouton autonome dans la barre d’outils :
+
+```html preview
+<ion-toolbar>
+  <ion-button slot="end" aria-label="Notifications">
+    <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+    <ion-badge>3</ion-badge>
+  </ion-button>
+</ion-toolbar>
+```
+
+Boutons groupés avec badges vides, numériques et larges :
+
+```html preview
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button aria-label="Unread notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge></ion-badge>
+    </ion-button>
+    <ion-button aria-label="3 notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>3</ion-badge>
+    </ion-button>
+    <ion-button aria-label="99 or more notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>99+</ion-badge>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+Utilisez la propriété `color` du badge pour choisir une couleur Ionic. Définir `hidden` ou `display: none`, ou retirer le badge, le masque sans modifier le layout de l’action. Incluez l’état des notifications dans le libellé accessible de l’action.
+
+Ce traitement concerne uniquement les badges enfants directs des boutons de barre d’outils. Les badges d’onglets, hors barre d’outils ou imbriqués dans un autre enfant gardent leur style existant. Les désactivations du thème sur la barre, le groupe, le bouton ou le badge restent prises en charge.
 
 ## Actions recommandées des superpositions
 

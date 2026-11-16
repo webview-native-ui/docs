@@ -1,7 +1,8 @@
 ---
 title: "Besonderes Markup und Klassen"
-sourceRevision: "1cf00d7a1d33ef40392eeef516073a5372ddb011225b1cb8bf71da061f8cbded"
+sourceRevision: "6f02d48fe23aef1123b4419535cf0704c579902cbbb274e4eb9cb0ab77aee9d4"
 ---
+
 # Besonderes Markup und Klassen
 
 Das meiste Ionic-Markup funktioniert unverändert. Die folgenden Kombinationen werden vom Theme bereitgestellt und müssen ausdrücklich aktiviert werden.
@@ -22,6 +23,46 @@ Gefüllte primäre Absende-Schaltflächen verwenden `--ion-color-primary-brightn
 ```
 
 Verwenden Sie `.button-submit`, wenn die Schaltfläche dieselbe Gestaltung benötigt, aber nicht `type="submit"` verwenden kann.
+
+## Badges für Toolbar-Schaltflächen
+
+Platzieren Sie `ion-badge` direkt in einem `ion-button` innerhalb von `ion-toolbar`. Einzelne Schaltflächen und Schaltflächen in `ion-buttons` werden unterstützt. Ein leeres Badge zeigt einen Ungelesen-Indikator; Text wie `3` oder `99+` zeigt eine Anzahl. Für einen Indikator muss `<ion-badge></ion-badge>` vollständig leer bleiben, ohne Leerzeichen oder Zeilenumbrüche zwischen den Tags.
+
+Einzelne Toolbar-Schaltfläche:
+
+```html preview
+<ion-toolbar>
+  <ion-button slot="end" aria-label="Notifications">
+    <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+    <ion-badge>3</ion-badge>
+  </ion-button>
+</ion-toolbar>
+```
+
+Gruppierte Toolbar-Schaltflächen mit leeren, numerischen und breiten Badges:
+
+```html preview
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button aria-label="Unread notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge></ion-badge>
+    </ion-button>
+    <ion-button aria-label="3 notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>3</ion-badge>
+    </ion-button>
+    <ion-button aria-label="99 or more notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>99+</ion-badge>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+Wählen Sie über die Badge-Eigenschaft `color` eine Ionic-Farbe. `hidden`, `display: none` oder das Entfernen des Badges blendet es ohne Änderung des Aktionslayouts aus. Nehmen Sie den Benachrichtigungszustand in die barrierefreie Beschriftung der Aktion auf.
+
+Die Gestaltung gilt nur für direkte Badge-Kinder von Toolbar-Schaltflächen. Badges in Tabs, außerhalb von Toolbars oder in weiteren Kindelementen behalten ihr bisheriges Styling. Theme-Opt-outs an Toolbar, Gruppe, Schaltfläche oder Badge bleiben unterstützt.
 
 ## Bevorzugte Overlay-Aktionen
 

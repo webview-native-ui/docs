@@ -1,6 +1,6 @@
 ---
 title: "Native UI konfigurieren"
-sourceRevision: "c8820c062e91f3cd42b0ff38565a08d6830ed9523859095c063cd54c36802c04"
+sourceRevision: "fd44c90585e2e690d42be22189f47f45ba6d82a0372f666c074f879ba55d7628"
 ---
 
 # Native UI konfigurieren
@@ -264,3 +264,17 @@ end
 ```
 
 Passen Sie den Pfad an Ihr Projektlayout an und wiederholen Sie die Versionsabstimmung bei Native-UI-Upgrades. Dies ist eine CocoaPods-Kompatibilitätseinrichtung und keine UI-Logik der Anwendung.
+
+## Experimentelle Liquid-Glass-Aufnahme
+
+Unter iOS 26 und neuer ist `experimentalInPlaceFilteringEnabled` standardmäßig `true`. Dies aktiviert eine experimentelle Umgehung mit einer **privaten Apple-API** für Glass-Aufnahmen beim Kaltstart. Über die Start-API des Capacitor-Plugins deaktivieren:
+
+```ts
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+
+const ui = await enableNativeUI({ experimentalInPlaceFilteringEnabled: false });
+```
+
+Die Option ist auch über `/core`, den eigenständigen Vertical-Bars-Start und das Low-Level-`NativeUI.configure` verfügbar. Android ignoriert sie. Beim Start wird der boolesche Wert über die Capacitor-Bridge und den gemeinsamen nativen Core an `NativeUICoveredSnapshots.experimentalInPlaceFilteringEnabled` weitergereicht. Weglassen oder `true` aktiviert, explizites `false` deaktiviert. Ein widersprüchlicher Start bei aktivem Runtime wird abgelehnt; zerstören Sie zuerst den bisherigen Handle.
+
+Dies ist eine prozessweite native Engine-Richtlinie; konfigurieren Sie sie vor Registrierungen anderer Engine-Integrationen. Neukonfiguration setzt Steuerelemente und Aufnahmecache dieses Plugins zurück, nicht die Caches anderer Integrationen. Native `AppDelegate`-Änderungen sind nicht nötig. Der aktivierte Pfad wartet auf Bildschirmaktualisierungen und kann die Aufnahmelatenz erhöhen. Nicht öffentliche APIs bergen App-Store-Prüfungs- und zukünftige OS-Kompatibilitätsrisiken; Deaktivierung entfernt den Helfercode nicht aus dem kompilierten Binärpaket.

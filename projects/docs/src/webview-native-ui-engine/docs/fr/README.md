@@ -1,7 +1,8 @@
 ---
 title: "Vue d’ensemble de la documentation"
-sourceRevision: "89d93b28716c579e0f214dd6295f82a48c0db142e66d1fbcb768d8accb6ac73f"
+sourceRevision: "339bb3e513fd876e35a512576514f1ade9a934f38ffb77152486abd6bd7e0fdd"
 ---
+
 # Documentation
 
 Créez des écrans pilotés par le Web avec des contrôles et des capacités natives. Ces guides expliquent comment intégrer l’Engine dans un plugin pour faire coexister Web UI et Native UI. Commencez par [le modèle partagé](concepts.md) : comment un composant natif trouve sa place dans une mise en page Web, quelle couche le présente et comment les interactions reviennent à la vue active. Le défilement et les superpositions sont des exemples de cette coordination, pas des modèles d’intégration distincts.
@@ -65,3 +66,7 @@ Utilisez ces pages pour vérifier les contrats et comportements pris en charge p
 ## Contribution
 
 [Développement et publications](maintenance.md) présente la structure du dépôt, les vérifications locales, la CI et la publication. Sa lecture n’est pas nécessaire pour consommer l’Engine.
+
+Pour l’acquisition au contact natif, l’intégration Window et les événements de timing, consultez la [capture avant interaction](advanced/preinteraction-capture.md).
+
+Pour le contournement par API privée activé par défaut lors des captures Liquid Glass au démarrage à froid sous iOS, et sa désactivation, consultez la [capture Glass expérimentale](experimental/glass-capture.md). Il ne s’agit pas d’une API prise en charge par Apple.

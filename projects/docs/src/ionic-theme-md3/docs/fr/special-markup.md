@@ -1,6 +1,6 @@
 ---
 title: "Balisage particulier"
-sourceRevision: "3728e6e1b03ebd988f193aafaf6d13fc5c05cd2337a964e7d3752d16f74d0d72"
+sourceRevision: "bca33665f4a0cd2593c3cf038f0f7f0c9311760c592aecee00ad193226d2680b"
 ---
 
 # Balisage particulier
@@ -17,6 +17,46 @@ Utilisez `type="submit"` pour un véritable envoi de formulaire. Si l’envoi pa
 ```
 
 Les couleurs Ionic explicites, l’état désactivé et `fill="clear"` / `fill="outline"` conservent leur sens habituel. La classe n’impose pas un autre remplissage.
+
+## Badges des boutons de barre d’outils
+
+Placez `ion-badge` directement dans un `ion-button` d’un `ion-toolbar`. Les boutons autonomes et ceux placés dans `ion-buttons` sont pris en charge. Un badge vide indique un élément non lu ; un texte tel que `3` ou `99+` affiche un nombre. Pour un indicateur, gardez `<ion-badge></ion-badge>` entièrement vide, sans espace ni saut de ligne entre les balises.
+
+Bouton autonome dans la barre d’outils :
+
+```html preview
+<ion-toolbar>
+  <ion-button slot="end" aria-label="Notifications">
+    <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+    <ion-badge>3</ion-badge>
+  </ion-button>
+</ion-toolbar>
+```
+
+Boutons groupés avec badges vides, numériques et larges :
+
+```html preview
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button aria-label="Unread notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge></ion-badge>
+    </ion-button>
+    <ion-button aria-label="3 notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>3</ion-badge>
+    </ion-button>
+    <ion-button aria-label="99 or more notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>99+</ion-badge>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+Utilisez la propriété `color` du badge pour choisir une couleur Ionic. Définir `hidden` ou `display: none`, ou retirer le badge, le masque sans modifier le layout de l’action. Incluez l’état des notifications dans le libellé accessible de l’action.
+
+Ce traitement concerne uniquement les badges enfants directs des boutons de barre d’outils. Les badges d’onglets, hors barre d’outils ou imbriqués dans un autre enfant gardent leur style existant. Les désactivations du thème sur la barre, le groupe, le bouton ou le badge restent prises en charge.
 
 ## Actions recommandées des superpositions
 

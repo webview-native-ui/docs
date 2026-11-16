@@ -1,7 +1,8 @@
 ---
 title: "登録設定"
-sourceRevision: "5a4a235c962fd595c64e6772b34dcffc282cd14995b0d32f51eb6436fa812c6f"
+sourceRevision: "12ed6d5fd957aeeb3d02a7d7b7f6b2037abd4b1f0c9e83f781742a8f5c9443d2"
 ---
+
 # ネイティブ登録の設定
 
 まず[基本的な初期化](../getting-started/initialization.md)を確認してください。以下は同じ登録に対する設定です。コンポーネントに必要なものだけを追加します。
@@ -15,7 +16,7 @@ sourceRevision: "5a4a235c962fd595c64e6772b34dcffc282cd14995b0d32f51eb6436fa812c6
 | `receiveListeners` | プラグインイベントを購読しません。初期の表示意図はネイティブビューの可視性から決まり、内部のDOM・スクロール処理は動作します。 | タブ選択で強調項目が変わる場合、`update`で画像とバインド値を更新し、`projection`で表示を変更し、`match`でサーフェスごとに振り分けます。[イベントの接続](events.md#choose-successful-update-and-presentation-events)とCordovaガイドの`receive`転送を参照してください。 |
 | `readValues` | ネイティブからDOMへの値の読み取りを行いません。 | フォールバックが非表示の間にネイティブのトグルが変化する場合、現在の状態を読み取り、再表示時に古い値に戻らないようにします。[値のバインディング](values.md)を参照してください。 |
 | `values` | `readValues`があれば、返されたすべてのキーを`data-native-ui-value-*`属性にします。`readValues`がなければ値を反映しません。 | カスタム要素が属性ではなく`checked`から描画する場合、そのキーをホストのプロパティに対応付けます。アプリケーションイベントは生成しません。 |
-| `captureDelayMs` | 50 msのデバウンス後に画像を準備します。 | 選択イベントの時点でタブの強調表示がまだアニメーション中なら、ピクセルが安定するまで待ちます。[キャプチャのタイミング](capture.md)を参照してください。オーバーレイの表示開始は遅らせません。 |
+| `captureDelayMs` | キャプチャの安定化に50 msを確保します。 | 選択イベントの時点でタブの強調表示がまだアニメーション中なら、ピクセルが安定するまで待ちます。[キャプチャのタイミング](capture.md)を参照してください。オーバーレイの表示開始は遅らせません。 |
 | `canCapture` | trueを返します。Engineによるジオメトリとプラットフォームの確認は引き続き適用されます。 | SDKがキャプチャ可能な静的コンテンツから制限付き動画へ切り替わる場合、不適切なキャプチャを防ぎます。現在のコンテンツの適格性を返してください。 |
 | `failedFallback` | 適切な画像がなければ通常のWebフォールバックを使います。 | SDKビューに利用可能なWebの代替がない場合、レンダラーが配置を維持しているときに限り、自動的な移動中もネイティブ表示を維持します。明示的なWebの被覆と`none`が優先されます。[失敗時の方針](../reference/projection.md#native-surface-requirements)を参照してください。 |
 | `allowedOrigins` | Capacitor: 同梱の`server.url`またはローカルのホスト名とスキーム。アプリのserver設定がなければlocalhostのデフォルト。Cordova: localhostのデフォルト。 | プログラムによる設定や、信頼するオリジンを狭める場合に上書きします。Androidではナビゲーション前に`install`で設定し、登録がそれを継承します。[オリジンの照合](../reference/projection.md)を参照してください。 |

@@ -1,6 +1,6 @@
 ---
 title: "Native UI"
-sourceRevision: "16a0909425a31b1fdb9ca1b066159f289e4f49a04102a60bde35607781c551a1"
+sourceRevision: "f0c3ea52e9520a91d3d7f28af905984251021184c2648235fa79fb4b9efd1b1b"
 ---
 
 # Native UI
@@ -37,6 +37,18 @@ import { configureNativeTransition } from '@rdlabo/capacitor-native-ui';
 
 await configureNativeTransition();
 ```
+
+### Scroll-Trägheit unter iOS
+
+Aktionen nativer Steuerelemente stoppen standardmäßig die aktuelle WebView-Scroll-Trägheit, auch in `ion-content`. Um sie beim Aktivieren eines nativen Steuerelements zu erhalten:
+
+```ts
+await enableNativeUI({ stopScrollOnActivate: false });
+```
+
+Dies beendet nur die laufende Trägheitsbewegung, ohne Scrolling zu sperren oder eine Fortsetzung zu planen. Die nächste Geste startet auf interaktivem Inhalt einen neuen Scrollvorgang. Overlays behalten ihre eigenen Regeln; ihr Schließen spielt die beendete Bewegung nicht erneut ab. Android und Web-Fallback bleiben unverändert. Wie andere Starteinstellungen erfordert eine Änderung das Zerstören des aktiven Handles und einen Neustart.
+
+Die Snapshot-Vorbereitung verwendet mit Engine 1.0.7 dieselbe Einstellung. Bei standardmäßigem `true` warten Leerlaufaufnahmen auf stabilisiertes Scrolling; nativer Kontakt stoppt die Trägheit vor neuer Geometriemessung und Pixelaufnahme. `false` deaktiviert sowohl das Anhalten vor der Aufnahme als auch bei Aktivierung. Fehlgeschlagene oder veraltete Aufnahmen behalten den normalen Web-Fallback.
 
 ### Navigation und native Builds
 

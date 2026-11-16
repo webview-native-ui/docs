@@ -1,14 +1,15 @@
 ---
 title: "Premiers pas"
-sourceRevision: "3f6cb5f433af923f336fdbb6cf3bbf04c75438e7c53e49edb60efec560549455"
+sourceRevision: "9f7a5183ea7ed9205438425af52ed708da19f83b39a4968ee49cd27c9c3b28cc"
 ---
+
 # Ionic Theme iOS26
 
 Bibliothèque de thème CSS/JS qui applique le système de design iOS26 aux applications Ionic.
 
 <!-- rdlabo-docs-pick -->
 
-![Écrans Ionic au thème iOS 26 avec barre d’onglets Liquid Glass, listes et contrôles](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/ios26-v9.4.3/screenshots/ios26.png)
+![Écrans Ionic au thème iOS 26 avec barre d’onglets Liquid Glass, listes et contrôles](https://raw.githubusercontent.com/webview-native-ui/ionic-theme-ios27/ios26-v9.5.0/screenshots/ios26.png)
 
 <!-- /rdlabo-docs-pick -->
 

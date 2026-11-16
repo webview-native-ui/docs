@@ -29,7 +29,7 @@ export const PROJECTS_EN = [
     "repositoryUrl": "https://github.com/webview-native-ui/engine",
     "category": "developer-tools",
     "icon": "app",
-    "version": "1.0.4",
+    "version": "1.0.10",
     "description": "Native UI placement, scroll tracking, and Web projection for Capacitor and Cordova plugin authors.",
     "path": "/projects/webview-native-ui-engine",
     "pages": [
@@ -211,7 +211,7 @@ export const PROJECTS_EN = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-ios27",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "2.1.3",
+    "version": "2.2.0",
     "description": "iOS 27 styling, motion, and Web layout for Ionic.",
     "path": "/projects/ionic-theme-ios27",
     "pages": [
@@ -237,7 +237,7 @@ export const PROJECTS_EN = [
         "path": "/projects/ionic-theme-ios27/docs/configuration"
       },
       {
-        "title": "Cordova setup",
+        "title": "Cordova theme setup",
         "navTitle": "Cordova setup",
         "slug": "cordova",
         "section": "Guides",
@@ -316,7 +316,7 @@ export const PROJECTS_EN = [
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "2.1.4",
+    "version": "2.1.9",
     "description": "Native UI, Android Dynamic Color and custom native content for WebView apps.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
@@ -415,7 +415,7 @@ export const PROJECTS_EN = [
     "repositoryBrowseUrl": "https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios26",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.4.3",
+    "version": "9.5.0",
     "description": "iOS 26 design styling for Ionic applications.",
     "path": "/projects/ionic-theme-ios26",
     "pages": [
@@ -513,7 +513,7 @@ export const PROJECTS_EN = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-md3",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.2.2",
+    "version": "9.3.0",
     "description": "Material Design 3 styling for Ionic applications.",
     "path": "/projects/ionic-theme-md3",
     "pages": [
@@ -611,7 +611,7 @@ export const PROJECTS_EN = [
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "description": "Native UI for Cordova, with standard HTML and optional Ionic theme integration.",
     "path": "/projects/cordova-native-ui",
     "pages": [
@@ -656,7 +656,7 @@ export const PROJECTS_JA = [
     "repositoryUrl": "https://github.com/webview-native-ui/engine",
     "category": "developer-tools",
     "icon": "app",
-    "version": "1.0.4",
+    "version": "1.0.10",
     "description": "Capacitor・Cordovaプラグイン開発者向けの、ネイティブUI配置・スクロール追従・Web投影ライブラリ。",
     "path": "/projects/webview-native-ui-engine",
     "pages": [
@@ -838,7 +838,7 @@ export const PROJECTS_JA = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-ios27",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "2.1.3",
+    "version": "2.2.0",
     "description": "Ionic向けのiOS 27スタイル、アニメーション、Webレイアウト。",
     "path": "/projects/ionic-theme-ios27",
     "pages": [
@@ -943,7 +943,7 @@ export const PROJECTS_JA = [
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "2.1.4",
+    "version": "2.1.9",
     "description": "WebViewアプリ向けのNative UI、Android Dynamic Color、独自ネイティブコンテンツ。",
     "path": "/projects/capacitor-native-ui",
     "pages": [
@@ -1042,7 +1042,7 @@ export const PROJECTS_JA = [
     "repositoryBrowseUrl": "https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios26",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.4.3",
+    "version": "9.5.0",
     "description": "Ionicアプリ向けのiOS 26デザインスタイル。",
     "path": "/projects/ionic-theme-ios26",
     "pages": [
@@ -1140,7 +1140,7 @@ export const PROJECTS_JA = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-md3",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.2.2",
+    "version": "9.3.0",
     "description": "Ionicアプリ向けのMaterial Design 3スタイル。",
     "path": "/projects/ionic-theme-md3",
     "pages": [
@@ -1238,7 +1238,7 @@ export const PROJECTS_JA = [
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "description": "標準HTMLと任意のIonicテーマ連携に対応するCordova向けNative UI。",
     "path": "/projects/cordova-native-ui",
     "pages": [
@@ -1283,7 +1283,7 @@ export const PROJECTS_FR = [
     "repositoryUrl": "https://github.com/webview-native-ui/engine",
     "category": "developer-tools",
     "icon": "app",
-    "version": "1.0.4",
+    "version": "1.0.10",
     "description": "Placement natif, suivi du défilement et projection Web pour les auteurs de plugins Capacitor et Cordova.",
     "path": "/projects/webview-native-ui-engine",
     "pages": [
@@ -1465,7 +1465,7 @@ export const PROJECTS_FR = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-ios27",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "2.1.3",
+    "version": "2.2.0",
     "description": "Styles, animations et disposition Web iOS 27 pour Ionic.",
     "path": "/projects/ionic-theme-ios27",
     "pages": [
@@ -1570,7 +1570,7 @@ export const PROJECTS_FR = [
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "2.1.4",
+    "version": "2.1.9",
     "description": "Native UI, Dynamic Color Android et contenu natif personnalisé pour les applications WebView.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
@@ -1669,7 +1669,7 @@ export const PROJECTS_FR = [
     "repositoryBrowseUrl": "https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios26",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.4.3",
+    "version": "9.5.0",
     "description": "Styles de design iOS 26 pour les applications Ionic.",
     "path": "/projects/ionic-theme-ios26",
     "pages": [
@@ -1767,7 +1767,7 @@ export const PROJECTS_FR = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-md3",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.2.2",
+    "version": "9.3.0",
     "description": "Styles Material Design 3 pour les applications Ionic.",
     "path": "/projects/ionic-theme-md3",
     "pages": [
@@ -1865,7 +1865,7 @@ export const PROJECTS_FR = [
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "description": "Native UI pour Cordova, avec HTML standard et intégration facultative du thème Ionic.",
     "path": "/projects/cordova-native-ui",
     "pages": [
@@ -1910,7 +1910,7 @@ export const PROJECTS_DE = [
     "repositoryUrl": "https://github.com/webview-native-ui/engine",
     "category": "developer-tools",
     "icon": "app",
-    "version": "1.0.4",
+    "version": "1.0.10",
     "description": "Native UI-Platzierung, Scroll-Verfolgung und Web-Projektion für Autoren von Capacitor- und Cordova-Plugins.",
     "path": "/projects/webview-native-ui-engine",
     "pages": [
@@ -2092,7 +2092,7 @@ export const PROJECTS_DE = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-ios27",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "2.1.3",
+    "version": "2.2.0",
     "description": "iOS-27-Stile, Animationen und Web-Layout für Ionic.",
     "path": "/projects/ionic-theme-ios27",
     "pages": [
@@ -2197,7 +2197,7 @@ export const PROJECTS_DE = [
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "2.1.4",
+    "version": "2.1.9",
     "description": "Native UI, Android Dynamic Color und eigene native Inhalte für WebView-Apps.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
@@ -2296,7 +2296,7 @@ export const PROJECTS_DE = [
     "repositoryBrowseUrl": "https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios26",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.4.3",
+    "version": "9.5.0",
     "description": "iOS-26-Design für Ionic-Anwendungen.",
     "path": "/projects/ionic-theme-ios26",
     "pages": [
@@ -2394,7 +2394,7 @@ export const PROJECTS_DE = [
     "repositoryUrl": "https://github.com/webview-native-ui/ionic-theme-md3",
     "category": "frontend-tools",
     "icon": "theme",
-    "version": "9.2.2",
+    "version": "9.3.0",
     "description": "Material-Design-3-Gestaltung für Ionic-Anwendungen.",
     "path": "/projects/ionic-theme-md3",
     "pages": [
@@ -2492,7 +2492,7 @@ export const PROJECTS_DE = [
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "description": "Native UI für Cordova mit Standard-HTML und optionaler Ionic-Theme-Integration.",
     "path": "/projects/cordova-native-ui",
     "pages": [

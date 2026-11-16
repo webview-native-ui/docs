@@ -548,6 +548,7 @@ async function generateProject(
         splitReadme ? splitReadme.readme : preparedBody,
         project.englishDocsRepositoryUrl ?? project.repositoryUrl,
         `${project.releaseTagPrefix ?? 'v'}${packageJson.version}`,
+        new Set([...pageSlugs.values()]),
       ),
       useFrontMatterTitle: !resolved.fromPackage,
       parsed,

@@ -1,6 +1,7 @@
 ---
 title: 設定
 ---
+
 # Native UIの設定
 
 導入は最小の[標準設定](setup.md)から始めます。`enableNativeUI()` は通常のコントロールと Vertical Bars をデフォルトで有効にします。このページは設定リファレンスです。展開した設定オブジェクトを導入用の定型コードとしてコピーしないでください。まず[投影の仕組み](../README.md#how-projection-works)を読み、インストールは[Ionicの設定](setup.md)または[HTMLの設定](framework-independent.md)を参照してください。
@@ -262,3 +263,17 @@ end
 ```
 
 プロジェクト構成に応じてパスを調整し、Native UI の更新時にもバージョンを揃えます。これは CocoaPods の互換設定であり、アプリの UI ロジックではありません。
+
+## 実験的なLiquid Glassキャプチャ
+
+iOS 26以降では`experimentalInPlaceFilteringEnabled`の既定値は`true`です。コールド起動時のGlassキャプチャに対し、**Appleの非公開API**を使う実験的な回避策を有効にします。Capacitorプラグインの起動APIから無効化するには次を使います。
+
+```ts
+import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
+
+const ui = await enableNativeUI({ experimentalInPlaceFilteringEnabled: false });
+```
+
+同じ設定は`/core`、単独のVertical Bars起動、低レベルの`NativeUI.configure`でも使えます。Androidは無視します。起動時に真偽値をCapacitorブリッジと共有ネイティブCore経由で`NativeUICoveredSnapshots.experimentalInPlaceFilteringEnabled`へ渡します。省略または`true`で有効、明示的な`false`で無効です。実行中のランタイムと競合する設定での起動は拒否されるため、既存ハンドルを破棄してから別の設定で起動します。
+
+これはプロセス全体のネイティブEngine設定なので、他のEngine連携からコントロールを登録する前に設定します。再設定はこのプラグインのコントロールとキャッシュをリセットしますが、他の連携のキャッシュはリセットしません。ネイティブの`AppDelegate`変更は不要です。有効時は画面更新を待つため、キャプチャ遅延が増える場合があります。非公開APIにはApp Store審査と将来のOS互換性のリスクがあり、無効化してもヘルパーコードはコンパイル済みバイナリに残ります。

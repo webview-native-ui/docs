@@ -21,6 +21,46 @@ solidのPrimary submit buttonは、foregroundとborderの表現に `--ion-color-
 
 buttonに `type="submit"` を指定できない場合に同じstyleを適用するには、`.button-submit` を使います。
 
+## ツールバーボタンのバッジ
+
+`ion-toolbar`内の`ion-button`の直下に`ion-badge`を配置します。単独のボタンと`ion-buttons`内のボタンの両方で使えます。空のバッジは未読インジケーター、`3`や`99+`のテキストは件数を表示します。インジケーターには、タグの間に空白や改行を入れず、完全に空の`<ion-badge></ion-badge>`を使います。
+
+単独のツールバーボタン：
+
+```html preview
+<ion-toolbar>
+  <ion-button slot="end" aria-label="Notifications">
+    <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+    <ion-badge>3</ion-badge>
+  </ion-button>
+</ion-toolbar>
+```
+
+空・数値・幅広のバッジを持つボタングループ：
+
+```html preview
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button aria-label="Unread notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge></ion-badge>
+    </ion-button>
+    <ion-button aria-label="3 notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>3</ion-badge>
+    </ion-button>
+    <ion-button aria-label="99 or more notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge>99+</ion-badge>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+バッジの`color`プロパティでIonicの色を選びます。`hidden`または`display: none`を設定するか、バッジを削除すると、アクションのレイアウトを変えずに非表示にできます。通知の状態をアクションのアクセシブルなラベルにも含めてください。
+
+対象はツールバーボタン直下のバッジに限られます。タブ、ツールバー外、別の子要素の中にあるバッジは既存のスタイルを維持します。ツールバー、グループ、ボタン、バッジでのテーマ無効化も引き続き使えます。
+
 ## 推奨するオーバーレイ操作
 
 iOSのalertとaction sheetでは、ボタンに `role: 'preferred'` を設定すると、背景が `--ion-color-primary`、文字とアイコンが `--ion-color-primary-contrast` になります。押下中の背景は `--ion-color-primary-shade` です。Ionicのカスタムroleを使うテーマの規約であり、操作の自動選択・実行はしません。閉じた際のroleは `preferred` です。

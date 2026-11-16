@@ -1,7 +1,8 @@
 ---
 title: "Développement et publications"
-sourceRevision: "3983e9f101bfcf320cf38df0698f868bcd57c7fdcc34b39c790b2beeed1e4ccb"
+sourceRevision: "0f1122357e2783205b137a54a18c5240b8ce3a79609fd694d77b917119561407"
 ---
+
 # Développement et publications
 
 Utilisez ce guide pour modifier ou publier l’Engine lui-même. Un consommateur natif peut compiler sans Node.js ; les modifications de source doivent donc régénérer le runtime embarqué. Une version peut arriver sur npm avant que les artefacts Maven soient téléchargeables : l’acceptation de la publication et la disponibilité du téléchargement pour les consommateurs sont donc vérifiées séparément ci-dessous.
@@ -16,7 +17,13 @@ Les points d’entrée publics sont `src/index.ts` et `src/ionic.ts`, avec les c
 
 `npm run build` regroupe `src/native/bootstrap.ts` dans `runtime/native-ui-engine.js`, le runtime WebView partagé. Android embarque directement ce fichier comme asset. La compilation le copie aussi dans `ios/Sources/WebViewNativeUIEngine/Resources`, car SwiftPM exige que les ressources se trouvent dans le répertoire de la cible. Les deux fichiers générés sont ignorés pendant le développement et inclus dans les tags de version pour que les consommateurs SwiftPM n’aient pas besoin de Node.js. Exécutez `npm run build` avant de compiler un checkout des sources avec Xcode. Modifiez le source TypeScript, pas l’un de ces fichiers générés ; la CI vérifie la régénération et contrôle le runtime inclus dans les archives npm et Maven.
 
-Les tests navigateur reprennent ces groupes sous `tests/`. `tests/cordova/` contient la fixture du véritable consommateur natif.
+Les tests suivent la responsabilité qu’ils protègent :
+
+- Les tests navigateur dans `tests/native`, `tests/projection` et `tests/dom` protègent les contrats de bridge, géométrie et cycle de vie des images. `tests/cordova/` teste un consommateur réel.
+- Les tests de `tests/controls` couvrent la découverte Ionic, la sélection source/proxy, l’isolation des pages/modales et le transfert des événements de l’adaptateur. Conservez les tests génériques de timing ou d’état des images dans leur couche, sans les répéter via Controls.
+- Les tests Swift et Android couvrent l’acquisition native, l’entrée SDK originale, le clipping et le démontage. Les mocks navigateur ne prouvent ni le dessin natif ni la livraison des taps et appuis longs.
+
+Une régression doit échouer sur une violation visible du contrat. Privilégiez les sorties, la propriété des ressources et la livraison des entrées plutôt que l’état privé, des nombres exacts de callbacks ou le retour d’une méthode void. Les comptes sont pertinents si le contrat promet un seul enregistrement ou une seule livraison. Utilisez des options de fixture nommées ; étendez un cas existant s’il protège la même frontière sans nouveau setup. Testez les longues limites de minuteurs navigateur avec une horloge contrôlée ; gardez la reconnaissance SDK réelle dans les tests natifs.
 
 Utilisez Node.js 24, comme la CI. Depuis ce dépôt :
 
@@ -26,12 +33,20 @@ npm run build
 npm run lint
 npx playwright install chromium
 npm test
-xcodebuild -scheme WebViewNativeUIEngine -destination 'platform=iOS Simulator,id=<booted simulator UUID>' test
 ```
 
 Le lint combine la vérification TypeScript stricte, les règles recommandées standard ESLint/TypeScript et les vérifications typées des Promise pour `src`. Les scripts et tests reçoivent un lint syntaxique ; Prettier gère le formatage. `npm run format` applique uniquement le formatage. Les charges utiles du pont et les doublures de test peuvent utiliser un `any` explicite ; la validation des frontières en production reste nécessaire. Un `void` explicite marque le travail en arrière-plan, mais ne gère pas une Promise rejetée.
 
 Les vérifications natives s’exécutent dans les jobs CI de leur plateforme : `npm run lint:swift` utilise node-swiftlint avec la configuration Capacitor sur macOS (`brew install swiftlint`) ; `npm run lint:android` exécute les vérifications de formatage Kotlin et Android Lint en traitant les avertissements comme des erreurs (JDK 21 et Android SDK 36). Utilisez `npm run format:swift` et `npm run format:kotlin` pour appliquer le formatage natif. Kotlin utilise ktfmt car le plugin Kotlin de Prettier ne peut pas analyser la fixture de test native existante.
+
+La CI Swift répartit les tâches indépendantes entre `swift-package`, `ios-integration` et `ios-consumers` ; le contrôle `swift` exige les trois réussites. Les tests Package couvrent les vues natives déterministes, la propriété des captures et l’encodage. La navigation et le suivi du défilement WKWebView réels, les présentations UIKit actives et le pipeline d’images écran s’exécutent dans `NativeUIHostedTests` avec UIApplication. Les consommateurs CocoaPod et Cordova sont testés par une matrice parallèle dans `ios-consumers` ; `swift` exige les deux. Chaque sélection native exécute ses suites, y compris les cas réservés à l’application. Le démarrage du simulateur suit la configuration Node.js et la génération du runtime pour éviter la concurrence avec les dépendances ; chaque job teste en série sur son appareil. La disponibilité du simulateur est limitée à deux minutes pour Package et Hosted, l’exécution à cinq minutes par suite et chaque job macOS à douze minutes. Les échecs conservent les bundles `.xcresult`. Selon la [documentation Apple](https://developer.apple.com/forums/thread/698054), `-collect-test-diagnostics never` évite la lente collecte système après échec ; les assertions, erreurs et états de fixture restent dans le résultat. Aucun retry automatique ne masque un échec.
+
+Les exclusions Package exactes sont dans `.github/workflows/native-ui-engine.yml` ; la sélection Hosted est dans `ios/Tests/project.yml` avec la [sélection de tests XcodeGen](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md#test-target). Lors d’un déplacement de test entre environnements, vérifiez que les ensembles exécutés restent disjoints et que leur union conserve la suite complète. Pour exécuter la sélection Hosted localement :
+
+```sh
+xcodegen generate --spec ios/Tests/project.yml
+xcodebuild -project ios/Tests/NativeUIControlsHostedTests.xcodeproj -scheme NativeUIHostedTests -destination 'platform=iOS Simulator,id=<booted simulator UUID>' -parallel-testing-enabled NO test
+```
 
 Ces vérifications incluent les tests natifs et les fixtures Cordova. La documentation de l’API Swift utilise `///` ; les notes d’implémentation utilisent `//`. Les heuristiques de taille et de complexité Swift n’imposent pas de découpage des machines à états ni de changements d’API publique ; les déballages et conversions forcés réservés aux fixtures sont autorisés, tandis que la production conserve les vérifications. Swift est également compilé et testé sur un simulateur iOS.
 
@@ -80,3 +95,32 @@ Aucune commande de compilation ou de test ne publie de paquet. Les versions npm/
 Pour relancer la vérification d’une version correspondant à un tag existant, sélectionnez ce tag à la fois comme référence du workflow et comme paramètre `tag` : `gh workflow run release.yml --ref vX.Y.Z -f tag=vX.Y.Z`. Cela utilise le workflow enregistré dans cette version, y compris pour les anciens tags antérieurs à la structure de commits réservés aux publications. Il vérifie le commit tagué d’origine et omet la publication npm uniquement lorsque le contenu du paquet existant correspond. Ne modifiez pas le tag. Les outils de publication utilisent le npm fourni avec Node.js 24, comme la CI.
 
 [Vue d’ensemble de la documentation](README.md)
+
+## Artefacts PNG natifs
+
+Les artefacts natifs versionnés permettent aux consommateurs de compiler sans Rust ni NDK. Toute modification du codec Rust, de l’en-tête C ou de la couche JNI doit régénérer tous les binaires dans le même changement.
+
+Utilisez Rust 1.99.1 (version fixée par la CI), Xcode sur macOS et Android NDK 29. Installez les cibles Rust `aarch64-apple-ios`, `aarch64-apple-ios-sim`, `x86_64-apple-ios`, `aarch64-linux-android`, `armv7-linux-androideabi`, `i686-linux-android` et `x86_64-linux-android`, puis exécutez :
+
+```sh
+cargo test --locked --manifest-path native/png/Cargo.toml
+cargo clippy --locked --manifest-path native/png/Cargo.toml --all-targets -- -D warnings
+python3 scripts/build-native-png.py --ndk "$ANDROID_NDK_HOME"
+python3 scripts/verify-native-png.py
+npm run build
+npm run test:package
+```
+
+Commitez ensemble `native/png`, `native/include`, `native/android`, `native/artifacts`, `native/licenses` et les ressources de licences iOS partagées. Le XCFramework contient les appareils arm64 et les simulateurs arm64/x86_64. L’artefact Android inclut arm64-v8a, armeabi-v7a, x86 et x86_64, avec alignement ELF de 16 Kio et règles consommateur conservant les noms JNI. Les notices des dépendances Rust et de la bibliothèque standard sont maintenues uniquement dans `ios/Sources/WebViewNativeUIEngine/Resources/NativeUIPngLicenses`, directement fourni par SwiftPM et CocoaPods. Android copie ce même dossier dans ses ressources générées et son archive source. `native/licenses` contient uniquement les notices du NDK Android ; ne dupliquez pas les notices partagées. Le manifeste de hachage source/binaire rejette les combinaisons périmées avant packaging. `--platform ios` ou `android` facilite l’itération locale ; une publication exige le build complet et la vérification `all-build.json`.
+
+Si d’autres appareils sont connectés, les tests Android connectés doivent sélectionner explicitement l’émulateur voulu :
+
+```sh
+ANDROID_SERIAL=emulator-5554 android/gradlew -p android :connectedDebugAndroidTest
+```
+
+Le test d’intégration de réutilisation d’images vérifie le déplacement, l’invalidation du contenu, le transfert et le nettoyage des fichiers sur le simulateur iOS indiqué :
+
+```sh
+python3 scripts/verify-image-reuse.py --device <booted-simulator-UUID>
+```

@@ -4,7 +4,7 @@ title: Cordova ではじめる
 
 # Cordova ではじめる
 
-公開済みの `@webview-native-ui/cordova-plugin` v0.1.1 を使い、Cordova アプリに Native UI を追加します。Capacitor プラグインと Native UI Core を共有しますが、Capacitor の JavaScript ランタイムは不要です。標準 HTML は `/core`、Ionic 連携はパッケージルートから利用します。
+公開済みの `@webview-native-ui/cordova-plugin` v0.1.3 を使い、Cordova アプリに Native UI を追加します。Capacitor プラグインと Native UI Core を共有しますが、Capacitor の JavaScript ランタイムは不要です。標準 HTML は `/core`、Ionic 連携はパッケージルートから利用します。
 
 ## 要件と対応範囲
 
@@ -18,13 +18,13 @@ title: Cordova ではじめる
 Cordova プロジェクトで実行します。
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.1
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.3
 ```
 
 Web アセットをバンドルする場合は、その npm プロジェクトでも実行します。
 
 ```sh
-npm install --save-exact @webview-native-ui/cordova-plugin@0.1.1
+npm install --save-exact @webview-native-ui/cordova-plugin@0.1.3
 ```
 
 Cordova のコマンドはネイティブプラグイン、npm 依存は Web バンドラー向けの import を導入します。両方のバージョンを揃えてください。Cordova の HTML に `<script src="cordova.js"></script>` を残し、Web アセットを `www` へビルドしてから `cordova prepare` を実行し、ネイティブアプリを再ビルドします。Web アセットの再読み込みではネイティブコードは更新されません。Git URL からの直接インストールは未対応です。
@@ -58,12 +58,12 @@ ESM アプリでは、標準 HTML は `@webview-native-ui/cordova-plugin/core`�
 
 ## 任意の同梱 Ionic テーマ
 
-0.1.1 には iOS27 テーマの2.1.0が同梱されています。単独テーマは独立してリリースされるため、そちらの最新版を入れても Cordova プラグインの同梱版は更新されません。バンドラーの alias を使わず、プラグインの `/theme` と `/theme/css/*` を使用します。アニメーションと CSS は [Cordova テーマ設定](/ionic-theme-ios27/docs/cordova)を参照し、古いテーマ import を置き換えて連携方式を混在させないでください。
+0.1.3 には iOS27 テーマの2.1.0が同梱されています。単独テーマは独立してリリースされるため、そちらの最新版を入れても Cordova プラグインの同梱版は更新されません。バンドラーの alias を使わず、プラグインの `/theme` と `/theme/css/*` を使用します。アニメーションと CSS は [Cordova テーマ設定](/ionic-theme-ios27/docs/cordova)を参照し、古いテーマ import を置き換えて連携方式を混在させないでください。
 
 `deviceready` と、アプリの `ion-app` のマウントが両方完了してから Native UI を開始します。テーマの import やスタイリングだけではネイティブコントロールは有効になりません。主な対応ホストは Capacitor であり、Cordova の対応範囲は限定されます。ビルド成功だけでフレームワークのルーターやジェスチャーの完全な同等性を確認したことにはなりません。
 
 ## 次の手順
 
 - [Engine の概念と制約](/webview-native-ui-engine/docs/concepts)では、共有する表示モデルを説明しています。
-- [パッケージの README](https://github.com/webview-native-ui/cordova-plugin/blob/5ac3c7e2754c55c3ffde2e90b3d54ad10152362a/README.md)には、ローカルアーカイブ、問題の調査、共有ソース、開発時の検証手順があります。
+- [パッケージの README](https://github.com/webview-native-ui/cordova-plugin/blob/a43efc05e217670ef529d34b290a693966ec997d/README.md)には、ローカルアーカイブ、問題の調査、共有ソース、開発時の検証手順があります。
 - Cordova のインストール・コールバック・ライフサイクルの問題は [Cordova リポジトリ](https://github.com/webview-native-ui/cordova-plugin/issues)へ報告してください。

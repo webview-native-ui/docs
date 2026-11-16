@@ -1,13 +1,14 @@
 ---
 title: "Timing de capture"
-sourceRevision: "d96661854c40b245d82c079e1106470993dadb679ce6a90d2a0e9c3f4f056788"
+sourceRevision: "d8fdcbd1f3e1cbbf7c658054109d1ceca1c924c0b9c2800d05ca8111d7904a23"
 ---
+
 # Configurer le timing de capture
 
-Utilisez ce paramètre lorsqu’un changement d’état réussi est signalé avant la fin de son animation visuelle. Par exemple, un événement de sélection d’onglet peut arriver alors que la surbrillance est encore agrandie ; une capture immédiate conserverait cette forme intermédiaire sous la prochaine superposition Web. Retardez la préparation en arrière-plan jusqu’à la stabilisation du contrôle. Conservez la valeur par défaut lorsque l’apparence mesurée est déjà stable ; un délai plus long maintient également l’image précédente disponible plus longtemps.
+Utilisez `captureDelayMs` lorsqu’une mise à jour native est signalée avant la stabilisation visuelle, par exemple pour la surbrillance d’un onglet. Ce paramètre d’enregistrement facultatif est partagé par Capacitor, Cordova et les options de bas niveau de `createWebProjection`. La valeur par défaut est **50 millisecondes** ; elle doit être finie, non négative et ne pas dépasser la limite du minuteur du navigateur, soit 2 147 483 647 ms.
 
-`captureDelayMs` est un paramètre d’enregistrement facultatif commun à Capacitor et Cordova. Sa valeur par défaut est de **50 millisecondes** sur iOS, Android et dans les options de bas niveau de `createWebProjection`. Les valeurs doivent être finies et non négatives. Il utilise le debounce existant : une nouvelle mise à jour ou interaction relance la préparation une fois l’activité stabilisée. Il n’ajoute pas de second minuteur et ne retarde pas la présentation de la superposition.
+Sur les hôtes natifs capables de détecter le contact, la requête est armée immédiatement et la géométrie native est échantillonnée pendant l’attente configurée. Un contact peut promouvoir cette requête avant la fin du délai. Les autres hôtes appliquent un debounce côté Web. Un rectangle stable ne prouve pas la fin d’une animation visuelle.
 
-Jusqu’à ce que les pixels de remplacement soient prêts, la dernière image terminée reste disponible. S’il n’existe aucune image terminée, le repli Web normal s’applique. Ouvrir une superposition pendant le debounce n’attend pas une nouvelle capture. Augmenter le délai prolonge donc aussi la période pendant laquelle l’apparence précédente peut être utilisée après une mise à jour.
+Jusqu’à disponibilité des nouveaux pixels, l’image précédemment terminée peut rester utilisable selon la propriété de la source et la validité du layout. L’ouverture d’une superposition utilise une image éligible ou le repli Web, sans attendre le debounce au repos. Un délai plus long peut donc conserver plus longtemps une apparence antérieure.
 
-Une valeur initiale recommandée pour les **animations de sélection Liquid Glass de UITabBar est de 600 ms**. Dans les comparaisons sur les simulateurs iPhone iOS 27.0 et Duo iOS 27.1, 50 ms capturaient une sélection agrandie, 300 ms conservaient encore une légère variation résiduelle et 600 ms correspondaient à l’apparence stabilisée observée à 1000 ms. Il s’agit d’une recommandation pour cette interaction, pas d’un contrat de timing Apple ni d’une durée universelle de Liquid Glass. Mesurez la sélection, la resélection et les mises à jour successives de votre contrôle avant de choisir une valeur. Aucun instantané stabilisé n’est garanti pour un contenu en changement continu.
+Choisissez le délai selon la sélection, la resélection et les mises à jour successives du contrôle. Il n’existe pas de durée universelle pour les animations Liquid Glass, et un contenu en évolution continue ne garantit aucune image stable. L’ordre d’acquisition, la politique d’interaction et les événements de timing sont regroupés dans la [capture avant interaction](../advanced/preinteraction-capture.md).
