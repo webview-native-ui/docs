@@ -448,7 +448,6 @@ test('the portal owns combined setup while plugin guides keep feature boundaries
       'layoutChange',
       'md3ThemeConfig',
       'ios27ThemeConfig',
-      'ios26ThemeConfig',
     ])
       assert.ok(article.textContent?.includes(name), `${code}: ${name}`);
     assert.ok(

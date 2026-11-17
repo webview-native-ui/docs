@@ -32,7 +32,9 @@ describe('Standard setup navigation', () => {
       }
       expect(page.querySelectorAll('h1')).toHaveLength(1);
       expect(page.textContent).toContain('@rdlabo/ionic-theme-ios26');
-      expect(page.textContent).toContain('ios26ThemeConfig');
+      expect(page.textContent).toContain('ios27ThemeConfig');
+      expect(page.textContent).not.toContain('ios26ThemeConfig');
+      expect(page.textContent).not.toContain('CSS.supports');
     },
   );
 });

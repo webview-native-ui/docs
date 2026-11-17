@@ -66,11 +66,6 @@
   outline: 2px solid #1767d2;
   outline-offset: 2px;
 }
-.setup-next {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid #e2e8f0;
-}
 @container docs-content (min-width: 1100px) {
   .setup-layout {
     grid-template-columns: minmax(0, 1fr) 220px;

@@ -33,7 +33,7 @@ import { resolveDocsLocale } from '../../../../../shared/docs-locales';
             <h1>{{ p.headline }}</h1>
             <p class="project-summary">{{ p.overview }}</p>
             <div class="project-actions">
-              @if (p.pages[0]; as firstPage) {
+              @if (setupPage(); as firstPage) {
                 <a class="project-button project-button--primary" [routerLink]="firstPage.path" i18n="@@getStarted">Get started</a>
               }
               @if (p.demoUrl) {
@@ -150,6 +150,10 @@ export class LandingPageComponent implements OnInit {
     return count === undefined ? undefined : this.#numberFormat.format(count);
   };
   protected readonly project = signal<ProjectDocs | undefined>(undefined);
+  protected readonly setupPage = computed(() => {
+    const pages = this.project()?.pages ?? [];
+    return pages.find((page) => page.slug === 'setup') ?? pages[0];
+  });
 
   protected readonly documentationGroups = computed(() => {
     const pages = this.project()?.pages ?? [];

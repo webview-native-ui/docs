@@ -1,6 +1,6 @@
 ---
 title: 'Configuration standard WebView Native UI'
-sourceRevision: '59251200f6cdf2ab13df8bf46f1881fd296abfd592181b5eb17f3cdda2771984'
+sourceRevision: 'd464340cef90f89bc2de11fddf7c1d14ee8d4cf989b4e08fcac1c9240e1e4a80'
 ---
 
 # Configuration standard WebView Native UI
@@ -21,68 +21,28 @@ Pour les autres intégrations, choisissez [HTML sans Ionic](/projects/capacitor-
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
   @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 \
   @erkamyaman/capacitor-foldable@8
-npm install --save-dev sass
 ```
 
 ## 2. Configurer les deux thèmes
 
-Modifiez le fichier Sass global, par exemple `src/global.scss`, après les styles de base Ionic. Placez `@use 'sass:meta'` en tête du fichier. Remplacez les imports existants des palettes sombres Ionic et des thèmes par cette composition ; gardez les personnalisations de l’application après les thèmes. Le contrôleur d’apparence de l’étape 3 gère la classe `ion-palette-dark`.
+Ajoutez ces imports à la feuille globale après le CSS de base Ionic. Remplacez les imports existants des thèmes et de la palette sombre Ionic. Les préréglages incluent la palette et les styles de compatibilité ; aucune configuration Sass supplémentaire n’est nécessaire.
 
-```scss:src/global.scss
-@use 'sass:meta';
-
-@include meta.load-css('@ionic/core/css/palettes/dark.class.css');
-
-@supports not (overflow-anchor: auto) {
-  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/default-variables');
-  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/ionic-theme-ios26');
-  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/ionic-theme-ios26-dark-class');
-  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/md-remove-ios-class-effect');
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/vertical-bars');
-}
-
-@supports (overflow-anchor: auto) {
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/default-variables');
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/ionic-theme-ios27');
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/ionic-theme-ios27-dark-class');
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/md-remove-ios-class-effect');
-}
-
-@include meta.load-css('@rdlabo/ionic-theme-md3/dist/styles/theme.css');
+```css
+@import '@rdlabo/ionic-theme-ios26/styles/class.css' supports(not (overflow-anchor: auto));
+@import '@rdlabo/ionic-theme-ios27/styles/class.css' supports(overflow-anchor: auto);
+@import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
+@import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
 
-Sass doit résoudre les paquets depuis `node_modules`. Avec Angular, ajoutez ceci aux options de compilation de l’application dans `angular.json`. Configurez le chemin Sass équivalent avec un autre outil.
-
-```json
-"stylePreprocessorOptions": {
-  "includePaths": ["node_modules"]
-}
-```
-
-La branche iOS par défaut utilise le thème iOS 26. Les navigateurs prenant en charge `overflow-anchor: auto` utilisent iOS 27 ; il s’agit d’un test de capacité, pas de version du système. Le mode Material Design utilise MD3. Les deux branches iOS incluent les styles de disposition Vertical Bars.
-
-Choisissez le préréglage correspondant avant l’initialisation Ionic existante. Conservez aussi vos autres options Ionic :
+Le CSS choisit iOS 26 par défaut et iOS 27 si le navigateur prend en charge `overflow-anchor: auto`. Le mode Material Design utilise MD3. Les deux styles iOS partagent `ios27ThemeConfig`, qui inclut la synchronisation des transitions natives. Passez le préréglage de la plateforme à votre initialisation Ionic existante :
 
 ```ts
 import { Capacitor } from '@capacitor/core';
-import {
-  ios26ThemeConfig,
-  iosTransitionAnimation as ios26TransitionAnimation,
-} from '@rdlabo/ionic-theme-ios26';
-import { ios27ThemeConfig, withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
-const iosConfig =
-  typeof CSS !== 'undefined' && CSS.supports('overflow-anchor: auto')
-    ? ios27ThemeConfig
-    : {
-        ...ios26ThemeConfig,
-        navAnimation: withNativeUITransition(ios26TransitionAnimation),
-      };
-const ionicConfig = Capacitor.getPlatform() === 'ios' ? iosConfig : md3ThemeConfig;
+const ionicConfig = Capacitor.getPlatform() === 'ios' ? ios27ThemeConfig : md3ThemeConfig;
 ```
-
-L’animation de navigation iOS 26 utilise `withNativeUITransition` pour synchroniser le Web et les contrôles natifs. `ios27ThemeConfig` inclut déjà cet adaptateur. Conservez les animations de popover fournies par chaque préréglage.
 
 | Framework         | Ionic initializer                                                   |
 | ----------------- | ------------------------------------------------------------------- |
@@ -91,7 +51,7 @@ L’animation de navigation iOS 26 utilise `withNativeUITransition` pour synchro
 | React             | `setupIonicReact(ionicConfig)` from `@ionic/react`                  |
 | Vue               | `app.use(IonicVue, ionicConfig)` with `IonicVue` from `@ionic/vue`  |
 
-Dans un navigateur, cet exemple choisit MD3. Pour prévisualiser iOS sur ordinateur, définissez `mode: 'ios'` dans l’initialisation existante avec le préréglage iOS correspondant. Le thème seul n’active pas les contrôles natifs.
+Pour prévisualiser iOS sur ordinateur, utilisez `ios27ThemeConfig` dans l’initialisation existante. Le thème seul n’active pas les contrôles natifs.
 
 ## 3. Démarrer après le rendu de la coque
 
@@ -112,8 +72,6 @@ import { enableDynamicColors } from '@rdlabo/ionic-theme-md3/dynamic-colors';
 await enableDynamicColors({
   getScheme: getDynamicColorScheme,
   listen: addDynamicColorListener,
-  mode: 'system',
-  onError: console.error,
 });
 
 if (Capacitor.getPlatform() === 'ios') {
@@ -148,7 +106,7 @@ SwiftPM résout Engine automatiquement ; les projets CocoaPods existants suivent
 
 ## Vérifier le résultat sur chaque plateforme
 
-- Sur iOS, vérifiez le thème de base iOS 26 et le thème iOS 27 sélectionné selon les capacités. Changez d’apparence claire/sombre, naviguez et ouvrez un popover pour vérifier les animations correspondantes.
+- Vérifiez l’apparence claire/sombre et la navigation. Le préréglage de transition iOS 27 convient aux deux styles iOS.
 - Sur iOS 26 ou ultérieur, les contrôles pris en charge sont natifs et conservent les gestionnaires Web existants. Le thème iOS habille le contenu Web restant.
 - Sur Android 12 ou ultérieur, Material Design 3 utilise la palette Dynamic Color de l’appareil. Les contrôles restent Web. Les versions Android antérieures utilisent la palette du thème.
 - Sur les appareils compatibles avec les rails natifs, les changements de disposition mettent à jour Vertical Bars. Les autres appareils conservent la disposition Web habituelle.

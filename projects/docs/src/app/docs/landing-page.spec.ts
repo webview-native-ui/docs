@@ -24,6 +24,16 @@ describe('LandingPageComponent', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
+  it.each(['ionic-theme-ios26', 'ionic-theme-ios27', 'ionic-theme-md3', 'capacitor-native-ui'])(
+    'takes Get started directly to the %s installation steps',
+    async (projectId) => {
+      const element = await setup(projectId);
+      expect(element.querySelector('.project-button--primary')?.getAttribute('href')).toBe(
+        `/projects/${projectId}/docs/setup`,
+      );
+    },
+  );
+
   it('lists every documentation page once in the full index', async () => {
     const element = await setup('ionic-theme-ios27');
     const project = (await loadProject('ionic-theme-ios27'))!;

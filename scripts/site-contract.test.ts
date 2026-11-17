@@ -545,71 +545,65 @@ test('all published internal document links resolve within this standalone site'
   }
 });
 
-test('standard setup synchronizes the base iOS animation without double-wrapping iOS 27', async () => {
+test('standard setup uses public CSS presets and one shared iOS initializer', async () => {
+  const { build } = await import('esbuild');
   const { transpileModule, ModuleKind } = await import('typescript');
   const { runInNewContext } = await import('node:vm');
-  const ios26 = {
-    mode: 'ios',
-    navAnimation: () => 'page-animation',
-    popoverEnter: () => 'popover-enter',
-    popoverLeave: () => 'popover-leave',
-  };
-  const ios27 = {
-    mode: 'ios',
-    navAnimation: () => 'page-animation',
-    popoverEnter: () => 'popover-enter',
-    popoverLeave: () => 'popover-leave',
-  };
-  const md3 = { mode: 'md', navAnimation: () => 'md-animation' };
+  const ios = { mode: 'ios', navAnimation: () => 'native-synchronized-animation' };
+  const md = { mode: 'md', navAnimation: () => 'md-animation' };
   for (const locale of ['en', 'ja', 'fr', 'de']) {
     const source = await readFile(`projects/docs/src/guides/${locale}/standard-setup.md`, 'utf8');
+    assert.doesNotMatch(
+      source,
+      /meta.load-css|CSS.supports|ios26ThemeConfig|ios26TransitionAnimation|withNativeUITransition|npm install --save-dev sass/,
+    );
+    const css = source.match(/^```css[^\n]*\n([\s\S]*?)\n```/m)?.[1];
+    assert.ok(css);
+    const bundled = await build({
+      stdin: { contents: css, loader: 'css', resolveDir: process.cwd() },
+      bundle: true,
+      write: false,
+      metafile: true,
+    });
+    const output = bundled.outputFiles[0].text;
+    assert.doesNotMatch(output, /@import\s/);
+    assert.match(output, /@supports \(not \(overflow-anchor: auto\)\)/);
+    assert.match(output, /@supports \(overflow-anchor: auto\)/);
+    assert.match(output, /ion-palette-dark/);
+    assert.match(output, /ios-theme-vertical-bars/);
+    for (const preset of [
+      'ionic-theme-ios26/dist/styles/class.css',
+      'ionic-theme-ios27/dist/styles/class.css',
+      'ionic-theme-md3/dist/styles/theme.css',
+    ]) {
+      assert.ok(
+        Object.keys(bundled.metafile.inputs).some((path) => path.endsWith(preset)),
+        `${locale}: ${preset}`,
+      );
+    }
     const snippet = [...source.matchAll(/^```ts[^\n]*\n([\s\S]*?)\n```/gm)]
       .map((match) => match[1])
       .find((code) => code.includes('const ionicConfig'));
-    assert.ok(snippet, `${locale}: executable Ionic initializer`);
+    assert.ok(snippet);
     const script = transpileModule(`${snippet}\nglobalThis.selected = ionicConfig;`, {
       compilerOptions: { module: ModuleKind.CommonJS },
     }).outputText;
     for (const platform of ['ios', 'android', 'web']) {
-      for (const supportsNewTheme of [false, true]) {
-        const wrapped = () => 'native-synchronized-animation';
-        const builders: unknown[] = [];
-        const packages: Record<string, unknown> = {
-          '@capacitor/core': { Capacitor: { getPlatform: () => platform } },
-          '@rdlabo/ionic-theme-ios26': {
-            ios26ThemeConfig: ios26,
-            iosTransitionAnimation: ios26.navAnimation,
-          },
-          '@rdlabo/ionic-theme-ios27': {
-            ios27ThemeConfig: ios27,
-            withNativeUITransition: (builder: unknown) => {
-              builders.push(builder);
-              return wrapped;
-            },
-          },
-          '@rdlabo/ionic-theme-md3': { md3ThemeConfig: md3 },
-        };
-        const context = {
-          exports: {},
-          require: (name: string) => {
-            assert.ok(name in packages, name);
-            return packages[name];
-          },
-          CSS: { supports: () => supportsNewTheme },
-          selected: undefined as typeof ios26 | typeof md3 | undefined,
-        };
-        runInNewContext(script, context);
-        if (platform !== 'ios') assert.equal(context.selected, md3);
-        else if (supportsNewTheme) {
-          assert.equal(context.selected, ios27);
-          assert.equal(builders.length, 0, 'iOS 27 already includes native synchronization');
-        } else {
-          assert.deepEqual(builders, [ios26.navAnimation]);
-          assert.equal(context.selected?.navAnimation, wrapped);
-          assert.equal((context.selected as typeof ios26).popoverEnter, ios26.popoverEnter);
-          assert.equal((context.selected as typeof ios26).popoverLeave, ios26.popoverLeave);
-        }
-      }
+      const packages: Record<string, unknown> = {
+        '@capacitor/core': { Capacitor: { getPlatform: () => platform } },
+        '@rdlabo/ionic-theme-ios27': { ios27ThemeConfig: ios },
+        '@rdlabo/ionic-theme-md3': { md3ThemeConfig: md },
+      };
+      const context = {
+        exports: {},
+        require: (name: string) => {
+          assert.ok(name in packages);
+          return packages[name];
+        },
+        selected: undefined as typeof ios | undefined,
+      };
+      runInNewContext(script, context);
+      assert.equal(context.selected, platform === 'ios' ? ios : md);
     }
   }
 });

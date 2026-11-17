@@ -561,10 +561,10 @@ export const GUIDE_COPY = {
     de: 'Ihre Web-App mit Plattform-UI.',
   },
   guideTitle: {
-    en: 'Understand, then customize.',
-    ja: '仕組みを理解して、必要な部分を調整する。',
-    fr: 'Comprendre, puis personnaliser.',
-    de: 'Verstehen und anpassen.',
+    en: 'Customize when needed',
+    ja: '必要になったら調整する',
+    fr: 'Personnaliser si nécessaire',
+    de: 'Bei Bedarf anpassen',
   },
   standardAudience: {
     en: 'Standard setup: Ionic + Capacitor 8',

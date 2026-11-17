@@ -16,68 +16,28 @@ For other integrations, choose [HTML without Ionic](/projects/capacitor-native-u
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
   @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 \
   @erkamyaman/capacitor-foldable@8
-npm install --save-dev sass
 ```
 
 ## 2. Configure both themes
 
-Edit your global Sass file, such as `src/global.scss`, after Ionic’s base styles. Put `@use 'sass:meta'` at the top of the file. Replace existing Ionic dark-palette and theme imports with this composition; keep app-specific overrides after the theme styles. The appearance controller in step 3 owns the `ion-palette-dark` class.
+Add these imports to your global stylesheet after Ionic’s base CSS. Replace existing theme and Ionic dark-palette imports. The presets include the matching dark palette and compatibility styles; no additional Sass setup is needed.
 
-```scss:src/global.scss
-@use 'sass:meta';
-
-@include meta.load-css('@ionic/core/css/palettes/dark.class.css');
-
-@supports not (overflow-anchor: auto) {
-  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/default-variables');
-  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/ionic-theme-ios26');
-  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/ionic-theme-ios26-dark-class');
-  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/md-remove-ios-class-effect');
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/vertical-bars');
-}
-
-@supports (overflow-anchor: auto) {
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/default-variables');
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/ionic-theme-ios27');
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/ionic-theme-ios27-dark-class');
-  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/md-remove-ios-class-effect');
-}
-
-@include meta.load-css('@rdlabo/ionic-theme-md3/dist/styles/theme.css');
+```css
+@import '@rdlabo/ionic-theme-ios26/styles/class.css' supports(not (overflow-anchor: auto));
+@import '@rdlabo/ionic-theme-ios27/styles/class.css' supports(overflow-anchor: auto);
+@import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
+@import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
 
-Sass must resolve installed packages through `node_modules`. For Angular, add this to the application build options in `angular.json`. In another build tool, configure its Sass load path equivalently.
-
-```json
-"stylePreprocessorOptions": {
-  "includePaths": ["node_modules"]
-}
-```
-
-The default iOS branch uses the iOS 26 theme. Browsers supporting `overflow-anchor: auto` use iOS 27 instead; this is a capability check, not OS-version detection. Material Design mode uses MD3. Vertical Bars layout styles are included in both iOS branches.
-
-Choose the matching preset before your existing Ionic initializer runs. Keep your other Ionic options when applying it:
+CSS selects iOS 26 by default and iOS 27 when the browser supports `overflow-anchor: auto`. Material Design mode uses MD3. Both iOS themes use the same `ios27ThemeConfig`, including native transition synchronization. Pass the platform preset to the Ionic initializer your app already calls:
 
 ```ts
 import { Capacitor } from '@capacitor/core';
-import {
-  ios26ThemeConfig,
-  iosTransitionAnimation as ios26TransitionAnimation,
-} from '@rdlabo/ionic-theme-ios26';
-import { ios27ThemeConfig, withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
-const iosConfig =
-  typeof CSS !== 'undefined' && CSS.supports('overflow-anchor: auto')
-    ? ios27ThemeConfig
-    : {
-        ...ios26ThemeConfig,
-        navAnimation: withNativeUITransition(ios26TransitionAnimation),
-      };
-const ionicConfig = Capacitor.getPlatform() === 'ios' ? iosConfig : md3ThemeConfig;
+const ionicConfig = Capacitor.getPlatform() === 'ios' ? ios27ThemeConfig : md3ThemeConfig;
 ```
-
-The iOS 26 navigation animation is wrapped with `withNativeUITransition` to synchronize Web and native controls during navigation. `ios27ThemeConfig` already includes this adapter. Keep the popover animations supplied by each preset.
 
 | Framework         | Ionic initializer                                                   |
 | ----------------- | ------------------------------------------------------------------- |
@@ -86,7 +46,7 @@ The iOS 26 navigation animation is wrapped with `withNativeUITransition` to sync
 | React             | `setupIonicReact(ionicConfig)` from `@ionic/react`                  |
 | Vue               | `app.use(IonicVue, ionicConfig)` with `IonicVue` from `@ionic/vue`  |
 
-In a browser, this example selects MD3. To preview iOS styling on desktop, set `mode: 'ios'` in your existing initializer and use the matching iOS preset. The theme alone does not activate native controls.
+To preview iOS styling on desktop, use `ios27ThemeConfig` in your existing initializer. The theme alone does not activate native controls.
 
 ## 3. Start after the app shell renders
 
@@ -107,8 +67,6 @@ import { enableDynamicColors } from '@rdlabo/ionic-theme-md3/dynamic-colors';
 await enableDynamicColors({
   getScheme: getDynamicColorScheme,
   listen: addDynamicColorListener,
-  mode: 'system',
-  onError: console.error,
 });
 
 if (Capacitor.getPlatform() === 'ios') {
@@ -143,7 +101,7 @@ SwiftPM resolves Engine automatically; existing CocoaPods projects use [native p
 
 ## Check the result on each platform
 
-- On iOS, check the base iOS 26 theme and the capability-selected iOS 27 theme. Switch between light and dark appearance, then navigate and open a popover to check the matching animations.
+- Check light/dark appearance and page navigation. The iOS 27 navigation preset works with both iOS theme styles.
 - On iOS 26 or later, supported controls render natively and keep the existing Web event handlers. The iOS theme styles the remaining Web content.
 - On Android 12 or later, Material Design 3 uses the device’s Dynamic Color palette. The controls remain Web controls. Older Android devices use the theme’s fallback palette.
 - On devices supporting native rails, changing the device layout updates Vertical Bars. Other devices retain the ordinary Web layout.
