@@ -16,8 +16,8 @@ import { resolveDocsLocale } from '../../../../../shared/docs-locales';
   styleUrl: './landing-page.css',
   template: `
     @if (project(); as p) {
+      <app-guide-context />
       <article class="project-landing">
-          <app-guide-context />
         <span aria-hidden="true" class="sr-only" data-pagefind-ignore [attr.data-pagefind-filter]="'project:' + p.id">{{ p.shortName }}</span>
         <span aria-hidden="true" class="sr-only" data-pagefind-ignore [attr.data-pagefind-filter]="'category:' + p.category">{{ p.category }}</span>
         <div class="project-identity">

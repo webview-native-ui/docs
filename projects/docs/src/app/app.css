@@ -14,63 +14,6 @@
   background: #f8fafc;
   z-index: 30;
 }
-.docs-navigation-columns {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  height: 100%;
-  min-height: 0;
-}
-.docs-rail {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  overflow-y: auto;
-  border-right: 1px solid #e2e8f0;
-  padding: 14px 4px 10px;
-}
-.docs-rail-categories,
-.docs-rail-global {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.docs-rail-global {
-  margin-top: auto;
-  padding-top: 28px;
-}
-.docs-rail-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  min-height: 54px;
-  width: 100%;
-  padding: 8px 0;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  color: #64748b;
-  font: inherit;
-  font-size: 10px;
-  line-height: 1.4;
-  text-decoration: none;
-  cursor: pointer;
-}
-.docs-rail-button:hover {
-  background: #eff6ff;
-  color: #1767d2;
-}
-.docs-rail-button.is-active {
-  background: #eff6ff;
-  color: #1767d2;
-}
-.docs-rail-button svg,
-.docs-rail-button app-project-icon {
-  display: block;
-  width: 20px;
-  height: 20px;
-}
 .docs-navigation-pane {
   overflow: hidden;
   height: 100%;
@@ -198,9 +141,9 @@
     transition: none;
   }
 }
-/* The shared guide is the primary navigation; package navigation is a reference tool. */
-.docs-sidebar {
+.docs-navigation-index {
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .guide-navigation {
   display: grid;
@@ -222,12 +165,13 @@
   background: #eff6ff;
   color: #1767d2;
 }
-.reference-navigation > summary {
-  padding: 16px;
-  cursor: pointer;
-  font-size: 13px;
-  color: #64748b;
+.reference-navigation {
+  padding: 16px 12px 24px;
 }
-.reference-navigation .docs-navigation-columns {
-  height: max(400px, calc(100dvh - 500px));
+.reference-navigation h2 {
+  margin: 0 12px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #64748b;
 }
