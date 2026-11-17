@@ -45,7 +45,21 @@ test('split theme and Native UI guides resolve localized links and heading fragm
         `${prefix}: preserve legacy anchor ${oldAnchor}`,
       );
     }
+    for (const chapter of GUIDE_CHAPTERS) {
+      const route = `${prefix}/guides/${chapter.id}`;
+      documents.set(
+        route,
+        new JSDOM(await readFile(`dist/docs/browser${route}/index.html`, 'utf8')).window.document,
+      );
+    }
     for (const [route, document] of documents) {
+      for (const marker of document.querySelectorAll('.diff-prefix')) {
+        if (!/^[+-]$/.test(marker.textContent ?? '')) continue;
+        const line = marker.parentElement?.textContent ?? '';
+        if (/^(?:---|\+\+\+) /.test(line)) continue;
+        assert.match(line, /^[+-] /, `${route}: diff marker needs a separator: ${line}`);
+      }
+
       for (const link of document.querySelectorAll<HTMLAnchorElement>('main a[href]')) {
         const url = new URL(link.getAttribute('href')!, `https://webview-native-ui.com${route}`);
         if (
@@ -494,6 +508,29 @@ test('shared guides lead from the complete setup to localized package details', 
     const home = await read(prefix);
     assert.ok(home.querySelector('main .guide-chapters'));
     assert.ok(home.querySelector('main #packages'));
+    assert.deepEqual(
+      [...home.querySelectorAll('.guide-chapters a')].map((a) => a.getAttribute('href')),
+      [`${prefix}/guides/appearance`, `${prefix}/guides/extensions`],
+    );
+    assert.ok(home.querySelector(`.support-navigation a[href="${prefix}/support"]`));
+    assert.equal(home.querySelector('.guide-navigation a[href$="/support"]'), null);
+    const setup = await read(`${prefix}/standard-setup`);
+    assert.ok(setup.getElementById('verify-installation'));
+    const redirects = await readFile('projects/docs/public/_redirects', 'utf8');
+    for (const obsolete of ['native-ui', 'device-layout']) {
+      assert.equal(home.querySelector(`a[href="${prefix}/guides/${obsolete}"]`), null);
+      assert.ok(
+        redirects.includes(
+          `${prefix}/guides/${obsolete} https://webview-native-ui.com${prefix}/standard-setup#verify-installation 301`,
+        ),
+      );
+    }
+    assert.equal(home.querySelectorAll('.guide-chapters a[href$="/migration"]').length, 0);
+    assert.ok(home.querySelector('.migration-guide a[href$="/migration"]'));
+    assert.ok(home.querySelector('#installation-navigation-title'));
+    assert.ok(home.querySelector('#task-navigation-title'));
+    assert.ok(home.querySelector('#migration-navigation-title'));
+    assert.ok(!home.querySelector('main .eyebrow')?.textContent?.match(/^0[123]$/));
     for (const chapter of GUIDE_CHAPTERS) {
       const path = `${prefix}/guides/${chapter.id}`;
       assert.ok(home.querySelector(`main a[href="${path}"]`));
@@ -521,8 +558,6 @@ test('shared guides lead from the complete setup to localized package details', 
           );
       }
     }
-    const native = await read(`${prefix}/guides/native-ui`);
-    assert.ok(native.querySelectorAll('article pre code').length >= 3);
     for (const chapter of GUIDE_CHAPTERS) {
       const page = await read(`${prefix}/guides/${chapter.id}`);
       assert.ok(page.querySelectorAll('article h2[id]').length >= 4);

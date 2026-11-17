@@ -1,3 +1,4 @@
+import { repairDisplayDiffSpacing } from './documented-diffs';
 import { GUIDE_CHAPTERS } from '../shared/guide-navigation';
 import { generateStandardSetup } from './standard-setup';
 import { access, mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
@@ -666,7 +667,7 @@ async function generateProject(
     }
     const preparedDocgen = prepareDocgenMarkdown(expanded);
     let html = rewriteInternalLinks(
-      await markdownToHtml(preparedDocgen.markdown),
+      await markdownToHtml(repairDisplayDiffSpacing(preparedDocgen.markdown)),
       project,
       locale,
     ).replace('loading="lazy"', 'loading="eager" fetchpriority="high"');
@@ -774,7 +775,11 @@ async function generateProject(
       file,
       section: localize(page.section, locale),
       path: `/projects/${project.slug}/docs/${slug}`,
-      markdown: rewriteAgentMarkdownLinks(preparedDocgen.markdown, project, locale),
+      markdown: rewriteAgentMarkdownLinks(
+        repairDisplayDiffSpacing(preparedDocgen.markdown),
+        project,
+        locale,
+      ),
       html,
       headings,
       codes,

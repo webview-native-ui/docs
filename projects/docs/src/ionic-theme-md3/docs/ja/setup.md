@@ -1,11 +1,19 @@
 ---
 title: MD3 テーマをセットアップする
-sourceRevision: '91bbdd037b94a24267e0e6b1d91a32cc2fff91a7894ae1b9bd0129c2594e2ccc'
+sourceRevision: '4bb3ca73de2c3058aaaad70af3a9155293f579b4b9675405076d8a4708cc1d6d'
 ---
 
 既存のIonic 9 Angular・React・VueアプリへMaterial Design 3テーマを適用します。このページはテーマだけの導入手順です。Native UIの起動、Capacitorのネイティブプロジェクト、Foldableの設定は不要です。既存のルートとイベント処理を維持します。
 
+
+差分はIonicの初期化が引数なしの既存アプリを例にしています。省略されたルーター・provider・描画処理は残します。アプリ固有の設定を渡している場合は、その前にプリセットを展開して既存の上書きを保ってください。差分のsrc/global.cssは既存のグローバルスタイル（Angularのsrc/global.scssなど）を指す例名で、別ファイルを新規作成する意味ではありません。
+
+
+スタイルの差分はdark.system.cssから始め、OSの明暗に従う方針を維持します。すでにクラス制御や常時ダークを使うアプリは、その方針に合うプリセットを選び、Systemへ変更しないでください。
+
 ## テーマをインストールする
+
+npmが成功した時点ではパッケージだけが導入済みで、スタイルと初期化の設定は未完了です。
 
 アプリのディレクトリでパッケージをインストールします。
 
@@ -15,14 +23,22 @@ npm install @rdlabo/ionic-theme-md3
 
 ## テーマのスタイルシートを読み込む
 
+この差分の適用後はスタイルを読込済みになり、Ionic初期化の設定はまだ残ります。
+
 グローバルスタイルシートでIonicの基本CSSと選択済みのIonicダークパレットを維持し、その後にMD3を読み込みます。例はシステム連動ダークモードです。別のパレットを設定済みなら、それを維持して二つ目を追加しません。MD3の個別スタイルのimportは、この一つのテーマimportへ置き換えます。
 
-```css
-@import '@ionic/core/css/palettes/dark.system.css';
-@import '@rdlabo/ionic-theme-md3/styles/theme.css';
+```diff:src/global.css
+@@
+ @import '@ionic/core/css/structure.css';
+ @import '@ionic/core/css/palettes/dark.system.css';
++ @import '@rdlabo/ionic-theme-md3/styles/theme.css';
+
+ :root { --app-content-width: 72rem; }
 ```
 
 ## Ionic を設定する
+
+自分のフレームワークの差分だけを適用します。ここまででスタイルと初期化が設定済みになり、最後にブラウザーで確認します。
 
 使っているフレームワークの例を一つ選びます。プリセットはブラウザーのプレビューを含め、テーマのモードとアニメーションを設定します。既存のアプリ固有オプションはスプレッドの後へ置いて維持します。プラットフォームでモードを選ぶアプリでは、その選択を維持し、対応するモードの場合だけこのプリセットを適用します。
 
@@ -30,40 +46,60 @@ npm install @rdlabo/ionic-theme-md3
 
 src/app/app.config.tsで、既存のIonic providerへプリセットを渡します。例はIonic providerの配置を示します。ルーターやHTTPなど、配列にあるほかのproviderは維持してください。
 
-```ts:src/app/app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import { provideIonicAngular } from '@ionic/angular';
-import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+```diff:src/app/app.config.ts
+@@
+ import { ApplicationConfig } from '@angular/core';
+ import { provideIonicAngular } from '@ionic/angular';
++ import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+ import { provideRouter } from '@angular/router';
+ import { routes } from './app.routes';
 
-export const appConfig: ApplicationConfig = {
-  providers: [provideIonicAngular({ ...md3ThemeConfig })],
-};
+ export const appConfig: ApplicationConfig = {
+   providers: [
+     provideRouter(routes),
+-     provideIonicAngular(),
++     provideIonicAngular({ ...md3ThemeConfig }),
+     provideHttpClient(),
+   ],
+ };
 ```
 
 ### React
 
 src/main.tsxで、既存のsetupIonicReactを次の呼び出しへ置き換え、既存のReactルートを描画する前に実行します。ルートの描画、ルーティング、CSSのimportは維持します。
 
-```ts:src/main.tsx
-import { setupIonicReact } from '@ionic/react';
-import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+```diff:src/main.tsx
+@@
+ import { setupIonicReact } from '@ionic/react';
++ import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+ import { createRoot } from 'react-dom/client';
+ import App from './App';
+ import './global.css';
 
-setupIonicReact({ ...md3ThemeConfig });
+- setupIonicReact();
++ setupIonicReact({ ...md3ThemeConfig });
+
+ createRoot(document.getElementById('root')!).render(<App />);
 ```
 
 ### Vue
 
 src/main.tsで、既存アプリのIonicVue登録時にプリセットを渡し、mountより前に実行します。例は登録位置を示します。ルーター、ほかのプラグイン、既存のmount手順は維持してください。
 
-```ts:src/main.ts
-import { createApp } from 'vue';
-import { IonicVue } from '@ionic/vue';
-import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
-import App from './App.vue';
+```diff:src/main.ts
+@@
+ import { createApp } from 'vue';
+ import { IonicVue } from '@ionic/vue';
++ import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+ import App from './App.vue';
+ import router from './router';
+@@
 
-const app = createApp(App);
-app.use(IonicVue, { ...md3ThemeConfig });
-app.mount('#app');
+ const app = createApp(App);
+- app.use(IonicVue);
++ app.use(IonicVue, { ...md3ThemeConfig });
+ app.use(router);
+ router.isReady().then(() => app.mount('#app'));
 ```
 
 ## 画面をプレビューする

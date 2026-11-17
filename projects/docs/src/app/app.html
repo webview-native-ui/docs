@@ -118,24 +118,34 @@
             <a [href]="canonicalHomePath" [attr.aria-current]="isIndex() ? 'page' : null">{{
               guideCopy.overview
             }}</a>
-            <a
-              [href]="guideHref('/standard-setup')"
-              [attr.aria-current]="isStandardSetup() ? 'page' : null"
-              >{{ standardSetupLabel }}</a
-            >
-            @for (chapter of guideChapters; track chapter.id) {
+            <section aria-labelledby="installation-navigation-title">
+              <h2 id="installation-navigation-title">{{ guideCopy.setupGroup }}</h2>
               <a
-                [href]="guideHref(chapter.path)"
-                [attr.aria-current]="isGuide(chapter.path) ? 'page' : null"
-                >{{ chapter.title }}</a
+                [href]="guideHref('/standard-setup')"
+                [attr.aria-current]="isStandardSetup() ? 'page' : null"
+                >{{ standardSetupLabel }}</a
               >
+            </section>
+            <section aria-labelledby="task-navigation-title">
+              <h2 id="task-navigation-title">{{ guideCopy.guideTitle }}</h2>
+              @for (chapter of taskGuides; track chapter.id) {
+                <a
+                  [href]="guideHref(chapter.path)"
+                  [attr.aria-current]="isGuide(chapter.path) ? 'page' : null"
+                  >{{ chapter.title }}</a
+                >
+              }
+            </section>
+            @if (migrationGuide; as chapter) {
+              <section aria-labelledby="migration-navigation-title">
+                <h2 id="migration-navigation-title">{{ guideCopy.migrationGroup }}</h2>
+                <a
+                  [href]="guideHref(chapter.path)"
+                  [attr.aria-current]="isGuide(chapter.path) ? 'page' : null"
+                  >{{ chapter.title }}</a
+                >
+              </section>
             }
-            <a
-              routerLink="/support"
-              [attr.aria-current]="isSupport() ? 'page' : null"
-              i18n="@@supportRail"
-              >Sponsor</a
-            >
           </nav>
           <section class="reference-navigation" aria-labelledby="package-reference-title">
             <h2 id="package-reference-title">{{ guideCopy.reference }}</h2>
@@ -146,6 +156,14 @@
               (selected)="selectProject($event)"
             />
           </section>
+          <div class="support-navigation">
+            <a
+              routerLink="/support"
+              [attr.aria-current]="isSupport() ? 'page' : null"
+              i18n="@@supportRail"
+              >Sponsor</a
+            >
+          </div>
         </div>
         <div
           class="docs-navigation-slide"

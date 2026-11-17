@@ -1,5 +1,6 @@
 import { GUIDE_CHAPTERS } from '../../../../shared/guide-navigation';
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
 import { DocsPageComponent } from './docs/docs-page';
 import { LandingPageComponent } from './docs/landing-page';
 import { NotFoundComponent } from './docs/not-found';
@@ -50,6 +51,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./docs/standard-setup-page').then((module) => module.StandardSetupPageComponent),
   },
+  ...['native-ui', 'device-layout'].map((id) => ({
+    path: `guides/${id}`,
+    pathMatch: 'full' as const,
+    redirectTo: () =>
+      inject(Router).createUrlTree(['/standard-setup'], { fragment: 'verify-installation' }),
+  })),
   ...GUIDE_CHAPTERS.map((chapter) => ({
     path: `guides/${chapter.id}`,
     data: { chapter: chapter.id },

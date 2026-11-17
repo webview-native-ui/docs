@@ -10,6 +10,7 @@ import { localizedPublicPath } from '../projects/docs/src/app/locale-path';
 import { assertReviewedDocsTranslation } from './docs-translation-review';
 import { enforceGeneratedHtmlPolicy } from './html-policy';
 import { preserveSourceHeadingLinks } from './localized-heading-anchors';
+import { addHeadingAliases } from './markdown-headings';
 
 interface GuideContent {
   title: string;
@@ -26,13 +27,15 @@ async function renderGuide(root: string, slug: string): Promise<Record<string, G
     const source = `projects/docs/src/guides/${code}/${slug}.md`;
     const raw = await readFile(join(root, source), 'utf8');
     if (code !== 'en') assertReviewedDocsTranslation(english, raw, source);
-    const body = fm(raw).body.trim();
+    const parsed = fm<{ headingAliases?: Record<string, string> }>(raw);
+    const body = parsed.body.trim();
     const title = body.match(/^# (.+)$/m)?.[1];
     if (!title) throw new Error(`${source}: title is required`);
     const content = body.replace(/^# .+\n/, '').trim();
     const description = content.split('\n\n')[0];
     const document = new JSDOM(await markdownToHtml(content.slice(description.length).trim()))
       .window.document;
+    addHeadingAliases(document, parsed.attributes.headingAliases, source);
     for (const link of document.querySelectorAll('a[href]')) {
       const href = link.getAttribute('href')!;
       if (href.startsWith('#')) {

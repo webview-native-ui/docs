@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { PUBLISHED_DOCS_LOCALES } from '../../../../../shared/docs-locales';
-import { GUIDE_CHAPTERS } from '../../../../../shared/guide-navigation';
+import { GUIDE_CHAPTERS, guideCopyForLocale } from '../../../../../shared/guide-navigation';
 import { GuidePageComponent } from './guide-page';
 
 const cases = PUBLISHED_DOCS_LOCALES.flatMap((locale) =>
@@ -35,6 +35,13 @@ describe('Task guides', () => {
       const harness = await RouterTestingHarness.create(`/guides/${chapter.id}`);
       const page = harness.routeNativeElement!;
       expect(page.querySelector('h1')?.textContent).toBe(chapter.title[code]);
+      const copy = guideCopyForLocale(code);
+      expect(page.querySelector('.guide-kind')?.textContent?.trim()).toBe(
+        chapter.kind === 'migration' ? copy.migrationGroup : copy.guideTitle,
+      );
+      expect(page.querySelector('.guide-reading-hint')?.textContent?.trim()).toBe(
+        chapter.kind === 'migration' ? copy.migrationReading : copy.taskReading,
+      );
       const steps = page.querySelectorAll('article h2[id]');
       expect(steps.length).toBeGreaterThanOrEqual(4);
       expect(page.querySelectorAll('article pre code').length).toBeGreaterThanOrEqual(2);

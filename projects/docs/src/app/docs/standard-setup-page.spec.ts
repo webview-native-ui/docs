@@ -2,6 +2,7 @@ import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { StandardSetupPageComponent } from './standard-setup-page';
+import { guideCopyForLocale } from '../../../../../shared/guide-navigation';
 import { PUBLISHED_DOCS_LOCALES } from '../../../../../shared/docs-locales';
 
 describe('Standard setup navigation', () => {
@@ -14,6 +15,9 @@ describe('Standard setup navigation', () => {
       });
       const fixture = TestBed.createComponent(StandardSetupPageComponent);
       fixture.detectChanges();
+      const copy = guideCopyForLocale(code);
+      expect(fixture.nativeElement.querySelector('.guide-kind')?.textContent?.trim()).toBe(copy.setupGroup);
+      expect(fixture.nativeElement.querySelector('.guide-reading-hint')?.textContent?.trim()).toBe(copy.setupReading);
       await fixture.whenStable();
       const page = fixture.nativeElement as HTMLElement;
       const links = page.querySelectorAll<HTMLAnchorElement>('.setup-toc a');

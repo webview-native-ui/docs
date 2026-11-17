@@ -1,3 +1,4 @@
+import { applyTutorial, completedSetup, tutorialBaselines } from './tutorial-states';
 import { GUIDE_CHAPTERS } from '../shared/guide-navigation';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
@@ -561,7 +562,7 @@ test('all published internal document links resolve within this standalone site'
 
 test('standard setup uses public CSS presets and one shared iOS initializer', async () => {
   const { build } = await import('esbuild');
-  const { transpileModule, ModuleKind } = await import('typescript');
+  const { transpileModule, ModuleKind, JsxEmit } = await import('typescript');
   const { runInNewContext } = await import('node:vm');
   const ios = { mode: 'ios', navAnimation: () => 'native-synchronized-animation' };
   const md = { mode: 'md', navAnimation: () => 'md-animation' };
@@ -571,7 +572,7 @@ test('standard setup uses public CSS presets and one shared iOS initializer', as
       source,
       /meta.load-css|CSS.supports|ios26ThemeConfig|ios26TransitionAnimation|withNativeUITransition|npm install --save-dev sass/,
     );
-    const css = source.match(/^```css[^\n]*\n([\s\S]*?)\n```/m)?.[1];
+    const css = completedSetup('angular', locale).files['src/global.css'];
     assert.ok(css);
     const bundled = await build({
       stdin: { contents: css, loader: 'css', resolveDir: process.cwd() },
@@ -583,11 +584,11 @@ test('standard setup uses public CSS presets and one shared iOS initializer', as
     assert.doesNotMatch(output, /@import\s/);
     assert.match(output, /@supports \(not \(overflow-anchor: auto\)\)/);
     assert.match(output, /@supports \(overflow-anchor: auto\)/);
-    assert.match(output, /ion-palette-dark/);
+    assert.match(output, /prefers-color-scheme:\s*dark/);
     assert.match(output, /ios-theme-vertical-bars/);
     for (const preset of [
-      'ionic-theme-ios26/dist/styles/class.css',
-      'ionic-theme-ios27/dist/styles/class.css',
+      'ionic-theme-ios26/dist/styles/system.css',
+      'ionic-theme-ios27/dist/styles/system.css',
       'ionic-theme-md3/dist/styles/theme.css',
     ]) {
       assert.ok(
@@ -595,19 +596,54 @@ test('standard setup uses public CSS presets and one shared iOS initializer', as
         `${locale}: ${preset}`,
       );
     }
+    const appearanceCss = applyTutorial(
+      'appearance',
+      'angular',
+      completedSetup('angular', locale).files,
+      { locale },
+    ).files['src/global.css'];
+    const manual = await build({
+      stdin: { contents: appearanceCss, loader: 'css', resolveDir: process.cwd() },
+      bundle: true,
+      write: false,
+      metafile: true,
+    });
+    const inputs = Object.keys(bundled.metafile.inputs);
+    assert.ok(
+      !inputs.some((path) => /ionic-theme-ios(?:26|27)\/dist\/styles\/class.css$/.test(path)),
+    );
+    const manualInputs = Object.keys(manual.metafile.inputs);
+    for (const theme of ['ios26', 'ios27']) {
+      assert.ok(
+        manualInputs.some((path) => path.endsWith(`ionic-theme-${theme}/dist/styles/class.css`)),
+      );
+      assert.ok(
+        !manualInputs.some((path) => path.endsWith(`ionic-theme-${theme}/dist/styles/system.css`)),
+      );
+    }
     assert.doesNotMatch(source, /Ionic 8|@ionic\/angular\/standalone/);
-    const snippets = [...source.matchAll(/^```ts[^\n]*\n([\s\S]*?)\n```/gm)]
-      .map((match) => match[1])
-      .filter((code) => code.includes('const ionicConfig'));
+    const snippets = (['angular', 'react', 'vue'] as const).map((framework) => {
+      const entry = tutorialBaselines().frameworks[framework].setupEntry;
+      return completedSetup(framework, locale).files[entry];
+    });
     assert.equal(snippets.length, 3, `${locale}: complete Angular, React and Vue examples`);
     for (const snippet of snippets) {
       const script = transpileModule(`${snippet}\nglobalThis.selected = ionicConfig;`, {
-        compilerOptions: { module: ModuleKind.CommonJS },
+        fileName: 'example.tsx',
+        compilerOptions: { module: ModuleKind.CommonJS, jsx: JsxEmit.ReactJSX },
       }).outputText;
       for (const platform of ['ios', 'android', 'web']) {
         const calls: unknown[] = [];
         const packages: Record<string, unknown> = {
           '@capacitor/core': { Capacitor: { getPlatform: () => platform } },
+          '@angular/router': { provideRouter: (routes: unknown) => routes },
+          '@angular/common/http': { provideHttpClient: () => 'existing-http-provider' },
+          './app.routes': { routes: ['existing-route'] },
+          'react-dom/client': { createRoot: () => ({ render: () => 'existing-root' }) },
+          'react/jsx-runtime': { jsx: () => 'existing-app' },
+          './App': { default: () => 'existing-app' },
+          './global.css': {},
+          './router': { __esModule: true, default: { isReady: () => Promise.resolve() } },
           '@rdlabo/ionic-theme-ios27': { ios27ThemeConfig: ios },
           '@rdlabo/ionic-theme-md3': { md3ThemeConfig: md },
           '@ionic/angular': {
@@ -620,7 +656,9 @@ test('standard setup uses public CSS presets and one shared iOS initializer', as
           '@ionic/vue': { IonicVue: 'IonicVue' },
           vue: {
             createApp: () => ({
-              use: (_plugin: unknown, options: unknown) => calls.push(options),
+              use: (plugin: unknown, options: unknown) => {
+                if (plugin === 'IonicVue') calls.push(options);
+              },
               mount: () => 'mounted',
             }),
           },
@@ -632,6 +670,7 @@ test('standard setup uses public CSS presets and one shared iOS initializer', as
             assert.ok(name in packages, name);
             return packages[name];
           },
+          document: { getElementById: () => ({}) },
           selected: undefined as typeof ios | undefined,
         };
         runInNewContext(script, context);
@@ -646,12 +685,25 @@ test('standard setup uses public CSS presets and one shared iOS initializer', as
 test('task examples change the Web UI and keep a single startup', async () => {
   const { transpileModule, ModuleKind, ScriptTarget, JsxEmit } = await import('typescript');
   const { runInNewContext } = await import('node:vm');
+  const setupState = completedSetup('angular');
   const codeBlocks = async (name: string) => {
-    const source = await readFile(`projects/docs/src/guides/en/${name}.md`, 'utf8');
-    return [...source.matchAll(/^```([^\n]+)\n([\s\S]*?)\n```/gm)].map((match) => ({
-      language: match[1],
-      code: match[2],
-    }));
+    const examples = new Map<string, { language: string; filename: string; code: string }>();
+    for (const framework of ['angular', 'react', 'vue'] as const) {
+      const base = completedSetup(framework);
+      const state = name === 'standard-setup' ? base : applyTutorial(name, framework, base.files);
+      for (const change of state.changes) {
+        const filename = change.block.filename!;
+        const extension = filename.split('.').at(-1)!;
+        const language =
+          extension === 'kt' ? 'kotlin' : extension === 'gradle' ? 'groovy' : extension;
+        examples.set(filename, {
+          language: `${language}:${filename}`,
+          filename,
+          code: state.files[filename],
+        });
+      }
+    }
+    return [...examples.values()];
   };
   const execute = (code: string, context: Record<string, unknown>) => {
     const javascript = transpileModule(code, {
@@ -664,72 +716,164 @@ test('task examples change the Web UI and keep a single startup', async () => {
     }).outputText;
     return runInNewContext(`(async () => { ${javascript} })()`, context) as Promise<void>;
   };
-  const setup = await codeBlocks('standard-setup');
-  const startupCode = setup.find((block) => block.language === 'ts:src/native-ui.ts')!.code;
+  const diagnosticStartupCode = setupState.changes.find((change) =>
+    change.after.includes('Object.assign(window'),
+  )!.after;
   const appearance = await codeBlocks('appearance');
-  const modes: string[] = [];
-  const modeModules: Record<string, unknown> = {
+  const { enableDynamicColors } = await import('@rdlabo/ionic-theme-md3/dynamic-colors');
+  const paletteDocument = new JSDOM('<html><body></body></html>');
+  const root = paletteDocument.window.document.documentElement;
+  root.style.setProperty('--ion-color-primary', '#123456');
+  const light = {
+    primary: '#6750a4',
+    secondary: '#625b71',
+    tertiary: '#7d5260',
+    error: '#b3261e',
+    surface: '#fffbfe',
+    onSurface: '#1c1b1f',
+  };
+  const dark = {
+    primary: '#d0bcff',
+    secondary: '#ccc2dc',
+    tertiary: '#efb8c8',
+    error: '#f2b8b5',
+    surface: '#1c1b1f',
+    onSurface: '#e6e1e5',
+  };
+  let available = true;
+  let systemDark = false;
+  const nativeScheme = () =>
+    available
+      ? { available: true as const, systemDark, light, dark }
+      : { available: false as const, systemDark };
+  let readGate: Promise<ReturnType<typeof nativeScheme>> | undefined;
+  let invalidate: () => void = () => undefined;
+  let controllers = 0;
+  let realController: Awaited<ReturnType<typeof enableDynamicColors>> | undefined;
+  const preferenceModules: Record<string, unknown> = {
     '@capacitor/core': { Capacitor: { getPlatform: () => 'web' } },
     '@rdlabo/capacitor-native-ui': {
-      getDynamicColorScheme: () => Promise.resolve({ available: false, systemDark: false }),
-      addDynamicColorListener: () => Promise.resolve({ remove: () => Promise.resolve() }),
+      getDynamicColorScheme: () => readGate ?? Promise.resolve(nativeScheme()),
+      addDynamicColorListener: async (listener: () => void) => {
+        invalidate = listener;
+        return { remove: async () => undefined };
+      },
     },
     '@rdlabo/ionic-theme-md3/dynamic-colors': {
-      enableDynamicColors: () => Promise.resolve({ setMode: (mode: string) => modes.push(mode) }),
+      enableDynamicColors: async (options: Parameters<typeof enableDynamicColors>[0]) => {
+        controllers++;
+        realController = await enableDynamicColors({
+          ...options,
+          document: paletteDocument.window.document,
+        });
+        return realController;
+      },
     },
     '@erkamyaman/capacitor-foldable': { Foldable: {} },
     '@rdlabo/capacitor-native-ui/integration': {},
     '@rdlabo/ionic-theme-ios27': {},
   };
-  const changes = appearance
-    .filter((block) => block.language === 'ts:src/native-ui.ts')
-    .map((block) => block.code);
-  const modeExports = {} as {
+  const appearanceStartup = applyTutorial('appearance', 'angular', setupState.files).files[
+    'src/native-ui.ts'
+  ];
+  type Preferences = { deviceColors: boolean; dark: boolean };
+  const prefExports = {} as {
     startNativeUI(): Promise<void>;
-    setAppearanceMode(mode: string): Promise<void>;
+    getAppearancePreferences(): Preferences;
+    setAppearancePreferences(patch: Partial<Preferences>): Promise<void>;
   };
-  await execute(
-    changes[0] +
-      '\n' +
-      startupCode.replace(
-        'await enableDynamicColors({',
-        'appearance = await enableDynamicColors({',
-      ) +
-      '\n' +
-      changes[1],
-    {
-      exports: modeExports,
-      require: (name: string) => modeModules[name],
-      console,
-    },
-  );
-  await modeExports.startNativeUI();
-  interface ExampleElement {
-    type: string;
-    props: { children?: ExampleElement | ExampleElement[]; onClick?: () => void };
+  await execute(appearanceStartup, {
+    exports: prefExports,
+    require: (name: string) => preferenceModules[name],
+    console,
+    matchMedia: () => ({ matches: systemDark }),
+  });
+  await prefExports.startNativeUI();
+  const preferenceSnapshot = () => ({ ...prefExports.getAppearancePreferences() });
+  assert.deepEqual(preferenceSnapshot(), { deviceColors: true, dark: false });
+  const checkPalette = (deviceColors: boolean, darkMode: boolean) => {
+    assert.equal(root.classList.contains('ion-palette-dark'), darkMode);
+    assert.equal(root.style.getPropertyValue('color-scheme'), darkMode ? 'dark' : 'light');
+    assert.equal(
+      root.style.getPropertyValue('--ion-color-primary').toLowerCase(),
+      deviceColors && available ? (darkMode ? dark.primary : light.primary) : '#123456',
+    );
+  };
+  for (const deviceColors of [false, true]) {
+    await prefExports.setAppearancePreferences({ deviceColors });
+    for (const dark of [false, true]) {
+      await prefExports.setAppearancePreferences({ dark });
+      assert.deepEqual(preferenceSnapshot(), { deviceColors, dark });
+      checkPalette(deviceColors, dark);
+    }
   }
-  const jsx = (type: string, props: ExampleElement['props']): ExampleElement => ({ type, props });
-  const buttons = (element: ExampleElement): ExampleElement[] => {
+  const flush = () => new Promise<void>((resolve) => setImmediate(resolve));
+  await prefExports.setAppearancePreferences({ deviceColors: false, dark: false });
+  systemDark = true;
+  invalidate();
+  await flush();
+  checkPalette(false, false);
+  await prefExports.setAppearancePreferences({ dark: false });
+  systemDark = false;
+  invalidate();
+  await flush();
+  checkPalette(false, false);
+  // An unavailable palette does not change the user's selected preference.
+  available = false;
+  await prefExports.setAppearancePreferences({ deviceColors: true, dark: true });
+  checkPalette(true, true);
+  assert.equal(preferenceSnapshot().deviceColors, true);
+  available = true;
+  await prefExports.setAppearancePreferences({ deviceColors: false, dark: false });
+  let releaseRead!: (value: ReturnType<typeof nativeScheme>) => void;
+  readGate = new Promise((resolve) => {
+    releaseRead = resolve;
+  });
+  const enable = prefExports.setAppearancePreferences({ deviceColors: true });
+  await flush();
+  const disable = prefExports.setAppearancePreferences({ deviceColors: false });
+  const enableAgain = prefExports.setAppearancePreferences({ deviceColors: true });
+  const changeMode = prefExports.setAppearancePreferences({ dark: true });
+  releaseRead(nativeScheme());
+  await Promise.all([enable, disable, enableAgain, changeMode]);
+  readGate = undefined;
+  assert.deepEqual(preferenceSnapshot(), { deviceColors: true, dark: true });
+  checkPalette(true, true);
+  // A final OFF while a shared refresh is pending restores the original colors.
+  readGate = new Promise((resolve) => {
+    releaseRead = resolve;
+  });
+  const off = prefExports.setAppearancePreferences({ deviceColors: false });
+  await flush();
+  const lightMode = prefExports.setAppearancePreferences({ dark: false });
+  releaseRead(nativeScheme());
+  await Promise.all([off, lightMode]);
+  readGate = undefined;
+  checkPalette(false, false);
+  assert.equal(controllers, 1);
+
+  const angular = { Component: () => (target: unknown) => target };
+  interface PreferenceNode {
+    type: string;
+    props: Record<string, any>;
+  }
+  const preferenceJsx = (type: string, props: Record<string, any>): PreferenceNode => ({
+    type,
+    props,
+  });
+  const fields = (element: PreferenceNode): PreferenceNode[] => {
     const children = Array.isArray(element.props?.children)
       ? element.props.children
       : [element.props?.children];
     return [
       element,
       ...children
-        .filter((child): child is ExampleElement => !!child && typeof child === 'object')
-        .flatMap(buttons),
-    ].filter((node) => node.type === 'button' || node.type === 'IonButton');
+        .filter((child): child is PreferenceNode => !!child && typeof child === 'object')
+        .flatMap(fields),
+    ];
   };
-  const signal = (initial: string) => {
-    let value = initial;
-    const read = () => value;
-    read.set = (next: string) => {
-      value = next;
-    };
-    return read;
-  };
-  const angular = { Component: () => (target: unknown) => target, signal };
   for (const framework of ['angular', 'react', 'vue']) {
+    await prefExports.setAppearancePreferences({ deviceColors: true, dark: false });
     const block = appearance.find((block) =>
       block.language.includes(
         framework === 'angular'
@@ -739,135 +883,179 @@ test('task examples change the Web UI and keep a single startup', async () => {
             : 'Appearance.vue',
       ),
     )!;
-    const output: Record<string, any> = {};
-    const modules: Record<string, unknown> = {
-      '../native-ui': modeExports,
-      './native-ui': modeExports,
-      '@angular/core': angular,
-      'react/jsx-runtime': { jsx, jsxs: jsx },
-    };
-    const code =
-      framework === 'vue'
-        ? block.code.match(/<script setup lang="ts">([\s\S]*?)<\/script>/)![1] +
-          '\nexports.setMode = setMode;'
-        : block.code;
-    await execute(code, { exports: output, require: (name: string) => modules[name], console });
-    // Reopening a page creates only framework event bindings, never global listeners.
+    assert.ok(block.code.includes('Use device colors'));
+    assert.ok(block.code.includes('Dark mode'));
+    assert.ok(block.code.includes('otherwise uses theme colors'));
+    assert.ok(!block.code.includes('<button'));
+    assert.ok(!block.code.includes('<select'));
+    assert.ok(!block.code.includes('<option'));
+    assert.equal((block.code.match(/<(?:ion-toggle|IonToggle)\b/g) ?? []).length, 2);
+    assert.equal((block.code.match(/<(?:ion-item|IonItem)\b/g) ?? []).length, 2);
+    assert.ok(!/<(?:ion-list|IonList|input)\b/.test(block.code));
     for (let visit = 0; visit < 2; visit++) {
-      if (framework === 'react') {
-        for (const button of buttons(output.default())) button.props.onClick!();
-      } else {
-        const setMode =
-          framework === 'angular'
-            ? (mode: string) => new output.AppearancePage().setMode(mode)
-            : output.setMode;
-        for (const mode of ['light', 'dark', 'system']) {
-          assert.ok(
-            block.code.includes(
-              framework === 'angular'
-                ? `(click)="setMode('${mode}')"`
-                : `@click="setMode('${mode}')"`,
-            ),
-          );
-          setMode(mode);
-        }
-      }
-    }
-  }
-  await new Promise((resolve) => setImmediate(resolve));
-  assert.deepEqual(modes, Array.from({ length: 6 }, () => ['light', 'dark', 'system']).flat());
-
-  const native = await codeBlocks('native-ui');
-  for (const framework of ['angular', 'react', 'vue']) {
-    const block = native.find((block) =>
-      block.language.includes(
-        framework === 'angular'
-          ? 'profile.page.ts'
-          : framework === 'react'
-            ? 'Profile.tsx'
-            : 'Profile.vue',
-      ),
-    )!;
-    const output: Record<string, any> = {};
-    const results: string[] = [];
-    let inspections = 0;
-    const diagnostics = {
-      inspectNativeUI: async () => {
-        inspections++;
-      },
-    };
-    const ion = Object.fromEntries(
-      [
-        'IonPage',
-        'IonHeader',
-        'IonToolbar',
-        'IonTitle',
-        'IonButtons',
-        'IonButton',
-        'IonContent',
-      ].map((name) => [name, name]),
-    );
-    const modules: Record<string, unknown> = {
-      '../native-ui': diagnostics,
-      './native-ui': diagnostics,
-      '@angular/core': angular,
-      '@ionic/angular': ion,
-      '@ionic/react': ion,
-      '@ionic/vue': ion,
-      react: { useState: (initial: string) => [initial, (value: string) => results.push(value)] },
-      'react/jsx-runtime': { jsx, jsxs: jsx },
-      vue: { ref: (value: string) => ({ value }) },
-    };
-    const code =
-      framework === 'vue'
-        ? block.code.match(/<script setup lang="ts">([\s\S]*?)<\/script>/)![1] +
-          '\nexports.save = save; exports.result = result;'
-        : block.code;
-    await execute(code, { exports: output, require: (name: string) => modules[name], console });
-    for (let visit = 0; visit < 2; visit++) {
+      const output: Record<string, any> = {};
+      let localState: Preferences | undefined;
+      const effects: (() => void)[] = [];
+      const modelSignal = (initial: Preferences) => {
+        let value = initial;
+        const read = () => value;
+        read.set = (next: Preferences) => {
+          value = next;
+          for (const effect of effects) effect();
+        };
+        return read;
+      };
+      const modules: Record<string, unknown> = {
+        '../native-ui': prefExports,
+        './native-ui': prefExports,
+        '@angular/core': {
+          Component: angular.Component,
+          signal: modelSignal,
+          effect: (callback: () => void) => {
+            effects.push(callback);
+            callback();
+          },
+        },
+        '@angular/forms/signals': { form: () => ({}), FormField: class {} },
+        '@ionic/react': { IonItem: 'IonItem', IonToggle: 'IonToggle' },
+        '@ionic/vue': { IonItem: 'ion-item', IonToggle: 'ion-toggle' },
+        '@ionic/angular': { IonItem: class {}, IonToggle: class {} },
+        react: {
+          useState: (initial: () => Preferences) => {
+            localState ??= initial();
+            return [
+              localState,
+              (update: (current: Preferences) => Preferences) => {
+                localState = update(localState!);
+              },
+            ];
+          },
+        },
+        'react/jsx-runtime': { jsx: preferenceJsx, jsxs: preferenceJsx },
+        vue: { reactive: (value: Preferences) => value },
+      };
+      const code =
+        framework === 'vue'
+          ? block.code.match(/<script setup lang="ts">([\s\S]*?)<\/script>/)![1] +
+            '\nexports.preferences = preferences; exports.updateDeviceColors = updateDeviceColors; exports.updateDark = updateDark;'
+          : block.code;
+      await execute(code, { exports: output, require: (name: string) => modules[name], console });
+      const expected = preferenceSnapshot();
+      const next =
+        visit === 0 ? { deviceColors: false, dark: true } : { deviceColors: true, dark: false };
       if (framework === 'angular') {
-        assert.ok(block.code.includes('(click)="save()"'));
-        const page = new output.ProfilePage();
-        assert.equal(page.result(), 'Not saved');
-        page.save();
-        assert.equal(page.result(), 'Saved');
+        assert.ok(block.code.includes('[formField]="fields.deviceColors"'));
+        assert.ok(block.code.includes('[formField]="fields.dark"'));
+        const page = new output.AppearancePage();
+        assert.deepEqual({ ...page.model() }, expected);
+        page.model.set({ ...page.model(), deviceColors: next.deviceColors });
+        page.model.set({ ...page.model(), dark: next.dark });
+        assert.deepEqual({ ...page.model() }, next);
       } else if (framework === 'react') {
-        const actions = buttons(output.default());
-        assert.equal(actions.length, 1);
-        actions[0].props.onClick!();
+        const controls = () => fields(output.default());
+        const checkbox = () => controls().filter((node) => node.type === 'IonToggle')[0];
+        const darkCheckbox = () => controls().filter((node) => node.type === 'IonToggle')[1];
+        assert.equal(checkbox().props.checked, expected.deviceColors);
+        assert.equal(darkCheckbox().props.checked, expected.dark);
+        checkbox().props.onIonChange({ detail: { checked: next.deviceColors } });
+        assert.equal(darkCheckbox().props.checked, expected.dark);
+        darkCheckbox().props.onIonChange({ detail: { checked: next.dark } });
+        assert.equal(checkbox().props.checked, next.deviceColors);
+        assert.equal(darkCheckbox().props.checked, next.dark);
       } else {
-        assert.ok(block.code.includes('@click="save"'));
-        output.save();
-        assert.equal(output.result.value, 'Saved');
+        assert.ok(block.code.includes(':checked="preferences.deviceColors"'));
+        assert.ok(block.code.includes(':checked="preferences.dark"'));
+        assert.deepEqual({ ...output.preferences }, expected);
+        output.updateDeviceColors({ detail: { checked: next.deviceColors } });
+        output.updateDark({ detail: { checked: next.dark } });
+        assert.deepEqual({ ...output.preferences }, next);
       }
+      await flush();
+      assert.deepEqual(preferenceSnapshot(), next);
+      checkPalette(next.deviceColors, next.dark);
     }
-    if (framework === 'react') assert.deepEqual(results, ['Saved', 'Saved']);
-    assert.equal(inspections, 2);
   }
+  assert.equal(controllers, 1);
+  await realController!.destroy();
+  assert.equal(root.style.getPropertyValue('--ion-color-primary'), '#123456');
+  paletteDocument.window.close();
+
+  // iOS system bars follow the chosen app appearance, including initial restoration.
+  const systemBarStyles: string[] = [];
+  const iosModes: string[] = [];
+  let iosSystemDark = true;
+  let nativePlatform = 'ios';
+  const iosModules = {
+    ...preferenceModules,
+    '@capacitor/core': {
+      Capacitor: { getPlatform: () => nativePlatform },
+      SystemBarsStyle: { Dark: 'DARK', Light: 'LIGHT' },
+      SystemBars: {
+        setStyle: async ({ style }: { style: string }) => {
+          systemBarStyles.push(style);
+        },
+      },
+    },
+    '@rdlabo/capacitor-native-ui': {
+      ...(preferenceModules['@rdlabo/capacitor-native-ui'] as object),
+      enableNativeUI: async () => ({}),
+    },
+    '@rdlabo/ionic-theme-md3/dynamic-colors': {
+      enableDynamicColors: async ({ mode }: { mode: string }) => {
+        iosModes.push(mode);
+        return { setMode: (next: string) => iosModes.push(next), refresh: async () => undefined };
+      },
+    },
+    '@erkamyaman/capacitor-foldable': {
+      Foldable: { addListener: async () => ({ remove: async () => undefined }) },
+    },
+    '@rdlabo/capacitor-native-ui/integration': { resolveVerticalBarsLayout: async () => ({}) },
+    '@rdlabo/ionic-theme-ios27': { setVerticalBarsLayout: () => undefined },
+  };
+  const iosExports = {} as typeof prefExports;
+  await execute(appearanceStartup, {
+    exports: iosExports,
+    require: (name: string) => iosModules[name as keyof typeof iosModules],
+    console,
+    matchMedia: () => ({ matches: iosSystemDark }),
+  });
+  await iosExports.startNativeUI();
+  assert.deepEqual(systemBarStyles, ['DARK']);
+  assert.deepEqual(iosModes, ['dark']);
+  await iosExports.setAppearancePreferences({ dark: false });
+  assert.equal(systemBarStyles.at(-1), 'LIGHT'); // OS stays dark.
+  iosSystemDark = false;
+  await iosExports.setAppearancePreferences({ dark: true });
+  assert.equal(systemBarStyles.at(-1), 'DARK'); // OS stays light.
+  await iosExports.setAppearancePreferences({ deviceColors: false });
+  assert.equal(systemBarStyles.at(-1), 'DARK');
+  const iosCalls = systemBarStyles.length;
+  for (nativePlatform of ['android', 'web'])
+    await iosExports.setAppearancePreferences({ dark: false });
+  assert.equal(systemBarStyles.length, iosCalls, 'preserve Android/Web system-bar handling');
 
   const extensions = await codeBlocks('extensions');
-  for (const name of [
-    'swift:ios/App/App/CounterView.swift',
-    'kotlin:App.kt',
-    'groovy:android/build.gradle',
-    'groovy:android/app/build.gradle',
+  for (const filename of [
+    'ios/App/App/CounterView.swift',
+    'android/app/src/main/java/com/example/app/App.kt',
+    'android/build.gradle',
+    'android/app/build.gradle',
   ]) {
     assert.ok(
-      extensions.find((block) => block.language === name),
-      `Native extension registration: ${name}`,
+      extensions.find((block) => block.filename === filename),
+      `Native extension registration: ${filename}`,
     );
   }
   assert.ok(
     extensions
-      .find((block) => block.language === 'kotlin:App.kt')!
+      .find((block) => block.filename.endsWith('/App.kt'))!
       .code.includes('NativeUI.register'),
   );
   assert.ok(
     extensions
-      .find((block) => block.language === 'swift:ios/App/App/CounterView.swift')!
+      .find((block) => block.filename.endsWith('/CounterView.swift'))!
       .code.includes('NativeUI.register'),
   );
-  const counterDocument = new JSDOM(extensions.find((block) => block.language === 'html')!.code);
   interface CounterDefinition {
     read(element: HTMLElement): {
       props: { count: number };
@@ -875,25 +1063,103 @@ test('task examples change the Web UI and keep a single startup', async () => {
     };
   }
   const counterExports = {} as { counter: CounterDefinition };
-  await execute(extensions.find((block) => block.code.includes('const source = document'))!.code, {
-    document: counterDocument.window.document,
-  });
-  await execute(extensions.find((block) => block.code.includes('export const counter'))!.code, {
+  await execute(extensions.find((block) => block.filename === 'src/native-ui/counter.ts')!.code, {
     exports: counterExports,
     require: () => ({ defineNativeUI: (definition: CounterDefinition) => definition }),
   });
-  const source = counterDocument.window.document.querySelector<HTMLElement>('[data-counter]')!;
-  for (let i = 0; i < 2; i++) counterExports.counter.read(source).actions.increment.click();
-  assert.equal(counterExports.counter.read(source).props.count, 2);
-  assert.equal(source.querySelector('[data-count-label]')!.textContent, 'Count: 2');
-  counterExports.counter.read(source).actions.increment.disabled = true;
-  counterExports.counter.read(source).actions.increment.click();
-  assert.equal(counterExports.counter.read(source).props.count, 2);
-  counterDocument.window.close();
+  for (const framework of ['angular', 'react', 'vue'] as const) {
+    const filename = tutorialBaselines().frameworks[framework].counterPage!;
+    const component = extensions.find((block) => block.filename === filename)!;
+    const output: Record<string, any> = {};
+    let reactCount: number | undefined;
+    const numberSignal = (initial: number) => {
+      let value = initial;
+      const read = () => value;
+      read.update = (update: (value: number) => number) => {
+        value = update(value);
+      };
+      return read;
+    };
+    const ion = Object.fromEntries(
+      ['IonPage', 'IonHeader', 'IonToolbar', 'IonTitle', 'IonContent'].map((name) => [name, name]),
+    );
+    const modules: Record<string, unknown> = {
+      '@angular/core': { Component: angular.Component, signal: numberSignal },
+      '@ionic/angular': ion,
+      '@ionic/react': ion,
+      '@ionic/vue': ion,
+      react: {
+        useState: (initial: number) => {
+          reactCount ??= initial;
+          return [
+            reactCount,
+            (update: (value: number) => number) => {
+              reactCount = update(reactCount!);
+            },
+          ];
+        },
+      },
+      'react/jsx-runtime': { jsx: preferenceJsx, jsxs: preferenceJsx },
+      vue: { ref: (value: number) => ({ value }) },
+    };
+    const code =
+      framework === 'vue'
+        ? component.code.match(/<script setup lang="ts">([\s\S]*?)<\/script>/)![1] +
+          '\nexports.count = count; exports.increment = increment;'
+        : component.code;
+    await execute(code, { exports: output, require: (name: string) => modules[name], console });
+    let count: () => number;
+    let increment: () => void;
+    if (framework === 'angular') {
+      assert.ok(component.code.includes('[attr.data-count]="count()"'));
+      assert.ok(component.code.includes('(click)="increment()"'));
+      const page = new output.CounterPage();
+      count = () => page.count();
+      increment = () => page.increment();
+    } else if (framework === 'react') {
+      const counter = () =>
+        fields(output.default()).find((node) => node.props?.['data-counter'] !== undefined)!;
+      count = () => Number(counter().props['data-count']);
+      increment = () =>
+        fields(counter())
+          .find((node) => node.type === 'button')!
+          .props.onClick();
+    } else {
+      assert.ok(component.code.includes(':data-count="count"'));
+      assert.ok(component.code.includes('@click="increment"'));
+      count = () => output.count.value;
+      increment = () => output.increment();
+    }
+    // Controlled rendering feeds the documented DOM contract into the real reader.
+    const document = new JSDOM(
+      '<div data-counter><p data-count-label></p><button type="button">Increment</button></div>',
+    );
+    const source = document.window.document.querySelector<HTMLElement>('[data-counter]')!;
+    const sync = () => {
+      source.dataset.count = String(count());
+      source.querySelector('[data-count-label]')!.textContent = `Count: ${count()}`;
+    };
+    source.querySelector('button')!.onclick = () => {
+      increment();
+      sync();
+    };
+    sync();
+    for (let click = 0; click < 2; click++)
+      counterExports.counter.read(source).actions.increment.click();
+    assert.equal(counterExports.counter.read(source).props.count, 2, framework);
+    assert.equal(source.querySelector('[data-count-label]')!.textContent, 'Count: 2');
+    counterExports.counter.read(source).actions.increment.disabled = true;
+    counterExports.counter.read(source).actions.increment.click();
+    assert.equal(count(), 2);
+    document.window.close();
+  }
 
   for (const isExtension of [false, true]) {
     for (const platform of ['ios', 'android', 'web']) {
       const calls = { colors: 0, native: 0, layout: 0 };
+      let layout: { edge: string | null; inset?: number } = { edge: null };
+      let layoutChanged: (() => void) | undefined;
+      const appliedLayouts: unknown[] = [];
       const modules: Record<string, unknown> = {
         '@capacitor/core': { Capacitor: { getPlatform: () => platform } },
         '@rdlabo/capacitor-native-ui': {
@@ -903,23 +1169,26 @@ test('task examples change the Web UI and keep a single startup', async () => {
               isExtension ? counterExports.counter : undefined,
             );
             calls.native++;
-            return Promise.resolve({});
+            return Promise.resolve({ getStatus: () => ({ state: 'native', projected: 2 }) });
           },
           getDynamicColorScheme: () => Promise.resolve({ available: false, systemDark: false }),
           addDynamicColorListener: () => Promise.resolve({ remove: () => Promise.resolve() }),
         },
         '@erkamyaman/capacitor-foldable': {
           Foldable: {
-            addListener: () => {
+            addListener: (_event: string, listener: () => void) => {
+              layoutChanged = listener;
               calls.layout++;
               return Promise.resolve({ remove: () => Promise.resolve() });
             },
           },
         },
         '@rdlabo/capacitor-native-ui/integration': {
-          resolveVerticalBarsLayout: () => Promise.resolve({ edge: null }),
+          resolveVerticalBarsLayout: () => Promise.resolve({ ...layout }),
         },
-        '@rdlabo/ionic-theme-ios27': { setVerticalBarsLayout: (value: unknown) => value },
+        '@rdlabo/ionic-theme-ios27': {
+          setVerticalBarsLayout: (value: unknown) => appliedLayouts.push(value),
+        },
         '@rdlabo/ionic-theme-md3/dynamic-colors': {
           enableDynamicColors: () => {
             calls.colors++;
@@ -928,12 +1197,16 @@ test('task examples change the Web UI and keep a single startup', async () => {
         },
       };
       modules['./native-ui/counter'] = { counter: counterExports.counter };
+      const inspectionWindow = {} as {
+        inspectNativeUI?: () => { state: string; projected: number };
+      };
       const startupExports = {} as { startNativeUI(): Promise<void> };
       await execute(
         isExtension
           ? extensions.find((block) => block.language === 'ts:src/native-ui.ts')!.code
-          : startupCode,
+          : diagnosticStartupCode,
         {
+          window: inspectionWindow,
           exports: startupExports,
           require: (name: string) => modules[name],
           console,
@@ -943,6 +1216,22 @@ test('task examples change the Web UI and keep a single startup', async () => {
       const second = startupExports.startNativeUI();
       assert.equal(first, second);
       await first;
+      await flush();
+      if (platform === 'ios') {
+        assert.deepEqual(appliedLayouts, [{ edge: null }], 'initial automatic layout');
+        layout = { edge: 'trailing', inset: 80 };
+        layoutChanged!();
+        await flush();
+        assert.deepEqual(appliedLayouts.at(-1), layout, 'layoutChange applies new spacing');
+        layout = { edge: null };
+        layoutChanged!();
+        await flush();
+        assert.deepEqual(appliedLayouts.at(-1), layout, 'layoutChange removes reserved spacing');
+      } else assert.deepEqual(appliedLayouts, []);
+      if (!isExtension && platform === 'ios') {
+        assert.equal(inspectionWindow.inspectNativeUI?.().state, 'native');
+        assert.equal(inspectionWindow.inspectNativeUI?.().projected, 2);
+      } else assert.equal(inspectionWindow.inspectNativeUI, undefined);
       assert.deepEqual(calls, {
         colors: 1,
         native: platform === 'ios' || (isExtension && platform === 'android') ? 1 : 0,

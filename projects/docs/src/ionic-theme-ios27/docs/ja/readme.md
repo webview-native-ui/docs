@@ -1,6 +1,6 @@
 ---
 title: Ionic Theme iOS27
-sourceRevision: 'adf3c52052f4ae36c4d93ddbffb47772078bb8b70577f8344129a65624900776'
+sourceRevision: 'a2a9e9c5d1e966ad521c387f28322fdb72f3d4334765d19b9105c2ea122bb935'
 ---
 
 `npm install @rdlabo/ionic-theme-ios27` でインストールします。1.x は [v1.2.1 のガイド](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1)を使用してください。Ionic アプリに iOS 27 の Liquid Glass とアニメーションを適用します。Capacitor iOS では、2.0.0から正式対応した Native UI を対応コントロールへ追加できます。
@@ -41,18 +41,32 @@ sourceRevision: 'adf3c52052f4ae36c4d93ddbffb47772078bb8b70577f8344129a6562490077
 npm install @rdlabo/ionic-theme-ios27
 ```
 
-```css
-@import '@rdlabo/ionic-theme-ios27/styles/system.css';
+```diff:src/global.css
+@@
+ @import '@ionic/core/css/core.css';
+ @import '@ionic/core/css/structure.css';
+- @import '@ionic/core/css/palettes/dark.system.css';
++ @import '@rdlabo/ionic-theme-ios27/styles/system.css';
+
+ :root { --app-content-width: 72rem; }
 ```
 
-```ts
-import { provideIonicAngular } from '@ionic/angular';
-import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+```diff:src/app/app.config.ts
+@@
+ import { ApplicationConfig } from '@angular/core';
+ import { provideIonicAngular } from '@ionic/angular';
++ import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+ import { provideRouter } from '@angular/router';
+ import { routes } from './app.routes';
 
-provideIonicAngular({
-  ...ios27ThemeConfig,
-  // animated: false,
-});
+ export const appConfig: ApplicationConfig = {
+   providers: [
+     provideRouter(routes),
+-     provideIonicAngular(),
++     provideIonicAngular({ ...ios27ThemeConfig }),
+     provideHttpClient(),
+   ],
+ };
 ```
 
 手動のダークモードには `styles/class.css`、常時ダークには `styles/always.css` を選びます。対応する Ionic ダークパレットも含まれます。テーマ設定は iOS モードとアニメーションを既定とし、アプリのオプションで上書きできます。対応する Ionic は `>=9 <10` です。ブラウザー専用アプリにネイティブ Capacitor プロジェクトは不要です。

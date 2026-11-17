@@ -124,6 +124,10 @@ export class App {
   });
   protected readonly guideCopy = guideCopyForLocale(this.#locale);
   protected readonly guideChapters = guideChaptersForLocale(this.#locale);
+  protected readonly taskGuides = this.guideChapters.filter((chapter) => chapter.kind === 'task');
+  protected readonly migrationGuide = this.guideChapters.find(
+    (chapter) => chapter.kind === 'migration',
+  );
   protected guideHref(path: string): string {
     return localizedPublicPath(this.#locale, path);
   }

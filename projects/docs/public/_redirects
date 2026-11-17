@@ -43,3 +43,13 @@
 /de/projects/webview-native-ui-engine/docs/cordova-plugin https://webview-native-ui.com/de/projects/webview-native-ui-engine/docs/getting-started/cordova 301
 /de/projects/webview-native-ui-engine/docs/projection-containers https://webview-native-ui.com/de/projects/webview-native-ui-engine/docs/reference/containers 301
 /de/projects/webview-native-ui-engine/docs/projection https://webview-native-ui.com/de/projects/webview-native-ui-engine/docs/reference/projection 301
+
+# Automatic features are verified during setup.
+/guides/native-ui https://webview-native-ui.com/standard-setup#verify-installation 301
+/guides/device-layout https://webview-native-ui.com/standard-setup#verify-installation 301
+/ja/guides/native-ui https://webview-native-ui.com/ja/standard-setup#verify-installation 301
+/ja/guides/device-layout https://webview-native-ui.com/ja/standard-setup#verify-installation 301
+/fr/guides/native-ui https://webview-native-ui.com/fr/standard-setup#verify-installation 301
+/fr/guides/device-layout https://webview-native-ui.com/fr/standard-setup#verify-installation 301
+/de/guides/native-ui https://webview-native-ui.com/de/standard-setup#verify-installation 301
+/de/guides/device-layout https://webview-native-ui.com/de/standard-setup#verify-installation 301

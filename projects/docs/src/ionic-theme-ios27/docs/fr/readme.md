@@ -1,6 +1,6 @@
 ---
 title: "Premiers pas"
-sourceRevision: 'adf3c52052f4ae36c4d93ddbffb47772078bb8b70577f8344129a65624900776'
+sourceRevision: 'a2a9e9c5d1e966ad521c387f28322fdb72f3d4334765d19b9105c2ea122bb935'
 ---
 
 Installez avec `npm install @rdlabo/ionic-theme-ios27`. Pour la version 1.x, consultez le [guide v1.2.1](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1).
@@ -42,18 +42,32 @@ Installez le thème, ajoutez une feuille de style globale après le CSS de base 
 npm install @rdlabo/ionic-theme-ios27
 ```
 
-```css
-@import '@rdlabo/ionic-theme-ios27/styles/system.css';
+```diff:src/global.css
+@@
+ @import '@ionic/core/css/core.css';
+ @import '@ionic/core/css/structure.css';
+- @import '@ionic/core/css/palettes/dark.system.css';
++ @import '@rdlabo/ionic-theme-ios27/styles/system.css';
+
+ :root { --app-content-width: 72rem; }
 ```
 
-```ts
-import { provideIonicAngular } from '@ionic/angular';
-import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+```diff:src/app/app.config.ts
+@@
+ import { ApplicationConfig } from '@angular/core';
+ import { provideIonicAngular } from '@ionic/angular';
++ import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+ import { provideRouter } from '@angular/router';
+ import { routes } from './app.routes';
 
-provideIonicAngular({
-  ...ios27ThemeConfig,
-  // animated: false,
-});
+ export const appConfig: ApplicationConfig = {
+   providers: [
+     provideRouter(routes),
+-     provideIonicAngular(),
++     provideIonicAngular({ ...ios27ThemeConfig }),
+     provideHttpClient(),
+   ],
+ };
 ```
 
 Choisissez `styles/class.css` pour le mode sombre contrôlé par l’application ou `styles/always.css` pour un mode toujours sombre. La feuille de style inclut la palette sombre Ionic correspondante. La configuration du thème sélectionne par défaut le mode iOS et ses animations, les options de l’application étant prioritaires. La compatibilité Ionic est `>=9 <10`. Les applications limitées au navigateur n’ont pas besoin de projet Capacitor natif.

@@ -1,0 +1,80 @@
+{
+  "frameworks": {
+    "angular": {
+      "files": {
+        "src/global.css": "@import '@ionic/core/css/core.css';\n@import '@ionic/core/css/structure.css';\n@import '@ionic/core/css/palettes/dark.system.css';\n\n:root { --app-content-width: 72rem; }\n",
+        "src/app/app.config.ts": "import { provideHttpClient } from '@angular/common/http';\nimport { ApplicationConfig } from '@angular/core';\nimport { provideIonicAngular } from '@ionic/angular';\nimport { provideRouter } from '@angular/router';\nimport { routes } from './app.routes';\n\nexport const appConfig: ApplicationConfig = {\n  providers: [\n    provideRouter(routes),\n    provideIonicAngular(),\n    provideHttpClient(),\n  ],\n};\n",
+        "src/app/app.component.ts": "import { Component } from '@angular/core';\nimport { IonApp, IonRouterOutlet } from '@ionic/angular';\n\n@Component({\n  selector: 'app-root',\n  imports: [IonApp, IonRouterOutlet],\n  template: '<ion-app><ion-router-outlet /></ion-app>',\n})\nexport class AppComponent {}\n",
+        "src/app/profile.page.ts": "import { Component } from '@angular/core';\nimport { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular';\n\n@Component({\n  selector: 'app-profile',\n  imports: [IonHeader, IonToolbar, IonTitle, IonContent],\n  template: `\n    <ion-header><ion-toolbar>\n      <ion-title>Profile</ion-title>\n    </ion-toolbar></ion-header>\n    <ion-content><p>Profile details</p></ion-content>\n  `,\n})\nexport class ProfilePage {}\n",
+        "src/app/appearance.page.ts": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-appearance',\n  template: `\n    <section aria-label=\"Appearance\">\n      <h1>Appearance</h1>\n    </section>\n  `,\n})\nexport class AppearancePage {}\n",
+        "src/app/app.routes.ts": "import { Routes } from '@angular/router';\nimport { ProfilePage } from './profile.page';\nimport { AppearancePage } from './appearance.page';\nimport { CounterPage } from './counter.page';\nexport const routes: Routes = [\n  { path: 'profile', component: ProfilePage },\n  { path: 'appearance', component: AppearancePage },\n  { path: 'counter', component: CounterPage },\n];\n",
+        "src/app/counter.page.ts": "import { Component } from '@angular/core';\nimport { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular';\n\n@Component({\n  selector: 'app-counter',\n  imports: [IonHeader, IonToolbar, IonTitle, IonContent],\n  template: `\n    <ion-header><ion-toolbar><ion-title>Counter</ion-title></ion-toolbar></ion-header>\n    <ion-content><p>Counter details</p></ion-content>\n  `,\n})\nexport class CounterPage {}\n"
+      },
+      "setupEntry": "src/app/app.config.ts",
+      "setupRoot": "src/app/app.component.ts",
+      "profilePage": "src/app/profile.page.ts",
+      "appearancePage": "src/app/appearance.page.ts",
+      "counterPage": "src/app/counter.page.ts"
+    },
+    "react": {
+      "files": {
+        "src/global.css": "@import '@ionic/core/css/core.css';\n@import '@ionic/core/css/structure.css';\n@import '@ionic/core/css/palettes/dark.system.css';\n\n:root { --app-content-width: 72rem; }\n",
+        "src/main.tsx": "import { setupIonicReact } from '@ionic/react';\nimport { createRoot } from 'react-dom/client';\nimport App from './App';\nimport './global.css';\n\nsetupIonicReact();\n\ncreateRoot(document.getElementById('root')!).render(<App />);\n",
+        "src/App.tsx": "import { IonApp } from '@ionic/react';\nimport { ExistingRouter } from './router';\n\nexport default function App() {\n  return <IonApp><ExistingRouter /></IonApp>;\n}\n",
+        "src/Profile.tsx": "import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';\n\nexport default function Profile() {\n  return (\n    <IonPage>\n      <IonHeader><IonToolbar>\n        <IonTitle>Profile</IonTitle>\n      </IonToolbar></IonHeader>\n      <IonContent><p>Profile details</p></IonContent>\n    </IonPage>\n  );\n}\n",
+        "src/Appearance.tsx": "export default function Appearance() {\n  return (\n    <section aria-label=\"Appearance\">\n      <h1>Appearance</h1>\n    </section>\n  );\n}\n",
+        "src/router.tsx": "import Profile from './Profile';\nimport Appearance from './Appearance';\nimport Counter from './Counter';\n\nexport function ExistingRouter() {\n  switch (window.location.pathname) {\n    case '/appearance': return <Appearance />;\n    case '/counter': return <Counter />;\n    default: return <Profile />;\n  }\n}\n",
+        "src/Counter.tsx": "import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';\n\nexport default function Counter() {\n  return (\n    <IonPage>\n      <IonHeader><IonToolbar><IonTitle>Counter</IonTitle></IonToolbar></IonHeader>\n      <IonContent><p>Counter details</p></IonContent>\n    </IonPage>\n  );\n}\n"
+      },
+      "setupEntry": "src/main.tsx",
+      "setupRoot": "src/App.tsx",
+      "profilePage": "src/Profile.tsx",
+      "appearancePage": "src/Appearance.tsx",
+      "counterPage": "src/Counter.tsx"
+    },
+    "vue": {
+      "files": {
+        "src/global.css": "@import '@ionic/core/css/core.css';\n@import '@ionic/core/css/structure.css';\n@import '@ionic/core/css/palettes/dark.system.css';\n\n:root { --app-content-width: 72rem; }\n",
+        "src/main.ts": "import { createApp } from 'vue';\nimport { IonicVue } from '@ionic/vue';\nimport App from './App.vue';\nimport router from './router';\nimport './global.css';\n\nconst app = createApp(App);\napp.use(IonicVue);\napp.use(router);\nrouter.isReady().then(() => app.mount('#app'));\n",
+        "src/App.vue": "<script setup lang=\"ts\">\nimport { IonApp, IonRouterOutlet } from '@ionic/vue';\n</script>\n\n<template>\n  <ion-app><ion-router-outlet /></ion-app>\n</template>\n",
+        "src/Profile.vue": "<script setup lang=\"ts\">\nimport { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';\n</script>\n\n<template>\n  <ion-page>\n    <ion-header><ion-toolbar>\n      <ion-title>Profile</ion-title>\n    </ion-toolbar></ion-header>\n    <ion-content><p>Profile details</p></ion-content>\n  </ion-page>\n</template>\n",
+        "src/Appearance.vue": "<script setup lang=\"ts\">\n</script>\n\n<template>\n  <section aria-label=\"Appearance\">\n    <h1>Appearance</h1>\n  </section>\n</template>\n",
+        "src/router.ts": "import { createRouter, createWebHistory } from 'vue-router';\nimport Profile from './Profile.vue';\nimport Appearance from './Appearance.vue';\nimport Counter from './Counter.vue';\nexport default createRouter({\n  history: createWebHistory(),\n  routes: [\n    { path: '/profile', component: Profile },\n    { path: '/appearance', component: Appearance },\n    { path: '/counter', component: Counter },\n  ],\n});\n",
+        "src/Counter.vue": "<script setup lang=\"ts\">\nimport { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';\n</script>\n\n<template>\n  <ion-page>\n    <ion-header><ion-toolbar><ion-title>Counter</ion-title></ion-toolbar></ion-header>\n    <ion-content><p>Counter details</p></ion-content>\n  </ion-page>\n</template>\n"
+      },
+      "setupEntry": "src/main.ts",
+      "setupRoot": "src/App.vue",
+      "profilePage": "src/Profile.vue",
+      "appearancePage": "src/Appearance.vue",
+      "counterPage": "src/Counter.vue"
+    }
+  },
+  "legacy": {
+    "files": {
+      "src/native-ui.ts": "import { enableNativeUIShell } from '@rdlabo/ionic-theme-ios27/native';\nimport { Foldable } from '@erkamyaman/capacitor-foldable';\nimport { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';\n\nexport async function startLegacyUI(): Promise<void> {\n  await enableNativeUIShell();\n  const updateLayout = async () => {\n    const placement = await Foldable.getBarPlacement();\n    setVerticalBarsLayout({ edge: placement.edge, inset: placement.inset });\n  };\n  void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))\n    .then(updateLayout)\n    .catch(console.error);\n}\n",
+      "src/global.css": "@import '@ionic/core/css/core.css';\n@import '@ionic/core/css/palettes/dark.class.css';\n@import '@rdlabo/ionic-theme-ios27/dist/css/default-variables.css';\n@import '@rdlabo/ionic-theme-ios27/dist/css/ionic-theme-ios27.css';\n@import '@rdlabo/ionic-theme-ios27/dist/css/ionic-theme-ios27-dark-class.css';\n@import '@rdlabo/ionic-theme-ios27/dist/css/md-remove-ios-class-effect.css';\n"
+    }
+  },
+  "native": {
+    "files": {
+      "ios/App/App/AppDelegate.swift": "import UIKit\nimport Capacitor\n\n@UIApplicationMain\nclass AppDelegate: UIResponder, UIApplicationDelegate {\n    var window: UIWindow?\n    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {\n        return true\n    }\n}\n",
+      "android/build.gradle": "buildscript {\n  ext.kotlin_version = '2.2.20'\n  dependencies {\n    classpath 'com.android.tools.build:gradle:8.13.0'\n  }\n}\n",
+      "android/app/build.gradle": "apply plugin: 'com.android.application'\n\nandroid {\n    namespace 'com.example.app'\n    defaultConfig { applicationId 'com.example.app' }\n}\n",
+      "android/app/src/main/java/com/example/app/App.kt": "package com.example.app\n\nimport android.app.Application\n\nclass App : Application() {\n    override fun onCreate() {\n        super.onCreate()\n    }\n}\n",
+      "android/app/src/main/AndroidManifest.xml": "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\">\n    <application android:label=\"My app\" android:name=\".App\">\n        <activity android:name=\".MainActivity\" />\n    </application>\n</manifest>\n"
+    },
+    "newApplicationFiles": {
+      "ios/App/App/AppDelegate.swift": "import UIKit\nimport Capacitor\n\n@UIApplicationMain\nclass AppDelegate: UIResponder, UIApplicationDelegate {\n    var window: UIWindow?\n    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {\n        return true\n    }\n}\n",
+      "android/build.gradle": "buildscript {\n  ext.kotlin_version = '2.2.20'\n  dependencies {\n    classpath 'com.android.tools.build:gradle:8.13.0'\n  }\n}\n",
+      "android/app/build.gradle": "apply plugin: 'com.android.application'\n\nandroid {\n    namespace 'com.example.app'\n    defaultConfig { applicationId 'com.example.app' }\n}\n",
+      "android/app/src/main/AndroidManifest.xml": "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\">\n    <application android:label=\"My app\">\n        <activity android:name=\".MainActivity\" />\n    </application>\n</manifest>\n"
+    },
+    "kotlinUnconfiguredFiles": {
+      "android/build.gradle": "buildscript {\n  dependencies {\n    classpath 'com.android.tools.build:gradle:8.13.0'\n  }\n}\n"
+    }
+  },
+  "note": "Illustrative existing files. Documentation edits preserve unshown application code; optional guides start after setup verification hooks are removed.",
+  "common": {
+    "files": {}
+  }
+}

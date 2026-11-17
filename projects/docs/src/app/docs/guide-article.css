@@ -21,6 +21,18 @@
   font-size: 16px;
   line-height: 1.8;
 }
+.setup-header .guide-kind {
+  margin: 0 0 8px;
+  color: #1767d2;
+  font-size: 13px;
+  font-weight: 600;
+}
+.setup-header .guide-reading-hint {
+  padding-left: 12px;
+  border-left: 3px solid #cbd5e1;
+  color: #475569;
+  font-size: 14px;
+}
 .setup-layout {
   display: grid;
   gap: 24px;

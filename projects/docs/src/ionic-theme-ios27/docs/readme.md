@@ -41,18 +41,32 @@ Install the theme, add one global theme stylesheet after Ionic's base CSS, and p
 npm install @rdlabo/ionic-theme-ios27
 ```
 
-```css
-@import '@rdlabo/ionic-theme-ios27/styles/system.css';
+```diff:src/global.css
+@@
+ @import '@ionic/core/css/core.css';
+ @import '@ionic/core/css/structure.css';
+- @import '@ionic/core/css/palettes/dark.system.css';
++ @import '@rdlabo/ionic-theme-ios27/styles/system.css';
+
+ :root { --app-content-width: 72rem; }
 ```
 
-```ts
-import { provideIonicAngular } from '@ionic/angular';
-import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+```diff:src/app/app.config.ts
+@@
+ import { ApplicationConfig } from '@angular/core';
+ import { provideIonicAngular } from '@ionic/angular';
++ import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+ import { provideRouter } from '@angular/router';
+ import { routes } from './app.routes';
 
-provideIonicAngular({
-  ...ios27ThemeConfig,
-  // animated: false,
-});
+ export const appConfig: ApplicationConfig = {
+   providers: [
+     provideRouter(routes),
+-     provideIonicAngular(),
++     provideIonicAngular({ ...ios27ThemeConfig }),
+     provideHttpClient(),
+   ],
+ };
 ```
 
 Choose `styles/class.css` for application-controlled dark mode or `styles/always.css` for always-dark mode. The stylesheet includes the matching Ionic dark palette. The theme configuration defaults to iOS mode and its animations, with application options taking precedence. Ionic compatibility is `>=9 <10`. Browser-only apps do not need a native Capacitor project.
