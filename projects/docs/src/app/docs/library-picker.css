@@ -1,36 +1,8 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  height: 100%;
-}
-.library-picker-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 18px 8px;
-}
-.library-picker-heading h2 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 600;
+  display: block;
 }
 .library-picker-list {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 12px 10px 24px;
-}
-.library-group-label {
-  margin: 20px 8px 6px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: #64748b;
-}
-.library-group-label:first-child {
-  margin-top: 4px;
+  padding: 0;
 }
 .library-picker-list a {
   display: flex;

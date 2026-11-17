@@ -136,7 +136,10 @@ describe('App', () => {
       );
     }
     expect(compiled.querySelector('.guide-navigation a[href="/standard-setup"]')).not.toBeNull();
-    expect(compiled.querySelector('.reference-navigation')?.hasAttribute('open')).toBe(false);
+    expect(compiled.querySelector('.reference-navigation h2')?.textContent).toContain(
+      'Package reference',
+    );
+    expect(compiled.querySelector('details.reference-navigation')).toBeNull();
     expect(compiled.querySelector('app-project-navigation')).toBeNull();
     expect(compiled.querySelector('footer')?.textContent).toContain(
       'Web and Native UI. One experience. Maintained by rdlabo',
@@ -159,9 +162,7 @@ describe('App', () => {
     expect(compiled.querySelector('app-library-picker a.is-active')?.getAttribute('href')).toBe(
       path,
     );
-    expect(compiled.querySelector('app-library-picker')?.textContent).not.toContain(
-      'Workers WebView Native UI Engine',
-    );
+    expect(compiled.querySelector('#project-link-webview-native-ui-engine')).not.toBeNull();
     expect(state.hasKey(INITIAL_DOCS_URL)).toBe(false);
 
     await TestBed.inject(Router).navigateByUrl(path);
@@ -238,7 +239,7 @@ describe('App', () => {
         ?.closest('.docs-navigation-slide')
         ?.hasAttribute('inert'),
     ).toBe(true);
-    expect(compiled.querySelector('.docs-rail')?.hasAttribute('inert')).toBe(false);
+    expect(compiled.querySelector('.guide-navigation')?.closest('[inert]')).toBeNull();
     const link = compiled.querySelector<HTMLAnchorElement>('#project-link-capacitor-native-ui')!;
     expect(link.getAttribute('href')).toBe(router.url);
     link.click();
@@ -296,13 +297,7 @@ describe('App', () => {
     expect(compiled.querySelector('.docs-navigation-track')?.classList.contains('is-detail')).toBe(
       true,
     );
-    compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Plugins"]')!
-      .click();
     fixture.detectChanges();
-    compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
-      .click();
     fixture.detectChanges();
     compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
     await fixture.whenStable();
@@ -395,9 +390,6 @@ describe('App', () => {
     fixture.detectChanges();
     compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
-    compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
-      .click();
     fixture.detectChanges();
     compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
     await vi.waitFor(() => expect(admobResolver).toHaveBeenCalledOnce());
@@ -486,9 +478,6 @@ describe('App', () => {
       }
       compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
       fixture.detectChanges();
-      compiled
-        .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
-        .click();
       fixture.detectChanges();
       compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
       await vi.waitFor(() => expect(resolver).toHaveBeenCalledOnce());
@@ -517,39 +506,35 @@ describe('App', () => {
       fixture.detectChanges();
       expect(compiled.querySelector('[role="alert"]')).toBeNull();
       expect(document.activeElement).toBe(
-        mobile ? toggle : compiled.querySelector('#project-link-ionic-theme-ios27'),
+        mobile ? toggle : compiled.querySelector('#project-link-capacitor-native-ui'),
       );
     },
   );
 
-  it('uses the primary category rail to show libraries without a filter field', async () => {
+  it('shows packages directly under the reference heading in the main table of contents', async () => {
     const fixture = TestBed.createComponent(App);
     await TestBed.inject(Router).navigateByUrl('/');
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    compiled
-      .querySelector<HTMLButtonElement>(
-        '.docs-rail-categories button[aria-label="Developer tools"]',
-      )!
-      .click();
+    expect(compiled.querySelector('.docs-rail')).toBeNull();
+    const reference = compiled.querySelector('.reference-navigation')!;
+    expect(reference.querySelectorAll('app-library-picker a')).toHaveLength(
+      projectsForLocale('en').filter((project) => !project.hostedUrl).length,
+    );
+    expect(reference.closest('[inert]')).toBeNull();
+    compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
     await fixture.whenStable();
     fixture.detectChanges();
-    const links = compiled.querySelectorAll('app-library-picker a');
-    expect(links).toHaveLength(
-      projectsForLocale('en').filter(
-        (project) => project.category === 'developer-tools' && !project.hostedUrl,
-      ).length,
+    expect(reference.closest('[inert]')).not.toBeNull();
+    expect(compiled.querySelector('.project-navigation-back')?.textContent).toContain(
+      'Package reference',
     );
-    expect(compiled.querySelector('#project-link-webview-native-ui-engine')).not.toBeNull();
-    expect(compiled.querySelector('#project-link-capacitor-native-ui')).toBeNull();
-    expect(compiled.querySelector('app-library-picker input')).toBeNull();
-    compiled
-      .querySelector<HTMLButtonElement>(
-        '.docs-rail-categories button[aria-label="Browse all libraries"]',
-      )!
-      .click();
-    await fixture.whenStable();
-    expect(compiled.querySelector('#project-link-capacitor-native-ui')).not.toBeNull();
+    compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
+    fixture.detectChanges();
+    expect(reference.closest('[inert]')).toBeNull();
+    expect(compiled.querySelectorAll('app-library-picker a')).toHaveLength(
+      projectsForLocale('en').filter((project) => !project.hostedUrl).length,
+    );
   });
 
   it('keeps the picker and current page when a library navigation is cancelled', async () => {
@@ -558,7 +543,7 @@ describe('App', () => {
     await router.navigateByUrl('/projects/capacitor-native-ui/docs/setup');
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    compiled.querySelector<HTMLButtonElement>('.docs-rail-categories button')!.click();
+    compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
     compiled.querySelector<HTMLAnchorElement>('#project-link-webview-native-ui-engine')!.click();
     await fixture.whenStable();
@@ -577,9 +562,6 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
-    compiled
-      .querySelector<HTMLButtonElement>('.docs-rail-categories button[aria-label="Themes"]')!
-      .click();
     fixture.detectChanges();
     const link = compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!;
     let nativeClick = false;
@@ -904,11 +886,6 @@ describe('App', () => {
     expect(navigation.scrollLeft).toBe(0);
     expect(compiled.querySelector('.docs-navigation-pane')?.scrollLeft).toBe(0);
 
-    compiled
-      .querySelector<HTMLButtonElement>(
-        '.docs-rail-categories button[aria-label="Developer tools"]',
-      )!
-      .click();
     fixture.detectChanges();
     await fixture.whenStable();
     navigation.scrollTop = 600;

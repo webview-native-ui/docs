@@ -103,109 +103,65 @@
     i18n-aria-label="@@documentation"
     aria-label="Documentation"
   >
-    <nav class="guide-navigation" [attr.aria-label]="guideCopy.guide">
-      <a [href]="canonicalHomePath" [attr.aria-current]="isIndex() ? 'page' : null">{{
-        guideCopy.overview
-      }}</a>
-      <a
-        [href]="guideHref('/standard-setup')"
-        [attr.aria-current]="isStandardSetup() ? 'page' : null"
-        >{{ standardSetupLabel }}</a
+    <div id="docs-navigation-pane" class="docs-navigation-pane">
+      <div
+        class="docs-navigation-track"
+        [class.is-detail]="!showingLibraries()"
+        [class.animate-ready]="navigationAnimationReady()"
       >
-      @for (chapter of guideChapters; track chapter.id) {
-        <a
-          [href]="guideHref(chapter.path)"
-          [attr.aria-current]="isGuide(chapter.path) ? 'page' : null"
-          >{{ chapter.title }}</a
+        <div
+          class="docs-navigation-slide docs-navigation-index"
+          [attr.inert]="!showingLibraries() ? '' : null"
+          [attr.aria-hidden]="!showingLibraries() ? 'true' : null"
         >
-      }
-      <a
-        routerLink="/support"
-        [attr.aria-current]="isSupport() ? 'page' : null"
-        i18n="@@supportRail"
-        >Sponsor</a
-      >
-    </nav>
-    <details class="reference-navigation" [open]="!!navigationProject() || libraryPickerOpen()">
-      <summary>{{ guideCopy.reference }}</summary>
-      <div class="docs-navigation-columns">
-        <div class="docs-rail">
-          <nav
-            class="docs-rail-categories"
-            aria-label="Choose a library"
-            i18n-aria-label="@@chooseLibrary"
-          >
-            <button
-              type="button"
-              class="docs-rail-button"
-              aria-label="Browse all libraries"
-              i18n-aria-label="@@browseAllLibraries"
-              aria-controls="docs-navigation-pane"
-              [attr.aria-pressed]="selectedCategory() === ''"
-              [class.is-active]="!selectedCategory()"
-              (click)="openLibraryPicker('', $event)"
+          <nav class="guide-navigation" [attr.aria-label]="guideCopy.guide">
+            <a [href]="canonicalHomePath" [attr.aria-current]="isIndex() ? 'page' : null">{{
+              guideCopy.overview
+            }}</a>
+            <a
+              [href]="guideHref('/standard-setup')"
+              [attr.aria-current]="isStandardSetup() ? 'page' : null"
+              >{{ standardSetupLabel }}</a
             >
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" />
-                <rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" />
-                <rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" />
-                <rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" />
-              </svg>
-              <span i18n="@@librariesRail">Libraries</span>
-            </button>
-            @for (group of projectGroups; track group.id) {
-              <button
-                type="button"
-                class="docs-rail-button"
-                [class.is-active]="selectedCategory() === group.id"
-                [attr.aria-label]="group.label"
-                [attr.title]="group.label"
-                aria-controls="docs-navigation-pane"
-                [attr.aria-pressed]="selectedCategory() === group.id"
-                (click)="openLibraryPicker(group.id, $event)"
+            @for (chapter of guideChapters; track chapter.id) {
+              <a
+                [href]="guideHref(chapter.path)"
+                [attr.aria-current]="isGuide(chapter.path) ? 'page' : null"
+                >{{ chapter.title }}</a
               >
-                <app-project-icon [kind]="categoryIcon(group.id)" />
-                <span>{{ categoryLabel(group.id) }}</span>
-              </button>
             }
+            <a
+              routerLink="/support"
+              [attr.aria-current]="isSupport() ? 'page' : null"
+              i18n="@@supportRail"
+              >Sponsor</a
+            >
           </nav>
+          <section class="reference-navigation" aria-labelledby="package-reference-title">
+            <h2 id="package-reference-title">{{ guideCopy.reference }}</h2>
+            <app-library-picker
+              [groups]="projectGroups"
+              [activeProjectId]="navigationProject()?.id"
+              [activePath]="navigationUrl()"
+              (selected)="selectProject($event)"
+            />
+          </section>
         </div>
-        <div id="docs-navigation-pane" class="docs-navigation-pane">
-          <div
-            class="docs-navigation-track"
-            [class.is-detail]="!showingLibraries()"
-            [class.animate-ready]="navigationAnimationReady()"
-          >
-            <div
-              class="docs-navigation-slide"
-              [attr.inert]="!showingLibraries() ? '' : null"
-              [attr.aria-hidden]="!showingLibraries() ? 'true' : null"
-            >
-              <app-library-picker
-                [groups]="projectGroups"
-                [category]="libraryCategory()"
-                [activeProjectId]="navigationProject()?.id"
-                [activePath]="navigationUrl()"
-                (selected)="selectProject($event)"
-              />
-            </div>
-            <div
-              class="docs-navigation-slide"
-              [attr.inert]="showingLibraries() ? '' : null"
-              [attr.aria-hidden]="showingLibraries() ? 'true' : null"
-            >
-              @if (navigationProject(); as project) {
-                <app-project-navigation
-                  [project]="project"
-                  [categoryLabel]="categoryTitle(project.category)"
-                  (backToLibraries)="openLibraryPicker(project.category)"
-                />
-              }
-            </div>
-          </div>
+        <div
+          class="docs-navigation-slide"
+          [attr.inert]="showingLibraries() ? '' : null"
+          [attr.aria-hidden]="showingLibraries() ? 'true' : null"
+        >
+          @if (navigationProject(); as project) {
+            <app-project-navigation
+              [project]="project"
+              [categoryLabel]="guideCopy.reference"
+              (backToLibraries)="openLibraryPicker()"
+            />
+          }
         </div>
       </div>
-    </details>
+    </div>
   </aside>
   @if (navigationError()) {
     <div class="docs-load-error" role="alert">

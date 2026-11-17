@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID, computed, inject, input, output } from '@angular/core';
+import { Component, LOCALE_ID, inject, input, output } from '@angular/core';
 import { ProjectCategoryGroup, ProjectSummary } from './docs-data';
 import { localizedPublicPath } from '../locale-path';
 
@@ -13,12 +13,6 @@ export class LibraryPicker {
   readonly activeProjectId = input<string>();
   readonly activePath = input('/');
   readonly selected = output<ProjectSummary>();
-  readonly category = input('');
-  protected readonly visibleGroups = computed(() =>
-    this.groups().filter((group) => !this.category() || group.id === this.category()),
-  );
-  protected readonly title = computed(() => this.visibleGroups()[0]?.label);
-
   protected hrefFor(project: ProjectSummary): string {
     return localizedPublicPath(
       this.#locale,

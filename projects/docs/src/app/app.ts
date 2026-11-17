@@ -31,16 +31,9 @@ import {
   RouterLink,
   RouterOutlet,
 } from '@angular/router';
-import {
-  ProjectSummary,
-  projectGroupsForLocale,
-  projectsForLocale,
-  ProjectCategory,
-  ProjectIcon,
-} from './docs/docs-data';
+import { ProjectSummary, projectGroupsForLocale, projectsForLocale } from './docs/docs-data';
 import { LibraryPicker } from './docs/library-picker';
 import { ProjectNavigation } from './docs/project-navigation';
-import { ProjectIconComponent } from './docs/project-icon';
 import { canonicalHomePath, localizedPublicPath } from './locale-path';
 import { FooterSponsors } from './footer-sponsors/footer-sponsors';
 import { LanguageMenu } from './language-menu';
@@ -52,7 +45,6 @@ type GoogleAnalyticsWindow = Window & {
 
 interface LibrarySelection {
   projectId: string;
-  category: string;
   pickerOpen: boolean;
   revision: number;
 }
@@ -73,7 +65,6 @@ export const INITIAL_DOCS_URL = makeStateKey<string>('rdlabo-docs-initial-url');
     RouterLink,
     LibraryPicker,
     ProjectNavigation,
-    ProjectIconComponent,
     LanguageMenu,
     FooterSponsors,
   ],
@@ -92,7 +83,6 @@ export class App {
   #librarySelection: LibrarySelection | null = null;
   #navigationId = 0;
   #menuRevision = 0;
-  #pickerTrigger: HTMLElement | null = null;
   #bodyOverflow: string | null = null;
   #navigationInitialized = false;
   #menuFocusFrame: number | null = null;
@@ -147,12 +137,8 @@ export class App {
   protected readonly isSupport = computed(() => this.currentUrl().split(/[?#]/)[0] === '/support');
   protected readonly activeProject = computed(() => this.#projectForUrl(this.currentUrl()));
   protected readonly navigationProject = computed(() => this.#projectForUrl(this.navigationUrl()));
-  protected readonly libraryCategory = signal(this.activeProject()?.category ?? '');
   protected readonly showingLibraries = computed(
     () => !this.navigationProject() || this.libraryPickerOpen(),
-  );
-  protected readonly selectedCategory = computed(() =>
-    this.showingLibraries() ? this.libraryCategory() : (this.navigationProject()?.category ?? ''),
   );
 
   constructor() {
@@ -214,7 +200,6 @@ export class App {
         this.navigationError.set(null);
         this.libraryPickerOpen.set(false);
         if (selectedFromPicker) this.#focusProjectNavigation(this.#menuRevision);
-        else this.libraryCategory.set(project?.category ?? '');
         return;
       }
       if (event instanceof NavigationSkipped) {
@@ -243,7 +228,6 @@ export class App {
         this.navigationError.set(event instanceof NavigationError ? event.url : null);
         if (pending?.selection && pending.revision === this.#menuRevision) {
           this.libraryPickerOpen.set(pending.selection.pickerOpen);
-          this.libraryCategory.set(pending.selection.category);
           const projectId = pending.selection.projectId;
           afterNextRender(
             () => {
@@ -276,7 +260,6 @@ export class App {
       }
       if (!pending || pending.revision === this.#menuRevision) {
         this.libraryPickerOpen.set(false);
-        if (!pending?.selection) this.libraryCategory.set(this.activeProject()?.category ?? '');
         if (
           this.mobileLayout() &&
           (!pending?.selection || this.activeProject()?.id !== pending.selection.projectId)
@@ -379,7 +362,6 @@ export class App {
     }
     this.#librarySelection = {
       projectId: project.id,
-      category: this.libraryCategory(),
       pickerOpen: this.libraryPickerOpen(),
       revision: this.#menuRevision,
     };
@@ -395,10 +377,8 @@ export class App {
     else this.#focusNavigationLink(this.#currentProjectLink());
   }
 
-  protected openLibraryPicker(category = '', event?: MouseEvent): void {
+  protected openLibraryPicker(): void {
     this.#menuRevision++;
-    this.#pickerTrigger = event?.currentTarget instanceof HTMLElement ? event.currentTarget : null;
-    this.libraryCategory.set(category);
     this.libraryPickerOpen.set(true);
     afterNextRender(() => this.#focusLibraryList(), { injector: this.#injector });
   }
@@ -408,8 +388,7 @@ export class App {
     this.libraryPickerOpen.set(false);
     afterNextRender(
       () => {
-        if (this.#pickerTrigger?.isConnected) this.#pickerTrigger.focus({ preventScroll: true });
-        else this.#focusNavigationLink(this.#currentProjectLink());
+        this.#focusNavigationLink(this.#currentProjectLink());
       },
       { injector: this.#injector },
     );
@@ -437,8 +416,7 @@ export class App {
 
   #focusLibraryList(): void {
     const sidebar = this.docsSidebar?.nativeElement;
-    const reference = sidebar?.querySelector<HTMLDetailsElement>('.reference-navigation');
-    if (!reference?.open) {
+    if (!this.navigationProject() || !this.showingLibraries()) {
       this.#focusNavigationLink(
         sidebar?.querySelector<HTMLAnchorElement>(
           '.guide-navigation [aria-current="page"], .guide-navigation a',
@@ -456,25 +434,13 @@ export class App {
 
   #focusNavigationLink(link: HTMLAnchorElement | null | undefined): void {
     link?.focus({ preventScroll: true });
-    const list = link?.closest('nav');
+    const list = link?.closest('.docs-navigation-index, .project-navigation-pages');
     if (!link || !list) return;
     const item = link.getBoundingClientRect();
     const viewport = list.getBoundingClientRect();
     if (item.top < viewport.top + 12) list.scrollTop -= viewport.top + 12 - item.top;
     else if (item.bottom > viewport.bottom - 12)
       list.scrollTop += item.bottom - viewport.bottom + 12;
-  }
-
-  protected categoryTitle(category: ProjectCategory): string {
-    return this.projectGroups.find((group) => group.id === category)?.label ?? '';
-  }
-
-  protected categoryIcon(category: ProjectCategory): ProjectIcon {
-    return category === 'plugins' ? 'app' : category === 'frontend-tools' ? 'theme' : 'server';
-  }
-
-  protected categoryLabel(category: ProjectCategory): string {
-    return this.categoryTitle(category);
   }
 
   #sidebarContainsFocus(): boolean {
