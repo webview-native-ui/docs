@@ -297,9 +297,14 @@ describe('App', () => {
     expect(compiled.querySelector('.docs-navigation-track')?.classList.contains('is-detail')).toBe(
       true,
     );
+    compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
-    fixture.detectChanges();
-    compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
+    await fixture.whenStable();
+    const nextPackage = compiled.querySelector<HTMLAnchorElement>(
+      '#project-link-ionic-theme-ios27',
+    )!;
+    expect(nextPackage.closest('[inert]')).toBeNull();
+    nextPackage.click();
     await fixture.whenStable();
     fixture.detectChanges();
     expect(router.url).toBe('/projects/ionic-theme-ios27');
@@ -390,8 +395,11 @@ describe('App', () => {
     fixture.detectChanges();
     compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
-    fixture.detectChanges();
-    compiled.querySelector<HTMLAnchorElement>('#project-link-ionic-theme-ios27')!.click();
+    const nextPackage = compiled.querySelector<HTMLAnchorElement>(
+      '#project-link-ionic-theme-ios27',
+    )!;
+    expect(nextPackage.closest('[inert]')).toBeNull();
+    nextPackage.click();
     await vi.waitFor(() => expect(admobResolver).toHaveBeenCalledOnce());
     fixture.detectChanges();
     stripe.resolve(true);
@@ -886,10 +894,15 @@ describe('App', () => {
     expect(navigation.scrollLeft).toBe(0);
     expect(compiled.querySelector('.docs-navigation-pane')?.scrollLeft).toBe(0);
 
+    compiled.querySelector<HTMLButtonElement>('.project-navigation-back')!.click();
     fixture.detectChanges();
     await fixture.whenStable();
     navigation.scrollTop = 600;
-    compiled.querySelector<HTMLAnchorElement>('#project-link-webview-native-ui-engine')!.click();
+    const selectedPackage = compiled.querySelector<HTMLAnchorElement>(
+      '#project-link-webview-native-ui-engine',
+    )!;
+    expect(selectedPackage.closest('[inert]')).toBeNull();
+    selectedPackage.click();
     fixture.detectChanges();
     await fixture.whenStable();
     expect(document.activeElement).toBe(current);
