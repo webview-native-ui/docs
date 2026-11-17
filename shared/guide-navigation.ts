@@ -18,30 +18,39 @@ export const GUIDE_CHAPTERS = [
     },
     paragraphs: {
       en: [
-        'The standard setup combines the iOS 27 and Material Design 3 themes. Start there for a new integration; use the individual theme guides when adding only a theme to an existing app.',
+        'The standard setup uses iOS 26 as the base iOS theme, switches to iOS 27 on capable browsers, and uses Material Design 3 for Android. Start there for a new integration; use the individual theme guides when adding only a theme to an existing app.',
         'Themes style your Web UI. Dynamic Color obtains the Android palette through the plugin and applies it through the Material Design theme. Keep one owner for the app’s appearance preference, including when the app chooses a different mode from the device.',
       ],
       ja: [
-        '標準導入ではiOS 27とMaterial Design 3のテーマを組み合わせます。新規導入はそこから始め、既存アプリにテーマだけを追加する場合は個別のテーマガイドを使います。',
+        '標準導入ではiOS 26を基本に、対応ブラウザーではiOS 27へ切り替え、AndroidにはMaterial Design 3を使います。新規導入はそこから始め、既存アプリにテーマだけを追加する場合は個別のテーマガイドを使います。',
         'テーマはWeb UIの見た目を担当します。Dynamic ColorはプラグインでAndroidの配色を取得し、Material Designのテーマを通じて反映します。デバイスと異なるモードを選ぶ場合も、アプリの配色モードを管理する場所は一つに保ちます。',
       ],
       fr: [
-        'La configuration standard associe les thèmes iOS 27 et Material Design 3. Commencez par elle pour une nouvelle intégration ; utilisez les guides individuels pour ajouter seulement un thème.',
+        'La configuration standard utilise iOS 26 comme base, passe à iOS 27 sur les navigateurs compatibles et utilise Material Design 3 pour Android. Commencez par elle pour une nouvelle intégration ; utilisez les guides individuels pour ajouter seulement un thème.',
         'Les thèmes habillent l’interface Web. Dynamic Color obtient la palette Android via le plugin et l’applique via le thème Material Design. Gardez un seul responsable du mode d’apparence, même si celui de l’application diffère de celui de l’appareil.',
       ],
       de: [
-        'Die Standardeinrichtung kombiniert die Themes für iOS 27 und Material Design 3. Beginnen Sie bei einer neuen Integration dort; die einzelnen Theme-Anleitungen eignen sich zum Ergänzen eines bestehenden Projekts.',
+        'Die Standardeinrichtung verwendet iOS 26 als Basis, wechselt in geeigneten Browsern zu iOS 27 und nutzt Material Design 3 für Android. Beginnen Sie bei einer neuen Integration dort; die einzelnen Theme-Anleitungen eignen sich zum Ergänzen eines bestehenden Projekts.',
         'Themes gestalten die Web-Oberfläche. Dynamic Color liest die Android-Palette über das Plugin und wendet sie über das Material-Design-Theme an. Verwalten Sie den Erscheinungsmodus an einer Stelle, auch wenn App und Gerät unterschiedliche Modi verwenden.',
       ],
     },
     links: [
       {
+        path: '/projects/ionic-theme-ios26/docs/setup',
+        label: {
+          en: 'Base iOS 26 theme',
+          ja: '基本のiOS 26テーマ',
+          fr: 'Thème iOS 26 de base',
+          de: 'iOS-26-Basistheme',
+        },
+      },
+      {
         path: '/projects/ionic-theme-ios27/docs/setup',
         label: {
-          en: 'iOS theme',
-          ja: 'iOSのテーマ',
-          fr: 'Thème iOS',
-          de: 'iOS-Theme',
+          en: 'iOS 27 theme',
+          ja: 'iOS 27テーマ',
+          fr: 'Thème iOS 27',
+          de: 'iOS-27-Theme',
         },
       },
       {
@@ -588,10 +597,10 @@ export const GUIDE_COPY = {
     de: 'Mit der vollständigen Einrichtung beginnen',
   },
   startDescription: {
-    en: 'For an existing Ionic app with Capacitor 8. The guide installs both themes, starts Native UI and Dynamic Color, and connects device-layout notifications for Vertical Bars.',
-    ja: 'Capacitor 8を使う既存のIonicアプリ向けです。両方のテーマ、Native UI、Dynamic Colorに加え、Vertical Barsに必要なデバイスのレイアウト通知まで一つの手順で接続します。',
-    fr: 'Pour une application Ionic existante avec Capacitor 8. Le guide installe les deux thèmes, démarre Native UI et Dynamic Color et connecte les notifications de disposition pour Vertical Bars.',
-    de: 'Für eine vorhandene Ionic-App mit Capacitor 8. Die Anleitung installiert beide Themes, startet Native UI und Dynamic Color und verbindet die Layout-Benachrichtigungen für Vertical Bars.',
+    en: 'For an existing Ionic app with Capacitor 8. Follow the steps to install iOS 26/27 and MD3, configure the app, then run and verify Native UI, Dynamic Color, and Vertical Bars.',
+    ja: 'Capacitor 8を使う既存のIonicアプリ向けです。iOS 26/27とMD3のインストールから、アプリの設定、Native UI・Dynamic Color・Vertical Barsの起動と動作確認まで、順番に進めます。',
+    fr: 'Pour une application Ionic existante avec Capacitor 8. Suivez les étapes pour installer iOS 26/27 et MD3, configurer l’application, puis exécuter et vérifier Native UI, Dynamic Color et Vertical Bars.',
+    de: 'Für eine vorhandene Ionic-App mit Capacitor 8. Die Schritte führen durch Installation von iOS 26/27 und MD3, App-Konfiguration sowie Start und Prüfung von Native UI, Dynamic Color und Vertical Bars.',
   },
   guide: {
     en: 'Guide',

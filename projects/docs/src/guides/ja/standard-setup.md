@@ -1,15 +1,15 @@
 ---
 title: 'WebView Native UI 標準導入'
-sourceRevision: '7fcf8d7e1460bbd5798e4542392a783f93f1e248c800994b3031a6407b21d95c'
+sourceRevision: '40aa2500ec14dae99b759ce8471ff7d4bf02906105beae57bb8aac7868ba4427'
 ---
 
 # WebView Native UI 標準導入
 
-標準の Ionic 構成では、iPhone Duo / Vertical Bars を含む iOS のネイティブコントロールと、Android の Dynamic Color をまとめて設定します。アプリの状態、ルート、イベントハンドラーはそのまま使います。
+既存の Ionic + Capacitor アプリに、iOS の基本となる iOS 26 テーマ、対応ブラウザー向けの iOS 27 テーマ、Android 向けの Material Design 3 を設定します。iOS のネイティブコントロール、iPhone Duo / Vertical Bars、Android Dynamic Color も、この手順で接続します。
 
 ## 導入前に確認する
 
-Capacitor 8 の既存の Ionic アプリを使います。Foldable はバージョン8の8.5以降が必要です。
+Ionic 8 または 9 の 8.8.1 以降、Capacitor 8、バージョン8の8.5以降の Foldable を使います。Web ビルドが成功し、iOS と Android のネイティブプロジェクトを追加済みのアプリから始めます。既存のルートとイベントハンドラーはそのまま使います。
 
 iOS のネイティブコントロールは iOS 26 以降と Xcode 26 以降が必要です。Android Dynamic Color は Android 12 以降で利用でき、古い端末は既定の配色を維持します。ネイティブレールには追加の[対応端末と OS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering)が必要です。
 
@@ -18,26 +18,62 @@ iOS のネイティブコントロールは iOS 26 以降と Xcode 26 以降が�
 ## 1. パッケージをインストールする
 
 ```sh
-npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @erkamyaman/capacitor-foldable
+npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
+  @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 \
+  @erkamyaman/capacitor-foldable@8
+npm install --save-dev sass
 ```
 
 ## 2. 両方のテーマを設定する
 
-Ionic の基本 CSS は維持し、次のテーマスタイルシートを使います。iOS のエントリーにはクラス方式のダークパレットと Vertical Bars の配置が含まれます。既存のシステム追従・常時ダークのパレット読み込みは、このエントリーへ置き換えます。
+`src/global.scss` などのグローバル Sass ファイルを編集し、Ionic の基本スタイルの後にテーマを読み込みます。`@use 'sass:meta'` はファイルの先頭に置きます。既存の Ionic ダークパレットとテーマのインポートをこの構成に置き換え、アプリ独自の上書きはテーマの後に残します。`ion-palette-dark` クラスは手順3の配色コントローラーが管理します。
 
-```css
-@import '@rdlabo/ionic-theme-ios27/styles/class.css';
-@import '@rdlabo/ionic-theme-md3/styles/theme.css';
+```scss:src/global.scss
+@use 'sass:meta';
+
+@include meta.load-css('@ionic/core/css/palettes/dark.class.css');
+
+@supports not (overflow-anchor: auto) {
+  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/default-variables');
+  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/ionic-theme-ios26');
+  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/ionic-theme-ios26-dark-class');
+  @include meta.load-css('@rdlabo/ionic-theme-ios26/src/styles/md-remove-ios-class-effect');
+  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/vertical-bars');
+}
+
+@supports (overflow-anchor: auto) {
+  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/default-variables');
+  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/ionic-theme-ios27');
+  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/ionic-theme-ios27-dark-class');
+  @include meta.load-css('@rdlabo/ionic-theme-ios27/src/styles/md-remove-ios-class-effect');
+}
+
+@include meta.load-css('@rdlabo/ionic-theme-md3/dist/styles/theme.css');
 ```
 
-既存の Ionic 初期化処理へ、プラットフォームに合うプリセットを渡します。
+Sass が `node_modules` のパッケージを参照できるようにします。Angular では `angular.json` のアプリのビルドオプションに次を追加します。別のビルドツールでは、同等の Sass 読み込みパスを設定してください。
+
+```json
+"stylePreprocessorOptions": {
+  "includePaths": ["node_modules"]
+}
+```
+
+iOS の基本は iOS 26 テーマです。`overflow-anchor: auto` に対応するブラウザーでは iOS 27 に切り替えます。OS のバージョン判定ではなく、ブラウザーの機能判定です。Material Design モードでは MD3 を使います。Vertical Bars のレイアウトスタイルは両方の iOS 構成に含めています。
+
+既存の Ionic 初期化処理を実行する前に、対応するプリセットを選びます。アプリ独自の Ionic オプションも維持して適用してください。
 
 ```ts
 import { Capacitor } from '@capacitor/core';
+import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
 import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
-const ionicConfig = Capacitor.getPlatform() === 'ios' ? ios27ThemeConfig : md3ThemeConfig;
+const iosConfig =
+  typeof CSS !== 'undefined' && CSS.supports('overflow-anchor: auto')
+    ? ios27ThemeConfig
+    : ios26ThemeConfig;
+const ionicConfig = Capacitor.getPlatform() === 'ios' ? iosConfig : md3ThemeConfig;
 ```
 
 | Framework         | Ionic initializer                                                   |
@@ -46,6 +82,8 @@ const ionicConfig = Capacitor.getPlatform() === 'ios' ? ios27ThemeConfig : md3Th
 | Angular / Ionic 9 | `provideIonicAngular(ionicConfig)` from `@ionic/angular`            |
 | React             | `setupIonicReact(ionicConfig)` from `@ionic/react`                  |
 | Vue               | `app.use(IonicVue, ionicConfig)` with `IonicVue` from `@ionic/vue`  |
+
+ブラウザーでは、この例は MD3 を選びます。デスクトップで iOS の見た目を確認する場合は、既存の初期化設定に `mode: 'ios'` を指定し、対応する iOS プリセットを使います。テーマの導入だけではネイティブコントロールは有効になりません。
 
 ## 3. アプリシェルの描画後に起動する
 
@@ -89,20 +127,28 @@ Angular ではアプリシェルの `afterNextRender` コールバック、React
 
 ## 4. ビルド・同期・実行する
 
-Web アセットをビルドして同期し、各ネイティブアプリを再ビルド・実行します。
+先にアプリの Web ビルドを実行します。下の例は既存の `build` スクリプトを使います。同期後、それぞれの追加済みネイティブプロジェクトを開き、シミュレーターまたは端末向けにビルドして起動します。
 
 ```sh
+npm run build
 npx cap sync
+npx cap open ios
+npx cap open android
 ```
 
 SwiftPM は Engine を自動解決します。既存の CocoaPods 構成は[ネイティブプロジェクト設定](/projects/capacitor-native-ui/docs/configuration#native-project-setup)を参照してください。
 
 ## 各プラットフォームで結果を確認する
 
+- iOS では、基本の iOS 26 テーマと、対応機能に応じた iOS 27 テーマを確認します。ライト・ダーク表示を切り替え、ページ遷移とポップオーバーで対応するアニメーションも確認します。
 - iOS 26以降では、対応するコントロールがネイティブ表示になり、既存のWebイベントハンドラーで動作します。残りのWebコンテンツにはiOSテーマが適用されます。
 - Android 12以降では、Material Design 3に端末のDynamic Colorが反映されます。コントロールはWebのままです。古いAndroidではテーマの既定色を使います。
 - ネイティブレールに対応するデバイスでは、配置の変更にVertical Barsが追従します。それ以外のデバイスでは通常のWebレイアウトを維持します。
 - ブラウザーで確認できるのはWebテーマとアプリの動作です。ネイティブコントロール、端末の配色、デバイスに応じたレールはネイティブアプリで確認してください。
+
+## 導入後に進む
+
+上の確認ができたら、[見た目の調整](/guides/appearance)、[ネイティブコントロールの設定](/guides/native-ui)、[デバイスレイアウトへの対応](/guides/device-layout)へ進みます。テーマだけを導入する場合は、[iOS 26 のセットアップ](/projects/ionic-theme-ios26/docs/setup)、[iOS 27 のセットアップ](/projects/ionic-theme-ios27/docs/setup)、[MD3 のセットアップ](/projects/ionic-theme-md3/docs/setup)を使います。
 
 ## 個別のオプション
 
