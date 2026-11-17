@@ -60,7 +60,10 @@ Choose the matching preset before your existing Ionic initializer runs. Keep you
 
 ```ts
 import { Capacitor } from '@capacitor/core';
-import { ios26ThemeConfig, iosTransitionAnimation as ios26TransitionAnimation } from '@rdlabo/ionic-theme-ios26';
+import {
+  ios26ThemeConfig,
+  iosTransitionAnimation as ios26TransitionAnimation,
+} from '@rdlabo/ionic-theme-ios26';
 import { ios27ThemeConfig, withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 

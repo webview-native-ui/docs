@@ -1,6 +1,6 @@
 ---
 title: 'WebView Native UI Standardeinrichtung'
-sourceRevision: '5481aa83039b3ce45afc79b52611c20a1dad86b2e932b6d8b7caff54da5deec8'
+sourceRevision: '59251200f6cdf2ab13df8bf46f1881fd296abfd592181b5eb17f3cdda2771984'
 ---
 
 # WebView Native UI Standardeinrichtung
@@ -65,7 +65,10 @@ Wählen Sie das passende Preset vor der bestehenden Ionic-Initialisierung. Behal
 
 ```ts
 import { Capacitor } from '@capacitor/core';
-import { ios26ThemeConfig, iosTransitionAnimation as ios26TransitionAnimation } from '@rdlabo/ionic-theme-ios26';
+import {
+  ios26ThemeConfig,
+  iosTransitionAnimation as ios26TransitionAnimation,
+} from '@rdlabo/ionic-theme-ios26';
 import { ios27ThemeConfig, withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
