@@ -541,7 +541,9 @@ test('shared guides lead from the complete setup to localized package details', 
         `https://webview-native-ui.com${path}`,
       );
       assert.ok(doc.querySelector(`.guide-navigation a[href="${path}"][aria-current="page"]`));
-      assert.ok(doc.querySelector(`main a[href="${prefix}/standard-setup"]`));
+      if (chapter.kind === 'task') {
+        assert.ok(doc.querySelector(`main a[href="${prefix}/standard-setup"]`));
+      }
       for (const link of doc.querySelectorAll<HTMLAnchorElement>('main a[href]')) {
         const url = new URL(link.getAttribute('href')!, 'https://webview-native-ui.com');
         if (url.origin !== 'https://webview-native-ui.com') continue;

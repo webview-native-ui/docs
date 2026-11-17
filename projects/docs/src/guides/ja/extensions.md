@@ -1,19 +1,20 @@
 ---
 title: '独自のネイティブUIを作る'
 sourceRevision: '37f9d083616edac03d3d061e002e3bddfe49b4b0893522155e8ff29a649d1aed'
+headingAliases:
+  '5.-%E5%86%8D%E3%83%93%E3%83%AB%E3%83%89%E3%81%97%E3%81%A6%E7%8A%B6%E6%85%8B%E3%81%A8%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%83%90%E3%83%83%E3%82%AF%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B': '5.-%E5%86%8D%E3%83%93%E3%83%AB%E3%83%89%E3%81%97%E3%81%A6%E3%82%AB%E3%82%A6%E3%83%B3%E3%82%BF%E3%83%BC%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
+  '2.-%E5%85%B1%E9%80%9A%E3%81%AEdom-reader%E3%82%92%E5%AE%9A%E7%BE%A9%E3%81%99%E3%82%8B': '2.-web%E3%81%AE%E7%8A%B6%E6%85%8B%E3%81%A8%E6%93%8D%E4%BD%9C%E3%82%92%E8%AA%AD%E3%81%BF%E5%8F%96%E3%82%8B'
 ---
 
 # 独自のネイティブUIを作る
 
-導入手順で組み込みコントロールは有効になっています。この任意の使い方では、独自のカウンターをiOSのSwiftUIまたはAndroidのComposeで追加します。カウントと加算処理はWeb側に保ちます。拡張APIは実験的な機能です。
+Webのカウンターを、iOSではSwiftUI、AndroidではComposeで表示します。カウントと加算処理はWeb側で管理します。拡張APIは実験的な機能です。
 
-この差分は、[アプリへの導入が完了](/standard-setup)し、一時確認用フックも撤去した状態から始めます。
-
-[既存テーマにNative UIを追加する場合](/projects/capacitor-native-ui/docs/ionic-vertical-bars)、[Ionicを使わないHTML](/projects/capacitor-native-ui/docs/framework-independent)、[Cordova](/projects/cordova-native-ui/docs/readme)はそれぞれの手順を使います。アプリを変更する前に[導入方法を選べます](/#choose-setup)。
+[Ionicアプリへの導入](/standard-setup)を終えたアプリが対象です。
 
 ## 1. 先にWebのカウンターを動かす
 
-導入完了後のアプリにある、既存ルートから表示している画面を使います。例ではその既存画面をCounterと呼びますが、導入手順で作成したページではありません。実際のファイル名・コンポーネント名・ルートを維持し、その画面へ自分のフレームワークの差分だけを適用します。新しいページ・ルート・描画後callbackは不要です。元のヘッダーと本文は残します。カウントはフレームワークの状態で持ち、既存のイベント接続からCountラベルとdata-count属性を同時に更新します。同じルートをブラウザーで開いてIncrementを2回押し、ラベルとdata-countがどちらも2になれば、この手順は完了です。手順2では同じ要素をネイティブ表示へ接続します。
+既存画面にカウンターを追加します。例のCounterは、アプリの画面名・ファイル名へ読み替えてください。ブラウザーでIncrementを2回押し、Countの表示とdata-count属性がどちらも2になることを確認します。
 
 ### Angular / Ionic 9
 
@@ -108,9 +109,14 @@ sourceRevision: '37f9d083616edac03d3d061e002e3bddfe49b4b0893522155e8ff29a649d1ae
  </template>
 ```
 
-## 2. 共通のDOM readerを定義する
+## 2. Webの状態と操作を読み取る
 
-Webカウンターが動いた状態から、新しいreaderファイルを作ります。全行が追加です。app.counterという名前をネイティブ登録名と一致させます。この手順の終了時は、propsと既存のWebボタンを読み取れる状態で、ネイティブ実装の登録はまだです。
+新しくsrc/native-ui/counter.tsを作成します。defineNativeUIで、ネイティブ表示に使うWebの要素を指定します。selectorでカウンター全体を選び、readから次の2つを返します。
+
+- props：ネイティブ画面へ渡すデータです。ここではカウントの値を渡します。
+- actions：ネイティブ画面から実行するWebの操作です。加算ボタンを渡すと、ネイティブ側の操作から元のincrementを呼べます。
+
+app.counterは、この定義と、次の手順で追加するSwiftUI／Composeの実装を結び付ける名前です。
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui/counter.ts
@@ -130,7 +136,7 @@ Webカウンターが動いた状態から、新しいreaderファイルを作�
 
 ## 3a. iOSにSwiftUIを登録する
 
-iOSを対象にする場合だけ、この分岐を実施します。アプリのディレクトリでnpx cap sync iosを実行し、Xcode 26以降で新しいCounterView.swiftをiOS 26以降のアプリターゲットへ追加します。AppDelegateの既存の起動メソッドに、JavaScript起動前の登録差分を適用し、元の戻り値とCapacitorの設定は維持します。起動時にネイティブ実装を登録する状態になりますが、JavaScriptとの接続は手順4で行います。
+iOS 26以降・Xcode 26以降が対象です。npx cap sync iosを実行し、CounterView.swiftをアプリターゲットへ追加します。AppDelegateの起動メソッドで、JavaScriptの実行前にカウンターを登録します。
 
 <!-- prettier-ignore -->
 ```diff:ios/App/App/CounterView.swift
@@ -191,9 +197,9 @@ iOSを対象にする場合だけ、この分岐を実施します。アプリ�
 
 ## 3b. AndroidにComposeを登録する
 
-Android API 24以降を対象にする場合だけ実施します。アプリのディレクトリでnpx cap sync androidを実行し、既存のGradleファイルへ差分を適用します。Kotlinの版は例に合わせて変更せず、アプリで使っている値を維持します。登録済みのApplicationクラスがあれば、通常のApp.kt編集差分をそのクラスへ適用し、既存のonCreateも残します。クラスがない場合だけnew Applicationと書かれた新規作成とmanifestの差分を使い、両方は適用しません。com.example.appは既存パッケージ名へ読み替えます。Composeと登録の設定がそろった状態になり、JavaScriptとの接続は手順4で行います。
+Android API 24以降が対象です。npx cap sync androidを実行し、既存のGradle設定へ差分を適用します。Applicationクラスがある場合は、そのクラスへApp.ktの変更を加えます。ない場合はnew Applicationの差分とmanifestの差分を使います。com.example.appはアプリのパッケージ名へ読み替えてください。
 
-rootのbuildファイルではKotlinの差分を一つだけ選びます。Kotlin configuredはアプリで定義済みの版を維持します。Kotlin not configuredは、Kotlin未設定のJavaベースのアプリへ、公開プラグインの既定値2.2.20で不足している定義を追加します。既存のAndroidプラグイン・repositories・アプリ設定は維持します。プラグイン依存関係がすでにある場合は二重に追加しません。
+ルートのbuildファイルは、Kotlin設定済みならKotlin configured、未設定ならKotlin not configuredの差分を選びます。設定済みのKotlinバージョンは維持し、未設定の場合はプラグインの既定値2.2.20を追加します。
 
 <!-- prettier-ignore -->
 ```diff:android/build.gradle (Kotlin configured)
@@ -378,7 +384,7 @@ rootのbuildファイルではKotlinの差分を一つだけ選びます。Kotli
 
 ## 4. 既存の起動処理に定義を渡す
 
-選んだネイティブ実装の登録後、既存の起動処理へこの局所差分だけを適用します。counterのimportを追加し、同じランタイムをネイティブホストで起動して拡張を渡します。モジュール全体は置き換えません。外観の状態・配色provider・設定の取得／変更関数はそのまま残すため、外観設定の使い方の前後どちらでも適用できます。iOSのレイアウト購読も既存のままです。ソース上の接続は完了し、残りはネイティブ再ビルドです。
+src/native-ui.ts を開き、手順2で作った counter をインポートします。起動時の enableNativeUI() にこの定義を渡すと、カウンターを表示したときに対応するネイティブUIが使われます。
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -398,24 +404,24 @@ rootのbuildファイルではKotlinの差分を一つだけ選びます。Kotli
 -     await enableNativeUI();
 ```
 
-## 5. 再ビルドして状態とフォールバックを確認する
+## 5. 再ビルドしてカウンターを確認する
 
-アプリのディレクトリでWebをビルド・同期し、対象のネイティブプロジェクトをXcodeまたはAndroid Studioで再ビルドします。Webの再読み込みだけではSwift・Kotlinの変更は入りません。Incrementを2回押すとネイティブ表示とWebのdata-countが2になり、元のボタンを無効にするとネイティブ操作もできないことを確認します。ブラウザーではWebのカウンターが動くことを確認します。対象ホストとWebの動作が一致すれば完了で、他の使い方の診断コードは不要です。
+Webをビルドしてネイティブプロジェクトへ同期します。
 
 ```sh
 npm run build
 npx cap sync
 ```
 
-同期後は選んだネイティブターゲットをXcodeまたはAndroid Studioで再ビルドし、アプリを再起動します。カウントはページの状態なので、新しいアプリ起動では0から始まります。同じCounterルートを開いてIncrementを2回押し、ネイティブのラベルとWeb要素のdata-countがどちらも2になることを確認します。
+XcodeまたはAndroid Studioで再ビルドし、アプリを起動します。Counter画面でIncrementを2回押し、ネイティブのラベルとWebのdata-countがどちらも2になることを確認します。ブラウザーでもWebのカウンターが動くことを確認してください。
 
-その画面を表示したまま、WebViewのインスペクターのコンソールで次を実行します。ネイティブのIncrementが操作できなくなり、カウントが2のままであることを確認します。
+Counter画面を表示したまま、WebViewのインスペクタのコンソールで次を実行します。ネイティブのIncrementも操作できなくなり、カウントが2のままになることを確認します。
 
 ```js
 document.querySelector('[data-counter] button').disabled = true;
 ```
 
-続いて同じコンソールで元のボタンを有効に戻し、再び操作できることを確認します。終了時はボタンを有効にしておきます。コンソールの操作をアプリの恒久的なコードへ追加する必要はありません。
+同じコンソールでボタンを有効に戻し、再び加算できることを確認します。
 
 ```js
 document.querySelector('[data-counter] button').disabled = false;

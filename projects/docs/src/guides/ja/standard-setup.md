@@ -2,6 +2,8 @@
 title: 'Ionicアプリに導入する'
 sourceRevision: 'b506eab74252bcd05a928532b54bd643b0d0c60820256d5eed3aba78a61cc385'
 headingAliases:
+  '3.-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B7%E3%82%A7%E3%83%AB%E3%81%AE%E6%8F%8F%E7%94%BB%E5%BE%8C%E3%81%AB%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B': '3.-%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E6%8F%8F%E7%94%BB%E5%BE%8C%E3%81%AB%E8%B5%B7%E5%8B%95%E5%87%A6%E7%90%86%E3%82%92%E5%91%BC%E3%81%B6'
+  '2.-%E4%B8%A1%E6%96%B9%E3%81%AE%E3%83%86%E3%83%BC%E3%83%9E%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B': '2.-%E3%83%86%E3%83%BC%E3%83%9E%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B'
   'verify-installation': '5.-%E5%B0%8E%E5%85%A5%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
   '%E5%90%84%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%A7%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B': '5.-%E5%B0%8E%E5%85%A5%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
   '%E5%B0%8E%E5%85%A5%E5%BE%8C%E3%81%AB%E9%80%B2%E3%82%80': '%E5%B0%8E%E5%85%A5%E5%AE%8C%E4%BA%86'
@@ -9,23 +11,23 @@ headingAliases:
 
 # Ionicアプリに導入する
 
-既存の Ionic + Capacitor アプリに、iOS の基本となる iOS 26 テーマ、対応ブラウザー向けの iOS 27 テーマ、Android 向けの Material Design 3 を設定します。iOS のネイティブコントロール、iPhone Duo / Vertical Bars、Android Dynamic Color も、この手順で接続します。
+既存のIonic + Capacitorアプリに、iOS 26／27テーマとAndroid向けのMaterial Design 3を導入します。iOSのネイティブコントロール、端末に応じたレイアウト、Androidの端末配色も設定します。
 
 ## 導入前に確認する
 
-この組み合わせの導入手順は、Ionicのdark.system.cssを使い、OSのライト・ダークへ追従しているアプリから始めます。スタイル差分の削除行はその開始方針そのもので、任意のダークパレットを表す仮の行ではありません。class・always方針を使うアプリは動作を維持し、[既存テーマの統合](/projects/capacitor-native-ui/docs/ionic-vertical-bars)、テーマの[設定](/projects/ionic-theme-ios27/docs/configuration)、更新時の[移行手順](/guides/migration)を使います。そのアプリをsystemへ変更すると動作が変わるため、この導入の範囲には含めません。
+この手順は、dark.system.cssでOSの明暗に追従しているアプリ向けです。クラスで明暗を切り替える場合や常時ダークの場合は、現在の方式に合う[テーマ設定](/projects/ionic-theme-ios27/docs/configuration)を使います。すでにテーマを設定しているアプリには、[Native UIだけを追加する手順](/projects/capacitor-native-ui/docs/ionic-vertical-bars)もあります。
 
-Capacitor 8と、バージョン8の8.5以降のFoldableを使う既存のIonic 9アプリを対象にします。まず対象をiOS・Android・両方から選びます。Webビルドが成功し、選んだ対象のネイティブプロジェクトがある状態から始めてください。対象外のネイティブプロジェクトは不要です。既存のルートとイベント処理は維持します。
+対象はIonic 9・Capacitor 8・Foldable 8.5以降（メジャーバージョン8）のアプリです。Webビルドが成功し、導入先のiOSまたはAndroidプロジェクトがある状態から始めます。
 
-iOS のネイティブコントロールは iOS 26 以降と Xcode 26 以降が必要です。Android Dynamic Color は Android 12 以降で利用でき、古い端末は既定の配色を維持します。ネイティブレールには追加の[対応端末と OS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering)が必要です。
+iOSのネイティブコントロールにはiOS 26以降とXcode 26以降、Androidの端末配色にはAndroid 12以降が必要です。古いOSではWebコントロールと既定の配色を使います。レール表示の条件は[対応端末とOS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering)を参照してください。
 
-テーマだけなら[iOS 26](/projects/ionic-theme-ios26/docs/setup)・[iOS 27](/projects/ionic-theme-ios27/docs/setup)・[MD3](/projects/ionic-theme-md3/docs/setup)の導入手順を選びます。[既存テーマにNative UIを追加する場合](/projects/capacitor-native-ui/docs/ionic-vertical-bars)、[Ionicを使わないHTML](/projects/capacitor-native-ui/docs/framework-independent)、[Cordova](/projects/cordova-native-ui/docs/readme)も、それぞれの手順から始めてください。
+テーマだけの導入は[iOS 26](/projects/ionic-theme-ios26/docs/setup)・[iOS 27](/projects/ionic-theme-ios27/docs/setup)・[MD3](/projects/ionic-theme-md3/docs/setup)、Ionicを使わない場合は[HTML](/projects/capacitor-native-ui/docs/framework-independent)、Cordovaアプリは[Cordova](/projects/cordova-native-ui/docs/readme)の手順を使います。
 
-差分のパスは、既存ファイルの役割を示す基準例です。アプリで使っているentry・root・page・グローバルスタイルシートへ対応させて適用します。Angularでは通常src/global.scssなどが該当します。captionに合わせてsrc/global.cssを新設しても、読み込まれないファイルには効果がありません。新規作成すると明記したファイルだけを作り、表示されていない既存コードは維持してください。
+差分は既存ファイルへ適用し、ファイル名はアプリの構成に合わせて読み替えてください。たとえばsrc/global.cssは、Angularではsrc/global.scssに当たります。新規作成するファイルは各手順で指定します。差分にないルートや設定はそのまま残します。
 
 ## 1. パッケージをインストールする
 
-開始時点では既存アプリのWebビルドが動き、今回のパッケージは未導入です。アプリのディレクトリでコマンドを実行します。npmが成功して依存関係とlockfileが更新されれば、この手順は完了です。この時点ではUIはまだ有効になっていません。
+アプリのディレクトリで、必要なパッケージをインストールします。
 
 ```sh
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
@@ -33,13 +35,11 @@ npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
   @erkamyaman/capacitor-foldable@8
 ```
 
-## 2. 両方のテーマを設定する
+## 2. テーマを設定する
 
-パッケージ導入後に、スタイルシートの差分と、使っているフレームワークの初期化差分だけを適用します。空白で始まる行は既存の文脈で、削除・置換する指示ではありません。表示していないprovider・ルーター・アプリのオプションも維持します。ここでテーマとIonic設定がそろいますが、ネイティブの起動はまだ接続していません。
+グローバルスタイルを変更し、使っているフレームワークの例に沿ってIonicを初期化します。
 
-スタイルの差分は既存のsrc/global.cssを例にしています。global.scssなど別のグローバルファイルを使うアプリでは、そのファイルへ適用し、別のスタイルシートを増やしません。削除するdark.system.cssは、この手順の開始状態そのものです。class・alwaysのパレットへ読み替えて削除しません。
-
-このsystemプリセットは、OSのライト・ダークへ追従する既存の方針を維持します。テーマを導入するだけで、アプリから明暗を上書きする方針には変更しません。classプリセットへ切り替えるのは、[外観設定の使い方](/guides/appearance)で上書きを追加するときだけです。起動時のコントローラーも既定のsystemモードのまま使います。
+system.cssでOSの明暗追従を維持します。アプリ内で切り替える設定は、導入後に[外観設定](/guides/appearance)で追加できます。
 
 <!-- prettier-ignore -->
 ```diff:src/global.css
@@ -55,13 +55,15 @@ npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
  :root { --app-content-width: 72rem; }
 ```
 
-CSSでiOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiOS 27を使います。Material DesignモードはMD3です。iOSの両方の見た目には、ネイティブ遷移の同期を含む共通の `ios27ThemeConfig` を使います。既存のIonic初期化処理へ、プラットフォームに合うプリセットを渡します。
+iOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiOS 27を表示します。Material DesignモードにはMD3を使います。
 
-使っているフレームワークの例を一つ選び、既存のIonic初期化処理を置き換えます。Ionicの初期化は一度だけ行います。
+テーマ設定のプリセットは、Ionicのモードや画面遷移のアニメーションをまとめた設定オブジェクトです。iOS 26／27には、ネイティブ遷移との同期を含む共通の `ios27ThemeConfig` を渡します。
+
+以下からフレームワークを一つ選び、既存のIonic初期化処理へプリセットを渡します。
 
 ### Angular / Ionic 9
 
-既存のアプリ設定で、Ionicのproviderにプリセットを渡します。providers配列にあるルーターやHTTPなど、ほかの設定は残してください。
+src/app/app.config.tsのprovideIonicAngularへプリセットを渡します。ルーターやHTTPなど、ほかのproviderは残します。
 
 <!-- prettier-ignore -->
 ```diff:src/app/app.config.ts
@@ -87,7 +89,7 @@ CSSでiOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiO
 
 ### React
 
-既存のエントリーファイルで、ルートコンポーネントのrenderより前に実行します。Reactのルート、ルーティング、CSSの読み込みはそのまま残してください。
+src/main.tsxで、Reactの描画前にsetupIonicReactを呼びます。
 
 <!-- prettier-ignore -->
 ```diff:src/main.tsx
@@ -110,7 +112,7 @@ CSSでiOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiO
 
 ### Vue
 
-既存のエントリーファイルで、mountする前のIonicVue登録時にプリセットを渡します。既存のルーターやほかのプラグインの登録は、アプリ作成からmountまでの間に残してください。
+src/main.tsで、mount前にIonicVueへプリセットを渡します。
 
 <!-- prettier-ignore -->
 ```diff:src/main.ts
@@ -133,9 +135,17 @@ CSSでiOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiO
  router.isReady().then(() => app.mount('#app'));
 ```
 
-## 3. アプリシェルの描画後に起動する
+## 3. アプリの描画後に起動処理を呼ぶ
 
-テーマ設定まで済んだ状態から始めます。全行が追加の差分で共通モジュールを新規作成し、既存のアプリルートには自分のフレームワークの差分だけを適用します。現在のテンプレートとルーターは維持します。描画後に起動処理が呼ばれる状態になりますが、ネイティブでのビルドと確認はこれからです。
+Native UIは、描画されたIonicの対応要素を読み取ってネイティブコントロールを表示します。要素が画面にそろってから開始するため、ルートコンポーネントの描画後に呼び出します。
+
+まずsrc/native-ui.tsを新規作成します。このファイルで次の3つを設定し、アプリ全体で一度だけ起動します。
+
+| 機能                   | 起動時に行うこと                                       |
+| ---------------------- | ------------------------------------------------------ |
+| 端末の配色             | enableDynamicColorsで、端末の色をテーマへ反映する      |
+| iOSのネイティブ表示    | enableNativeUIで、Ionicのコントロールを読み取る        |
+| 端末レイアウトへの追従 | Foldableの変更通知を受け、配置と余白をテーマへ反映する |
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -174,7 +184,7 @@ CSSでiOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiO
 
 ### Angular
 
-既存ルートコンポーネントへこの差分を適用します。文脈として示したテンプレートとコンポーネントimportはそのまま維持し、元のメニューとルーターも残します。
+既存のルートコンポーネントへ、afterNextRenderで起動する処理を追加します。
 
 <!-- prettier-ignore -->
 ```diff:src/app/app.component.ts
@@ -201,7 +211,7 @@ CSSでiOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiO
 
 ### React
 
-既存のAppコンポーネントへこの差分を適用します。ExistingRouterはもともと描画しているルーターを表し、そのルーターとルートは維持します。
+既存のAppコンポーネントへ、useEffectで起動する処理を追加します。ExistingRouterは、アプリで使っているルーターへ読み替えてください。
 
 <!-- prettier-ignore -->
 ```diff:src/App.tsx
@@ -222,7 +232,7 @@ CSSでiOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiO
 
 ### Vue
 
-既存のApp.vueのscriptへこの差分を適用します。現在のテンプレート、ルーターの表示位置、メニューはそのまま維持します。
+既存のApp.vueへ、onMountedで起動する処理を追加します。
 
 <!-- prettier-ignore -->
 ```diff:src/App.vue
@@ -242,7 +252,7 @@ CSSでiOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiO
 
 ## 4. ビルド・同期・実行する
 
-起動処理の接続後、アプリのディレクトリでWebをビルドし、対象OSのコマンドだけを実行します。開いたプロジェクトをXcodeまたはAndroid Studioでビルド・起動します。新しいWebアセットとプラグインを含むアプリを実行できれば、この手順は完了です。導入の合否は手順5で確認します。
+アプリのディレクトリでWebをビルドし、導入先のOSへ同期します。続いて、XcodeまたはAndroid Studioでアプリをビルド・起動します。
 
 ```sh
 npm run build
@@ -262,17 +272,17 @@ npx cap sync android
 npx cap open android
 ```
 
-SwiftPMはEngineを自動解決します。既存のCocoaPods構成は[ネイティブプロジェクト設定](/projects/capacitor-native-ui/docs/configuration#native-project-setup)を使います。
+SwiftPMではEngineが自動解決されます。CocoaPodsを使う場合は[ネイティブプロジェクト設定](/projects/capacitor-native-ui/docs/configuration#native-project-setup)に沿って設定します。
 
 ## 5. 導入結果を確認する
 
-対応するIonicコントロールのネイティブ表示と、端末レイアウト変更への追従は、ここまでの導入で有効になっています。既存の画面と操作を使って以下を確認します。確認のためにツールバーの操作や独自コンポーネント、レイアウトのプレビューコードを追加する必要はありません。
+ネイティブ表示と端末レイアウトへの追従は、ここまでの設定で有効になります。既存の画面を開き、以下の項目を確認します。
 
-更新したアプリを起動した状態から確認します。Androidのみのアプリと、ネイティブ対応条件より古いiOSは、下のiOS限定2区画を丸ごとスキップします。Safari操作・一時フックの追加と撤去・iOSの再ビルドと同期も不要です。対象OSの完了確認表を確認して「導入完了」へ進んでください。一時診断と撤去を実施するのは、iOS 26以降へXcode 26以降でビルドする場合だけです。
+次の一時診断はiOS 26以降向けです。Androidと古いiOSでは「全対象：導入完了の確認」へ進んでください。
 
 ### iOS 26以降・Xcode 26以降のみ：一時診断を追加する
 
-iOS 26以降・Xcode 26以降では、確認時に一度だけ既存ランタイムの状態を調べます。src/native-ui.tsのiOS分岐にある既存のawait enableNativeUI()を、一時的に次の2行へ置き換えます。同じハンドルを読むための確認用フックで、別のランタイムは起動しません。
+src/native-ui.tsのawait enableNativeUI()を一時的に置き換え、表示状態を取得できるようにします。
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts (iOS verification)
@@ -282,27 +292,27 @@ iOS 26以降・Xcode 26以降では、確認時に一度だけ既存ランタイ
 +     Object.assign(window, { inspectNativeUI: () => shell.getStatus() });
 ```
 
-手順4で開発アプリを再ビルド・iOSへ同期し、SafariのWebインスペクタでこのアプリのWebViewを開きます。対応するツールバーボタンやタブバーがある既存画面を表示し、描画後にコンソールで次を実行します。
+Webを再ビルドしてiOSへ同期し、Xcodeで起動します。SafariのWebインスペクタでアプリのWebViewを開き、ツールバーボタンやタブバーのある画面を表示してから、次を実行します。
 
 ```js
 window.inspectNativeUI();
 ```
 
-対応コントロールではstateがnative、projectedが正数になり、操作すると元のWeb処理が一度だけ動くことを確認します。投影は非同期なので、最初にprojectedが0なら画面の表示を待って再確認します。0のままではネイティブ表示を確認できていません。対応iOSのビルドでstateがwebのままなら、reasonとネイティブの同期・再ビルド、コントロールの対応条件を確認してから完了とします。非対応OSではWebへのフォールバックが期待結果で、元のWeb操作が動けば正常です。確認後は一時フックを除去し、元のawait enableNativeUI()へ戻します。
+stateがnative、projectedが正数で、ネイティブコントロールから元のWeb処理が一度だけ動けば正常です。projectedが0なら描画を待って再確認します。stateがwebのままなら、reasonを手がかりに対応条件やプラグインの同期・再ビルドを確認してください。
 
 ### 全対象：導入完了の確認
 
 | 対象                     | 確認する操作                                                           | 完了条件                                                                                                                       |
 | ------------------------ | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| 全対象                   | 既存画面を開き、画面遷移とライト・ダークを試す                         | 元のルート・イベント処理と、読みやすいWeb表示が動く                                                                            |
-| iOS                      | Xcode 26以降でiOS 26以降へ実行し、対応コントロールを確認する           | 既存の対応コントロールがネイティブ表示され、操作すると元のWebの処理が一度だけ実行される。古いOSでは操作できるWeb表示が期待結果 |
+| 全対象                   | 既存画面を開き、画面遷移とライト・ダークを試す                         | 元の画面へ移動でき、ライト・ダークのどちらでも文字が読める                                                                     |
+| iOS                      | iOS 26以降で対応コントロールを操作する                                 | 既存の対応コントロールがネイティブ表示され、操作すると元のWebの処理が一度だけ実行される。古いOSでは操作できるWeb表示が期待結果 |
 | Android                  | ネイティブアプリを開く。Android 12以降では端末の配色を変更して開き直す | 対応端末ではMD3に端末配色が反映され、非対応端末では既定色のWebコントロールで操作できる                                         |
 | ネイティブレール対応端末 | レイアウトを変更し、元に戻す                                           | 通知された配置にVertical Barsが追従し、領域がなくなれば余白も戻る。他の端末では通常配置が期待結果                              |
-| ブラウザー               | テーマを表示して元の操作を試す                                         | Webの見た目と処理が動く。ネイティブ表示・端末配色・レールの確認とは区別する                                                    |
+| ブラウザー               | ツールバーのボタンを押すか、タブを切り替える                           | ブラウザーでもボタンの操作やタブ移動が導入前と同じように動く                                                                   |
 
 ### iOS 26以降・Xcode 26以降のみ：一時診断を撤去する
 
-上の対応iOS向け診断を実施した場合だけ、この撤去差分を適用します。Androidのみ・古いiOSの場合は、コマンドを含めこの区画全体をスキップして「導入完了」へ進みます。
+診断に使った一時フックを削除し、元の起動処理へ戻します。
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts (iOS verification)
@@ -312,7 +322,7 @@ window.inspectNativeUI();
 +     await enableNativeUI();
 ```
 
-アプリのディレクトリで下のビルド・同期を実行し、実行中のiOSアプリを終了して起動し直します。Safari Web Inspectorを開き直してコンソールの式を実行し、undefinedになることを確認します。通常のコントロールと元の処理も動くことを確認してください。ソースからの撤去だけでなく、以前のwindowフックもこれで消えます。
+以下を実行し、iOSアプリを終了して起動し直します。Safariのコンソールで一時フックがundefinedになることと、通常の操作が動くことを確認します。
 
 ```sh
 npm run build
@@ -329,4 +339,4 @@ typeof window.inspectNativeUI;
 
 ## 個別のオプション
 
-これらのテーマを使わない Native UI は[既存テーマの設定](/projects/capacitor-native-ui/docs/ionic-vertical-bars)または [HTML の設定](/projects/capacitor-native-ui/docs/framework-independent)を使います。明暗設定・配色変換は [Dynamic Color](/projects/capacitor-native-ui/docs/dynamic-colors)、Native UI のオプションは[設定](/projects/capacitor-native-ui/docs/configuration)、既存構成からの移行は[移行ガイド](/projects/capacitor-native-ui/docs/migration)を参照してください。
+配色の詳細は[Dynamic Color](/projects/capacitor-native-ui/docs/dynamic-colors)、Native UIのオプションは[設定](/projects/capacitor-native-ui/docs/configuration)、既存設定の更新は[移行ガイド](/projects/capacitor-native-ui/docs/migration)を参照してください。

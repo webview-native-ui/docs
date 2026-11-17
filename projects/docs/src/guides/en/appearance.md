@@ -1,30 +1,38 @@
 ---
 title: 'Add an appearance switch'
 headingAliases:
-  '1.-place-the-appearance-controls': '1.-check-the-two-settings-to-add'
-  '3.-connect-the-buttons': '3.-connect-both-settings'
+  '4.-check-each-mode-and-the-fallback': '3.-switch-the-toggles-and-check-the-result'
+  '3.-connect-both-settings': '2.-add-two-toggles-to-the-settings-page'
+  '2.-keep-the-existing-appearance-controller': '1.-let-the-app-choose-light-or-dark-appearance'
+  '1.-check-the-two-settings-to-add': 'settings-to-add'
+  '1.-place-the-appearance-controls': 'settings-to-add'
+  '3.-connect-the-buttons': '2.-add-two-toggles-to-the-settings-page'
 ---
 
 # Add an appearance switch
 
-App setup preserves OS-following appearance. This optional task replaces that policy with two independent app settings: Use device colors and Dark mode. Each setting uses an ion-item containing an ion-toggle to show its current value. The initial Dark mode value is sampled once from the OS; later OS changes do not change the setting.
+Add two toggles, Use device colors and Dark mode, and apply the chosen appearance throughout the app.
 
-For a theme-only app, start with the [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup), or [MD3](/projects/ionic-theme-md3/docs/setup) installation guide. Native UI is not required. The steps below add appearance settings to the combined Ionic + Capacitor setup.
+Start with an app that has completed [Ionic app setup](/standard-setup). First prepare the shared appearance behavior, then call it from the settings-page toggles.
 
-## 1. Check the two settings to add
+## Settings to add
 
-Start with [completed app setup](/standard-setup), with its temporary verification hook removed. In this step, identify the two settings; no file changes are needed yet. Use device colors selects the available Android 12+ palette instead of theme defaults. Dark mode selects dark when checked and light when unchecked, independently of the palette source. There is no OS-following choice in this UI.
+The toggles choose the palette source and light/dark appearance independently. For example, device colors can be used in light mode, or the default theme colors in dark mode.
 
-| Setting           | On                          | Off                |
-| ----------------- | --------------------------- | ------------------ |
-| Use device colors | Use available device colors | Use theme defaults |
-| Dark mode         | Dark                        | Light              |
+| Setting           | On                                         | Off                |
+| ----------------- | ------------------------------------------ | ------------------ |
+| Use device colors | Use available device colors on Android 12+ | Use theme defaults |
+| Dark mode         | Dark                                       | Light              |
 
-## 2. Keep the existing appearance controller
+## 1. Let the app choose light or dark appearance
 
-Apply four diffs in order: change the existing stylesheet from System to Class presets, then add preference state, the provider and the getter/setter to the existing startup module. This deliberately changes appearance ownership from OS-following CSS to the app’s Dark mode toggle; it is independent of choosing device colors. The controller still starts once. It takes the current OS appearance only as the initial dark boolean, starts in the matching explicit dark/light mode, and thereafter follows that boolean. Partial updates preserve the other setting. At the end, the API is ready; the two toggles are added in step 3.
+Change src/global.css and the src/native-ui.ts created during setup, in that order. This lets the settings page change the appearance of the whole app.
 
-On iOS, status-bar text and icons need an explicit update independently of the Web theme and Native UI controls. Call SystemBars at startup and after preference changes so they remain readable when the app appearance differs from the OS. This iOS-only synchronization preserves existing Android system-bar and inset handling.
+### Change the stylesheet that controls light and dark appearance
+
+The installed system.css follows OS appearance. Replace it with class.css so the app can choose light or dark. class.css responds to the ion-palette-dark class, which setMode adds or removes for you.
+
+Apply the diff to your global stylesheet. If Angular uses src/global.scss, change that file.
 
 <!-- prettier-ignore -->
 ```diff:src/global.css
@@ -36,6 +44,12 @@ On iOS, status-bar text and icons need an explicit update independently of the W
  @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
  @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
+
+### Keep the current settings in variables
+
+In src/native-ui.ts, keep the two settings in preferences. deviceColors controls device colors; dark controls dark mode. The initial dark value comes from the OS when the app starts.
+
+appearance holds the object returned by enableDynamicColors. The next change stores that result so its setMode and refresh methods can be used later.
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -60,6 +74,12 @@ On iOS, status-bar text and icons need an explicit update independently of the W
 + };
 ```
 
+### Apply the settings when the app starts
+
+Pass the initial light/dark choice to enableDynamicColors and store its result in appearance. After startup, appearance.setMode switches the app between light and dark and appearance.refresh selects the palette again.
+
+When device colors are off, withhold the device palette so the theme uses its defaults. On iOS, also call syncIOSSystemBars at startup; it is defined below.
+
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
 @@
@@ -79,6 +99,14 @@ On iOS, status-bar text and icons need an explicit update independently of the W
    if (Capacitor.getPlatform() === 'ios') {
 +     await syncIOSSystemBars();
 ```
+
+### Add functions for the settings page to call
+
+Add these functions at the end of the same file.
+
+- getAppearancePreferences returns the current settings so the settings page can display the initial toggle values.
+- setAppearancePreferences accepts a changed setting and applies it to the theme. Changing one toggle preserves the other value.
+- syncIOSSystemBars matches iOS status-bar text and icons to the app appearance, keeping the clock and battery readable on a dark screen.
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -108,11 +136,17 @@ On iOS, status-bar text and icons need an explicit update independently of the W
 + }
 ```
 
-## 3. Connect both settings
+The settings page can now read the current values and change the app appearance. Connect these two operations to its toggles next.
 
-Use an existing routed settings page and apply only your framework’s diff. Keep its actual filename, route and other content. Both toggles read the shared preferences and display the selected values, without creating another controller. Leaving and reopening this route retains the settings during this running session. No values are persisted: restarting the app or fully reloading the browser samples the current OS again for the initial Dark mode value. Use device colors expresses a preference, not proof that a device palette is available; its nearby explanation covers unsupported devices.
+## 2. Add two toggles to the settings page
+
+Add two ion-item elements to the existing settings page, each containing one ion-toggle. Read initial values with getAppearancePreferences, then pass toggle changes to setAppearancePreferences.
+
+Apply the example for your framework.
 
 ### Angular / Ionic 9
+
+Initialize the Signal Forms model from the current preferences. When a toggle updates the model, effect calls setAppearancePreferences to apply the change to the app.
 
 <!-- prettier-ignore -->
 ```diff:src/app/appearance.page.ts
@@ -156,6 +190,8 @@ Use an existing routed settings page and apply only your framework’s diff. Kee
 
 ### React
 
+Pass the current value to checked. onIonChange supplies the new value in event.detail.checked; pass it to setAppearancePreferences. Update the page state too, so its toggle displays the same value.
+
 <!-- prettier-ignore -->
 ```diff:src/Appearance.tsx
 @@
@@ -195,6 +231,8 @@ Use an existing routed settings page and apply only your framework’s diff. Kee
 ```
 
 ### Vue
+
+Pass the current value to checked. ionChange supplies the new value in event.detail.checked; pass it to setAppearancePreferences and update the page state held by reactive.
 
 <!-- prettier-ignore -->
 ```diff:src/Appearance.vue
@@ -240,16 +278,20 @@ Use an existing routed settings page and apply only your framework’s diff. Kee
  </template>
 ```
 
-## 4. Check each mode and the fallback
+The app shares these values, so reopening the settings page keeps them. This example does not persist them. Restarting the app or fully reloading the browser enables device colors and initializes dark mode from the current OS setting. While running, the app follows the toggle value even if the OS appearance changes.
 
-Before checking the edited controls, run the app’s existing Web development server and fully reload the browser page. For native verification, run npm run build in the app directory, sync only the selected target with npx cap sync ios or npx cap sync android, rebuild that native target, then stop and relaunch its app/WebView. A source edit alone does not update an installed native app. Restarting the app or fully reloading the browser resets these in-memory preferences; select the test values after that restart. Reopening only the routed settings page retains them.
+## 3. Switch the toggles and check the result
 
-Check all four combinations: device colors off/dark off, off/on, on/off and on/on. The selected Dark mode toggle must produce light or dark Web UI and supported iOS controls respectively. Changing the OS light/dark appearance while the app keeps running must not change this toggle or override its appearance. Changing either toggle must not reset the other.
+In the browser, start the development server and reload the page. For native apps, run npm run build and npx cap sync ios or npx cap sync android for the target, then rebuild and launch it.
 
-On supported Android 12+, enable device colors, change the wallpaper palette and return to the same running app to check the new colors. Disabling device colors must restore theme defaults while preserving Dark mode. On iOS, in browsers and unsupported Android, either source setting keeps usable theme colors. Reopen the settings route and confirm that both toggle values remain visible. The task is complete when all four combinations, source fallback and route reopening work.
+First turn Dark mode on and off. The background and text throughout the app should change between dark and light.
 
-On iOS, leave the OS light and set the app dark; verify that the time, battery and other status-bar content remain readable. Also check OS dark with app light. This example does not persist preferences. If connecting it to existing persistence, apply the same SystemBars update immediately after restoration and verify both directions after restarting.
+On supported Android 12+ devices, also switch Use device colors. On uses the device palette; off uses theme defaults. Change the wallpaper and return to the app to check that its colors update while enabled. iOS, browsers and unsupported Android use theme defaults for either value.
 
-If the app prints or exports documents or PDFs, check that output keeps the intended colors after changing display settings. If screen theme variables propagate into the output, give that output its own print palette. Compare the actual settings and main app screens before and after the change, not only a temporary verification screen.
+Try all four combinations: changing the palette source must preserve light/dark mode, and changing light/dark mode must preserve the palette source. Reopen the settings page and check that both choices are still displayed.
 
-For brand-color mapping, see the [Dynamic Color reference](/projects/capacitor-native-ui/docs/dynamic-colors). For theme-only installation, use the [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup), or [MD3](/projects/ionic-theme-md3/docs/setup) instructions.
+On iOS, check OS light with app dark and the opposite combination; the clock and battery must remain readable. If connecting existing persistence, update SystemBars when restoring preferences and check again after restarting.
+
+For apps that print or export PDFs, check whether palette or light/dark mode changes affect output colors. Use a separate print palette where needed. Check the actual settings and main app screens.
+
+See the [Dynamic Color reference](/projects/capacitor-native-ui/docs/dynamic-colors) for color mappings.

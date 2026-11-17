@@ -12,7 +12,7 @@ export const GUIDE_CHAPTERS = [
     },
     description: {
       en: 'Configure device colors and light/dark appearance as separate preferences.',
-      ja: '端末の配色を使う設定と、ライト・ダークの設定を別々に追加します。',
+      ja: '端末の配色とダークモードを切り替える設定を追加します。',
       fr: 'Réglez séparément les couleurs de l’appareil et l’apparence claire ou sombre.',
       de: 'Stellen Sie Gerätefarben und Hell-/Dunkelmodus getrennt ein.',
     },
@@ -28,7 +28,7 @@ export const GUIDE_CHAPTERS = [
     },
     description: {
       en: 'Extend the native rendering when the built-in controls do not cover your application.',
-      ja: '用意されたコントロールでは足りない場合に、ネイティブの描画を拡張します。',
+      ja: 'SwiftUIやComposeで画面を作り、Webの状態・操作につなぎます。',
       fr: 'Étendez le rendu natif lorsque les contrôles intégrés ne suffisent pas.',
       de: 'Erweitern Sie die native Darstellung, wenn die integrierten Steuerelemente nicht ausreichen.',
     },
@@ -44,7 +44,7 @@ export const GUIDE_CHAPTERS = [
     },
     description: {
       en: 'Move to the current setup while keeping your application’s responsibilities clear.',
-      ja: 'アプリが担う責務を保ちながら、現在の推奨構成へ移行します。',
+      ja: '使用中のパッケージと、古いimport・起動処理を更新します。',
       fr: 'Adoptez la configuration actuelle en conservant clairement les responsabilités de votre application.',
       de: 'Wechseln Sie zur aktuellen Einrichtung und behalten Sie klare Zuständigkeiten in Ihrer App.',
     },
@@ -96,7 +96,7 @@ export const GUIDE_COPY = {
   },
   guideTitle: {
     en: 'Use and customize after setup',
-    ja: '導入後の使い方',
+    ja: '機能を追加する',
     fr: 'Utiliser et personnaliser après l’installation',
     de: 'Nach der Einrichtung nutzen und anpassen',
   },
@@ -114,7 +114,7 @@ export const GUIDE_COPY = {
   },
   taskIntro: {
     en: 'App setup is complete on the installation page. Choose a guide below for the result you want; each guide has its own steps.',
-    ja: '導入は「Ionicアプリに導入する」のページで完了します。ここからは、実現したいことに合うページを選び、そのページ内の手順を進めます。',
+    ja: '導入後、必要な機能の手順を選んでください。',
     fr: 'L’installation se termine sur sa page dédiée. Choisissez ci-dessous le résultat souhaité ; chaque guide possède ses propres étapes.',
     de: 'Die Einrichtung wird auf der Installationsseite abgeschlossen. Wählen Sie hier das gewünschte Ergebnis; jede Anleitung hat eigene Schritte.',
   },
@@ -126,13 +126,13 @@ export const GUIDE_COPY = {
   },
   taskReading: {
     en: 'For an app already set up. Choose this guide for its specific result and follow the steps within this page.',
-    ja: '導入済みのアプリで、このページの内容を実装・確認する手順です。目的別ガイドから必要なページを選んで利用できます。',
+    ja: '導入済みのアプリに機能を追加する手順です。',
     fr: 'Pour une application déjà configurée. Choisissez ce guide pour son résultat précis et suivez les étapes de cette page.',
     de: 'Für eine bereits eingerichtete App. Wählen Sie diese Anleitung für ihr konkretes Ergebnis und folgen Sie den Schritten auf dieser Seite.',
   },
   migrationReading: {
     en: 'For an existing integration. Follow the changes that apply to the packages and features your app already uses.',
-    ja: '既存の構成を更新するための手順です。現在使っているパッケージと機能に該当する変更を進めます。',
+    ja: '使用中のパッケージと機能に合わせて更新します。',
     fr: 'Pour une intégration existante. Appliquez les changements correspondant aux paquets et fonctions déjà utilisés.',
     de: 'Für eine bestehende Integration. Führen Sie die Änderungen für die bereits genutzten Pakete und Funktionen aus.',
   },
@@ -198,7 +198,7 @@ export const GUIDE_COPY = {
   },
   referenceDescription: {
     en: 'Look up installation variants, options and APIs for a specific package.',
-    ja: '特定のパッケージの導入方法・オプション・APIを調べる場合はこちら。',
+    ja: '各パッケージの導入方法・設定・APIを調べられます。',
     fr: 'Consultez les variantes d’installation, options et API d’un paquet précis.',
     de: 'Hier finden Sie Installationsvarianten, Optionen und APIs einzelner Pakete.',
   },
