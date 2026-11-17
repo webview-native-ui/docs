@@ -462,6 +462,26 @@ test('the portal owns combined setup while plugin guides keep feature boundaries
     assert.ok(entry.querySelector(`article a[href="${prefix}/standard-setup"]`));
     const home = await read('');
     assert.ok(home.querySelector(`main a[href="${prefix}/standard-setup"]`));
+    const selector = home.querySelector('#choose-setup')!;
+    assert.ok(selector);
+    for (const path of [
+      'ionic-theme-ios26/docs/setup',
+      'ionic-theme-ios27/docs/setup',
+      'ionic-theme-md3/docs/setup',
+      'capacitor-native-ui/docs/ionic-vertical-bars',
+      'capacitor-native-ui/docs/framework-independent',
+      'cordova-native-ui/docs/readme',
+    ])
+      assert.ok(selector.querySelector(`a[href="${prefix}/projects/${path}"]`), `${code}: ${path}`);
+    assert.ok(!selector.querySelector(`a[href="${prefix}/guides/appearance"]`));
+    for (const theme of ['ios26', 'ios27', 'md3']) {
+      const setup = await read(`/projects/ionic-theme-${theme}/docs/setup`);
+      assert.ok(
+        !Array.from(setup.querySelectorAll('pre code')).some((node) =>
+          /npm install.*capacitor-foldable/.test(node.textContent ?? ''),
+        ),
+      );
+    }
   }
 });
 
@@ -495,15 +515,22 @@ test('shared guides lead from the complete setup to localized package details', 
         const target = await read(url.pathname);
         if (url.hash)
           assert.ok(
-            target.getElementById(decodeURIComponent(url.hash.slice(1))),
+            target.getElementById(url.hash.slice(1)) ||
+              target.getElementById(decodeURIComponent(url.hash.slice(1))),
             `${path}: ${url.href}`,
           );
       }
     }
     const native = await read(`${prefix}/guides/native-ui`);
-    assert.equal(native.querySelectorAll('main table tbody tr').length, 3);
+    assert.ok(native.querySelectorAll('article pre code').length >= 3);
+    for (const chapter of GUIDE_CHAPTERS) {
+      const page = await read(`${prefix}/guides/${chapter.id}`);
+      assert.ok(page.querySelectorAll('article h2[id]').length >= 4);
+      assert.ok(page.querySelectorAll('article pre code').length >= 2);
+      assert.ok(page.querySelector('.setup-toc a'));
+    }
     const deepLink = await read(`${prefix}/projects/capacitor-native-ui/docs/configuration`);
-    assert.ok(deepLink.querySelector(`app-guide-context a[href="${prefix}/standard-setup"]`));
+    assert.ok(deepLink.querySelector(`app-guide-context a[href="${prefix || '/'}#choose-setup"]`));
   }
 });
 

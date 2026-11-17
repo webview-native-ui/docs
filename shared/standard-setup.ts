@@ -1,7 +1,7 @@
 export const STANDARD_SETUP_PATH = '/standard-setup';
 export const STANDARD_SETUP_LABELS = {
-  en: 'Standard setup',
-  ja: '標準導入',
-  fr: 'Configuration standard',
-  de: 'Standardeinrichtung',
+  en: 'Set up your app',
+  ja: 'アプリに導入する',
+  fr: 'Configurer l’application',
+  de: 'App einrichten',
 } as const;

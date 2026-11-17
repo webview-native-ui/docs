@@ -1,11 +1,9 @@
 ---
 title: "Premiers pas"
-sourceRevision: "477b6643b6dadcac2c0c2454c6535eb9e167e215bdc38eb7058a5163cc3d66b6"
+sourceRevision: 'adf3c52052f4ae36c4d93ddbffb47772078bb8b70577f8344129a65624900776'
 ---
 
-# Ionic Theme iOS27
-
-Installez avec `npm install @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable`. Pour la version 1.x, consultez le [guide v1.2.1](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1).
+Installez avec `npm install @rdlabo/ionic-theme-ios27`. Pour la version 1.x, consultez le [guide v1.2.1](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1).
 Un thème pour les applications Ionic qui apporte Liquid Glass et les animations d’iOS 27 au Web. Les applications Capacitor iOS peuvent aussi activer Native UI pour les contrôles pris en charge, avec une prise en charge officielle depuis la version 2.0.0.
 
 **[Démo Ionic 9](https://ionic-theme-ios27.rdlabo.dev/) · [Guide d’installation](/docs/setup)**
@@ -34,14 +32,14 @@ Un thème pour les applications Ionic qui apporte Liquid Glass et les animations
 
 ## Premiers pas
 
-Les guides standard utilisent le package de thème autonome, avec Capacitor comme hôte natif par défaut. L’utilisation du thème seul dans le navigateur reste prise en charge. Pour une application Cordova, consultez le [guide Cordova](/docs/cordova) facultatif, qui décrit le thème fourni et le démarrage propre à cet hôte.
+Commencez par le thème autonome dans une application Ionic 9 existante. Le thème seul dans le navigateur ne nécessite ni projet Capacitor natif ni démarrage Native UI. Pour Cordova, utilisez le [guide facultatif](/docs/cordova) qui couvre le thème fourni et le démarrage propre à cet hôte.
 
-Nous utilisons [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable), un excellent plugin communautaire d’Erkam Yaman, comme intégration standard pour la disposition de l’appareil. Il expose l’état de pliage, la géométrie de la charnière, le placement des barres et les événements de changement, ce qui vous permet de contrôler l’adaptation de la disposition. Foldable fournit les données de l’appareil ; le thème fournit les utilitaires de disposition Web et Native UI projette les contrôles. Installez-le avec le package utilisé, puis raccordez ses événements dans votre application.
+Ajoutez [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable), le plugin communautaire d’Erkam Yaman, uniquement pour une disposition pilotée par l’appareil, en suivant le [guide de disposition](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout). Il signale placement, posture et changements ; le thème fournit la disposition Web et Native UI projette les contrôles lorsqu’il est activé séparément. Son installation et ses événements sont facultatifs et ne sont pas des prérequis du thème.
 
 Installez le thème, ajoutez une feuille de style globale après le CSS de base d’Ionic et transmettez la configuration du thème à votre initialiseur Ionic existant. Consultez le [guide d’installation](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup) pour Angular, React et Vue.
 
 ```sh
-npm install @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+npm install @rdlabo/ionic-theme-ios27
 ```
 
 ```css
@@ -49,6 +47,7 @@ npm install @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
 ```
 
 ```ts
+import { provideIonicAngular } from '@ionic/angular';
 import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
 
 provideIonicAngular({
@@ -57,7 +56,7 @@ provideIonicAngular({
 });
 ```
 
-Choisissez `styles/class.css` pour le mode sombre contrôlé par l’application ou `styles/always.css` pour un mode toujours sombre. La feuille de style inclut la palette sombre Ionic correspondante. La configuration du thème sélectionne par défaut le mode iOS et ses animations, les options de l’application étant prioritaires. La compatibilité Ionic est `>=8.8.1 <10`. Les applications limitées au navigateur n’ont pas besoin de projet Capacitor natif.
+Choisissez `styles/class.css` pour le mode sombre contrôlé par l’application ou `styles/always.css` pour un mode toujours sombre. La feuille de style inclut la palette sombre Ionic correspondante. La configuration du thème sélectionne par défaut le mode iOS et ses animations, les options de l’application étant prioritaires. La compatibilité Ionic est `>=9 <10`. Les applications limitées au navigateur n’ont pas besoin de projet Capacitor natif.
 
 Le thème habille les barres d’outils, onglets, listes, boutons, recherches et superpositions, en clair et en sombre. Il n’active pas les contrôles natifs. Une fois le thème Web opérationnel, vous pouvez [ajouter Native UI](/docs/add-native-ui).
 

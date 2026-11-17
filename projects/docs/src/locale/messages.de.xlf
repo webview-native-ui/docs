@@ -643,7 +643,7 @@
       <trans-unit id="footerBecomeSponsor" datatype="html"><source>Become a sponsor</source><target>Sponsor werden</target></trans-unit>
     <trans-unit id="codeExample"><source>Code example</source><target>Codebeispiel</target></trans-unit>
 <trans-unit id="codeFiles"><source>Files</source><target>Dateien</target></trans-unit>
-      <trans-unit id="combinedSetupContext"><source>Ionic + Capacitor standard setup</source><target>Standardeinrichtung für Ionic + Capacitor</target></trans-unit>
+      <trans-unit id="combinedSetupContext"><source>Choose your setup</source><target>Einrichtung auswählen</target></trans-unit>
       <trans-unit id="webThemeDemoScope"><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source><target>Die Browser-Demo zeigt das Theme-Design und Web-Interaktionen. Native Steuerelemente und Android-Gerätefarben benötigen die native App auf einem unterstützten Gerät.</target></trans-unit>
 </body>
   </file>

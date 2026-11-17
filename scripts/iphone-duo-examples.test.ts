@@ -11,12 +11,13 @@ for (const [project, page] of [
   ['capacitor-native-ui', 'setup'],
   ['capacitor-native-ui', 'device-layout'],
   ['portal', 'standard-setup'],
+  ['portal', 'extensions'],
 ]) {
   test(`${page} examples compile against the installed release`, () => {
     const markdown = readFileSync(
       resolve(
         project === 'portal'
-          ? 'projects/docs/src/guides/ja/standard-setup.md'
+          ? `projects/docs/src/guides/ja/${page}.md`
           : `projects/docs/src/${project}/docs/ja/${page}.md`,
       ),
       'utf8',
@@ -26,7 +27,13 @@ for (const [project, page] of [
     try {
       let index = 0;
       const examples: string[] = [];
-      for (const match of markdown.matchAll(/^```(ts|scss)\n([\s\S]*?)^```/gm)) {
+      // The portal keeps its device wiring in a named shared startup module.
+      // Framework configuration examples are exercised by the site contract tests.
+      const pattern =
+        project === 'portal'
+          ? /^```(ts|scss)(?::src\/native-ui.ts)?\n([\s\S]*?)^```/gm
+          : /^```(ts|scss)\n([\s\S]*?)^```/gm;
+      for (const match of markdown.matchAll(pattern)) {
         const [, language, code] = match;
         if (language === 'scss') {
           assert.doesNotThrow(() => compileString(code, { loadPaths: [resolve('node_modules')] }));
@@ -55,6 +62,14 @@ for (const [project, page] of [
           join(directory, 'app/app.config.ts'),
           "import type { ApplicationConfig } from '@angular/core'; export const appConfig: ApplicationConfig = { providers: [] };",
         );
+      }
+      if (project === 'portal' && page === 'extensions') {
+        mkdirSync(join(directory, 'native-ui'));
+        const definition = markdown.match(
+          /^```ts:src\/native-ui\/counter.ts\n([\s\S]*?)^```/m,
+        )?.[1];
+        assert.ok(definition, 'Extension startup imports the actual documented counter');
+        writeFileSync(join(directory, 'native-ui/counter.ts'), definition);
       }
       for (const code of examples) {
         const filename = join(

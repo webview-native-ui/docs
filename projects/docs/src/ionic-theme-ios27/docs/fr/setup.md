@@ -1,81 +1,84 @@
 ---
-title: "Installer le thème iOS 27"
-sourceRevision: "f0a32f142c76345cff225766112b4f44065d063ad5e42882f022c1c6e2dd6693"
+title: Installer le thème iOS 27
+sourceRevision: '5f713abce856fca7f17d1960ccba189941b8b99b01ddd439ce3b2f00e4ef968c'
+headingAliases:
+  '1.-installer-le-th%C3%A8me-et-foldable': '1.-installer-le-th%C3%A8me'
 ---
 
-# Installer le thème iOS 27
-
-Donnez l’apparence iOS 27 à une application Ionic existante avec une feuille de style et un objet de configuration du thème. Ce guide utilise le thème iOS 27 seul et le mode sombre système. Pour choisir les styles iOS 26/27 selon le navigateur ou utiliser MD3, consultez plutôt les [thèmes adaptatifs](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/adaptive-themes).
+Appliquez le thème iOS 27 à une application Ionic 9 Angular, React ou Vue existante. Cette page installe uniquement le thème. Le démarrage Native UI, un projet natif Capacitor et la configuration Foldable ne sont pas nécessaires. Conservez les routes et gestionnaires existants.
 
 ## Avant de commencer
 
-Utilisez une application Ionic Angular, React ou Vue existante avec Ionic `>=8.8.1 <10`. Conservez les imports CSS de base d’Ionic. Les applications limitées au navigateur n’ont pas besoin de projet Capacitor natif. Il s’agit de la configuration standard du package de thème autonome ; les applications Cordova utilisent la [configuration Cordova](cordova.md) facultative.
+Conservez le CSS de base Ionic. Choisissez l’exemple de votre framework ci-dessous et remplacez l’initialisation existante du thème, sans initialiser Ionic une seconde fois.
 
-## 1. Installer le thème et Foldable
+## 1. Installer le thème
+
+Installez le paquet depuis le répertoire de l’application :
 
 ```sh
-npm install @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+npm install @rdlabo/ionic-theme-ios27
 ```
-
-Foldable fournit le placement et la posture de l’appareil. Raccordez ses valeurs initiales et ses événements de changement à l’aide du [guide de disposition de l’appareil](vertical-bars-layout.md#read-the-device-layout).
 
 ## 2. Charger une feuille de style
 
-Ajoutez la feuille de style après le CSS de base d’Ionic dans votre feuille de style globale. Remplacez les imports existants du thème et de la palette sombre Ionic par cette feuille de style pour ne charger chacune qu’une fois.
+Dans la feuille globale, remplacez les imports du thème existant et de sa palette sombre Ionic par cet import après le CSS de base Ionic. Le préréglage inclut le mode sombre système et les styles de compatibilité. Aucune configuration Sass n’est nécessaire.
 
 ```css
 @import '@rdlabo/ionic-theme-ios27/styles/system.css';
 ```
 
-La feuille de style inclut la palette sombre Ionic et les styles du thème correspondants. Pour une apparence manuelle ou toujours sombre, la composition des feuilles de style et les personnalisations de l’application, consultez la [configuration](configuration.md#dark-mode).
+Pour le mode sombre manuel, choisissez styles/class.css et conservez le contrôle existant de la classe ion-palette-dark. Pour une application toujours sombre, choisissez styles/always.css. Ne chargez qu’un seul de ces préréglages.
 
 ## 3. Transmettre la configuration du thème à Ionic
 
-```ts
+Choisissez l’exemple de votre framework. Le préréglage fournit le mode et les animations du thème, y compris dans le navigateur. Conservez les options propres à l’application après le spread. Si l’application sélectionne volontairement différents modes par plateforme, gardez cette sélection et n’appliquez le préréglage qu’au mode correspondant.
+
+### Angular
+
+Dans src/app/app.config.ts, passez le préréglage au provider Ionic existant. L’exemple montre ce provider ; conservez les autres providers du tableau, notamment le routeur et HTTP.
+
+```ts:src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideIonicAngular } from '@ionic/angular';
 import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
 
-const ionicConfig = {
-  ...ios27ThemeConfig,
-  // animated: false,
+export const appConfig: ApplicationConfig = {
+  providers: [provideIonicAngular({ ...ios27ThemeConfig })],
 };
 ```
 
-La configuration fournit `mode: 'ios'` et les animations des transitions de page et des popovers. Transmettez-la à votre initialiseur Ionic existant avant le rendu. Ajoutez les options de l’application après le spread si nécessaire.
+### React
 
-| Framework | Application des options |
-| --- | --- |
-| Angular / Ionic 8 | `provideIonicAngular(ionicConfig)` depuis `@ionic/angular/standalone` |
-| Angular / Ionic 9 | `provideIonicAngular(ionicConfig)` depuis `@ionic/angular` |
-| React | `setupIonicReact(ionicConfig)` depuis `@ionic/react` |
-| Vue | `app.use(IonicVue, ionicConfig)` avec `IonicVue` depuis `@ionic/vue` |
+Dans src/main.tsx, remplacez l’appel setupIonicReact existant par celui-ci avant le rendu de la racine React. Conservez le rendu, les routes et les imports CSS.
 
-Les applications existantes peuvent suivre la [migration facultative de la configuration](migration.md#optional-simplify-the-setup) pour conserver la sélection du mode selon la plateforme et les animations personnalisées. La [configuration](configuration.md) décrit les API individuelles de feuilles de style et d’animation.
+```ts:src/main.tsx
+import { setupIonicReact } from '@ionic/react';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+
+setupIonicReact({ ...ios27ThemeConfig });
+```
+
+### Vue
+
+Dans src/main.ts, passez le préréglage lors de l’enregistrement IonicVue sur l’application existante, avant le montage. L’exemple montre cet emplacement ; conservez le routeur, les autres plugins et la séquence de montage existante.
+
+```ts:src/main.ts
+import { createApp } from 'vue';
+import { IonicVue } from '@ionic/vue';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+import App from './App.vue';
+
+const app = createApp(App);
+app.use(IonicVue, { ...ios27ThemeConfig });
+app.mount('#app');
+```
 
 ## 4. Prévisualiser votre premier écran
 
-Démarrez le serveur de développement habituel de l’application et ouvrez une page existante. Ajoutez ce balisage dans son `ion-content` en utilisant la syntaxe de composants de votre framework :
-
-```html
-<ion-list inset="true">
-  <ion-item-group>
-    <ion-item><ion-label>Notifications</ion-label></ion-item>
-    <ion-item><ion-label>Appearance</ion-label></ion-item>
-  </ion-item-group>
-</ion-list>
-```
-
-Vous devriez voir un groupe en retrait aux bords arrondis. Passez le système du mode clair au mode sombre, puis naviguez entre les pages pour voir la transition du thème. Consultez [Utiliser ion-item-group](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/using-ion-item-group) pour la structure des listes.
-
-| Si vous voyez… | Vérifiez… |
-| --- | --- |
-| Des contrôles Material Design sur ordinateur | Définissez `mode: 'ios'` dans l’initialiseur Ionic existant. |
-| Des contrôles sans styles | Chargez globalement la feuille de style du thème après les styles de base d’Ionic. |
-| Des surfaces claires et sombres mélangées | Utilisez une seule paire correspondante de palette Ionic et de variante sombre du thème. |
-| Les transitions de page par défaut | Transmettez les options d’animation avant l’initialisation d’Ionic. |
+Démarrez le serveur de développement habituel et ouvrez une page existante contenant des boutons ou listes Ionic. Vérifiez l’apparence iOS, le passage clair/sombre du système et la navigation entre les pages. En mode sombre manuel ou permanent, vérifiez plutôt la politique choisie. L’installation est terminée lorsque le style est appliqué, que les contrôles et la navigation fonctionnent et que la politique d’apparence est respectée. Aucune compilation native ni appareil avec rail n’est nécessaire.
 
 ## Étapes suivantes
 
-- [Personnaliser les styles et les composants](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/features).
-- [Ajouter Native UI](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/add-native-ui) pour les contrôles pris en charge dans une application Capacitor iOS. L’installation du thème seule n’active pas les contrôles natifs.
-- [Ajouter Vertical Bars avec un thème existant](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/ionic-vertical-bars).
-- [Migrer une application existante](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/migration).
+Le placement suivant l’appareil et les contrôles natifs sont des ajouts facultatifs. Pour suivre les rails signalés par l’appareil, utilisez [le guide de disposition](vertical-bars-layout.md#read-the-device-layout) et installez Foldable à cette étape. Pour les contrôles natifs, utilisez [l’intégration Native UI](add-native-ui.md). Le thème seul n’active pas les contrôles natifs.
+
+Pour les styles individuels et les personnalisations, consultez [la configuration](configuration.md). Pour actualiser une intégration existante, consultez [la migration](migration.md).

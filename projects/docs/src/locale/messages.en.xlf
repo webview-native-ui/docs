@@ -680,7 +680,7 @@
         <source>Switch language</source>
       </segment>
     </unit>
-    <unit id="combinedSetupContext"><segment><source>Ionic + Capacitor standard setup</source></segment></unit>
+    <unit id="combinedSetupContext"><segment><source>Choose your setup</source></segment></unit>
     <unit id="webThemeDemoScope"><segment><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source></segment></unit>
   </file>
 </xliff>

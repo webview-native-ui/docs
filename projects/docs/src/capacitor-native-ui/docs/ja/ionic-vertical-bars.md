@@ -1,8 +1,9 @@
 ---
 title: 既存テーマで使う Vertical Bars
+headingAliases:
+  '4.-%E3%83%93%E3%83%AB%E3%83%89%E3%83%BB%E5%90%8C%E6%9C%9F%E3%81%97%E3%81%A6-iphone-duo-%E3%81%A7%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B': '4.-%E3%83%93%E3%83%AB%E3%83%89%E3%83%BB%E5%90%8C%E6%9C%9F%E3%81%97%E3%81%A6ios%E3%81%A7%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B'
+sourceRevision: 'e8fca461b9c50e67c4ceeb02b0509e81050f55c942ba53750abaae7d4679a8ab'
 ---
-
-# 既存テーマで使う Vertical Bars
 
 Vertical Bars は Native UI のデフォルト構成に含まれます。このガイドでは標準の iOS 27 テーマではなく、既存の Web テーマを維持する場合を扱います。
 
@@ -28,7 +29,7 @@ iPhone Duo 対応と Vertical Bars は 2.0.0 から安定版です。
 
 ### 1. インストールして単独スタイルシートを読み込む
 
-既存の Ionic アプリ（Ionic `>=8.8.1 <10`、Capacitor 8）を使用します。既存の Foldable は[配置 API の要件](vertical-bars.md#use-with-capacitor-foldable)であるバージョン 8 の 8.5 以降を満たす必要があります。Native UI、レイアウトスタイルシートのパッケージ、必須のデバイス状態プラグインを一緒に導入します。
+既存の Ionic アプリ（Ionic `>=9 <10`、Capacitor 8）を使用します。既存の Foldable は[配置 API の要件](vertical-bars.md#use-with-capacitor-foldable)であるバージョン 8 の 8.5 以降を満たす必要があります。Native UI、レイアウトスタイルシートのパッケージ、必須のデバイス状態プラグインを一緒に導入します。
 
 ```bash
 npm install @rdlabo/ionic-theme-ios27 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
@@ -42,7 +43,7 @@ npm install @rdlabo/ionic-theme-ios27 @rdlabo/capacitor-native-ui @erkamyaman/ca
 
 iOS 27 テーマ全体のスタイルシートは不要です。Foldable の `ionic-tabs.css` ではなくこのスタイルシートを使います。両方を読み込むと同じタブを再配置します。
 
-配置、折りたたみ状態、変更を公開し、レイアウト判断をアプリに委ねる [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable) を標準連携として採用しています。論理的なレール端と計測インセットをテーマのレイアウトヘルパーに渡します。Native UI はネイティブレールの利用可否を独立して確認します。
+配置、折りたたみ状態、変更を公開し、レイアウト判断をアプリに委ねる [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable) を標準連携として採用しています。`resolveVerticalBarsLayout(Foldable)` で通知を解決し、論理的なレール端と計測インセット、ツールバーの原点をテーマのレイアウトヘルパーに渡します。Native UI はネイティブレールの利用可否を独立して確認します。
 
 ### 2. ナビゲーションアニメーションを接続する
 
@@ -110,7 +111,7 @@ const configureNavigation = (existingTransition: AnimationBuilder) => ({
 
 ネイティブ起動、デバイス配置、描画は非同期です。`enableNativeUI()` の解決はハンドルの取得であり、投影完了の保証ではありません。速やかに起動するとアプリ側の待機は避けられますが、ネイティブ投影前に初期の Web レイアウトが見える場合があります。
 
-### 4. ビルド・同期して iPhone Duo で実行する
+### 4. ビルド・同期してiOSで実行する
 
 Web アセットをビルドし、ネイティブプロジェクトを同期します。
 
@@ -118,7 +119,7 @@ Web アセットをビルドし、ネイティブプロジェクトを同期し�
 npx cap sync ios
 ```
 
-Xcode 27.1 以降でビルドし、iOS 27.1 以降の iPhone Duo で実行します。既存の SPM・CocoaPods 連携は維持します。[Native UI 設定](setup.md#4-build-sync-and-run)を参照してください。
+Xcode 26以降でビルドし、通常のiPhoneを含むiOS 26以降のシミュレーターまたは端末で実行します。SPM・CocoaPodsの既存構成は維持し、[Native UIの設定](setup.md#4-build-sync-and-run)を参照してください。対応コントロールがネイティブ表示され、元のWebハンドラーと画面遷移が動くことを確認します。端末のedgeがnullなら通常配置が正しく、レールがなくても導入完了です。ネイティブレールを確認する場合だけ、iOS 27.1以降のiPhone Duoなどの対応端末と、iOS 27.1以降のSDKでリンクしたバイナリを追加で使います。ブラウザーの余白プレビューはネイティブレール対応の証明にはなりません。
 
 **デバイスがレールを報告すると:** 既存タブバーと対象の固定ツールバー操作が側面へ移ります。内容はテーマを維持し、計測したインセットを確保します。対応 iOS レールは SwiftUI、利用不可なら Web レールになります。null の edge を報告するデバイスは通常レイアウトです。報告なしで模擬レールを試すには[任意のブラウザープレビュー](#optional-browser-preview)を使います。
 
@@ -128,7 +129,7 @@ Xcode 27.1 以降でビルドし、iOS 27.1 以降の iPhone Duo で実行しま
 
 外観設定とローカル上書きは[ボタンの外観の選択](vertical-bars.md#choose-button-appearance)を参照してください。
 
-既定は `system` で SwiftUI が縦ボタンを装飾しアイコンを着色します。既存テーマの fill と色を使うには手順 3 の `enableNativeUI` 呼び出しだけを次に置き換え、Foldable の購読は維持します。
+既定は `system` で SwiftUI が縦ボタンを装飾しアイコンを着色します。既存テーマの fill と色を使うには手順 3 の起動呼び出しだけを次に置き換え、Foldable の購読は維持します。
 
 ```ts
 const shell = await enableNativeUI({

@@ -1,19 +1,19 @@
 ---
-title: 'WebView Native UI Standardeinrichtung'
-sourceRevision: 'd464340cef90f89bc2de11fddf7c1d14ee8d4cf989b4e08fcac1c9240e1e4a80'
+title: 'Eine Ionic-App einrichten'
+sourceRevision: 'c9537c6c26d13c92845d732c8b7d42316125570eb1dfd3a3b8ce0ca6ba7f3d06'
 ---
 
-# WebView Native UI Standardeinrichtung
+# Eine Ionic-App einrichten
 
 Richten Sie eine bestehende Ionic- und Capacitor-App mit iOS 26 als iOS-Basistheme, iOS 27 für geeignete Browser und Material Design 3 auf Android ein. Diese Anleitung verbindet außerdem native iOS-Steuerelemente, iPhone Duo / Vertical Bars und Android Dynamic Color.
 
 ## Vor dem Start
 
-Verwenden Sie Ionic 8 oder 9 ab 8.8.1, Capacitor 8 sowie Foldable 8.5 oder neuer innerhalb von Version 8. Beginnen Sie mit einer App, deren Web-Build funktioniert und deren native iOS- und Android-Projekte bereits hinzugefügt wurden. Bestehende Routen und Ereignishandler bleiben erhalten.
+Verwenden Sie eine vorhandene Ionic-9-App mit Capacitor 8 und Foldable ab 8.5 innerhalb der Hauptversion 8. Wählen Sie iOS, Android oder beide. Beginnen Sie mit einem funktionierenden Web-Build und einem nativen Projekt für jede gewählte Plattform; ein weiteres Projekt ist nicht nötig. Behalten Sie vorhandene Routen und Handler.
 
 Native iOS-Steuerelemente benötigen iOS 26+ und Xcode 26+. Android Dynamic Color benötigt Android 12+; ältere Geräte behalten die Standardpalette. Natives Rail-Rendering erfordert zusätzlich ein [unterstütztes Gerät und Betriebssystem](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering).
 
-Für andere Integrationen wählen Sie [HTML ohne Ionic](/projects/capacitor-native-ui/docs/framework-independent), [Cordova](/projects/cordova-native-ui/docs/readme) oder [nur Themes](/guides/appearance).
+Für ein Theme allein wählen Sie die Installation von [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup) oder [MD3](/projects/ionic-theme-md3/docs/setup). Für [Native UI mit vorhandenem Theme](/projects/capacitor-native-ui/docs/ionic-vertical-bars), [HTML ohne Ionic](/projects/capacitor-native-ui/docs/framework-independent) oder [Cordova](/projects/cordova-native-ui/docs/readme) verwenden Sie die jeweilige Anleitung.
 
 ## 1. Pakete installieren
 
@@ -36,81 +36,194 @@ Fügen Sie diese Imports nach dem Ionic-Basis-CSS in die globale Stylesheet-Date
 
 CSS wählt standardmäßig iOS 26 und bei Unterstützung für `overflow-anchor: auto` iOS 27. Der Material-Design-Modus nutzt MD3. Beide iOS-Stile verwenden dasselbe `ios27ThemeConfig` einschließlich nativer Übergangssynchronisierung. Übergeben Sie das Plattform-Preset an Ihre vorhandene Ionic-Initialisierung:
 
-```ts
+Wählen Sie das Beispiel für Ihr Framework und ersetzen Sie die vorhandene Ionic-Initialisierung. Initialisieren Sie Ionic nur einmal.
+
+### Angular / Ionic 9
+
+Übergeben Sie das Preset im vorhandenen App-Setup an den Ionic-Provider. Behalten Sie andere Provider einschließlich Router und HTTP bei.
+
+```ts:src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideIonicAngular } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
 const ionicConfig = Capacitor.getPlatform() === 'ios' ? ios27ThemeConfig : md3ThemeConfig;
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideIonicAngular(ionicConfig)],
+};
 ```
 
-| Framework         | Ionic initializer                                                   |
-| ----------------- | ------------------------------------------------------------------- |
-| Angular / Ionic 8 | `provideIonicAngular(ionicConfig)` from `@ionic/angular/standalone` |
-| Angular / Ionic 9 | `provideIonicAngular(ionicConfig)` from `@ionic/angular`            |
-| React             | `setupIonicReact(ionicConfig)` from `@ionic/react`                  |
-| Vue               | `app.use(IonicVue, ionicConfig)` with `IonicVue` from `@ionic/vue`  |
+### React
 
-Für die iOS-Vorschau auf dem Desktop verwenden Sie `ios27ThemeConfig` in der vorhandenen Initialisierung. Das Theme allein aktiviert keine nativen Steuerelemente.
+Führen Sie dies im bestehenden Einstiegspunkt vor dem Rendern der Root-Komponente aus. Behalten Sie React-Root, Routen und CSS-Imports bei.
+
+```ts:src/main.tsx
+import { setupIonicReact } from '@ionic/react';
+import { Capacitor } from '@capacitor/core';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+
+const ionicConfig = Capacitor.getPlatform() === 'ios' ? ios27ThemeConfig : md3ThemeConfig;
+
+setupIonicReact(ionicConfig);
+```
+
+### Vue
+
+Übergeben Sie das Preset im vorhandenen Einstiegspunkt bei der Registrierung von IonicVue vor dem Mounten. Behalten Sie Router und andere Plugins zwischen Erzeugung und Mounten bei.
+
+```ts:src/main.ts
+import { createApp } from 'vue';
+import { IonicVue } from '@ionic/vue';
+import { Capacitor } from '@capacitor/core';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
+import App from './App.vue';
+
+const ionicConfig = Capacitor.getPlatform() === 'ios' ? ios27ThemeConfig : md3ThemeConfig;
+
+const app = createApp(App);
+app.use(IonicVue, ionicConfig);
+app.mount('#app');
+```
 
 ## 3. Nach dem Rendern der App-Shell starten
 
-Führen Sie dies einmal nach dem Rendern der App-Shell einschließlich `ion-app` aus. Es verbindet beide Funktionen und die erforderlichen Layoutmeldungen:
+Erstellen Sie src/native-ui.ts mit diesem gemeinsamen Start. Wiederholte Aufrufe liefern dasselbe Promise, damit ein erneut ausgeführter React-Effekt den Erscheinungscontroller nicht doppelt startet. Rufen Sie es nach dem Shell-Rendering mit dem passenden Framework-Beispiel auf.
 
-```ts
+```ts:src/native-ui.ts
 import { Capacitor } from '@capacitor/core';
-import {
-  enableNativeUI,
-  getDynamicColorScheme,
-  addDynamicColorListener,
-} from '@rdlabo/capacitor-native-ui';
+import { enableNativeUI, getDynamicColorScheme, addDynamicColorListener } from '@rdlabo/capacitor-native-ui';
 import { Foldable } from '@erkamyaman/capacitor-foldable';
 import { resolveVerticalBarsLayout } from '@rdlabo/capacitor-native-ui/integration';
 import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
 import { enableDynamicColors } from '@rdlabo/ionic-theme-md3/dynamic-colors';
 
-await enableDynamicColors({
-  getScheme: getDynamicColorScheme,
-  listen: addDynamicColorListener,
-});
+let startup: Promise<void> | undefined;
 
-if (Capacitor.getPlatform() === 'ios') {
-  await enableNativeUI();
+export function startNativeUI(): Promise<void> {
+  return (startup ??= connectNativeUI());
+}
 
-  const updateLayout = async () => {
-    setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
-  };
+async function connectNativeUI(): Promise<void> {
+  await enableDynamicColors({
+    getScheme: getDynamicColorScheme,
+    listen: addDynamicColorListener,
+  });
 
-  void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))
-    .then(updateLayout)
-    .catch(console.error);
+  if (Capacitor.getPlatform() === 'ios') {
+    await enableNativeUI();
+
+    const updateLayout = async () => {
+      setVerticalBarsLayout(await resolveVerticalBarsLayout(Foldable));
+    };
+
+    void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))
+      .then(updateLayout)
+      .catch(console.error);
+  }
 }
 ```
 
-Der Theme-Controller folgt der Systemdarstellung und wendet die Android-Palette an, wenn verfügbar. Andere Plattformen und nicht unterstützte Android-Geräte behalten die Ersatzfarben. Unter iOS startet Native UI mit normalen Steuerelementen und Vertical Bars; das Abonnement übernimmt das anfängliche Layout und Displaywechsel.
+### Angular
 
-Verwenden Sie unter Angular den `afterNextRender`-Callback der App-Shell, unter React oder Vue den Start nach dem Mounten. Verwaltet Ihre App eine eigene Darstellungspräferenz, verbinden Sie diese gemäß dem [Dynamic-Color-Leitfaden](/projects/capacitor-native-ui/docs/dynamic-colors#apply-to-ionic), statt einen zweiten Darstellungscontroller anzulegen.
+Ergänzen Sie Import und afterNextRender in der bestehenden Root-Komponente. Die minimale Shell zeigt die Position; behalten Sie Imports, Template, Menü und Router bei.
+
+```ts:src/app/app.component.ts
+import { Component, afterNextRender } from '@angular/core';
+import { IonApp, IonRouterOutlet } from '@ionic/angular';
+import { startNativeUI } from '../native-ui';
+
+@Component({
+  selector: 'app-root',
+  imports: [IonApp, IonRouterOutlet],
+  template: '<ion-app><ion-router-outlet /></ion-app>',
+})
+export class AppComponent {
+  constructor() {
+    afterNextRender(() => {
+      void startNativeUI().catch(console.error);
+    });
+  }
+}
+```
+
+### React
+
+Ergänzen Sie Import und Effekt in der vorhandenen App-Komponente. Ihre JSX-Routen und Seiten bleiben innerhalb von IonApp.
+
+```tsx:src/App.tsx
+import { useEffect } from 'react';
+import { IonApp } from '@ionic/react';
+import { startNativeUI } from './native-ui';
+
+export default function App() {
+  useEffect(() => {
+    void startNativeUI().catch(console.error);
+  }, []);
+
+  return <IonApp>{/* Keep your existing router and pages here. */}</IonApp>;
+}
+```
+
+### Vue
+
+Ergänzen Sie Import und onMounted im bestehenden App.vue-Skript. Template, Routen und Menü bleiben erhalten.
+
+```vue:src/App.vue
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import { IonApp, IonRouterOutlet } from '@ionic/vue';
+import { startNativeUI } from './native-ui';
+
+onMounted(() => {
+  void startNativeUI().catch(console.error);
+});
+</script>
+
+<template>
+  <ion-app><ion-router-outlet /></ion-app>
+</template>
+```
 
 ## 4. Erstellen, synchronisieren und ausführen
 
-Erstellen Sie zuerst die Web-Dateien; der Befehl setzt ein vorhandenes `build`-Skript voraus. Synchronisieren Sie dann, öffnen Sie jedes bestehende native Projekt und bauen/starten Sie es für einen Simulator oder ein Gerät:
+Erstellen Sie den Web-Build und führen Sie nur die Befehle der gewählten Plattform aus. Bauen und starten Sie das Projekt in Xcode oder Android Studio. Beide Gruppen sind nur bei zwei Zielplattformen nötig.
 
 ```sh
 npm run build
-npx cap sync
+```
+
+### iOS
+
+```sh
+npx cap sync ios
 npx cap open ios
+```
+
+### Android
+
+```sh
+npx cap sync android
 npx cap open android
 ```
 
-SwiftPM löst Engine automatisch auf; vorhandene CocoaPods-Projekte verwenden die [native Einrichtung](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
+SwiftPM löst Engine automatisch auf. Für CocoaPods siehe [native Einrichtung](/projects/capacitor-native-ui/docs/configuration#native-project-setup).
 
 ## Das Ergebnis auf jeder Plattform prüfen
 
-- Prüfen Sie helle/dunkle Darstellung und Navigation. Das iOS-27-Übergangspreset gilt für beide iOS-Stile.
-- Unter iOS 26 oder neuer werden unterstützte Steuerelemente nativ dargestellt und verwenden die bestehenden Web-Ereignishandler. Das iOS-Theme gestaltet den übrigen Web-Inhalt.
-- Unter Android 12 oder neuer verwendet Material Design 3 die Dynamic-Color-Palette des Geräts. Die Steuerelemente bleiben Web-Elemente. Ältere Android-Versionen verwenden die Theme-Palette.
-- Auf Geräten mit nativen Rails folgt Vertical Bars den Änderungen des Gerätelayouts. Andere Geräte behalten das normale Web-Layout.
-- Im Browser lassen sich Web-Themes und das Verhalten der App prüfen. Testen Sie native Steuerelemente, Gerätefarben und geräteabhängige Rails in den nativen Apps.
+Prüfen Sie nur die Zeilen der gewählten Plattformen. Nicht verfügbare Funktionen sind mit funktionierendem Fallback abgeschlossen; ein weiteres OS oder ein Rail-Gerät ist nicht erforderlich.
+
+| Ziel                   | Prüfung                                                                   | Fertig, wenn                                                                                                                                        |
+| ---------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Alle                   | Seiten öffnen, navigieren und Hell/Dunkel wechseln.                       | Routen, Aktionen und lesbare Web-Elemente funktionieren.                                                                                            |
+| iOS                    | Mit Xcode 26+ unter iOS 26+ starten und unterstützte Elemente betrachten. | Native Darstellung und Web-Aktion funktionieren. Diagnose siehe [Steuerelement-Anleitung](/guides/native-ui). Ältere Systeme behalten Web-Elemente. |
+| Android                | Native App öffnen; ab Android 12 Gerätepalette ändern und erneut öffnen.  | MD3 nutzt verfügbare Gerätefarben; sonst bleiben Fallback-Farben und Web-Elemente bedienbar.                                                        |
+| Gerät mit nativer Rail | Layout ändern und zurücksetzen.                                           | Vertical Bars folgt den Meldungen und entfernt den Platz wieder. Andere Geräte behalten das normale Layout.                                         |
+| Browser                | Themes und vorhandene Aktionen ausprobieren.                              | Web-Darstellung und Verhalten funktionieren; dies belegt keine nativen Elemente, Gerätefarben oder Rails.                                           |
 
 ## Nach der Einrichtung
 

@@ -420,6 +420,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'readme',
         file: 'readme.md',
+        localEnglishSource: true,
         updatedAt: { en: '2026-11-11', ja: '2026-11-11', fr: '2026-11-11', de: '2026-11-11' },
       },
       {
@@ -432,7 +433,9 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'setup',
         file: 'setup.md',
+        localEnglishSource: true,
         headingAliases: {
+          '1.-install-the-theme-and-foldable': '1.-install-the-theme',
           'choose-one-dark-mode-pair': '2.-load-one-stylesheet',
           '3-configure-ionic-animations': '3.-pass-theme-configuration-to-ionic',
           '3-pass-theme-configuration-to-ionic': '3.-pass-theme-configuration-to-ionic',
@@ -648,6 +651,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         section: text('Guides', 'ガイド'),
         slug: 'ionic-vertical-bars',
         file: 'ionic-vertical-bars.md',
+        localEnglishSource: true,
         headingAliases: {
           '2-connect-your-navigation-animation': '2.-connect-your-navigation-animation',
           '3-connect-device-placement-and-start-the-controls':
@@ -799,6 +803,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         },
         slug: 'setup',
         file: 'setup.md',
+        localEnglishSource: true,
         updatedAt: {
           en: '2026-11-11',
           ja: '2026-11-11',
@@ -968,6 +973,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
         },
         slug: 'setup',
         file: 'setup.md',
+        localEnglishSource: true,
         updatedAt: {
           en: '2026-11-11',
           ja: '2026-11-11',

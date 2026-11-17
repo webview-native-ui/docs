@@ -42,14 +42,18 @@ import { SeoService } from './seo.service';
           </div>
         </div>
       </section>
-      <section class="setup-section" aria-labelledby="standard-entry">
+      <section id="choose-setup" class="setup-section" aria-labelledby="standard-entry">
         <header><p class="eyebrow">02</p><h2 id="standard-entry">{{ copy.start }}</h2></header>
         <div>
           <p>{{ copy.startDescription }}</p>
           <p><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a></p>
           <nav class="setup-alternatives" [attr.aria-label]="copy.otherSetups">
             <span>{{ copy.otherSetups }}</span>
-            <a [href]="guideHref('/guides/appearance')">{{ copy.themeOnly }}</a>
+            <span>{{ copy.themeOnly }}:</span>
+            <a [href]="guideHref('/projects/ionic-theme-ios26/docs/setup')">iOS 26</a>
+            <a [href]="guideHref('/projects/ionic-theme-ios27/docs/setup')">iOS 27</a>
+            <a [href]="guideHref('/projects/ionic-theme-md3/docs/setup')">MD3</a>
+            <a [href]="guideHref('/projects/capacitor-native-ui/docs/ionic-vertical-bars')">{{ copy.existingTheme }}</a>
             <a [href]="guideHref('/projects/capacitor-native-ui/docs/framework-independent')">{{ copy.htmlSetup }}</a>
             <a [href]="guideHref('/projects/cordova-native-ui/docs/readme')">{{ copy.cordovaSetup }}</a>
           </nav>

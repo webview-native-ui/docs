@@ -1,13 +1,13 @@
 ---
-title: "Installer le thème iOS 26"
-sourceRevision: "972873bad21952ab2b7f25d58c5a1373b1507f7ac8294e99dbb24423fab1c7fd"
+title: Installer le thème iOS 26
+sourceRevision: '12e1b547a08ce9495e6add0490ec5f7082afe228220c97c1ede85b68b98326af'
 ---
 
-# Installer le thème iOS 26
-
-Utilisez une application Ionic Angular, React ou Vue existante avec `@ionic/core >=8.8.1 <10`.
+Appliquez le thème iOS 26 à une application Ionic 9 Angular, React ou Vue existante. Cette page installe uniquement le thème. Le démarrage Native UI, un projet natif Capacitor et la configuration Foldable ne sont pas nécessaires. Conservez les routes et gestionnaires existants.
 
 ## 1. Installer
+
+Installez le paquet depuis le répertoire de l’application :
 
 ```sh
 npm install @rdlabo/ionic-theme-ios26
@@ -15,68 +15,60 @@ npm install @rdlabo/ionic-theme-ios26
 
 ## 2. Charger une feuille de style
 
-Après les styles de base d’Ionic, ajoutez cet import à votre feuille de style globale.
+Dans la feuille globale, remplacez les imports du thème existant et de sa palette sombre Ionic par cet import après le CSS de base Ionic. Le préréglage inclut le mode sombre système et les styles de compatibilité. Aucune configuration Sass n’est nécessaire.
 
 ```css
 @import '@rdlabo/ionic-theme-ios26/styles/system.css';
 ```
 
-Cette feuille de style fournit les variables du thème, les styles des composants, les styles de compatibilité Material Design, la palette sombre système d’Ionic et les styles sombres correspondants du thème. Utilisez `styles/class.css` pour le mode sombre manuel via la classe `ion-palette-dark` sur la racine du document, ou `styles/always.css` pour une apparence toujours sombre. Choisissez la feuille de style correspondant à la politique de mode sombre de votre application et remplacez les imports existants correspondants du thème et de la palette sombre Ionic.
+Pour le mode sombre manuel, choisissez styles/class.css et conservez le contrôle existant de la classe ion-palette-dark. Pour une application toujours sombre, choisissez styles/always.css. Ne chargez qu’un seul de ces préréglages.
 
 ## 3. Configurer Ionic
 
-Déployez `ios26ThemeConfig` par spread dans votre initialiseur de framework existant avant le rendu. Utilisez l’exemple correspondant à votre framework.
+Choisissez l’exemple de votre framework. Le préréglage fournit le mode et les animations du thème, y compris dans le navigateur. Conservez les options propres à l’application après le spread. Si l’application sélectionne volontairement différents modes par plateforme, gardez cette sélection et n’appliquez le préréglage qu’au mode correspondant.
 
-Angular avec Ionic 9 importe `provideIonicAngular` depuis `@ionic/angular`. Avec Ionic 8, utilisez `@ionic/angular/standalone` pour cet import.
+### Angular
 
-```ts
+Dans src/app/app.config.ts, passez le préréglage au provider Ionic existant. L’exemple montre ce provider ; conservez les autres providers du tableau, notamment le routeur et HTTP.
+
+```ts:src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular';
 import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
 
-// In the application's existing providers array
-provideIonicAngular({
-  ...ios26ThemeConfig,
-  // animated: false,
-});
+export const appConfig: ApplicationConfig = {
+  providers: [provideIonicAngular({ ...ios26ThemeConfig })],
+};
 ```
 
-Pour React :
+### React
 
-```ts
+Dans src/main.tsx, remplacez l’appel setupIonicReact existant par celui-ci avant le rendu de la racine React. Conservez le rendu, les routes et les imports CSS.
+
+```ts:src/main.tsx
 import { setupIonicReact } from '@ionic/react';
 import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
 
-setupIonicReact({
-  ...ios26ThemeConfig,
-  // animated: false,
-});
+setupIonicReact({ ...ios26ThemeConfig });
 ```
 
-Pour Vue, utilisez l’application Vue existante :
+### Vue
 
-```ts
+Dans src/main.ts, passez le préréglage lors de l’enregistrement IonicVue sur l’application existante, avant le montage. L’exemple montre cet emplacement ; conservez le routeur, les autres plugins et la séquence de montage existante.
+
+```ts:src/main.ts
+import { createApp } from 'vue';
 import { IonicVue } from '@ionic/vue';
 import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
+import App from './App.vue';
 
-app.use(IonicVue, {
-  ...ios26ThemeConfig,
-  // animated: false,
-});
+const app = createApp(App);
+app.use(IonicVue, { ...ios26ThemeConfig });
+app.mount('#app');
 ```
-
-La configuration définit `mode: 'ios'` ; le thème apparaît donc aussi dans les aperçus sur ordinateur. Ajoutez vos options Ionic après le spread pour remplacer les valeurs par défaut. Si l’application sélectionne ses modes selon la plateforme, ne déployez la configuration que pour le mode iOS. Consultez un exemple dans [Configuration](configuration.md#theme-configuration-and-customization).
 
 ## 4. Prévisualiser
 
-Démarrez le serveur de développement habituel de votre application et ouvrez une page existante. Ajoutez ce balisage dans son `ion-content`, avec la syntaxe de composants de votre framework.
+Démarrez le serveur de développement habituel et ouvrez une page existante contenant des boutons ou listes Ionic. Vérifiez l’apparence iOS, le passage clair/sombre du système et la navigation entre les pages. En mode sombre manuel ou permanent, vérifiez plutôt la politique choisie. L’installation est terminée lorsque le style est appliqué, que les contrôles et la navigation fonctionnent et que la politique d’apparence est respectée. Aucune compilation native ni appareil avec rail n’est nécessaire.
 
-```html
-<ion-list inset="true">
-  <ion-item-group>
-    <ion-item><ion-label>Notifications</ion-label></ion-item>
-    <ion-item><ion-label>Appearance</ion-label></ion-item>
-  </ion-item-group>
-</ion-list>
-```
-
-Vérifiez les groupes arrondis en retrait, naviguez entre les pages et contrôlez la politique de mode sombre choisie. Consultez [Utiliser ion-item-group](using-ion-item-group.md) pour la structure des listes. La [configuration](configuration.md) couvre les imports CSS individuels et les options d’animation. La [migration](migration.md) couvre l’adoption des wrappers dans une application existante et les mises à niveau propres à chaque version.
+Pour les styles individuels et les personnalisations, consultez [la configuration](configuration.md). Pour actualiser une intégration existante, consultez [la migration](migration.md).

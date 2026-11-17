@@ -4,11 +4,11 @@ import { localizedPublicPath } from '../locale-path';
 
 @Component({
   selector: 'app-guide-context',
-  template: `<aside class="border-b border-slate-200 flex flex-wrap items-center gap-x-1 px-6 py-3 text-sm max-[576px]:px-4 text-slate-600" data-pagefind-ignore><a [href]="home">{{ copy.overview }}</a> · <a [href]="setup"><span i18n="@@combinedSetupContext">Ionic + Capacitor standard setup</span></a></aside>`,
+  template: `<aside class="border-b border-slate-200 flex flex-wrap items-center gap-x-1 px-6 py-3 text-sm max-[576px]:px-4 text-slate-600" data-pagefind-ignore><a [href]="home">{{ copy.overview }}</a> · <a [href]="setup"><span i18n="@@combinedSetupContext">Choose your setup</span></a></aside>`,
 })
 export class GuideContextComponent {
   readonly #locale = inject(LOCALE_ID);
   protected readonly copy = guideCopyForLocale(this.#locale);
   protected readonly home = localizedPublicPath(this.#locale, '/');
-  protected readonly setup = localizedPublicPath(this.#locale, '/standard-setup');
+  protected readonly setup = localizedPublicPath(this.#locale, '/#choose-setup');
 }

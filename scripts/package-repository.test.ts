@@ -231,8 +231,8 @@ test('resolves independently released packages at repository roots without chang
     const readme = await fetchEnglishProjectReadme(project);
     assert.equal(
       readme?.repositoryPath,
-      name === 'ionic-theme-ios26'
-        ? 'projects/docs/src/ionic-theme-ios26/docs/readme.md'
+      name === 'ionic-theme-ios26' || name === 'ionic-theme-ios27'
+        ? `projects/docs/src/${name}/docs/readme.md`
         : `${directory}README.md`,
     );
   }

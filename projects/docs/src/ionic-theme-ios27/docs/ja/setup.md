@@ -1,80 +1,84 @@
 ---
 title: iOS 27 テーマをセットアップする
+sourceRevision: '5f713abce856fca7f17d1960ccba189941b8b99b01ddd439ce3b2f00e4ef968c'
+headingAliases:
+  '1.-%E3%83%86%E3%83%BC%E3%83%9E%E3%81%A8-foldable-%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B': '1.-%E3%83%86%E3%83%BC%E3%83%9E%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B'
 ---
 
-# iOS 27 テーマをセットアップする
-
-スタイルシート1つとテーマ設定1つで、既存の Ionic アプリに iOS 27 の外観を適用します。このガイドは、単独の iOS 27 テーマとシステム連動のダークモードを使います。ブラウザーによる iOS 26/27 の切替や MD3 との併用には[適応テーマ](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/adaptive-themes)を使用してください。
+既存のIonic 9 Angular・React・VueアプリへiOS 27テーマを適用します。このページはテーマだけの導入手順です。Native UIの起動、Capacitorのネイティブプロジェクト、Foldableの設定は不要です。既存のルートとイベント処理を維持します。
 
 ## 始める前に
 
-Ionic `>=8.8.1 <10` の既存の Ionic Angular・React・Vue アプリを使用し、Ionic の基本 CSS を維持します。ブラウザー専用アプリにネイティブ Capacitor プロジェクトは不要です。これは単独テーマパッケージの標準設定です。Cordova アプリは任意の [Cordova セットアップ](cordova.md)を使用します。
+Ionicの基本CSSは維持します。下から使っているフレームワークの例を一つ選び、既存のテーマ初期化を置き換えてください。Ionicを二重に初期化しません。
 
-## 1. テーマと Foldable をインストールする
+## 1. テーマをインストールする
+
+アプリのディレクトリでパッケージをインストールします。
 
 ```sh
-npm install @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+npm install @rdlabo/ionic-theme-ios27
 ```
-
-Foldable はデバイスの配置と姿勢を提供します。[デバイスレイアウト](vertical-bars-layout.md#read-the-device-layout)に従って、初期値と変更イベントを接続してください。
 
 ## 2. スタイルシートを1つ読み込む
 
-グローバルスタイルシートで、Ionic の基本 CSS の後に追加します。既存の Ionic ダークパレットとテーマの import をこの1つに置き換え、重複読み込みを避けてください。
+グローバルスタイルシートで、既存テーマと対応するIonicダークパレットのimportを、Ionicの基本CSSの後に置く次のimportへ置き換えます。システム連動ダークモードと互換スタイルが含まれます。Sassの設定は不要です。
 
 ```css
 @import '@rdlabo/ionic-theme-ios27/styles/system.css';
 ```
 
-対応する Ionic ダークパレットとテーマスタイルが含まれます。手動・常時ダーク、個別の組み合わせ、アプリ独自の上書きは[設定ガイド](configuration.md#dark-mode)を参照してください。
+手動ダークモードではstyles/class.cssを選び、既存のion-palette-darkクラス操作を維持します。常時ダークではstyles/always.cssを選びます。読み込むプリセットは一つです。
 
 ## 3. テーマ設定を Ionic へ渡す
 
-```ts
+使っているフレームワークの例を一つ選びます。プリセットはブラウザーのプレビューを含め、テーマのモードとアニメーションを設定します。既存のアプリ固有オプションはスプレッドの後へ置いて維持します。プラットフォームでモードを選ぶアプリでは、その選択を維持し、対応するモードの場合だけこのプリセットを適用します。
+
+### Angular
+
+src/app/app.config.tsで、既存のIonic providerへプリセットを渡します。例はIonic providerの配置を示します。ルーターやHTTPなど、配列にあるほかのproviderは維持してください。
+
+```ts:src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideIonicAngular } from '@ionic/angular';
 import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
 
-const ionicConfig = {
-  ...ios27ThemeConfig,
-  // animated: false,
+export const appConfig: ApplicationConfig = {
+  providers: [provideIonicAngular({ ...ios27ThemeConfig })],
 };
 ```
 
-設定は `mode: 'ios'`、画面遷移、popover のアニメーションを提供します。描画前に既存の Ionic 初期化へ渡し、アプリ固有のオプションはスプレッドの後に追加します。
+### React
 
-| フレームワーク | オプションの適用先 |
-| --- | --- |
-| Angular / Ionic 8 | `@ionic/angular/standalone` の `provideIonicAngular(ionicConfig)` |
-| Angular / Ionic 9 | `@ionic/angular` の `provideIonicAngular(ionicConfig)` |
-| React | `@ionic/react` の `setupIonicReact(ionicConfig)` |
-| Vue | `@ionic/vue` の `IonicVue` と `app.use(IonicVue, ionicConfig)` |
+src/main.tsxで、既存のsetupIonicReactを次の呼び出しへ置き換え、既存のReactルートを描画する前に実行します。ルートの描画、ルーティング、CSSのimportは維持します。
 
-既存アプリは[任意の設定移行](migration.md#optional-simplify-the-setup)で、プラットフォーム別モードや独自アニメーションを維持できます。個別の CSS とアニメーション API は[設定ガイド](configuration.md)を参照してください。
+```ts:src/main.tsx
+import { setupIonicReact } from '@ionic/react';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+
+setupIonicReact({ ...ios27ThemeConfig });
+```
+
+### Vue
+
+src/main.tsで、既存アプリのIonicVue登録時にプリセットを渡し、mountより前に実行します。例は登録位置を示します。ルーター、ほかのプラグイン、既存のmount手順は維持してください。
+
+```ts:src/main.ts
+import { createApp } from 'vue';
+import { IonicVue } from '@ionic/vue';
+import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+import App from './App.vue';
+
+const app = createApp(App);
+app.use(IonicVue, { ...ios27ThemeConfig });
+app.mount('#app');
+```
 
 ## 4. 最初の画面をプレビューする
 
-通常の開発サーバーで既存ページを開き、フレームワークの構文に合わせて `ion-content` 内に追加します。
-
-```html
-<ion-list inset="true">
-  <ion-item-group>
-    <ion-item><ion-label>Notifications</ion-label></ion-item>
-    <ion-item><ion-label>Appearance</ion-label></ion-item>
-  </ion-item-group>
-</ion-list>
-```
-
-角丸の inset グループを確認します。システムのライト・ダークを切り替え、ページ遷移のアニメーションも確認してください。構造は [ion-item-group の使い方](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/using-ion-item-group)を参照します。
-
-| 表示の問題 | 確認事項 |
-| --- | --- |
-| デスクトップで Material Design の外観になる | 既存の Ionic 初期化で `mode: 'ios'` を設定する。 |
-| スタイルが適用されない | Ionic の基本スタイルの後にテーマをグローバルに読み込む。 |
-| ライトとダークが混在する | Ionic パレットとテーマのダーク設定を一致させる。 |
-| 標準の画面遷移になる | Ionic 初期化前にアニメーションを渡す。 |
+通常の開発サーバーを起動し、Ionicのボタンやリストがある既存ページを開きます。iOSの外観、システムのライト・ダーク切替、既存ページ間の遷移を確認します。手動・常時ダークを選んだ場合はその方針を確認します。テーマが適用され、元の操作と画面遷移が動き、選択した外観方針に従えば導入完了です。この確認にネイティブビルドやレール対応端末は不要です。
 
 ## 次の手順
 
-- [スタイルとコンポーネントのカスタマイズ](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/features)。
-- Capacitor iOS の対応コントロールへ [Native UI を追加](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/add-native-ui)。テーマ導入だけではネイティブコントロールは有効になりません。
-- [既存テーマを維持して Vertical Bars を追加](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/ionic-vertical-bars)。
-- [既存アプリの移行](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/migration)。
+端末に応じた配置とネイティブコントロールは任意の追加機能です。端末が通知するレールに追従する場合は[端末レイアウト](vertical-bars-layout.md#read-the-device-layout)へ進み、そこでFoldableを追加します。ネイティブコントロールは[Native UIの導入](add-native-ui.md)を使います。テーマの導入だけではネイティブコントロールは有効になりません。
+
+個別のスタイルとアプリ独自の上書きは[設定ガイド](configuration.md)、既存の導入設定を更新する場合は[移行ガイド](migration.md)を使います。

@@ -338,13 +338,18 @@ test('publishes separate theme and Native UI guides with current package APIs', 
     assert.equal(native.packageName, '@rdlabo/capacitor-native-ui');
     assert.equal(native.repositoryUrl, 'https://github.com/webview-native-ui/capacitor-plugin');
     if (!prefix) {
-      assert.ok(
-        native.pages.every((page) =>
-          page.editUrl.startsWith(
-            'https://github.com/webview-native-ui/capacitor-plugin/edit/main/',
-          ),
-        ),
-      );
+      const definition = projectDefinitions.find(
+        (project) => project.id === 'capacitor-native-ui',
+      )!;
+      for (const page of native.pages) {
+        const local = definition.pages.find(
+          (entry) => entry.slug === page.slug,
+        )?.localEnglishSource;
+        const expected = local
+          ? 'https://github.com/webview-native-ui/docs/edit/main/projects/docs/src/capacitor-native-ui/docs/'
+          : 'https://github.com/webview-native-ui/capacitor-plugin/edit/main/';
+        assert.ok(page.editUrl.startsWith(expected), `${page.slug}: ${page.editUrl}`);
+      }
     }
     assert.equal(native.pages.find((page) => page.slug === 'native-ui')!.title, 'Native UI');
     assert.doesNotMatch(native.description, /Preview|プレビュー/);
@@ -518,6 +523,15 @@ test('all published internal document links resolve within this standalone site'
       name: `standard-setup/${locale}`,
       html: STANDARD_SETUP[locale as keyof typeof STANDARD_SETUP].html,
     });
+    const { GUIDE_CONTENT } =
+      await import('../projects/docs/src/app/generated/guide-content.generated');
+    for (const chapter of GUIDE_CHAPTERS) {
+      documents.push({
+        name: `guides/${chapter.id}/${locale}`,
+        html: GUIDE_CONTENT[chapter.id][locale].html,
+      });
+    }
+
     for (const definition of projectDefinitions) {
       const { PROJECT } = await import(
         `../projects/docs/src/app/generated/projects/${definition.id}.${locale}.generated.ts`
@@ -581,29 +595,359 @@ test('standard setup uses public CSS presets and one shared iOS initializer', as
         `${locale}: ${preset}`,
       );
     }
-    const snippet = [...source.matchAll(/^```ts[^\n]*\n([\s\S]*?)\n```/gm)]
+    assert.doesNotMatch(source, /Ionic 8|@ionic\/angular\/standalone/);
+    const snippets = [...source.matchAll(/^```ts[^\n]*\n([\s\S]*?)\n```/gm)]
       .map((match) => match[1])
-      .find((code) => code.includes('const ionicConfig'));
-    assert.ok(snippet);
-    const script = transpileModule(`${snippet}\nglobalThis.selected = ionicConfig;`, {
-      compilerOptions: { module: ModuleKind.CommonJS },
+      .filter((code) => code.includes('const ionicConfig'));
+    assert.equal(snippets.length, 3, `${locale}: complete Angular, React and Vue examples`);
+    for (const snippet of snippets) {
+      const script = transpileModule(`${snippet}\nglobalThis.selected = ionicConfig;`, {
+        compilerOptions: { module: ModuleKind.CommonJS },
+      }).outputText;
+      for (const platform of ['ios', 'android', 'web']) {
+        const calls: unknown[] = [];
+        const packages: Record<string, unknown> = {
+          '@capacitor/core': { Capacitor: { getPlatform: () => platform } },
+          '@rdlabo/ionic-theme-ios27': { ios27ThemeConfig: ios },
+          '@rdlabo/ionic-theme-md3': { md3ThemeConfig: md },
+          '@ionic/angular': {
+            provideIonicAngular: (options: unknown) => {
+              calls.push(options);
+              return options;
+            },
+          },
+          '@ionic/react': { setupIonicReact: (options: unknown) => calls.push(options) },
+          '@ionic/vue': { IonicVue: 'IonicVue' },
+          vue: {
+            createApp: () => ({
+              use: (_plugin: unknown, options: unknown) => calls.push(options),
+              mount: () => 'mounted',
+            }),
+          },
+          './App.vue': { default: {} },
+        };
+        const context = {
+          exports: {},
+          require: (name: string) => {
+            assert.ok(name in packages, name);
+            return packages[name];
+          },
+          selected: undefined as typeof ios | undefined,
+        };
+        runInNewContext(script, context);
+        const expected = platform === 'ios' ? ios : md;
+        assert.equal(context.selected, expected);
+        assert.deepEqual(calls, [expected], `${locale}: Ionic initializes exactly once`);
+      }
+    }
+  }
+});
+
+test('task examples change the Web UI and keep a single startup', async () => {
+  const { transpileModule, ModuleKind, ScriptTarget, JsxEmit } = await import('typescript');
+  const { runInNewContext } = await import('node:vm');
+  const codeBlocks = async (name: string) => {
+    const source = await readFile(`projects/docs/src/guides/en/${name}.md`, 'utf8');
+    return [...source.matchAll(/^```([^\n]+)\n([\s\S]*?)\n```/gm)].map((match) => ({
+      language: match[1],
+      code: match[2],
+    }));
+  };
+  const execute = (code: string, context: Record<string, unknown>) => {
+    const javascript = transpileModule(code, {
+      fileName: 'example.tsx',
+      compilerOptions: {
+        module: ModuleKind.CommonJS,
+        target: ScriptTarget.ES2022,
+        jsx: JsxEmit.ReactJSX,
+      },
     }).outputText;
+    return runInNewContext(`(async () => { ${javascript} })()`, context) as Promise<void>;
+  };
+  const setup = await codeBlocks('standard-setup');
+  const startupCode = setup.find((block) => block.language === 'ts:src/native-ui.ts')!.code;
+  const appearance = await codeBlocks('appearance');
+  const modes: string[] = [];
+  const modeModules: Record<string, unknown> = {
+    '@capacitor/core': { Capacitor: { getPlatform: () => 'web' } },
+    '@rdlabo/capacitor-native-ui': {
+      getDynamicColorScheme: () => Promise.resolve({ available: false, systemDark: false }),
+      addDynamicColorListener: () => Promise.resolve({ remove: () => Promise.resolve() }),
+    },
+    '@rdlabo/ionic-theme-md3/dynamic-colors': {
+      enableDynamicColors: () => Promise.resolve({ setMode: (mode: string) => modes.push(mode) }),
+    },
+    '@erkamyaman/capacitor-foldable': { Foldable: {} },
+    '@rdlabo/capacitor-native-ui/integration': {},
+    '@rdlabo/ionic-theme-ios27': {},
+  };
+  const changes = appearance
+    .filter((block) => block.language === 'ts:src/native-ui.ts')
+    .map((block) => block.code);
+  const modeExports = {} as {
+    startNativeUI(): Promise<void>;
+    setAppearanceMode(mode: string): Promise<void>;
+  };
+  await execute(
+    changes[0] +
+      '\n' +
+      startupCode.replace(
+        'await enableDynamicColors({',
+        'appearance = await enableDynamicColors({',
+      ) +
+      '\n' +
+      changes[1],
+    {
+      exports: modeExports,
+      require: (name: string) => modeModules[name],
+      console,
+    },
+  );
+  await modeExports.startNativeUI();
+  interface ExampleElement {
+    type: string;
+    props: { children?: ExampleElement | ExampleElement[]; onClick?: () => void };
+  }
+  const jsx = (type: string, props: ExampleElement['props']): ExampleElement => ({ type, props });
+  const buttons = (element: ExampleElement): ExampleElement[] => {
+    const children = Array.isArray(element.props?.children)
+      ? element.props.children
+      : [element.props?.children];
+    return [
+      element,
+      ...children
+        .filter((child): child is ExampleElement => !!child && typeof child === 'object')
+        .flatMap(buttons),
+    ].filter((node) => node.type === 'button' || node.type === 'IonButton');
+  };
+  const signal = (initial: string) => {
+    let value = initial;
+    const read = () => value;
+    read.set = (next: string) => {
+      value = next;
+    };
+    return read;
+  };
+  const angular = { Component: () => (target: unknown) => target, signal };
+  for (const framework of ['angular', 'react', 'vue']) {
+    const block = appearance.find((block) =>
+      block.language.includes(
+        framework === 'angular'
+          ? 'appearance.page.ts'
+          : framework === 'react'
+            ? 'Appearance.tsx'
+            : 'Appearance.vue',
+      ),
+    )!;
+    const output: Record<string, any> = {};
+    const modules: Record<string, unknown> = {
+      '../native-ui': modeExports,
+      './native-ui': modeExports,
+      '@angular/core': angular,
+      'react/jsx-runtime': { jsx, jsxs: jsx },
+    };
+    const code =
+      framework === 'vue'
+        ? block.code.match(/<script setup lang="ts">([\s\S]*?)<\/script>/)![1] +
+          '\nexports.setMode = setMode;'
+        : block.code;
+    await execute(code, { exports: output, require: (name: string) => modules[name], console });
+    // Reopening a page creates only framework event bindings, never global listeners.
+    for (let visit = 0; visit < 2; visit++) {
+      if (framework === 'react') {
+        for (const button of buttons(output.default())) button.props.onClick!();
+      } else {
+        const setMode =
+          framework === 'angular'
+            ? (mode: string) => new output.AppearancePage().setMode(mode)
+            : output.setMode;
+        for (const mode of ['light', 'dark', 'system']) {
+          assert.ok(
+            block.code.includes(
+              framework === 'angular'
+                ? `(click)="setMode('${mode}')"`
+                : `@click="setMode('${mode}')"`,
+            ),
+          );
+          setMode(mode);
+        }
+      }
+    }
+  }
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(modes, Array.from({ length: 6 }, () => ['light', 'dark', 'system']).flat());
+
+  const native = await codeBlocks('native-ui');
+  for (const framework of ['angular', 'react', 'vue']) {
+    const block = native.find((block) =>
+      block.language.includes(
+        framework === 'angular'
+          ? 'profile.page.ts'
+          : framework === 'react'
+            ? 'Profile.tsx'
+            : 'Profile.vue',
+      ),
+    )!;
+    const output: Record<string, any> = {};
+    const results: string[] = [];
+    let inspections = 0;
+    const diagnostics = {
+      inspectNativeUI: async () => {
+        inspections++;
+      },
+    };
+    const ion = Object.fromEntries(
+      [
+        'IonPage',
+        'IonHeader',
+        'IonToolbar',
+        'IonTitle',
+        'IonButtons',
+        'IonButton',
+        'IonContent',
+      ].map((name) => [name, name]),
+    );
+    const modules: Record<string, unknown> = {
+      '../native-ui': diagnostics,
+      './native-ui': diagnostics,
+      '@angular/core': angular,
+      '@ionic/angular': ion,
+      '@ionic/react': ion,
+      '@ionic/vue': ion,
+      react: { useState: (initial: string) => [initial, (value: string) => results.push(value)] },
+      'react/jsx-runtime': { jsx, jsxs: jsx },
+      vue: { ref: (value: string) => ({ value }) },
+    };
+    const code =
+      framework === 'vue'
+        ? block.code.match(/<script setup lang="ts">([\s\S]*?)<\/script>/)![1] +
+          '\nexports.save = save; exports.result = result;'
+        : block.code;
+    await execute(code, { exports: output, require: (name: string) => modules[name], console });
+    for (let visit = 0; visit < 2; visit++) {
+      if (framework === 'angular') {
+        assert.ok(block.code.includes('(click)="save()"'));
+        const page = new output.ProfilePage();
+        assert.equal(page.result(), 'Not saved');
+        page.save();
+        assert.equal(page.result(), 'Saved');
+      } else if (framework === 'react') {
+        const actions = buttons(output.default());
+        assert.equal(actions.length, 1);
+        actions[0].props.onClick!();
+      } else {
+        assert.ok(block.code.includes('@click="save"'));
+        output.save();
+        assert.equal(output.result.value, 'Saved');
+      }
+    }
+    if (framework === 'react') assert.deepEqual(results, ['Saved', 'Saved']);
+    assert.equal(inspections, 2);
+  }
+
+  const extensions = await codeBlocks('extensions');
+  for (const name of [
+    'swift:ios/App/App/CounterView.swift',
+    'kotlin:App.kt',
+    'groovy:android/build.gradle',
+    'groovy:android/app/build.gradle',
+  ]) {
+    assert.ok(
+      extensions.find((block) => block.language === name),
+      `Native extension registration: ${name}`,
+    );
+  }
+  assert.ok(
+    extensions
+      .find((block) => block.language === 'kotlin:App.kt')!
+      .code.includes('NativeUI.register'),
+  );
+  assert.ok(
+    extensions
+      .find((block) => block.language === 'swift:ios/App/App/CounterView.swift')!
+      .code.includes('NativeUI.register'),
+  );
+  const counterDocument = new JSDOM(extensions.find((block) => block.language === 'html')!.code);
+  interface CounterDefinition {
+    read(element: HTMLElement): {
+      props: { count: number };
+      actions: { increment: HTMLButtonElement };
+    };
+  }
+  const counterExports = {} as { counter: CounterDefinition };
+  await execute(extensions.find((block) => block.code.includes('const source = document'))!.code, {
+    document: counterDocument.window.document,
+  });
+  await execute(extensions.find((block) => block.code.includes('export const counter'))!.code, {
+    exports: counterExports,
+    require: () => ({ defineNativeUI: (definition: CounterDefinition) => definition }),
+  });
+  const source = counterDocument.window.document.querySelector<HTMLElement>('[data-counter]')!;
+  for (let i = 0; i < 2; i++) counterExports.counter.read(source).actions.increment.click();
+  assert.equal(counterExports.counter.read(source).props.count, 2);
+  assert.equal(source.querySelector('[data-count-label]')!.textContent, 'Count: 2');
+  counterExports.counter.read(source).actions.increment.disabled = true;
+  counterExports.counter.read(source).actions.increment.click();
+  assert.equal(counterExports.counter.read(source).props.count, 2);
+  counterDocument.window.close();
+
+  for (const isExtension of [false, true]) {
     for (const platform of ['ios', 'android', 'web']) {
-      const packages: Record<string, unknown> = {
+      const calls = { colors: 0, native: 0, layout: 0 };
+      const modules: Record<string, unknown> = {
         '@capacitor/core': { Capacitor: { getPlatform: () => platform } },
-        '@rdlabo/ionic-theme-ios27': { ios27ThemeConfig: ios },
-        '@rdlabo/ionic-theme-md3': { md3ThemeConfig: md },
-      };
-      const context = {
-        exports: {},
-        require: (name: string) => {
-          assert.ok(name in packages);
-          return packages[name];
+        '@rdlabo/capacitor-native-ui': {
+          enableNativeUI: (options?: { extensions?: unknown[] }) => {
+            assert.equal(
+              options?.extensions?.[0],
+              isExtension ? counterExports.counter : undefined,
+            );
+            calls.native++;
+            return Promise.resolve({});
+          },
+          getDynamicColorScheme: () => Promise.resolve({ available: false, systemDark: false }),
+          addDynamicColorListener: () => Promise.resolve({ remove: () => Promise.resolve() }),
         },
-        selected: undefined as typeof ios | undefined,
+        '@erkamyaman/capacitor-foldable': {
+          Foldable: {
+            addListener: () => {
+              calls.layout++;
+              return Promise.resolve({ remove: () => Promise.resolve() });
+            },
+          },
+        },
+        '@rdlabo/capacitor-native-ui/integration': {
+          resolveVerticalBarsLayout: () => Promise.resolve({ edge: null }),
+        },
+        '@rdlabo/ionic-theme-ios27': { setVerticalBarsLayout: (value: unknown) => value },
+        '@rdlabo/ionic-theme-md3/dynamic-colors': {
+          enableDynamicColors: () => {
+            calls.colors++;
+            return Promise.resolve({});
+          },
+        },
       };
-      runInNewContext(script, context);
-      assert.equal(context.selected, platform === 'ios' ? ios : md);
+      modules['./native-ui/counter'] = { counter: counterExports.counter };
+      const startupExports = {} as { startNativeUI(): Promise<void> };
+      await execute(
+        isExtension
+          ? extensions.find((block) => block.language === 'ts:src/native-ui.ts')!.code
+          : startupCode,
+        {
+          exports: startupExports,
+          require: (name: string) => modules[name],
+          console,
+        },
+      );
+      const first = startupExports.startNativeUI();
+      const second = startupExports.startNativeUI();
+      assert.equal(first, second);
+      await first;
+      assert.deepEqual(calls, {
+        colors: 1,
+        native: platform === 'ios' || (isExtension && platform === 'android') ? 1 : 0,
+        layout: platform === 'ios' ? 1 : 0,
+      });
     }
   }
 });

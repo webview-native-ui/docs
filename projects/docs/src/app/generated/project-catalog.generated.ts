@@ -216,14 +216,14 @@ export const PROJECTS_EN = [
     "path": "/projects/ionic-theme-ios27",
     "pages": [
       {
-        "title": "Getting Started",
+        "title": "Ionic Theme iOS27",
         "navTitle": "Getting Started",
         "slug": "readme",
         "section": "Guides",
         "path": "/projects/ionic-theme-ios27/docs/readme"
       },
       {
-        "title": "Theme setup",
+        "title": "Set up the iOS 27 theme",
         "navTitle": "Theme setup",
         "slug": "setup",
         "section": "Guides",
@@ -427,7 +427,7 @@ export const PROJECTS_EN = [
         "path": "/projects/ionic-theme-ios26/docs/readme"
       },
       {
-        "title": "Theme setup",
+        "title": "Set up the iOS 26 theme",
         "navTitle": "Theme setup",
         "slug": "setup",
         "section": "Guides",
@@ -525,7 +525,7 @@ export const PROJECTS_EN = [
         "path": "/projects/ionic-theme-md3/docs/readme"
       },
       {
-        "title": "Theme setup",
+        "title": "Set up the MD3 theme",
         "navTitle": "Theme setup",
         "slug": "setup",
         "section": "Guides",

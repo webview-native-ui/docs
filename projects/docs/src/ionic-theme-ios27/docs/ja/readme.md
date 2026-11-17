@@ -1,10 +1,9 @@
 ---
 title: Ionic Theme iOS27
+sourceRevision: 'adf3c52052f4ae36c4d93ddbffb47772078bb8b70577f8344129a65624900776'
 ---
 
-# Ionic Theme iOS27
-
-`npm install @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable` でインストールします。1.x は [v1.2.1 のガイド](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1)を使用してください。Ionic アプリに iOS 27 の Liquid Glass とアニメーションを適用します。Capacitor iOS では、2.0.0から正式対応した Native UI を対応コントロールへ追加できます。
+`npm install @rdlabo/ionic-theme-ios27` でインストールします。1.x は [v1.2.1 のガイド](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1)を使用してください。Ionic アプリに iOS 27 の Liquid Glass とアニメーションを適用します。Capacitor iOS では、2.0.0から正式対応した Native UI を対応コントロールへ追加できます。
 
 **[Ionic 9 デモ](https://ionic-theme-ios27.rdlabo.dev/) · [セットアップ](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup)**
 
@@ -32,14 +31,14 @@ title: Ionic Theme iOS27
 
 ## はじめる
 
-標準ガイドは単独テーマパッケージを使用し、ネイティブホストは Capacitor を標準とします。テーマだけをブラウザーで使うこともできます。Cordova アプリには、同梱テーマとホスト固有の起動を説明する [Cordova ガイド](/docs/cordova)があります。
+既存のIonic 9アプリに、単体テーマから導入します。ブラウザーでテーマだけを使う場合、CapacitorのネイティブプロジェクトやNative UIの起動は不要です。Cordovaアプリは、同梱テーマとホスト固有の起動を説明する任意の[Cordovaガイド](/docs/cordova)を使います。
 
-デバイスレイアウトには、Erkam Yaman によるコミュニティプラグイン [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable) を標準連携として使用します。折りたたみ状態、ヒンジの形状、バー配置と変更イベントをアプリへ提供し、レイアウトの応答を制御できます。Foldable はデバイス情報、テーマは Web レイアウト、Native UI はコントロールの投影を担当します。使用するパッケージと一緒に導入し、アプリでイベントを接続してください。
+端末に応じた配置が必要な場合だけ、Erkam Yamanによるコミュニティプラグイン[Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable)を[端末レイアウトの手順](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout)で追加します。Foldableは配置・姿勢・変更イベントを通知し、テーマはWeb配置を提供します。別途有効にしたNative UIがコントロールを投影します。Foldableの導入とイベント接続は任意の追加機能であり、テーマの前提ではありません。
 
 テーマを導入し、Ionic の基本 CSS の後にグローバルのテーマ CSS を1つ読み込み、既存の Ionic 初期化へテーマ設定を渡します。Angular・React・Vue の手順は[セットアップ](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup)を参照してください。
 
 ```sh
-npm install @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
+npm install @rdlabo/ionic-theme-ios27
 ```
 
 ```css
@@ -47,6 +46,7 @@ npm install @rdlabo/ionic-theme-ios27 @erkamyaman/capacitor-foldable
 ```
 
 ```ts
+import { provideIonicAngular } from '@ionic/angular';
 import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
 
 provideIonicAngular({
@@ -55,7 +55,7 @@ provideIonicAngular({
 });
 ```
 
-手動のダークモードには `styles/class.css`、常時ダークには `styles/always.css` を選びます。対応する Ionic ダークパレットも含まれます。テーマ設定は iOS モードとアニメーションを既定とし、アプリのオプションで上書きできます。対応する Ionic は `>=8.8.1 <10` です。ブラウザー専用アプリにネイティブ Capacitor プロジェクトは不要です。
+手動のダークモードには `styles/class.css`、常時ダークには `styles/always.css` を選びます。対応する Ionic ダークパレットも含まれます。テーマ設定は iOS モードとアニメーションを既定とし、アプリのオプションで上書きできます。対応する Ionic は `>=9 <10` です。ブラウザー専用アプリにネイティブ Capacitor プロジェクトは不要です。
 
 テーマは toolbar、tabs、list、button、search、overlay のライト・ダーク外観を提供しますが、ネイティブコントロールは有効にしません。Web テーマの動作後に任意で [Native UI を追加](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/add-native-ui)できます。
 

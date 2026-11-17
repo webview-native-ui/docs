@@ -1,9 +1,9 @@
 ---
 title: "Vertical Bars mit Ihrem bestehenden Theme"
-sourceRevision: "21e5bb8f36ac3e48f01de53362d670dd6321517e71879538c5e6c2bd2eeec47c"
+sourceRevision: 'e8fca461b9c50e67c4ceeb02b0509e81050f55c942ba53750abaae7d4679a8ab'
+headingAliases:
+  '4.-erstellen%2C-synchronisieren-und-auf-iphone-duo-ausf%C3%BChren': '4.-erstellen%2C-synchronisieren-und-unter-ios-ausf%C3%BChren'
 ---
-
-# Vertical Bars mit Ihrem bestehenden Theme
 
 Vertical Bars gehört zur standardmäßigen Native-UI-Einrichtung. Mit dieser Anleitung behalten Sie das bestehende Web-Theme Ihrer App, statt das standardmäßige iOS-27-Theme-Preset zu übernehmen. Wählen Sie die Einrichtung nach den Komponenten Ihrer App, unabhängig davon, ob Sie Angular, React, Vue oder ein anderes Framework verwenden.
 
@@ -27,7 +27,7 @@ Unterstützung für iPhone Duo und Vertical Bars sind ab Version 2.0.0 stabil.
 
 ### 1. Das eigenständige Stylesheet installieren und laden
 
-Beginnen Sie mit Ihrer bestehenden Ionic-App (Ionic `>=8.8.1 <10`, Capacitor 8). Bestehende Foldable-Installationen müssen die [Gerätelayout-API-Anforderung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#use-with-capacitor-foldable) erfüllen: Version 8.5 oder neuer innerhalb von Version 8. Installieren Sie Native UI, das Layout-Stylesheet-Paket und das erforderliche Gerätezustands-Plugin zusammen:
+Beginnen Sie mit Ihrer bestehenden Ionic-App (Ionic `>=9 <10`, Capacitor 8). Bestehende Foldable-Installationen müssen die [Gerätelayout-API-Anforderung](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#use-with-capacitor-foldable) erfüllen: Version 8.5 oder neuer innerhalb von Version 8. Installieren Sie Native UI, das Layout-Stylesheet-Paket und das erforderliche Gerätezustands-Plugin zusammen:
 
 ```bash
 npm install @rdlabo/ionic-theme-ios27 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
@@ -109,7 +109,7 @@ Führen Sie Schritt 3 nach dem Rendern von `ion-app` aus. `setVerticalBarsLayout
 
 Nativer Start, Gerätepositionierung und Rendering der Bedienelemente sind asynchron. Die Auflösung von `enableNativeUI()` liefert das Laufzeithandle, garantiert jedoch keine bereits abgeschlossene Projektion. Früher Start vermeidet zusätzliche Wartezeiten der Anwendung; das anfängliche Web-Layout kann dennoch vor der nativen Projektion sichtbar sein.
 
-### 4. Erstellen, synchronisieren und auf iPhone Duo ausführen
+### 4. Erstellen, synchronisieren und unter iOS ausführen
 
 Erstellen Sie die Web-Assets Ihrer Anwendung und synchronisieren Sie anschließend das native Projekt:
 
@@ -117,7 +117,7 @@ Erstellen Sie die Web-Assets Ihrer Anwendung und synchronisieren Sie anschließe
 npx cap sync ios
 ```
 
-Erstellen Sie mit Xcode 27.1 oder neuer und führen Sie auf iPhone Duo mit iOS 27.1 oder neuer aus. Behalten Sie Ihre bestehende SPM- oder CocoaPods-Integration; siehe [Native UI-Einrichtung](setup.md#4-build-sync-and-run).
+Erstellen Sie mit Xcode 26 oder neuer und starten Sie auf einem iOS-26+-Simulator oder Gerät, einschließlich eines gewöhnlichen iPhones. Behalten Sie SPM oder CocoaPods; siehe [Native-UI-Einrichtung](setup.md#4-build-sync-and-run). Prüfen Sie native Darstellung unterstützter Bedienelemente sowie bestehende Web-Handler und Navigation. Bei null als Kante bleibt das gewöhnliche Layout korrekt: Die Einrichtung ist auch ohne Leiste abgeschlossen. Nur zur Prüfung nativer Leisten verwenden Sie zusätzlich unterstützte Hardware wie iPhone Duo unter iOS 27.1+ und ein gegen das iOS-27.1+-SDK gelinktes Programm. Eine Browser-Abstandsvorschau belegt keine native Leistenunterstützung.
 
 **Erwartetes Verhalten, wenn das Gerät eine Seitenleiste meldet:** Ihre bestehende Tab-Leiste und geeignete Aktionen fixierter Werkzeugleisten wechseln an die Seite. Der Inhalt behält sein Theme und reserviert den gemessenen Abstand. Unterstützte iOS-Seitenleisten verwenden SwiftUI; bei fehlender nativer Darstellung bleibt die Web-Seitenleiste. Geräte mit null als Kante behalten ihr gewöhnliches Layout. Mit der [optionalen Browservorschau](#optional-browser-preview) simulieren Sie eine Seitenleiste ohne Gerätemeldung.
 

@@ -1,9 +1,9 @@
 ---
 title: "Vertical Bars avec votre thème existant"
-sourceRevision: "21e5bb8f36ac3e48f01de53362d670dd6321517e71879538c5e6c2bd2eeec47c"
+sourceRevision: 'e8fca461b9c50e67c4ceeb02b0509e81050f55c942ba53750abaae7d4679a8ab'
+headingAliases:
+  '4.-compiler%2C-synchroniser-et-ex%C3%A9cuter-sur-iphone-duo': '4.-compiler%2C-synchroniser-et-ex%C3%A9cuter-sur-ios'
 ---
-
-# Vertical Bars avec votre thème existant
 
 Vertical Bars fait partie de la configuration Native UI par défaut. Utilisez ce guide pour conserver le thème Web existant de votre application au lieu d’adopter le préréglage standard du thème iOS 27. Choisissez la configuration correspondant aux composants de votre application, que vous utilisiez Angular, React, Vue ou un autre framework.
 
@@ -27,7 +27,7 @@ La prise en charge d’iPhone Duo et Vertical Bars est stable à partir de la ve
 
 ### 1. Installer et charger la feuille de style autonome
 
-Partez de votre application Ionic existante (Ionic `>=8.8.1 <10`, Capacitor 8). Les installations Foldable existantes doivent respecter [la version requise de l’API de disposition de l’appareil](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#use-with-capacitor-foldable) : version 8.5 ou ultérieure dans la version majeure 8. Installez ensemble Native UI, le package de feuille de style de disposition et le plugin requis pour l’état de l’appareil :
+Partez de votre application Ionic existante (Ionic `>=9 <10`, Capacitor 8). Les installations Foldable existantes doivent respecter [la version requise de l’API de disposition de l’appareil](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#use-with-capacitor-foldable) : version 8.5 ou ultérieure dans la version majeure 8. Installez ensemble Native UI, le package de feuille de style de disposition et le plugin requis pour l’état de l’appareil :
 
 ```bash
 npm install @rdlabo/ionic-theme-ios27 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
@@ -109,7 +109,7 @@ Exécutez l’étape 3 après le rendu de `ion-app`. `setVerticalBarsLayout()` e
 
 Le démarrage natif, le placement et le rendu sont asynchrones. La résolution de `enableNativeUI()` fournit le handle du runtime, sans garantir que les contrôles sont déjà projetés. Démarrer rapidement évite une attente ajoutée par l’application, mais la disposition Web initiale peut rester visible avant la projection native.
 
-### 4. Compiler, synchroniser et exécuter sur iPhone Duo
+### 4. Compiler, synchroniser et exécuter sur iOS
 
 Compilez les ressources Web de l’application, puis synchronisez le projet natif :
 
@@ -117,7 +117,7 @@ Compilez les ressources Web de l’application, puis synchronisez le projet nati
 npx cap sync ios
 ```
 
-Compilez avec Xcode 27.1 ou ultérieur et exécutez sur iPhone Duo sous iOS 27.1 ou ultérieur. Conservez votre intégration SPM ou CocoaPods ; consultez la [configuration Native UI](setup.md#4-build-sync-and-run).
+Compilez avec Xcode 26 ou ultérieur et exécutez sur un simulateur ou appareil iOS 26+, y compris un iPhone ordinaire. Conservez SPM ou CocoaPods ; voir [la configuration Native UI](setup.md#4-build-sync-and-run). Vérifiez la présentation native des contrôles compatibles et le fonctionnement des gestionnaires Web et de la navigation. Un bord null conserve la disposition ordinaire : l’intégration est alors terminée, même sans rail. Uniquement pour vérifier les rails natifs, utilisez en plus un matériel compatible tel qu’iPhone Duo sous iOS 27.1+ avec un binaire lié au SDK iOS 27.1+. L’aperçu d’espacement dans le navigateur ne prouve pas la prise en charge native.
 
 **Résultat attendu lorsque l’appareil signale un rail :** la barre d’onglets existante et les actions admissibles des barres d’outils fixes passent sur le côté. Le contenu conserve son thème et réserve le retrait mesuré. Les rails iOS compatibles utilisent SwiftUI ; sinon, le rail Web reste affiché. Les appareils signalant un bord null conservent leur disposition ordinaire. Utilisez l’[aperçu facultatif dans le navigateur](#optional-browser-preview) pour simuler un rail sans signalement de l’appareil.
 
