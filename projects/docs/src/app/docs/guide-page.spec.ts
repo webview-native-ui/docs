@@ -58,7 +58,9 @@ describe('Task guides', () => {
           ),
         ).toBe(true);
       }
-      expect(page.querySelector('article a[href="' + prefix + '/standard-setup"]')).not.toBeNull();
+      if (chapter.kind === 'task') {
+        expect(page.querySelector('article a[href="' + prefix + '/standard-setup"]')).not.toBeNull();
+      }
       expect(
         page.querySelector(
           'article a[href^="https://github.com/webview-native-ui/docs/edit/main/projects/docs/src/guides/' +

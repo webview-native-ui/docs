@@ -1,31 +1,39 @@
 ---
 title: 'Ajouter un sélecteur d’apparence'
-sourceRevision: '13b6b0ec01975144b90a17a7f5d6effa854f3b741a574f04b30ac7b2fa77844d'
+sourceRevision: '96278604f5e0a37dea6bee8b7c47217fc3ee67500e5523589899642cbab6480e'
 headingAliases:
-  '1.-placer-les-commandes': '1.-v%C3%A9rifier-les-deux-r%C3%A9glages-%C3%A0-ajouter'
-  '3.-relier-les-boutons': '3.-raccorder-les-deux-r%C3%A9glages'
+  '4.-v%C3%A9rifier-les-modes-et-le-repli': '3.-changer-les-r%C3%A9glages-et-v%C3%A9rifier-le-r%C3%A9sultat'
+  '3.-raccorder-les-deux-r%C3%A9glages': '2.-ajouter-deux-interrupteurs-aux-r%C3%A9glages'
+  '2.-conserver-le-contr%C3%B4leur-existant': '1.-choisir-le-mode-clair-ou-sombre-dans-l%E2%80%99app'
+  '1.-v%C3%A9rifier-les-deux-r%C3%A9glages-%C3%A0-ajouter': 'r%C3%A9glages-%C3%A0-ajouter'
+  '1.-placer-les-commandes': 'r%C3%A9glages-%C3%A0-ajouter'
+  '3.-relier-les-boutons': '2.-ajouter-deux-interrupteurs-aux-r%C3%A9glages'
 ---
 
 # Ajouter un sélecteur d’apparence
 
-La configuration conserve l’apparence liée au système. Cette tâche facultative la remplace par deux réglages indépendants de l’application : Use device colors et Dark mode. Deux interrupteurs affichent leurs valeurs. La valeur initiale sombre est lue une seule fois depuis le système ; ses changements ultérieurs ne modifient pas le réglage.
+Ajoutez deux interrupteurs, Use device colors et Dark mode, et appliquez le choix à toute l’app.
 
-Pour une application utilisant uniquement un thème, commencez par l’installation [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup) ou [MD3](/projects/ionic-theme-md3/docs/setup). Native UI n’est pas nécessaire. Les étapes suivantes ajoutent des réglages d’apparence à la configuration Ionic + Capacitor.
+Partez d’une app ayant terminé la [configuration Ionic](/standard-setup). Préparez d’abord le changement d’apparence commun à l’app, puis appelez-le depuis les interrupteurs des réglages.
 
-## 1. Vérifier les deux réglages à ajouter
+## Réglages à ajouter
 
-Partez de la [configuration terminée](/standard-setup), hook temporaire retiré. Identifiez les deux réglages sans modifier encore les fichiers. Use device colors choisit la palette disponible d’Android 12+ plutôt que les couleurs du thème. Dark mode choisit sombre si coché, clair sinon, indépendamment de la palette. Cette interface n’ajoute pas de choix de suivi du système.
+Les interrupteurs choisissent séparément la source des couleurs et le mode clair ou sombre. Les couleurs de l’appareil peuvent ainsi être utilisées en mode clair, ou les couleurs du thème en mode sombre.
 
-| Réglage           | Coché                              | Décoché           |
-| ----------------- | ---------------------------------- | ----------------- |
-| Use device colors | Couleurs disponibles de l’appareil | Couleurs du thème |
-| Dark mode         | Sombre                             | Clair             |
+| Réglage           | Activé                               | Désactivé         |
+| ----------------- | ------------------------------------ | ----------------- |
+| Use device colors | Couleurs disponibles sur Android 12+ | Couleurs du thème |
+| Dark mode         | Sombre                               | Clair             |
 
-## 2. Conserver le contrôleur existant
+## 1. Choisir le mode clair ou sombre dans l’app
 
-Appliquez quatre diffs dans l’ordre : System vers Class dans le stylesheet existant, puis état des préférences, provider et fonctions d’accès dans le démarrage. Cela confie volontairement le clair/sombre à la interrupteur Dark mode de l’application, au lieu du CSS suivant le système, indépendamment des couleurs de l’appareil. Le contrôleur démarre toujours une seule fois. Le système fournit uniquement le booléen sombre initial ; le contrôleur démarre dans le mode clair/sombre explicite correspondant puis suit ce booléen. Une mise à jour partielle conserve l’autre réglage. L’API est alors prête ; les deux interrupteurs arrivent à l’étape 3.
+Modifiez dans cet ordre src/global.css, puis le fichier src/native-ui.ts créé lors de l’installation. L’écran de réglages pourra ainsi changer l’apparence de toute l’app.
 
-Sur iOS, le texte et les icônes de la barre d’état nécessitent une mise à jour distincte du thème Web et des contrôles Native UI. Appelez SystemBars au démarrage et après les changements pour préserver leur lisibilité lorsque l’app diffère du système. Cette synchronisation iOS conserve la gestion Android existante des barres et des insets.
+### Changer la feuille de style qui gère les modes clair et sombre
+
+Le fichier system.css installé suit l’apparence du système. Remplacez-le par class.css pour laisser l’app choisir le mode clair ou sombre. class.css réagit à la classe ion-palette-dark, ajoutée ou retirée par setMode.
+
+Appliquez la différence à votre feuille de style globale. Si Angular utilise src/global.scss, modifiez ce fichier.
 
 <!-- prettier-ignore -->
 ```diff:src/global.css
@@ -37,6 +45,12 @@ Sur iOS, le texte et les icônes de la barre d’état nécessitent une mise à 
  @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
  @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
+
+### Conserver les réglages courants dans des variables
+
+Dans src/native-ui.ts, preferences contient les deux choix : deviceColors pour les couleurs de l’appareil et dark pour le mode sombre. La valeur initiale de dark vient du système au démarrage.
+
+appearance conserve l’objet renvoyé par enableDynamicColors. La modification suivante stocke ce résultat pour utiliser ensuite ses méthodes setMode et refresh.
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -61,6 +75,12 @@ Sur iOS, le texte et les icônes de la barre d’état nécessitent une mise à 
 + };
 ```
 
+### Appliquer les réglages au démarrage
+
+Transmettez le choix initial clair/sombre à enableDynamicColors et conservez son résultat dans appearance. Après le démarrage, appearance.setMode change le mode et appearance.refresh sélectionne à nouveau la palette.
+
+Lorsque les couleurs de l’appareil sont désactivées, ne transmettez pas cette palette : le thème retrouve ses couleurs par défaut. Sur iOS, appelez aussi syncIOSSystemBars au démarrage ; cette fonction est définie ci-dessous.
+
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
 @@
@@ -80,6 +100,14 @@ Sur iOS, le texte et les icônes de la barre d’état nécessitent une mise à 
    if (Capacitor.getPlatform() === 'ios') {
 +     await syncIOSSystemBars();
 ```
+
+### Ajouter les fonctions appelées par l’écran de réglages
+
+Ajoutez ces fonctions à la fin du même fichier.
+
+- getAppearancePreferences renvoie les réglages courants pour afficher les valeurs initiales des interrupteurs.
+- setAppearancePreferences reçoit un réglage modifié et l’applique au thème. Changer un interrupteur conserve l’autre valeur.
+- syncIOSSystemBars adapte le texte et les icônes de la barre d’état iOS à l’app, pour garder l’heure et la batterie lisibles sur un écran sombre.
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -109,11 +137,17 @@ Sur iOS, le texte et les icônes de la barre d’état nécessitent une mise à 
 + }
 ```
 
-## 3. Raccorder les deux réglages
+L’écran de réglages peut maintenant lire les valeurs et changer l’apparence de l’app. Reliez ces deux opérations aux interrupteurs.
 
-Appliquez uniquement le diff de votre framework à une page de réglages déjà routée. Conservez son fichier, sa route et son contenu. Les deux interrupteurs lisent les préférences partagées et affichent les valeurs, sans second contrôleur. Réouvrir la route conserve les réglages pendant cette exécution. Rien n’est persisté : redémarrer l’application ou recharger entièrement le navigateur relit le système pour la valeur sombre initiale. Use device colors exprime une préférence, pas la disponibilité prouvée d’une palette ; le texte voisin explique le repli.
+## 2. Ajouter deux interrupteurs aux réglages
+
+Ajoutez deux éléments ion-item à l’écran de réglages existant, avec un ion-toggle chacun. Lisez les valeurs initiales avec getAppearancePreferences, puis transmettez les changements à setAppearancePreferences.
+
+Appliquez l’exemple de votre framework.
 
 ### Angular / Ionic 9
+
+Initialisez le modèle Signal Forms avec les réglages courants. Lorsqu’un interrupteur modifie le modèle, effect appelle setAppearancePreferences pour appliquer le changement à l’app.
 
 <!-- prettier-ignore -->
 ```diff:src/app/appearance.page.ts
@@ -157,6 +191,8 @@ Appliquez uniquement le diff de votre framework à une page de réglages déjà 
 
 ### React
 
+Transmettez la valeur courante à checked. onIonChange fournit la nouvelle valeur dans event.detail.checked ; transmettez-la à setAppearancePreferences. Mettez aussi à jour l’état de la page pour afficher la même valeur.
+
 <!-- prettier-ignore -->
 ```diff:src/Appearance.tsx
 @@
@@ -196,6 +232,8 @@ Appliquez uniquement le diff de votre framework à une page de réglages déjà 
 ```
 
 ### Vue
+
+Transmettez la valeur courante à checked. ionChange fournit la nouvelle valeur dans event.detail.checked ; transmettez-la à setAppearancePreferences et mettez à jour l’état de la page contenu dans reactive.
 
 <!-- prettier-ignore -->
 ```diff:src/Appearance.vue
@@ -241,16 +279,20 @@ Appliquez uniquement le diff de votre framework à une page de réglages déjà 
  </template>
 ```
 
-## 4. Vérifier les modes et le repli
+Les valeurs sont partagées dans l’app et conservées lorsque vous rouvrez les réglages. Cet exemple ne les enregistre pas durablement. Un redémarrage ou un rechargement complet active les couleurs de l’appareil et initialise le mode sombre avec le réglage actuel du système. Pendant l’exécution, l’app suit l’interrupteur même si le système change d’apparence.
 
-Avant de vérifier les contrôles modifiés, démarrez le serveur Web de développement existant et rechargez complètement la page. Pour la vérification native, exécutez npm run build dans le répertoire de l’application, synchronisez uniquement la cible avec npx cap sync ios ou npx cap sync android, recompilez-la puis arrêtez et relancez l’application/WebView. Modifier la source seul ne met pas à jour une application installée. Redémarrage ou rechargement complet réinitialise ces préférences en mémoire : choisissez les valeurs de test ensuite. Une simple réouverture de la page routée les conserve.
+## 3. Changer les réglages et vérifier le résultat
 
-Vérifiez les quatre combinaisons : couleurs désactivées/sombre désactivé, désactivées/activé, activées/désactivé et activées/activé. La interrupteur Dark mode doit produire respectivement clair ou sombre sur le Web et les contrôles iOS compatibles. Changer le clair/sombre du système pendant l’exécution ne doit modifier ni la interrupteur ni l’apparence choisie. Chaque interrupteur doit préserver l’autre.
+Dans le navigateur, lancez le serveur de développement et rechargez la page. Pour l’app native, exécutez npm run build puis npx cap sync ios ou npx cap sync android pour la cible, reconstruisez et lancez-la.
 
-Sur Android 12+ compatible, activez les couleurs de l’appareil, changez la palette du fond d’écran puis revenez à la même application en cours. Désactiver cette option doit rétablir les couleurs du thème sans changer Dark mode. Sur iOS, navigateurs et Android non compatible, les couleurs du thème restent utilisables dans les deux cas. Rouvrez la route et vérifiez les deux interrupteurs. La tâche est terminée lorsque les quatre combinaisons, le repli et la réouverture fonctionnent.
+Activez et désactivez d’abord Dark mode : le fond et le texte de l’app doivent passer du mode sombre au mode clair.
 
-Sur iOS, laissez le système clair et activez le mode sombre de l’app ; vérifiez la lisibilité de l’heure, de la batterie et des autres éléments de la barre d’état. Vérifiez aussi le système sombre avec l’app claire. Cet exemple ne persiste pas les préférences. Avec un stockage existant, appliquez la même mise à jour SystemBars dès la restauration et vérifiez les deux sens après redémarrage.
+Sur Android 12+ compatible, changez aussi Use device colors. Activé utilise la palette de l’appareil ; désactivé utilise le thème. Changez le fond d’écran et revenez dans l’app pour vérifier l’actualisation des couleurs lorsque le réglage est activé. iOS, les navigateurs et Android non compatible utilisent les couleurs du thème dans les deux cas.
 
-Si l’app imprime ou exporte des documents ou PDF, vérifiez que les couleurs de sortie restent adaptées après le changement des réglages. Si les variables du thème se propagent à la sortie, définissez une palette d’impression indépendante. Comparez les vrais écrans de réglages et les écrans principaux avant et après, au-delà du seul écran temporaire de vérification.
+Essayez les quatre combinaisons : changer la source des couleurs conserve le mode clair/sombre, et changer le mode conserve la source. Rouvrez les réglages et vérifiez les deux valeurs.
 
-Pour le mappage des couleurs, consultez [Dynamic Color](/projects/capacitor-native-ui/docs/dynamic-colors). Pour un thème seul, suivez [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup) ou [MD3](/projects/ionic-theme-md3/docs/setup).
+Sur iOS, vérifiez le système clair avec l’app sombre et l’inverse ; l’heure et la batterie doivent rester lisibles. Avec un stockage existant, actualisez aussi SystemBars lors de la restauration et vérifiez après redémarrage.
+
+Si l’app imprime ou exporte des PDF, vérifiez l’effet des changements de palette et de mode sur les couleurs de sortie. Utilisez une palette d’impression distincte si nécessaire. Vérifiez les vrais écrans de réglages et les écrans principaux.
+
+Consultez [Dynamic Color](/projects/capacitor-native-ui/docs/dynamic-colors) pour la correspondance des couleurs.

@@ -1,31 +1,39 @@
 ---
 title: 'Darstellungswechsel hinzufügen'
-sourceRevision: '13b6b0ec01975144b90a17a7f5d6effa854f3b741a574f04b30ac7b2fa77844d'
+sourceRevision: '96278604f5e0a37dea6bee8b7c47217fc3ee67500e5523589899642cbab6480e'
 headingAliases:
-  '1.-die-bedienelemente-platzieren': '1.-die-zwei-neuen-einstellungen-pr%C3%BCfen'
-  '3.-die-schaltfl%C3%A4chen-verbinden': '3.-beide-einstellungen-verbinden'
+  '4.-modi-und-fallback-pr%C3%BCfen': '3.-schalter-bet%C3%A4tigen-und-darstellung-pr%C3%BCfen'
+  '3.-beide-einstellungen-verbinden': '2.-zwei-schalter-zur-einstellungsseite-hinzuf%C3%BCgen'
+  '2.-den-bestehenden-erscheinungscontroller-verwenden': '1.-hell-oder-dunkel-durch-die-app-steuern'
+  '1.-die-zwei-neuen-einstellungen-pr%C3%BCfen': 'die-beiden-einstellungen'
+  '1.-die-bedienelemente-platzieren': 'die-beiden-einstellungen'
+  '3.-die-schaltfl%C3%A4chen-verbinden': '2.-zwei-schalter-zur-einstellungsseite-hinzuf%C3%BCgen'
 ---
 
 # Darstellungswechsel hinzufügen
 
-Die Einrichtung behält die OS-Darstellung bei. Diese optionale Aufgabe ersetzt sie durch zwei unabhängige App-Einstellungen: Use device colors und Dark mode. Beide ion-toggle-Schalter zeigen aktuelle Werte. Der anfängliche Dunkelwert wird einmal vom OS gelesen; spätere OS-Änderungen ändern die Einstellung nicht.
+Ergänzen Sie die Schalter Use device colors und Dark mode und wenden Sie die Auswahl in der gesamten App an.
 
-Für eine App nur mit Theme beginnen Sie mit der Installation von [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup) oder [MD3](/projects/ionic-theme-md3/docs/setup). Native UI ist dafür nicht erforderlich. Die folgenden Schritte ergänzen die Ionic- und Capacitor-Einrichtung um Darstellungseinstellungen.
+Beginnen Sie mit einer App nach der [Ionic-Einrichtung](/standard-setup). Bereiten Sie zuerst die gemeinsame Darstellungsänderung vor und rufen Sie diese anschließend über die Schalter auf.
 
-## 1. Die zwei neuen Einstellungen prüfen
+## Die beiden Einstellungen
 
-Beginnen Sie nach der [abgeschlossenen Einrichtung](/standard-setup) ohne temporären Prüf-Hook. Bestimmen Sie zunächst die beiden Einstellungen, ohne Dateien zu ändern. Use device colors wählt die verfügbare Android-12+-Palette statt Theme-Standardfarben. Dark mode wählt aktiviert dunkel und deaktiviert hell, unabhängig von der Farbquelle. Diese UI ergänzt keine OS-Folgeauswahl.
+Die Schalter wählen Farbquelle und Hell-/Dunkelmodus unabhängig voneinander. Beispielsweise sind Gerätefarben im Hellmodus oder die Standardfarben des Themes im Dunkelmodus möglich.
 
-| Einstellung       | Aktiviert               | Deaktiviert          |
-| ----------------- | ----------------------- | -------------------- |
-| Use device colors | Verfügbare Gerätefarben | Theme-Standardfarben |
-| Dark mode         | Dunkel                  | Hell                 |
+| Einstellung       | Ein                                       | Aus                       |
+| ----------------- | ----------------------------------------- | ------------------------- |
+| Use device colors | Verfügbare Gerätefarben unter Android 12+ | Standardfarben des Themes |
+| Dark mode         | Dunkel                                    | Hell                      |
 
-## 2. Den bestehenden Erscheinungscontroller verwenden
+## 1. Hell oder Dunkel durch die App steuern
 
-Wenden Sie vier Diffs nacheinander an: System zu Class im bestehenden Stylesheet, dann Einstellungszustand, Provider und Getter/Setter im Startmodul. Damit übernimmt bewusst die Dark-mode-ion-toggle-Schalter der App Hell/Dunkel vom OS-folgenden CSS, unabhängig von Gerätefarben. Der Controller startet weiterhin einmal. Das OS liefert nur den anfänglichen Dunkel-Booleschen Wert; der Controller startet passend explizit hell/dunkel und folgt danach diesem Wert. Teiländerungen behalten die jeweils andere Einstellung. Danach ist die API bereit; beide ion-toggle-Schalter folgen in Schritt 3.
+Ändern Sie zuerst src/global.css und dann die bei der Einrichtung erstellte src/native-ui.ts. Dadurch kann die Einstellungsseite die Darstellung der gesamten App ändern.
 
-Unter iOS benötigen Text und Symbole der Statusleiste eine eigene Aktualisierung, unabhängig vom Web-Theme und den Native-UI-Steuerelementen. Rufen Sie SystemBars beim Start und nach Einstellungsänderungen auf, damit die Anzeige auch bei einer vom Betriebssystem abweichenden Darstellung lesbar bleibt. Die bestehende Android-Verwaltung von Systemleisten und Insets bleibt erhalten.
+### Das Stylesheet für Hell und Dunkel wechseln
+
+Das installierte system.css folgt der Betriebssystemdarstellung. Ersetzen Sie es durch class.css, damit die App Hell oder Dunkel wählen kann. class.css reagiert auf die Klasse ion-palette-dark, die setMode hinzufügt oder entfernt.
+
+Wenden Sie den Diff auf das globale Stylesheet an. Verwendet Angular src/global.scss, ändern Sie diese Datei.
 
 <!-- prettier-ignore -->
 ```diff:src/global.css
@@ -37,6 +45,12 @@ Unter iOS benötigen Text und Symbole der Statusleiste eine eigene Aktualisierun
  @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
  @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
+
+### Die aktuellen Einstellungen in Variablen halten
+
+In src/native-ui.ts hält preferences die beiden Werte: deviceColors für Gerätefarben und dark für den Dunkelmodus. Der Anfangswert von dark stammt beim Start aus dem Betriebssystem.
+
+appearance hält das von enableDynamicColors zurückgegebene Objekt. Die nächste Änderung speichert dieses Ergebnis, damit dessen Methoden setMode und refresh später nutzbar sind.
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -61,6 +75,12 @@ Unter iOS benötigen Text und Symbole der Statusleiste eine eigene Aktualisierun
 + };
 ```
 
+### Einstellungen beim App-Start anwenden
+
+Übergeben Sie die anfängliche Hell-/Dunkelauswahl an enableDynamicColors und speichern Sie das Ergebnis in appearance. Nach dem Start ändert appearance.setMode den Modus; appearance.refresh wählt die Palette erneut aus.
+
+Bei ausgeschalteten Gerätefarben wird die Gerätepalette nicht weitergegeben, sodass das Theme seine Standardfarben verwendet. Rufen Sie unter iOS außerdem die unten definierte Funktion syncIOSSystemBars beim Start auf.
+
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
 @@
@@ -80,6 +100,14 @@ Unter iOS benötigen Text und Symbole der Statusleiste eine eigene Aktualisierun
    if (Capacitor.getPlatform() === 'ios') {
 +     await syncIOSSystemBars();
 ```
+
+### Funktionen für die Einstellungsseite ergänzen
+
+Ergänzen Sie diese Funktionen am Ende derselben Datei.
+
+- getAppearancePreferences liefert die aktuellen Einstellungen für die Anfangswerte der Schalter.
+- setAppearancePreferences übernimmt eine geänderte Einstellung und wendet sie auf das Theme an. Der andere Schalterwert bleibt erhalten.
+- syncIOSSystemBars passt Text und Symbole der iOS-Statusleiste an die App an, damit Uhr und Batterie auf einem dunklen Bildschirm lesbar bleiben.
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -109,11 +137,17 @@ Unter iOS benötigen Text und Symbole der Statusleiste eine eigene Aktualisierun
 + }
 ```
 
-## 3. Beide Einstellungen verbinden
+Die Einstellungsseite kann jetzt die Werte lesen und die App-Darstellung ändern. Verbinden Sie diese beiden Vorgänge mit den Schaltern.
 
-Wenden Sie nur den Diff Ihres Frameworks auf eine vorhandene geroutete Einstellungsseite an. Dateiname, Route und anderer Inhalt bleiben bestehen. Beide ion-toggle-Schalter lesen gemeinsame Einstellungen und zeigen Werte ohne weiteren Controller. Erneutes Öffnen der Route behält sie während dieser Ausführung. Nichts wird gespeichert: App-Neustart oder vollständiges Browser-Neuladen liest das OS erneut für den Dunkel-Anfangswert. Use device colors zeigt einen Wunsch, keinen Nachweis verfügbarer Gerätefarben; der Text daneben erklärt den Fallback.
+## 2. Zwei Schalter zur Einstellungsseite hinzufügen
+
+Ergänzen Sie zwei ion-item-Elemente auf der vorhandenen Einstellungsseite, jeweils mit einem ion-toggle. Lesen Sie die Anfangswerte mit getAppearancePreferences und übergeben Sie Änderungen an setAppearancePreferences.
+
+Wenden Sie das Beispiel Ihres Frameworks an.
 
 ### Angular / Ionic 9
+
+Initialisieren Sie das Signal-Forms-Modell mit den aktuellen Einstellungen. Ändert ein Schalter das Modell, ruft effect die Funktion setAppearancePreferences auf und aktualisiert die App.
 
 <!-- prettier-ignore -->
 ```diff:src/app/appearance.page.ts
@@ -157,6 +191,8 @@ Wenden Sie nur den Diff Ihres Frameworks auf eine vorhandene geroutete Einstellu
 
 ### React
 
+Übergeben Sie den aktuellen Wert an checked. onIonChange liefert den neuen Wert in event.detail.checked; geben Sie ihn an setAppearancePreferences weiter. Aktualisieren Sie auch den Seitenzustand, damit der Schalter denselben Wert anzeigt.
+
 <!-- prettier-ignore -->
 ```diff:src/Appearance.tsx
 @@
@@ -196,6 +232,8 @@ Wenden Sie nur den Diff Ihres Frameworks auf eine vorhandene geroutete Einstellu
 ```
 
 ### Vue
+
+Übergeben Sie den aktuellen Wert an checked. ionChange liefert den neuen Wert in event.detail.checked; geben Sie ihn an setAppearancePreferences weiter und aktualisieren Sie den von reactive gehaltenen Seitenzustand.
 
 <!-- prettier-ignore -->
 ```diff:src/Appearance.vue
@@ -241,16 +279,20 @@ Wenden Sie nur den Diff Ihres Frameworks auf eine vorhandene geroutete Einstellu
  </template>
 ```
 
-## 4. Modi und Fallback prüfen
+Die Werte werden innerhalb der App geteilt und bleiben beim erneuten Öffnen der Einstellungen erhalten. Dieses Beispiel speichert sie nicht dauerhaft. Beim Neustart oder vollständigen Neuladen werden Gerätefarben eingeschaltet und der Dunkelmodus anhand des aktuellen Betriebssystems initialisiert. Während der Laufzeit folgt die App dem Schalter, auch wenn sich die Betriebssystemdarstellung ändert.
 
-Starten Sie vor der Prüfung der geänderten Elemente den bestehenden Web-Entwicklungsserver und laden Sie die Browser-Seite vollständig neu. Führen Sie zur nativen Prüfung npm run build im App-Verzeichnis aus, synchronisieren Sie nur das gewählte Ziel mit npx cap sync ios oder npx cap sync android, bauen Sie es neu und beenden/starten Sie App/WebView neu. Quelländerungen allein aktualisieren keine installierte App. App-Neustart oder vollständiges Browser-Neuladen setzt diese Speichereinstellungen zurück; wählen Sie die Testwerte erst danach. Nur die geroutete Einstellungsseite erneut zu öffnen behält sie bei.
+## 3. Schalter betätigen und Darstellung prüfen
 
-Prüfen Sie alle vier Kombinationen: Gerätefarben aus/dunkel aus, aus/an, an/aus und an/an. Dark mode muss passend helle oder dunkle Web-UI und unterstützte iOS-Elemente erzeugen. Ein OS-Hell-/Dunkelwechsel während laufender App darf weder ion-toggle-Schalter noch gewählte Darstellung verändern. Jede ion-toggle-Schalter muss die andere Einstellung beibehalten.
+Starten Sie im Browser den Entwicklungsserver und laden Sie die Seite neu. Führen Sie für native Apps npm run build und npx cap sync ios oder npx cap sync android für das Ziel aus; erstellen und starten Sie die native App erneut.
 
-Aktivieren Sie auf unterstütztem Android 12+ Gerätefarben, ändern Sie die Hintergrundpalette und kehren Sie zur gleichen laufenden App zurück. Ausschalten muss Theme-Farben wiederherstellen, ohne Dark mode zu ändern. Unter iOS, Browsern und nicht unterstütztem Android bleiben Theme-Farben in beiden Fällen nutzbar. Öffnen Sie die Route erneut und prüfen Sie beide ion-toggle-Schalter. Fertig ist die Aufgabe mit vier funktionierenden Kombinationen, Fallback und erneutem Öffnen.
+Schalten Sie zunächst Dark mode ein und aus. Hintergrund und Text der gesamten App müssen zwischen Dunkel und Hell wechseln.
 
-Lassen Sie unter iOS das Betriebssystem hell und stellen Sie die App dunkel ein; Uhrzeit, Batterie und andere Statusleistenelemente müssen lesbar bleiben. Prüfen Sie auch dunkles Betriebssystem mit heller App. Dieses Beispiel speichert keine Einstellungen dauerhaft. Bei bestehender Persistenz führen Sie dieselbe SystemBars-Aktualisierung direkt nach der Wiederherstellung aus und prüfen beide Richtungen nach einem Neustart.
+Ändern Sie auf unterstützten Android-12+-Geräten auch Use device colors. Ein verwendet die Gerätepalette, Aus die Theme-Standardfarben. Ändern Sie das Hintergrundbild und kehren Sie zur App zurück, um bei eingeschalteter Option die neuen Farben zu prüfen. iOS, Browser und nicht unterstützte Android-Geräte nutzen bei beiden Werten die Theme-Farben.
 
-Wenn die App Dokumente druckt oder als PDF exportiert, prüfen Sie nach der Darstellungsänderung die vorgesehenen Ausgabefarben. Falls Bildschirm-Theme-Variablen in die Ausgabe gelangen, verwenden Sie eine eigene Druckpalette. Vergleichen Sie die tatsächlichen Einstellungs- und Hauptbildschirme vor und nach der Änderung, nicht nur einen temporären Prüfbildschirm.
+Prüfen Sie alle vier Kombinationen: Ein Wechsel der Farbquelle erhält den Hell-/Dunkelmodus und umgekehrt. Öffnen Sie die Einstellungen erneut und prüfen Sie beide Werte.
 
-Für die Farbzuordnung siehe [Dynamic Color](/projects/capacitor-native-ui/docs/dynamic-colors). Nur Themes installieren Sie über [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup) oder [MD3](/projects/ionic-theme-md3/docs/setup).
+Prüfen Sie unter iOS ein helles Betriebssystem mit dunkler App und den umgekehrten Fall; Uhr und Batterie müssen lesbar bleiben. Aktualisieren Sie bei bestehender Persistenz SystemBars auch beim Wiederherstellen und prüfen Sie nach einem Neustart erneut.
+
+Prüfen Sie bei Druck oder PDF-Export, ob Änderungen an Farbquelle oder Modus die Ausgabefarben beeinflussen. Verwenden Sie bei Bedarf eine eigene Druckpalette. Prüfen Sie die tatsächlichen Einstellungs- und Hauptbildschirme.
+
+Die Farbzuordnung steht in der [Dynamic-Color-Referenz](/projects/capacitor-native-ui/docs/dynamic-colors).

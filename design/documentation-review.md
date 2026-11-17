@@ -316,3 +316,42 @@ at 390px and 1440px, verifying two optional guides, a separate Sponsor link, two
 toggles per framework and no raw input/ion-list. Eight real local Cloudflare 301 responses point
 to the localized setup verification anchor. Desktop and mobile navigation screenshots were
 visually inspected. Changes remain local; no publication or protected-branch push was performed.
+
+## Guide explanations and reader assumptions
+
+The editorial pass initially focused on shorter Japanese copy. User acceptance identified that
+phrases such as “add appearance-setting logic” still assumed knowledge of the library. The
+reader is an Ionic developer familiar with TypeScript, but not these theme or Native UI APIs.
+
+Appearance now explains the two preferences before numbered work. The actual steps prepare
+application-controlled appearance, add the two toggles, and verify the result. Four subsections
+place the file, reason and API roles immediately before each diff: stylesheet behavior, current
+state, startup application, and functions called from the screen. Framework sections explain
+how the changed toggle value reaches the shared setter. The same structure and explanations
+are present in English, Japanese, French and German; translated source revisions were reviewed
+and updated. All executable fences in the ten edited source articles remain unchanged.
+
+Japanese setup explains why Native UI starts after rendering and the three responsibilities of
+the shared startup file. Extensions explain selector/read/props/actions; migration explains
+what the resolver replaces; theme-only pages define Ionic configuration presets and distinguish
+them from CSS stylesheets. Mandatory conditions, completion checks and historical heading URLs
+remain. Two tests that incorrectly required an installation link in the migration article now
+limit that requirement to optional feature guides.
+
+Both delegated reviewers approved the final explanations, checking what the reader does,
+where and why, rather than treating brevity or test success as proof of clarity. Review returned
+and corrected the Cordova/HTML distinction, existing-import preservation, both output-color
+axes, button checks, overloaded “preset” terminology and the ambiguous English “brightness”.
+
+Verification passed: 170 source tests, 15 Worker tests, 119 Angular tests, production build,
+15 output checks, Worker dry runs, SEO, formatting and lint. Final browser checks covered the
+four appearance locales at 390px/1440px, five old section-two URLs, the CSS explanation in view,
+and the Japanese setup role explanation. Mobile and desktop screenshots were inspected.
+
+### Japanese guide design review
+
+A reviewer acting as a content designer requested three changes. The appearance guide
+now explains device color availability next to the controls and describes restart behavior
+before the framework examples. The setup guide pairs button and tab operations with
+observable outcomes. The reviewer reread the setup, appearance, extension and migration
+guides and accepted the revisions.

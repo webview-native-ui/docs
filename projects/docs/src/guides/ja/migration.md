@@ -1,17 +1,19 @@
 ---
 title: '既存アプリを移行する'
 sourceRevision: 'f6c682196640ada89288d21f58919e99a41517204ad8bf7aea096a8f052c71f2'
+headingAliases:
+  '4.-%E5%A4%96%E8%A6%B3%E3%81%AE%E6%96%B9%E9%87%9D%E3%82%92%E4%BF%9D%E3%81%A3%E3%81%A6%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E3%82%92%E6%95%B4%E7%90%86%E3%81%99%E3%82%8B': '4.-%E9%85%8D%E8%89%B2%E3%82%92%E4%BF%9D%E3%81%A3%E3%81%A6%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB%E3%82%92%E6%95%B4%E7%90%86%E3%81%99%E3%82%8B'
 ---
 
 # 既存アプリを移行する
 
-以前の導入設定を使っているアプリを、ルート・状態・イベント処理を保ちながら更新する手順です。新規導入の次のステップではありません。使用中の機能を確認し、該当する変更だけを適用して元の動作を確認します。
+既存アプリで使用中のパッケージと設定を更新します。以下の手順から、導入済みの機能に該当する変更を適用してください。対象はIonic 9・Capacitor 8です。
 
 ## 1. 使用中のパッケージを確認する
 
-以前の導入設定がある状態から始めます。このコマンドはパッケージを読むだけです。結果を保存し、以下で該当する変更を選びます。見つからないパッケージは未導入機能を示し、追加インストールを要求するものではありません。
+アプリのディレクトリで、使用中のパッケージとバージョンを確認します。
 
-アプリのディレクトリで実行し、使用中の版を確認します。見つからないパッケージはその機能を使っていないことを示します。テーマだけの移行のためにNative UIを足す必要はありません。この手順はIonic 9とCapacitor 8を対象にします。Cordovaでは、ここで示すCapacitorのコマンドではなく専用プラグインの移行手順を使います。
+一覧にないパッケージは更新対象から外します。Cordovaを使う場合は[専用プラグインの手順](/projects/cordova-native-ui/docs/readme)を参照してください。
 
 ```sh
 npm ls @ionic/core @capacitor/core @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @rdlabo/capacitor-native-ui
@@ -19,9 +21,9 @@ npm ls @ionic/core @capacitor/core @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme
 
 ## 2. 利用するパッケージを更新する
 
-確認した一覧から、使用中のパッケージだけを更新します。一括のコマンドはその組み合わせを使っているアプリ用です。依存関係とlockfileが更新されれば、この手順は完了です。既存ソースの接続はまだ変わっていません。
+使用中のパッケージを更新します。以下はIonicとCapacitorを組み合わせた構成の例です。
 
-IonicとCapacitorを組み合わせたアプリでは、次のパッケージをまとめて更新し、Foldableはメジャー版8に保ちます。テーマだけのアプリでは、使用中のテーマだけを更新してください。npmが更新したlockfileも残します。別構成のコマンドまで全部実行する必要はありません。
+テーマだけを使うアプリでは、使用中のテーマだけを更新します。Foldableはメジャーバージョン8を使い、npmが更新したlockfileも保存します。
 
 ```sh
 npm install @rdlabo/ionic-theme-ios26@latest @rdlabo/ionic-theme-ios27@latest   @rdlabo/ionic-theme-md3@latest @rdlabo/capacitor-native-ui@latest   @erkamyaman/capacitor-foldable@8
@@ -29,9 +31,9 @@ npm install @rdlabo/ionic-theme-ios26@latest @rdlabo/ionic-theme-ios27@latest   
 
 ## 3. 古いNative UIのimportと起動を置き換える
 
-古いimportと呼び出しがある場合だけ、既存の起動モジュールへこの差分を適用します。なければスキップします。同じ起動呼び出しがプラグインの入口を使う状態になり、ランタイムは追加しません。
+以前のテーマ内蔵Native UIを使っている場合は、古いnative入口とenableNativeUIShellを検索し、既存の起動処理を次のように置き換えます。
 
-以前のテーマ内蔵Native UIを使っていたアプリだけが対象です。プロジェクト内で古いnative入口とenableNativeUIShellを検索し、アプリシェルの既存の呼び出しを置き換えます。起動は一度だけに保ち、画面のイベント処理はそのまま使います。古い名前がなければ次の手順へ進んでください。
+該当するimportや呼び出しがなければ、次へ進みます。
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -49,13 +51,13 @@ npm install @rdlabo/ionic-theme-ios26@latest @rdlabo/ionic-theme-ios27@latest   
      setVerticalBarsLayout({ edge: placement.edge, inset: placement.inset });
 ```
 
-## 4. 外観の方針を保って読み込みを整理する
+## 4. 配色を保ってスタイルを整理する
 
-古いclassパレットの組み合わせが一致する場合だけ、このスタイル差分を適用します。system・alwaysの方針なら、その方針を維持します。選択済みの外観方針を変えずに、import構成だけをまとめた状態で完了です。
+以下は、iOS 27のクラス型ダークパレットを一つのプリセットへまとめる例です。
 
-iOS 27のクラス型ダークパレットを使うアプリでは、対応する次の読み込みを一つのプリセットへ置き換えられます。システム追従のテーマ単体アプリはsystem.css、常時ダークならalways.cssを選ぶ方針を維持します。iOS 26/27とMD3を組み合わせた構成では、[導入手順](/standard-setup)の4 importと共通iOSプリセットを使い、このiOS 27単体の読み込みを追加しないでください。
+OSの明暗に追従する場合はsystem.css、常時ダークならalways.cssを使います。iOS 26／27とMD3を組み合わせたアプリは、設定済みの4つのimportを維持します。
 
-組み合わせた導入手順の既定は、両iOSテーマのsystem importでOSのライト・ダークへ追従する方針です。テーマの更新だけなら、その読み込みを維持します。[外観設定の使い方](/guides/appearance)でアプリから明暗の上書きを追加する場合だけ、classへ切り替えます。この方針変更は端末配色の選択とは別です。下の旧classパレットの差分は、すでに手動管理している方針をそのまま維持します。
+更新時は現在の明暗の切り替え方式を維持します。OS追従からアプリ内での切り替えへ変更する場合は、[外観設定](/guides/appearance)の手順を使います。
 
 <!-- prettier-ignore -->
 ```diff:src/global.css
@@ -71,11 +73,9 @@ iOS 27のクラス型ダークパレットを使うアプリでは、対応す�
 
 ## 5. 既存のレイアウト更新を置き換える
 
-古い端末レイアウト処理がある場合だけ、importとresolverへの変換部分を差分で変更します。表示されたリスナーは既存の文脈です。未導入ならスキップします。一つの既存購読からresolverの戻り値を反映できれば、この手順は完了です。
+src/native-ui.ts で Foldable.getBarPlacement() を検索してください。呼び出しがなければ手順6へ進みます。
 
-getBarPlacementからedgeとinsetへ直接変換している場合は、既存のlayoutChange処理の中で次のresolverへ置き換えます。toolbarTopも反映できます。購読を増やしたり、OS世代でプリセットを切り替えたり、共通iOSプリセットのアニメーションを手動でラップしたりする必要はありません。通常のNative UI起動はアプリシェルに維持します。
-
-端末レイアウト連携を使っていない場合、この手順は飛ばします。
+呼び出しがある場合は、バーの位置と余白を計算する部分を resolveVerticalBarsLayout(Foldable) に置き換えます。端末から取得した配置を setVerticalBarsLayout に渡すと、ツールバー上端の位置も反映されます。
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts
@@ -98,11 +98,11 @@ getBarPlacementからedgeとinsetへ直接変換している場合は、既存�
 
 ## 6. 再ビルドして動作を確認する
 
-該当するソース変更が済んだら、アプリのディレクトリでビルドし、既存のネイティブ機能がある対象のコマンドだけを実行します。ブラウザー・テーマのみのアプリはWebの確認で完了です。ネイティブアプリは再ビルド・同期・再起動後に使用中の機能が動けば完了し、レールや拡張を新たな必須条件にはしません。
+Webをビルドし、使用中のテーマ、明暗の切り替え、画面遷移を確認します。
 
-ブラウザー・テーマのみのアプリは、Webビルドと、選んだテーマの表示・ライト／ダークの方針・画面遷移を確認すれば完了です。Native UIやレイアウト機能を使っていない場合は、その手順を飛ばします。ネイティブプロジェクトやレール端末は不要です。
+ブラウザー向け・テーマのみのアプリは、Web上での確認で完了です。
 
-ネイティブ機能がある場合は、Webビルド後に既存の対象のコマンドだけ実行します。実際に使うネイティブ機能、元のWebイベント処理、キャンセルを含む画面遷移を確認してください。端末配色やレールは導入済みかつ対応端末でのみ確認し、それ以外は利用可能な端末でフォールバックを確認します。独自拡張の追加は不要です。
+ネイティブアプリは、対象OSへ同期して再ビルド・起動します。導入済みのネイティブコントロール、端末配色、レイアウト連携と、元のWeb操作が動くことを確認してください。非対応端末ではWeb表示や既定の配色への切り替わりを確認します。
 
 ```sh
 npm run build
@@ -121,5 +121,3 @@ npx cap open ios
 npx cap sync android
 npx cap open android
 ```
-
-[既存テーマにNative UIを追加する場合](/projects/capacitor-native-ui/docs/ionic-vertical-bars)、[Ionicを使わないHTML](/projects/capacitor-native-ui/docs/framework-independent)、[Cordova](/projects/cordova-native-ui/docs/readme)はそれぞれの手順を使います。アプリを変更する前に[導入方法を選べます](/#choose-setup)。
