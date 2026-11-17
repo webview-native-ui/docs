@@ -1,11 +1,11 @@
 ---
 title: "Erste Schritte mit Cordova"
-sourceRevision: "bb8e32a248493e1e54f1f67bdfd917810aecae2ef57b9223f531faaa5013938f"
+sourceRevision: "f8ab74043a95d5f006f73d9e95eb7bfb54c5927dc48aecba7b7bd9e4d710f15d"
 ---
 
 # Erste Schritte mit Cordova
 
-Verwenden Sie das veröffentlichte Paket `@webview-native-ui/cordova-plugin` v0.1.3, um Native UI in eine Cordova-Anwendung einzubinden. Der Adapter verwendet denselben Native UI Core wie das Capacitor-Plugin; die JavaScript-Laufzeit von Capacitor ist nicht erforderlich. Standard-HTML wird über `/core` unterstützt, während der Paketeinstieg die Ionic-Integration ergänzt.
+Verwenden Sie das veröffentlichte Paket `@webview-native-ui/cordova-plugin` v0.1.4, um Native UI in eine Cordova-Anwendung einzubinden. Der Adapter verwendet denselben Native UI Core wie das Capacitor-Plugin; die JavaScript-Laufzeit von Capacitor ist nicht erforderlich. Standard-HTML wird über `/core` unterstützt, während der Paketeinstieg die Ionic-Integration ergänzt.
 
 ## Voraussetzungen und unterstützter Umfang
 
@@ -19,13 +19,13 @@ Verwenden Sie das veröffentlichte Paket `@webview-native-ui/cordova-plugin` v0.
 Führen Sie diesen Befehl im Cordova-Projekt aus:
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.3
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 Bei einer gebündelten Web-Anwendung führen Sie außerdem diesen Befehl in dem npm-Projekt aus, das die Web-Assets erstellt:
 
 ```sh
-npm install --save-exact @webview-native-ui/cordova-plugin@0.1.3
+npm install --save-exact @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 Der Cordova-Befehl installiert das native Plugin. Die npm-Abhängigkeit stellt die Importe für den Web-Bundler bereit. Halten Sie beide Versionen gleich. Behalten Sie `<script src="cordova.js"></script>` im HTML-Einstiegspunkt von Cordova bei, erstellen Sie die Web-Assets unter `www`, führen Sie anschließend `cordova prepare` aus und bauen Sie die native Anwendung neu. Das Neuladen der Web-Assets aktualisiert keinen nativen Code. Die direkte Installation über eine Git-URL wird nicht unterstützt.
@@ -59,12 +59,29 @@ Importieren Sie in einer ESM-Anwendung `enableNativeUI` für Standard-HTML aus `
 
 ## Optionales mitgeliefertes Ionic-Theme
 
-Version 0.1.3 enthält das iOS27-Theme in Version 2.1.0. Das eigenständige Theme wird unabhängig veröffentlicht; die Installation seiner neuesten Version aktualisiert die im Cordova-Plugin enthaltene Kopie nicht. Verwenden Sie die Einstiegspunkte `/theme` und `/theme/css/*` des Plugins ohne Bundler-Alias. Folgen Sie der [Cordova-Einrichtung des Themes](/ionic-theme-ios27/docs/cordova) für Animationen und Stylesheets und ersetzen Sie alte Theme-Importe, statt beide Integrationen zu mischen.
+Version 0.1.4 enthält das iOS27-Theme in Version 2.2.0. Das eigenständige Theme wird unabhängig veröffentlicht; die Installation seiner neuesten Version aktualisiert die im Cordova-Plugin enthaltene Kopie nicht. Verwenden Sie die Einstiegspunkte `/theme` und `/theme/css/*` des Plugins ohne Bundler-Alias. Folgen Sie der [Cordova-Einrichtung des Themes](/ionic-theme-ios27/docs/cordova) für Animationen und Stylesheets und ersetzen Sie alte Theme-Importe, statt beide Integrationen zu mischen.
 
 Starten Sie Native UI erst, wenn sowohl `deviceready` eingetreten als auch `ion-app` im Lebenszyklus Ihrer Anwendung eingebunden ist. Der Import oder die Gestaltung durch das Theme allein aktiviert keine nativen Bedienelemente. Capacitor ist der primäre Host; Cordova hat einen kleineren Unterstützungsumfang. Erfolgreiche Builds belegen keine vollständige Gleichwertigkeit bei Framework-Routern oder Gesten.
+
+## Badges für Werkzeugleisten-Schaltflächen
+
+Version 0.1.4 enthält den Core für Werkzeugleisten-Badges aus Capacitor 2.1.10 und die passenden Theme-Stile. Platzieren Sie `ion-badge` direkt in einem `ion-button` innerhalb einer `ion-toolbar`:
+
+```html
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button aria-label="3 notifications">
+      <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+      <ion-badge color="primary">3</ion-badge>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+Auf unterstützten nativen iOS Vertical Bars übernimmt das Badge den Quelltext sowie die Ionic-Hintergrund- und Textfarben. Der Web-Fallback der Leiste behält auch den Anzeigezustand bei. Änderungen an Anzahl und Farbe, Ausblenden und Entfernen aktualisieren die vorhandene Aktion. Verwenden Sie für einen Ungelesen-Indikator ein vollständig leeres `<ion-badge></ion-badge>` ohne Leerzeichen oder Zeilenumbrüche darin. Nehmen Sie den Benachrichtigungsstatus in die barrierefreie Beschriftung auf. Aktualisieren Sie beide Plugin-Installationen, führen Sie `cordova prepare` aus und erstellen Sie die native App neu.
 
 ## Nächste Schritte
 
 - [Engine-Konzepte und Grenzen](/webview-native-ui-engine/docs/concepts) erläutern das gemeinsame Darstellungsmodell.
-- Das [Paket-README](https://github.com/webview-native-ui/cordova-plugin/blob/a43efc05e217670ef529d34b290a693966ec997d/README.md) behandelt lokale Archive, Fehlerbehebung, gemeinsam genutzten Quellcode und Entwicklungsprüfungen.
+- Das [Paket-README](https://github.com/webview-native-ui/cordova-plugin/blob/d4f7aeffb228be4d7f0ff1ec4a21fcd00104f517/README.md) behandelt lokale Archive, Fehlerbehebung, gemeinsam genutzten Quellcode und Entwicklungsprüfungen.
 - Melden Sie Probleme mit Cordova-Installation, Callbacks und Lebenszyklus im [Cordova-Repository](https://github.com/webview-native-ui/cordova-plugin/issues).

@@ -11,13 +11,13 @@ Capacitor is the default native host in these docs. This optional guide covers t
 From the Cordova application root:
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.3
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 This installs the prepared native and JavaScript assets and saves the npm dependency. If your Web bundler is a separate npm project, install the same version in that project too:
 
 ```sh
-npm install @webview-native-ui/cordova-plugin@0.1.3
+npm install @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 If Cordova and your bundler share a `package.json`, no second install is needed. Keep your existing Ionic dependencies. See the plugin's [requirements](https://github.com/webview-native-ui/cordova-plugin#requirements) for Cordova, SwiftPM, Xcode and Android configuration. Native rendering requires supported iOS versions; standard Android controls retain Web presentation.
@@ -100,7 +100,7 @@ The [adaptive themes](adaptive-themes.md) guide uses standalone theme Sass sourc
 
 Replace all theme JavaScript imports from `@rdlabo/ionic-theme-ios27` with `@webview-native-ui/cordova-plugin/theme`, and CSS imports from `@rdlabo/ionic-theme-ios27/dist/css/*` with `@webview-native-ui/cordova-plugin/theme/css/*`. Import Native UI startup from the Cordova package root. Remove old integration aliases and original theme/Capacitor dependencies once they are no longer used by the app. Keep your component markup, bindings and handlers.
 
-Use helpers and CSS from the same bundled theme version. Cordova 0.1.3 includes theme 2.1.0; installing a newer standalone theme does not update that copy. Check `shared/ORIGIN.json` in the installed Cordova package for its theme version and Core revision, and update the Cordova package to receive newer bundled sources.
+Use helpers and CSS from the same bundled theme version. Cordova 0.1.4 includes theme 2.2.0; installing a newer standalone theme does not update that copy. Check `shared/ORIGIN.json` in the installed Cordova package for its theme version and Core revision, and update the Cordova package to receive newer bundled sources.
 
 ## Supported behavior and verification
 

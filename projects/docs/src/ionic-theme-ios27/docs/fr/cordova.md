@@ -1,6 +1,6 @@
 ---
 title: "Configuration Cordova"
-sourceRevision: "c2900d912e29ceea6285c2795d407d616461f204124a69276b55e3ef3dcda536"
+sourceRevision: "e1489d1b5f63a0aae69a7a641d67e5e563595c6081552422dad3c7ea4796375b"
 ---
 
 Pour une application Cordova avec Ionic et Native UI, utilisez `@webview-native-ui/cordova-plugin`. Le plugin inclut le JavaScript, les types et le CSS du thème, déjà reliés à son intégration native. Aucun alias de bundler ni installation séparée de `@rdlabo/ionic-theme-ios27` ou `@rdlabo/capacitor-native-ui` n’est nécessaire.
@@ -12,13 +12,13 @@ Capacitor est l’hôte natif par défaut de cette documentation. Ce guide facul
 Depuis la racine de l’application Cordova :
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.3
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 Cette commande installe les ressources natives et JavaScript préparées et enregistre la dépendance npm. Si votre bundler Web constitue un projet npm séparé, installez-y la même version :
 
 ```sh
-npm install @webview-native-ui/cordova-plugin@0.1.3
+npm install @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 Si Cordova et votre bundler partagent un `package.json`, aucune seconde installation n’est nécessaire. Conservez les dépendances Ionic existantes. Consultez les [prérequis du plugin](https://github.com/webview-native-ui/cordova-plugin#requirements) pour Cordova, SwiftPM, Xcode et Android. Le rendu natif exige une version iOS prise en charge ; les contrôles Android standard conservent leur présentation Web.
@@ -101,7 +101,7 @@ Le guide des [thèmes adaptatifs](adaptive-themes.md) utilise les sources Sass d
 
 Remplacez tous les imports JavaScript du thème depuis `@rdlabo/ionic-theme-ios27` par `@webview-native-ui/cordova-plugin/theme`, et les imports CSS depuis `@rdlabo/ionic-theme-ios27/dist/css/*` par `@webview-native-ui/cordova-plugin/theme/css/*`. Importez le démarrage de Native UI depuis la racine du package Cordova. Supprimez les anciens alias d’intégration et dépendances du thème/Capacitor lorsqu’ils ne sont plus utilisés. Conservez le balisage, les bindings et les gestionnaires des composants.
 
-Utilisez les helpers et le CSS de la même version du thème fourni. Cordova 0.1.3 inclut le thème 2.1.0 ; installer un thème autonome plus récent ne met pas cette copie à jour. Vérifiez la version du thème et la révision Core dans `shared/ORIGIN.json` du package Cordova installé, puis mettez à jour le package Cordova pour recevoir les sources fournies plus récentes.
+Utilisez les helpers et le CSS de la même version du thème fourni. Cordova 0.1.4 inclut le thème 2.2.0 ; installer un thème autonome plus récent ne met pas cette copie à jour. Vérifiez la version du thème et la révision Core dans `shared/ORIGIN.json` du package Cordova installé, puis mettez à jour le package Cordova pour recevoir les sources fournies plus récentes.
 
 ## Comportements pris en charge et vérification
 

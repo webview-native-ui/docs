@@ -1,6 +1,6 @@
 ---
 title: "Cordova einrichten"
-sourceRevision: "c2900d912e29ceea6285c2795d407d616461f204124a69276b55e3ef3dcda536"
+sourceRevision: "e1489d1b5f63a0aae69a7a641d67e5e563595c6081552422dad3c7ea4796375b"
 ---
 
 Verwenden Sie `@webview-native-ui/cordova-plugin` für eine Cordova-App mit Ionic und Native UI. Das Plugin enthält Theme-JavaScript, Typen und CSS, bereits mit seiner nativen Integration verbunden. Bundler-Aliasse oder separate Installationen von `@rdlabo/ionic-theme-ios27` oder `@rdlabo/capacitor-native-ui` sind nicht nötig.
@@ -12,13 +12,13 @@ Capacitor ist der standardmäßige native Host dieser Dokumentation. Diese optio
 Im Stammverzeichnis der Cordova-Anwendung:
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.3
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 Dies installiert die vorbereiteten nativen und JavaScript-Assets und speichert die npm-Abhängigkeit. Ist Ihr Web-Bundler ein separates npm-Projekt, installieren Sie dort dieselbe Version:
 
 ```sh
-npm install @webview-native-ui/cordova-plugin@0.1.3
+npm install @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 Teilen Cordova und Bundler eine `package.json`, ist keine zweite Installation nötig. Behalten Sie vorhandene Ionic-Abhängigkeiten bei. Die [Plugin-Voraussetzungen](https://github.com/webview-native-ui/cordova-plugin#requirements) beschreiben Cordova, SwiftPM, Xcode und Android. Natives Rendering erfordert unterstützte iOS-Versionen; standardmäßige Android-Steuerelemente behalten die Web-Darstellung.
@@ -101,7 +101,7 @@ Die Anleitung für [adaptive Themes](adaptive-themes.md) nutzt Sass-Quellen des 
 
 Ersetzen Sie alle Theme-JavaScript-Importe aus `@rdlabo/ionic-theme-ios27` durch `@webview-native-ui/cordova-plugin/theme` und CSS-Importe aus `@rdlabo/ionic-theme-ios27/dist/css/*` durch `@webview-native-ui/cordova-plugin/theme/css/*`. Importieren Sie den Native UI-Start aus der Cordova-Paketwurzel. Entfernen Sie alte Integrationsaliase sowie ursprüngliche Theme-/Capacitor-Abhängigkeiten, sobald die App sie nicht mehr nutzt. Behalten Sie Komponenten-Markup, Bindings und Handler bei.
 
-Verwenden Sie Helfer und CSS derselben gebündelten Theme-Version. Cordova 0.1.3 enthält Theme 2.1.0; die Installation eines neueren eigenständigen Themes aktualisiert diese Kopie nicht. Prüfen Sie Theme-Version und Core-Revision in `shared/ORIGIN.json` des installierten Cordova-Pakets und aktualisieren Sie das Cordova-Paket für neuere gebündelte Quellen.
+Verwenden Sie Helfer und CSS derselben gebündelten Theme-Version. Cordova 0.1.4 enthält Theme 2.2.0; die Installation eines neueren eigenständigen Themes aktualisiert diese Kopie nicht. Prüfen Sie Theme-Version und Core-Revision in `shared/ORIGIN.json` des installierten Cordova-Pakets und aktualisieren Sie das Cordova-Paket für neuere gebündelte Quellen.
 
 ## Unterstütztes Verhalten und Überprüfung
 
