@@ -550,17 +550,17 @@ test('standard setup synchronizes the base iOS animation without double-wrapping
   const { runInNewContext } = await import('node:vm');
   const ios26 = {
     mode: 'ios',
-    navAnimation: () => {},
-    popoverEnter: () => {},
-    popoverLeave: () => {},
+    navAnimation: () => 'page-animation',
+    popoverEnter: () => 'popover-enter',
+    popoverLeave: () => 'popover-leave',
   };
   const ios27 = {
     mode: 'ios',
-    navAnimation: () => {},
-    popoverEnter: () => {},
-    popoverLeave: () => {},
+    navAnimation: () => 'page-animation',
+    popoverEnter: () => 'popover-enter',
+    popoverLeave: () => 'popover-leave',
   };
-  const md3 = { mode: 'md', navAnimation: () => {} };
+  const md3 = { mode: 'md', navAnimation: () => 'md-animation' };
   for (const locale of ['en', 'ja', 'fr', 'de']) {
     const source = await readFile(`projects/docs/src/guides/${locale}/standard-setup.md`, 'utf8');
     const snippet = [...source.matchAll(/^```ts[^\n]*\n([\s\S]*?)\n```/gm)]
@@ -572,7 +572,7 @@ test('standard setup synchronizes the base iOS animation without double-wrapping
     }).outputText;
     for (const platform of ['ios', 'android', 'web']) {
       for (const supportsNewTheme of [false, true]) {
-        const wrapped = () => {};
+        const wrapped = () => 'native-synchronized-animation';
         const builders: unknown[] = [];
         const packages: Record<string, unknown> = {
           '@capacitor/core': { Capacitor: { getPlatform: () => platform } },
