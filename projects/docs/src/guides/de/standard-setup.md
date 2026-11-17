@@ -1,6 +1,6 @@
 ---
 title: 'WebView Native UI Standardeinrichtung'
-sourceRevision: '40aa2500ec14dae99b759ce8471ff7d4bf02906105beae57bb8aac7868ba4427'
+sourceRevision: '5481aa83039b3ce45afc79b52611c20a1dad86b2e932b6d8b7caff54da5deec8'
 ---
 
 # WebView Native UI Standardeinrichtung
@@ -65,16 +65,21 @@ Wählen Sie das passende Preset vor der bestehenden Ionic-Initialisierung. Behal
 
 ```ts
 import { Capacitor } from '@capacitor/core';
-import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
-import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+import { ios26ThemeConfig, iosTransitionAnimation as ios26TransitionAnimation } from '@rdlabo/ionic-theme-ios26';
+import { ios27ThemeConfig, withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
 const iosConfig =
   typeof CSS !== 'undefined' && CSS.supports('overflow-anchor: auto')
     ? ios27ThemeConfig
-    : ios26ThemeConfig;
+    : {
+        ...ios26ThemeConfig,
+        navAnimation: withNativeUITransition(ios26TransitionAnimation),
+      };
 const ionicConfig = Capacitor.getPlatform() === 'ios' ? iosConfig : md3ThemeConfig;
 ```
+
+Die iOS-26-Navigationsanimation wird mit `withNativeUITransition` umschlossen, um Web und native Steuerelemente zu synchronisieren. `ios27ThemeConfig` enthält diesen Adapter bereits. Behalten Sie die Popover-Animationen des jeweiligen Presets bei.
 
 | Framework         | Ionic initializer                                                   |
 | ----------------- | ------------------------------------------------------------------- |

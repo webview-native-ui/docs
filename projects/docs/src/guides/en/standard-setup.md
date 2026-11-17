@@ -60,16 +60,21 @@ Choose the matching preset before your existing Ionic initializer runs. Keep you
 
 ```ts
 import { Capacitor } from '@capacitor/core';
-import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
-import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+import { ios26ThemeConfig, iosTransitionAnimation as ios26TransitionAnimation } from '@rdlabo/ionic-theme-ios26';
+import { ios27ThemeConfig, withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
 const iosConfig =
   typeof CSS !== 'undefined' && CSS.supports('overflow-anchor: auto')
     ? ios27ThemeConfig
-    : ios26ThemeConfig;
+    : {
+        ...ios26ThemeConfig,
+        navAnimation: withNativeUITransition(ios26TransitionAnimation),
+      };
 const ionicConfig = Capacitor.getPlatform() === 'ios' ? iosConfig : md3ThemeConfig;
 ```
+
+The iOS 26 navigation animation is wrapped with `withNativeUITransition` to synchronize Web and native controls during navigation. `ios27ThemeConfig` already includes this adapter. Keep the popover animations supplied by each preset.
 
 | Framework         | Ionic initializer                                                   |
 | ----------------- | ------------------------------------------------------------------- |

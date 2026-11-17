@@ -1,6 +1,6 @@
 ---
 title: 'WebView Native UI 標準導入'
-sourceRevision: '40aa2500ec14dae99b759ce8471ff7d4bf02906105beae57bb8aac7868ba4427'
+sourceRevision: '5481aa83039b3ce45afc79b52611c20a1dad86b2e932b6d8b7caff54da5deec8'
 ---
 
 # WebView Native UI 標準導入
@@ -65,16 +65,21 @@ iOS の基本は iOS 26 テーマです。`overflow-anchor: auto` に対応す�
 
 ```ts
 import { Capacitor } from '@capacitor/core';
-import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
-import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
+import { ios26ThemeConfig, iosTransitionAnimation as ios26TransitionAnimation } from '@rdlabo/ionic-theme-ios26';
+import { ios27ThemeConfig, withNativeUITransition } from '@rdlabo/ionic-theme-ios27';
 import { md3ThemeConfig } from '@rdlabo/ionic-theme-md3';
 
 const iosConfig =
   typeof CSS !== 'undefined' && CSS.supports('overflow-anchor: auto')
     ? ios27ThemeConfig
-    : ios26ThemeConfig;
+    : {
+        ...ios26ThemeConfig,
+        navAnimation: withNativeUITransition(ios26TransitionAnimation),
+      };
 const ionicConfig = Capacitor.getPlatform() === 'ios' ? iosConfig : md3ThemeConfig;
 ```
+
+iOS 26の画面遷移は `withNativeUITransition` でラップし、Webとネイティブコントロールを同期します。`ios27ThemeConfig` はこの連携を含んでいます。ポップオーバーのアニメーションは各プリセットの設定を使います。
 
 | Framework         | Ionic initializer                                                   |
 | ----------------- | ------------------------------------------------------------------- |
