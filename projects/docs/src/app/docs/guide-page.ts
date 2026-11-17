@@ -12,7 +12,7 @@ import { GuideArticleComponent } from './guide-article';
   selector: 'app-guide-page',
   imports: [GuideArticleComponent],
   template: `@if (guide(); as content) {
-    <app-guide-article [guide]="content" [path]="path()" />
+    <app-guide-article [guide]="content" [path]="path()" [kind]="chapter()?.kind ?? 'task'" />
   }`,
 })
 export class GuidePageComponent {

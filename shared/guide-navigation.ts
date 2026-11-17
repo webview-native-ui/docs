@@ -3,51 +3,23 @@ import { resolveDocsLocale } from './docs-locales';
 export const GUIDE_CHAPTERS = [
   {
     id: 'appearance',
+    kind: 'task',
     title: {
-      en: 'Shape the appearance',
-      ja: '見た目を整える',
-      fr: 'Personnaliser l’apparence',
-      de: 'Das Erscheinungsbild gestalten',
+      en: 'Add an appearance switch',
+      ja: '外観の切り替えを追加する',
+      fr: 'Ajouter un sélecteur d’apparence',
+      de: 'Darstellungswechsel hinzufügen',
     },
     description: {
-      en: 'Use platform themes, then choose how your app follows light, dark and device colors.',
-      ja: 'プラットフォームに合うテーマを使い、ライト・ダークモードやデバイスの配色への追従を設定します。',
-      fr: 'Utilisez les thèmes des plateformes, puis choisissez les modes clair, sombre et les couleurs de l’appareil.',
-      de: 'Verwenden Sie Plattform-Themes und bestimmen Sie anschließend Hell-/Dunkelmodus und Gerätefarben.',
-    },
-  },
-  {
-    id: 'native-ui',
-    title: {
-      en: 'Use native UI',
-      ja: 'Native UIを使う',
-      fr: 'Utiliser l’interface native',
-      de: 'Native UI verwenden',
-    },
-    description: {
-      en: 'Project your Web controls into native UI while your app keeps its state, routes and handlers.',
-      ja: 'アプリの状態・ルーティング・イベント処理を保ったまま、WebのコントロールをネイティブUIで表示します。',
-      fr: 'Affichez vos contrôles Web en interface native tout en conservant l’état, les routes et les gestionnaires de votre application.',
-      de: 'Stellen Sie Web-Steuerelemente nativ dar, während Zustand, Routing und Ereignisbehandlung in Ihrer App bleiben.',
-    },
-  },
-  {
-    id: 'device-layout',
-    title: {
-      en: 'Adapt to the device',
-      ja: '端末に合わせる',
-      fr: 'S’adapter à l’appareil',
-      de: 'An das Gerät anpassen',
-    },
-    description: {
-      en: 'Follow display changes and place Vertical Bars on supported devices.',
-      ja: 'ディスプレイの変化に追従し、対応デバイスに合わせてVertical Barsを配置します。',
-      fr: 'Suivez les changements d’affichage et placez Vertical Bars sur les appareils compatibles.',
-      de: 'Reagieren Sie auf Anzeigeänderungen und platzieren Sie Vertical Bars auf unterstützten Geräten.',
+      en: 'Configure device colors and light/dark appearance as separate preferences.',
+      ja: '端末の配色を使う設定と、ライト・ダークの設定を別々に追加します。',
+      fr: 'Réglez séparément les couleurs de l’appareil et l’apparence claire ou sombre.',
+      de: 'Stellen Sie Gerätefarben und Hell-/Dunkelmodus getrennt ein.',
     },
   },
   {
     id: 'extensions',
+    kind: 'task',
     title: {
       en: 'Build your own native UI',
       ja: '独自のネイティブUIを作る',
@@ -63,6 +35,7 @@ export const GUIDE_CHAPTERS = [
   },
   {
     id: 'migration',
+    kind: 'migration',
     title: {
       en: 'Migrate an existing app',
       ja: '既存アプリを移行する',
@@ -122,10 +95,46 @@ export const GUIDE_COPY = {
     de: 'Ihre Web-App mit Plattform-UI.',
   },
   guideTitle: {
-    en: 'Customize when needed',
-    ja: '必要になったら調整する',
-    fr: 'Personnaliser si nécessaire',
-    de: 'Bei Bedarf anpassen',
+    en: 'Use and customize after setup',
+    ja: '導入後の使い方',
+    fr: 'Utiliser et personnaliser après l’installation',
+    de: 'Nach der Einrichtung nutzen und anpassen',
+  },
+  setupGroup: {
+    en: 'Installation',
+    ja: '導入する',
+    fr: 'Installation',
+    de: 'Einrichtung',
+  },
+  migrationGroup: {
+    en: 'Update an existing integration',
+    ja: '移行・更新',
+    fr: 'Mettre à jour une intégration',
+    de: 'Eine bestehende Integration aktualisieren',
+  },
+  taskIntro: {
+    en: 'App setup is complete on the installation page. Choose a guide below for the result you want; each guide has its own steps.',
+    ja: '導入は「Ionicアプリに導入する」のページで完了します。ここからは、実現したいことに合うページを選び、そのページ内の手順を進めます。',
+    fr: 'L’installation se termine sur sa page dédiée. Choisissez ci-dessous le résultat souhaité ; chaque guide possède ses propres étapes.',
+    de: 'Die Einrichtung wird auf der Installationsseite abgeschlossen. Wählen Sie hier das gewünschte Ergebnis; jede Anleitung hat eigene Schritte.',
+  },
+  setupReading: {
+    en: 'Follow steps 1–5 on this page to finish installation and verify the result.',
+    ja: 'このページの手順1〜5を順に進めると、導入と動作確認が完了します。',
+    fr: 'Suivez les étapes 1 à 5 de cette page pour terminer l’installation et vérifier le résultat.',
+    de: 'Folgen Sie den Schritten 1–5 auf dieser Seite, um Einrichtung und Prüfung abzuschließen.',
+  },
+  taskReading: {
+    en: 'For an app already set up. Choose this guide for its specific result and follow the steps within this page.',
+    ja: '導入済みのアプリで、このページの内容を実装・確認する手順です。目的別ガイドから必要なページを選んで利用できます。',
+    fr: 'Pour une application déjà configurée. Choisissez ce guide pour son résultat précis et suivez les étapes de cette page.',
+    de: 'Für eine bereits eingerichtete App. Wählen Sie diese Anleitung für ihr konkretes Ergebnis und folgen Sie den Schritten auf dieser Seite.',
+  },
+  migrationReading: {
+    en: 'For an existing integration. Follow the changes that apply to the packages and features your app already uses.',
+    ja: '既存の構成を更新するための手順です。現在使っているパッケージと機能に該当する変更を進めます。',
+    fr: 'Pour une intégration existante. Appliquez les changements correspondant aux paquets et fonctions déjà utilisés.',
+    de: 'Für eine bestehende Integration. Führen Sie die Änderungen für die bereits genutzten Pakete und Funktionen aus.',
   },
   standardAudience: {
     en: 'For Ionic 9 + Capacitor 8',
@@ -284,6 +293,7 @@ export function guideChaptersForLocale(locale: string) {
   return GUIDE_CHAPTERS.map((chapter) => ({
     id: chapter.id,
     path: '/guides/' + chapter.id,
+    kind: chapter.kind,
     title: chapter.title[code],
     description: chapter.description[code],
   }));

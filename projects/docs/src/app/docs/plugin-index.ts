@@ -32,7 +32,7 @@ import { SeoService } from './seo.service';
       </header>
 
       <section class="experience-explanation" aria-labelledby="how-it-fits">
-        <header><p class="eyebrow">01</p><h2 id="how-it-fits">{{ copy.howTitle }}</h2></header>
+        <header><h2 id="how-it-fits">{{ copy.howTitle }}</h2></header>
         <div>
           <p>{{ copy.intro }}</p>
           <p>{{ copy.approach }}</p>
@@ -43,7 +43,7 @@ import { SeoService } from './seo.service';
         </div>
       </section>
       <section id="choose-setup" class="setup-section" aria-labelledby="standard-entry">
-        <header><p class="eyebrow">02</p><h2 id="standard-entry">{{ copy.start }}</h2></header>
+        <header><h2 id="standard-entry">{{ copy.start }}</h2></header>
         <div>
           <p>{{ copy.startDescription }}</p>
           <p><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a></p>
@@ -63,15 +63,22 @@ import { SeoService } from './seo.service';
           </nav>
         </div>
       </section>
-      <header class="chapter-heading"><p class="eyebrow">03</p><h2>{{ copy.guideTitle }}</h2></header>
+      <header class="chapter-heading"><h2>{{ copy.guideTitle }}</h2><p>{{ copy.taskIntro }}</p></header>
       <section class="guide-chapters" [attr.aria-label]="copy.guide">
-        @for (chapter of chapters; track chapter.id) {
+        @for (chapter of taskGuides; track chapter.id) {
           <section class="guide-chapter">
             <h2><a [href]="guideHref(chapter.path)">{{ chapter.title }} →</a></h2>
             <p>{{ chapter.description }}</p>
           </section>
         }
       </section>
+      @if (migrationGuide; as chapter) {
+        <section class="guide-chapter migration-guide" aria-labelledby="migration-guide-title">
+          <h2 id="migration-guide-title">{{ copy.migrationGroup }}</h2>
+          <p>{{ copy.migrationReading }}</p>
+          <a [href]="guideHref(chapter.path)">{{ chapter.title }} →</a>
+        </section>
+      }
       <section id="packages" class="package-reference-intro">
         <h2>{{ copy.reference }}</h2>
         <p>{{ copy.referenceDescription }}</p>
@@ -125,6 +132,8 @@ export class PluginIndexComponent implements OnInit {
   readonly #locale = inject(LOCALE_ID);
   protected readonly copy = guideCopyForLocale(this.#locale);
   protected readonly chapters = guideChaptersForLocale(this.#locale);
+  protected readonly taskGuides = this.chapters.filter((chapter) => chapter.kind === 'task');
+  protected readonly migrationGuide = this.chapters.find((chapter) => chapter.kind === 'migration');
   protected guideHref(path: string): string { return localizedPublicPath(this.#locale, path); }
   protected readonly standardSetupLabel = STANDARD_SETUP_LABELS[resolveDocsLocale(this.#locale)];
   protected readonly standardSetupHref = localizedPublicPath(this.#locale, STANDARD_SETUP_PATH);

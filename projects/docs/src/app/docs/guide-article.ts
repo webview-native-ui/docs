@@ -3,6 +3,7 @@ import { HeadingLinksDirective } from '../../../../../shared/heading-links';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { ScrollSpyDirective } from './scroll-spy.directive';
 import { localizedFragmentPath } from '../locale-path';
+import { guideCopyForLocale } from '../../../../../shared/guide-navigation';
 
 export interface GuideContent {
   readonly title: string;
@@ -18,8 +19,10 @@ export interface GuideContent {
   styleUrl: './guide-article.css',
   template: `
     <header class="setup-header">
+      <p class="guide-kind">{{ kindLabel() }}</p>
       <h1>{{ guide().title }}</h1>
       <p>{{ guide().description }}</p>
+      <p class="guide-reading-hint">{{ readingHint() }}</p>
     </header>
     <div class="setup-layout">
       <nav class="setup-toc" [attr.aria-label]="contentsLabel" data-pagefind-ignore>
@@ -53,6 +56,22 @@ export class GuideArticleComponent {
   readonly #locale = inject(LOCALE_ID);
   readonly guide = input.required<GuideContent>();
   readonly path = input.required<string>();
+  readonly kind = input.required<'setup' | 'task' | 'migration'>();
+  readonly #copy = guideCopyForLocale(this.#locale);
+  protected readonly kindLabel = computed(() =>
+    this.kind() === 'setup'
+      ? this.#copy.setupGroup
+      : this.kind() === 'migration'
+        ? this.#copy.migrationGroup
+        : this.#copy.guideTitle,
+  );
+  protected readonly readingHint = computed(() =>
+    this.kind() === 'setup'
+      ? this.#copy.setupReading
+      : this.kind() === 'migration'
+        ? this.#copy.migrationReading
+        : this.#copy.taskReading,
+  );
   protected readonly contentsLabel = $localize`:@@onThisPage:On this page`;
   protected readonly headingIds = computed(() =>
     this.guide().headings.map((heading) => heading.id),

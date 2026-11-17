@@ -1,3 +1,4 @@
+import { applyTutorial, completedSetup } from './tutorial-states';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -27,13 +28,22 @@ for (const [project, page] of [
     try {
       let index = 0;
       const examples: string[] = [];
+      const portalState =
+        project === 'portal'
+          ? page === 'extensions'
+            ? applyTutorial('extensions', 'angular', completedSetup('angular', 'ja').files, {
+                locale: 'ja',
+              })
+            : completedSetup('angular', 'ja')
+          : undefined;
+      if (portalState) examples.push(portalState.files['src/native-ui.ts']);
       // The portal keeps its device wiring in a named shared startup module.
       // Framework configuration examples are exercised by the site contract tests.
       const pattern =
         project === 'portal'
           ? /^```(ts|scss)(?::src\/native-ui.ts)?\n([\s\S]*?)^```/gm
           : /^```(ts|scss)\n([\s\S]*?)^```/gm;
-      for (const match of markdown.matchAll(pattern)) {
+      for (const match of project === 'portal' ? [] : markdown.matchAll(pattern)) {
         const [, language, code] = match;
         if (language === 'scss') {
           assert.doesNotThrow(() => compileString(code, { loadPaths: [resolve('node_modules')] }));
@@ -65,9 +75,7 @@ for (const [project, page] of [
       }
       if (project === 'portal' && page === 'extensions') {
         mkdirSync(join(directory, 'native-ui'));
-        const definition = markdown.match(
-          /^```ts:src\/native-ui\/counter.ts\n([\s\S]*?)^```/m,
-        )?.[1];
+        const definition = portalState!.files['src/native-ui/counter.ts'];
         assert.ok(definition, 'Extension startup imports the actual documented counter');
         writeFileSync(join(directory, 'native-ui/counter.ts'), definition);
       }

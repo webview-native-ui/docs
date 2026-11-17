@@ -151,7 +151,15 @@
   padding: 16px 12px;
   border-bottom: 1px solid #e2e8f0;
 }
-.guide-navigation a {
+.guide-navigation h2 {
+  margin: 14px 12px 4px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.guide-navigation a,
+.support-navigation a {
   display: block;
   padding: 9px 12px;
   border-radius: 6px;
@@ -161,7 +169,9 @@
   text-decoration: none;
 }
 .guide-navigation a:hover,
-.guide-navigation a[aria-current='page'] {
+.guide-navigation a[aria-current='page'],
+.support-navigation a:hover,
+.support-navigation a[aria-current='page'] {
   background: #eff6ff;
   color: #1767d2;
 }
@@ -174,4 +184,9 @@
   font-weight: 600;
   line-height: 1.5;
   color: #64748b;
+}
+
+.support-navigation {
+  padding: 12px;
+  border-top: 1px solid #e2e8f0;
 }

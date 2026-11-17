@@ -22,9 +22,8 @@ second mandatory tutorial sequence.
 | Add Native UI while keeping an existing theme     | Dedicated package Ionic integration guide                                       | Retain the theme and integrate only the native runtime and device wiring needed by the app.                         |
 | Add Native UI without Ionic                       | Dedicated package HTML guide                                                    | Follow the framework-independent integration without Ionic imports.                                                 |
 | Use Cordova                                       | Dedicated Cordova package guide                                                 | Use Cordova installation and lifecycle rather than Capacitor commands.                                              |
-| Add an appearance setting                         | `/guides/appearance`, portal                                                    | A user can choose Light, Dark and System through the existing appearance controller.                                |
-| Use a built-in native control                     | `/guides/native-ui`, portal                                                     | The same Web action works in the supported native presentation and the Web fallback.                                |
-| Adapt to device layout                            | `/guides/device-layout`, portal                                                 | Device notifications apply and remove layout space through one subscription.                                        |
+| Add an appearance setting                         | `/guides/appearance`, portal                                                    | Device-palette and dark-mode settings work independently through the existing controller.                           |
+| Verify automatic native UI and layout             | `/standard-setup#verify-installation`, portal                                   | Existing Ionic controls and handlers work; layout changes apply and remove spacing without extra implementation.    |
 | Implement a custom native component               | `/guides/extensions`, portal                                                    | A Web-owned counter works in Web and the selected native host. This is optional and experimental.                   |
 | Update an existing integration                    | `/guides/migration`, portal                                                     | Identify the installed features, replace obsolete configuration and verify retained behavior.                       |
 | Look up a package                                 | Persistent package reference table of contents                                  | Select a package, enter its documentation and locate its setup or API.                                              |
@@ -64,7 +63,7 @@ remain available independently of tutorial progress.
   native-toolchain requirements at the point where they affect an action.
 - Task examples must connect to the established startup module and existing framework events;
   do not create a second shell, controller or layout subscription.
-- Appearance and built-in-control tasks provide concrete Angular, React and Vue page examples
+- Appearance and extension tasks provide concrete Angular, React and Vue page examples
   using their own event binding and state. Do not require the reader to translate raw DOM code
   into a framework page or attach global listeners on every routed-page visit.
 - Custom extensions change startup deliberately: enable the single runtime for each chosen
@@ -93,17 +92,17 @@ package/page link, walk the scenarios below as a new reader. Verify the concrete
 installed, pinned package contracts and execute Web examples where feasible. Separate observed
 behavior from inferred native behavior; do not claim a native build or device test that was not run.
 
-| Scenario                                    | Acceptance condition                                                                                                                                                                                         |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Angular / React / Vue combined installation | Each reader can identify the exact file, imports, initialization call and shell lifecycle; only one framework's example is needed and only the selected native projects are required.                        |
-| Theme-only / HTML / Cordova                 | Each path is visible before combined installation and avoids unrelated prerequisites.                                                                                                                        |
-| Appearance settings after route navigation  | All three framework pages wire their events explicitly. Existing startup is reused; opening/reopening settings does not create a second controller or duplicate actions.                                     |
-| Native control action                       | It is clear where markup and handlers go; Web remains the source of behavior; iOS support, observable projection status and other-platform fallback are explicit; all three framework handlers are concrete. |
-| Layout notification and reversal            | One listener updates from the resolver, removal restores normal layout, and a browser spacing preview is explicitly limited.                                                                                 |
-| Custom component                            | The Web counter, reader, native registration and existing startup form one executable path separately for iOS and Android, including the change from the combined startup guard.                             |
-| Migration                                   | A reader can identify applicable changes and verify completion without installing features they do not use.                                                                                                  |
-| Navigation and localization                 | Home, sidebar, package entry, direct URLs and heading links agree; all four languages expose equivalent actions.                                                                                             |
-| Desktop and mobile reading                  | Navigation and code stay usable without page-wide overflow.                                                                                                                                                  |
+| Scenario                                    | Acceptance condition                                                                                                                                                                  |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Angular / React / Vue combined installation | Each reader can identify the exact file, imports, initialization call and shell lifecycle; only one framework's example is needed and only the selected native projects are required. |
+| Theme-only / HTML / Cordova                 | Each path is visible before combined installation and avoids unrelated prerequisites.                                                                                                 |
+| Appearance settings after route navigation  | All three framework pages wire their events explicitly. Existing startup is reused; opening/reopening settings does not create a second controller or duplicate actions.              |
+| Automatic native controls                   | Existing screen actions work in native presentation and Web fallback during setup verification; no fake Save example or additional page implementation.                               |
+| Layout notification and reversal            | The setup listener applies initial placement, follows notifications and removes reserved spacing when the resolver returns no edge.                                                   |
+| Custom component                            | The Web counter, reader, native registration and existing startup form one executable path separately for iOS and Android, including the change from the combined startup guard.      |
+| Migration                                   | A reader can identify applicable changes and verify completion without installing features they do not use.                                                                           |
+| Navigation and localization                 | Home, sidebar, package entry, direct URLs and heading links agree; all four languages expose equivalent actions.                                                                      |
+| Desktop and mobile reading                  | Navigation and code stay usable without page-wide overflow.                                                                                                                           |
 
 Return failures and repeat after corrections. Approval means the documented acceptance criteria
 are met within the explicitly recorded evidence limits, not that every native host was built.
@@ -120,3 +119,97 @@ translations, so their install instructions can follow these journeys without ch
 package versions or rewriting other upstream reference pages. Their edit links must target this
 repository. Dependencies installed automatically as package peers do not imply a requirement
 to initialize Native UI or create native projects.
+
+## Visible reading model
+
+The previous design described independent task guides but the rendered interface presented
+setup, tasks and migration as one flat sequence. A reader must be able to infer the reading
+model from the page itself, including a direct link on mobile with the sidebar closed.
+
+- The setup page has five ordered operations, ending in platform checks, then an explicit
+  completion statement. Completing setup never requires finishing a task guide.
+- Homepage and sidebar separate installation, independent post-setup uses, migration/update
+  and package reference. Decorative section numbers must not imply a cross-page sequence.
+- Every portal guide identifies its kind and reading rule above the content. A task title and
+  introduction name the additional result; built-in controls and device updates already
+  enabled during setup are not presented as another required installation.
+- Numbering belongs to operations inside a page. A migration page is an alternate route for
+  existing installations, not the last chapter of first-time installation.
+- Acceptance checks must inspect these visible boundaries and the standalone setup finish,
+  in addition to code, links, and successful page rendering.
+
+## Independent appearance preferences
+
+Device palette selection and dark mode are independent booleans, matching seatkeep's two
+settings. Ionic examples use two ion-item rows, each containing one ion-toggle: Use device
+colors and Dark mode. Do not add an ion-list wrapper.
+There is no select or system/light/dark choice. The initial dark value snapshots current OS
+brightness once; after initialization the dark toggle controls appearance independently of
+OS changes. Unsupported platforms retain their default palette with device colors enabled.
+
+Reuse the existing theme controller, setting mode from the dark boolean at startup and on
+updates. Only a palette preference change triggers refresh. To disable device colors, the
+provider returns available:false while retaining systemDark. Read the latest preference after
+the native read resolves. Partial synchronous updates prevent one setting overwriting the
+other during pending reads. Choices survive reopening the page within the running app;
+this example does not add persistence across restarts.
+
+Acceptance checks all four combinations with the real controller, unsupported palette
+fallback, original-color restoration, OS changes while manual dark mode remains selected,
+and concurrent palette/dark updates. Angular uses Signal Forms; React and Vue bind both
+toggles to boolean state. The initial setup retains system.css until this optional task.
+
+## State transitions and file diffs
+
+Installation and task instructions describe changes to an existing application. Show every
+application-file edit as a filename-labelled diff: context remains, additions start with +,
+removals start with -, and only genuinely new files use all-addition examples. Each + or -
+marker has a visual gap of one monospace character before code. Changed and context rows
+reserve matching columns, with code indentation preserved. Source separator spaces are one
+implementation detail; the visual requirement is verified with browser coordinates. Keep terminal
+commands, WebView console operations and expected output distinct from file edits. Reference
+API definitions describe contracts rather than an application state transition.
+
+Each step states its starting condition, the edit or operation, and the ending condition.
+Installed dependencies, configured styles/options, connected startup and verified native
+behavior are different states. A successful code edit does not establish that a native app
+has been rebuilt or verified. A temporary check includes its removal diff and the rebuild,
+sync and restart/full-reload needed to verify the restored running state.
+
+The setup chain starts from an existing routed Ionic app and ends with its inspection hook
+removed. Optional tasks start from that state. Their diffs preserve unshown providers,
+HTTP configuration, routers, rendering and application content. Counter examples use each
+framework's state in an existing routed page rather than assuming a custom rendering callback
+not created by setup. Appearance and native extensions must work in either order without
+replacing each other's startup changes. Temporary installation diagnostics must restore the original startup without leaving inspection hooks.
+
+Acceptance applies the actual context and deleted lines to tracked starting fixtures, builds
+successive snapshots, then executes and compiles those snapshots. Extracting only + lines is
+insufficient. Temporary-check reversion, both optional-task orders, existing router/provider
+retention and the declared legacy/new-Application alternatives are separate regression cases.
+
+## Preserve appearance policy until the optional change
+
+The combined-installation baseline uses Ionic dark.system.css and follows OS brightness.
+Theme installation retains that policy through the public iOS system.css presets. It must
+not silently replace OS media-query behavior with class-based control. Existing class/always
+apps retain their own policy through the appropriate setup/migration route, rather than being
+converted to the system baseline as a supposed simplification.
+
+Only the optional appearance-settings task replaces the two iOS system.css imports with
+class.css, leaving conditions, Vertical Bars and MD3 imports unchanged. Explain that this is
+an intentional switch to application-controlled brightness. Device-palette selection remains
+an independent preference. Validate the compiled CSS in iOS and MD modes with OS light/dark
+and class absent/present, as well as the optional controller's fixed Light/Dark, so preserving
+the trigger is checked rather than merely finding dark tokens in CSS.
+
+## Automatic features are part of installation
+
+Native presentation and device-layout synchronization already start in combined setup. They
+must not appear as independent post-setup tasks. Remove the fake Save implementation and manual
+layout preview, and keep their real acceptance criteria at the end of setup. Optional tasks
+cover actual feature additions: appearance settings and custom native UI. Migration remains a
+separate journey. Sponsorship is a separate navigation link outside guide categories. Old
+native-ui and device-layout portal URLs redirect to the shared setup verification anchor in
+all languages, replacing obsolete fragments. Package references remain available for specific
+capabilities and configuration.

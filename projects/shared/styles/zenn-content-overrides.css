@@ -4,3 +4,8 @@
   width: max-content;
   min-width: 100%;
 }
+
+/* Context markers reserve the same marker + separator columns as changed rows. */
+.znc .shiki .line:not(.diff) > .diff-prefix {
+  padding-inline-end: 1ch;
+}

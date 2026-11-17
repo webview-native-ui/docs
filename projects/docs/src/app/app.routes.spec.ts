@@ -40,6 +40,15 @@ describe('routes', () => {
     expect(router.url).toBe('/projects/capacitor-native-ui/docs/setup');
   });
 
+  it('redirects obsolete automatic-feature guides to setup verification, replacing old fragments', async () => {
+    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
+    const router = TestBed.inject(Router);
+    for (const guide of ['native-ui', 'device-layout']) {
+      await router.navigateByUrl(`/guides/${guide}#obsolete-heading`);
+      expect(router.url).toBe('/standard-setup#verify-installation');
+    }
+  });
+
   it('renders a real not-found component instead of redirecting unknown paths to Stripe', async () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const router = TestBed.inject(Router);

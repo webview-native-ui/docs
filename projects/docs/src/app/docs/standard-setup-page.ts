@@ -9,7 +9,7 @@ import { docsBreadcrumbStructuredData } from './seo-json-ld';
 @Component({
   selector: 'app-standard-setup-page',
   imports: [GuideArticleComponent],
-  template: `<app-guide-article [guide]="guide" [path]="path" />`,
+  template: `<app-guide-article [guide]="guide" [path]="path" kind="setup" />`,
 })
 export class StandardSetupPageComponent implements OnInit {
   readonly #locale = inject(LOCALE_ID);
