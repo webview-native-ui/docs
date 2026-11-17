@@ -18,7 +18,13 @@ export async function generateStandardSetup(root: string) {
   );
   const guides: Record<
     string,
-    { title: string; description: string; html: string; editUrl: string }
+    {
+      title: string;
+      description: string;
+      html: string;
+      headings: { id: string; text: string }[];
+      editUrl: string;
+    }
   > = {};
   for (const { code } of PUBLISHED_DOCS_LOCALES) {
     const source = `projects/docs/src/guides/${code}/standard-setup.md`;
@@ -29,7 +35,8 @@ export async function generateStandardSetup(root: string) {
     if (!title) throw new Error(`${source}: title is required`);
     const content = body.replace(/^# .+\n/, '').trim();
     const description = content.split('\n\n')[0];
-    const document = new JSDOM(await markdownToHtml(content)).window.document;
+    const document = new JSDOM(await markdownToHtml(content.slice(description.length).trim()))
+      .window.document;
     for (const link of document.querySelectorAll('a[href]')) {
       const href = link.getAttribute('href')!;
       if (href.startsWith('/') && !href.startsWith('//')) {
@@ -42,6 +49,10 @@ export async function generateStandardSetup(root: string) {
       title,
       description,
       html,
+      headings: Array.from(JSDOM.fragment(html).querySelectorAll('h2[id]')).map((heading) => ({
+        id: heading.id,
+        text: heading.textContent?.trim() ?? '',
+      })),
       editUrl: `https://github.com/webview-native-ui/docs/edit/main/${source}`,
     };
   }
