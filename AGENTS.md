@@ -11,7 +11,7 @@ https://webview-native-ui.com. Keep `/projects/<slug>` and en/ja/fr/de URL paths
 - Related articles remain canonical on rdlabo.dev; the retained metadata is in `scripts/related-articles.ts`.
 - Verify with `npm run fmt:check`, `npm run lint`, `npm test`, `npm run build`, and `npm run seo:audit` (Node 24).
 - Production uses `wrangler.jsonc`. The optional Markdown/agent router uses a separate Worker and config; see `workers/README.md`. Never copy production secrets into files.
-- Deploy only after explicit approval. The workflow is manual and production-environment gated. The migration source's redirects must be deployed only after this site is live and verified.
+- Pushes to `main` automatically deploy the documentation and legacy-domain redirects after all workflow checks pass, using the `cloudflare-production` environment. PR publication and merging still require explicit approval. Manual deployment remains available on `main`; the optional agent router is deployed only when selected in a manual run.
 
 ## Whole-site review criteria
 
