@@ -645,10 +645,10 @@ export const GUIDE_COPY = {
     de: 'iOS: Liquid-Glass-Design und native Steuerelemente',
   },
   iosDetail: {
-    en: 'Use iOS 27 theme styling with built-in native controls on iOS 26+ (Xcode 26+). Vertical Bars adapts to supported devices, including iPhone Duo.',
-    ja: 'iOS 27テーマのスタイルを使い、iOS 26以降ではプラグインのネイティブコントロールを利用できます（Xcode 26以降）。iPhone Duoなどの対応端末ではVertical Barsで配置も調整します。',
-    fr: 'Utilisez le style du thème iOS 27 et les contrôles natifs intégrés sur iOS 26+ (Xcode 26+). Vertical Bars adapte la disposition aux appareils compatibles, dont iPhone Duo.',
-    de: 'Nutzen Sie das iOS-27-Theme und integrierte native Steuerelemente unter iOS 26+ (Xcode 26+). Vertical Bars passt das Layout an unterstützte Geräte wie iPhone Duo an.',
+    en: 'Use iOS 26 theme styling by default and iOS 27 on capable browsers, with built-in native controls on iOS 26+ (Xcode 26+). Vertical Bars adapts to supported devices, including iPhone Duo.',
+    ja: 'iOS 26テーマを基本に、対応ブラウザーではiOS 27へ切り替えます。iOS 26以降ではプラグインのネイティブコントロールを利用できます（Xcode 26以降）。iPhone Duoなどの対応端末ではVertical Barsで配置も調整します。',
+    fr: 'Utilisez le thème iOS 26 par défaut et iOS 27 sur les navigateurs compatibles, avec les contrôles natifs intégrés sur iOS 26+ (Xcode 26+). Vertical Bars adapte la disposition aux appareils compatibles, dont iPhone Duo.',
+    de: 'Nutzen Sie standardmäßig das iOS-26-Theme und in geeigneten Browsern iOS 27 sowie integrierte native Steuerelemente unter iOS 26+ (Xcode 26+). Vertical Bars passt das Layout an unterstützte Geräte wie iPhone Duo an.',
   },
   androidBenefit: {
     en: 'Android: Material Design 3 with device colors',
