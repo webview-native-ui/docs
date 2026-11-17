@@ -12,13 +12,13 @@ Ionic と Native UI を使う Cordova アプリには、`@webview-native-ui/cord
 Cordova アプリのルートで実行します。
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.3
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 準備済みのネイティブと JavaScript のアセットをインストールし、npm の依存関係を保存します。Web バンドラーが別の npm プロジェクトにある場合は、そちらにも同じバージョンをインストールします。
 
 ```sh
-npm install @webview-native-ui/cordova-plugin@0.1.3
+npm install @webview-native-ui/cordova-plugin@0.1.4
 ```
 
 Cordova とバンドラーが `package.json` を共有している場合、2回目のインストールは不要です。既存の Ionic の依存関係は維持します。Cordova、SwiftPM、Xcode、Android の設定は、プラグインの[要件](https://github.com/webview-native-ui/cordova-plugin#requirements)を参照してください。ネイティブ描画には対応する iOS バージョンが必要です。標準の Android コントロールは Web 表示を維持します。
@@ -101,7 +101,7 @@ Android の要件を満たしてビルドする場合は `android` を使いま�
 
 すべてのテーマ JavaScript インポートを `@rdlabo/ionic-theme-ios27` から `@webview-native-ui/cordova-plugin/theme` へ、CSS インポートを `@rdlabo/ionic-theme-ios27/dist/css/*` から `@webview-native-ui/cordova-plugin/theme/css/*` へ置き換えます。Native UI の起動は Cordova パッケージのルートからインポートします。アプリで不要になったら、古い連携用エイリアスと元のテーマ／Capacitor の依存関係を削除します。コンポーネントのマークアップ、バインディング、ハンドラーは維持します。
 
-ヘルパーと CSS は同じ同梱テーマバージョンのものを使います。Cordova 0.1.3 はテーマ 2.1.0 を含みます。新しい独立テーマをインストールしても、このコピーは更新されません。インストール済み Cordova パッケージの `shared/ORIGIN.json` でテーマのバージョンと Core のリビジョンを確認し、新しい同梱ソースを取得するには Cordova パッケージを更新してください。
+ヘルパーと CSS は同じ同梱テーマバージョンのものを使います。Cordova 0.1.4 はテーマ 2.2.0 を含みます。新しい独立テーマをインストールしても、このコピーは更新されません。インストール済み Cordova パッケージの `shared/ORIGIN.json` でテーマのバージョンと Core のリビジョンを確認し、新しい同梱ソースを取得するには Cordova パッケージを更新してください。
 
 ## 対応する動作と検証
 

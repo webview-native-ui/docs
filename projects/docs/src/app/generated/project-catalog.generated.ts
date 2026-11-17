@@ -316,7 +316,7 @@ export const PROJECTS_EN = [
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "2.1.9",
+    "version": "2.1.10",
     "description": "Native UI, Android Dynamic Color and custom native content for WebView apps.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
@@ -611,7 +611,7 @@ export const PROJECTS_EN = [
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Native UI for Cordova, with standard HTML and optional Ionic theme integration.",
     "path": "/projects/cordova-native-ui",
     "pages": [
@@ -943,7 +943,7 @@ export const PROJECTS_JA = [
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "2.1.9",
+    "version": "2.1.10",
     "description": "WebViewアプリ向けのNative UI、Android Dynamic Color、独自ネイティブコンテンツ。",
     "path": "/projects/capacitor-native-ui",
     "pages": [
@@ -1238,7 +1238,7 @@ export const PROJECTS_JA = [
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "標準HTMLと任意のIonicテーマ連携に対応するCordova向けNative UI。",
     "path": "/projects/cordova-native-ui",
     "pages": [
@@ -1570,7 +1570,7 @@ export const PROJECTS_FR = [
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "2.1.9",
+    "version": "2.1.10",
     "description": "Native UI, Dynamic Color Android et contenu natif personnalisé pour les applications WebView.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
@@ -1865,7 +1865,7 @@ export const PROJECTS_FR = [
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Native UI pour Cordova, avec HTML standard et intégration facultative du thème Ionic.",
     "path": "/projects/cordova-native-ui",
     "pages": [
@@ -2197,7 +2197,7 @@ export const PROJECTS_DE = [
     "repositoryUrl": "https://github.com/webview-native-ui/capacitor-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "2.1.9",
+    "version": "2.1.10",
     "description": "Native UI, Android Dynamic Color und eigene native Inhalte für WebView-Apps.",
     "path": "/projects/capacitor-native-ui",
     "pages": [
@@ -2492,7 +2492,7 @@ export const PROJECTS_DE = [
     "repositoryUrl": "https://github.com/webview-native-ui/cordova-plugin",
     "category": "plugins",
     "icon": "app",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Native UI für Cordova mit Standard-HTML und optionaler Ionic-Theme-Integration.",
     "path": "/projects/cordova-native-ui",
     "pages": [
