@@ -45,9 +45,14 @@ Published package versions checked against npm on 2026-11-12:
 Cordova 0.1.1 bundles iOS27 theme 2.1.0; it does not inherit the standalone theme version.
 
 Cloudflare Workers Static Assets uses `wrangler.jsonc` and the `webview-native-ui-docs` service.
-Production deploys are manual via the environment-gated workflow after explicit approval.
-Configure `CLOUDFLARE_API_TOKEN` and the custom domain before running it. The optional agent router
-has a distinct Worker name; see [workers/README.md](workers/README.md) for secrets and fail-open setup.
+Every push to `main`, including a merged PR, automatically runs the production deployment workflow.
+It refreshes public sponsors and runs formatting, lint, tests, the production build, and the SEO audit
+before deploying the documentation and legacy-domain redirects through the `cloudflare-production`
+environment. Deployments run sequentially without cancelling an in-progress deployment.
+
+Manual workflow dispatch remains available on `main`. Only manual runs can opt into deploying the
+separate agent router. Configure `CLOUDFLARE_API_TOKEN` and the custom domain before deployment; see
+[workers/README.md](workers/README.md) for agent-router secrets and fail-open setup.
 
 The footer lists every current public GitHub sponsor; the support page also lists past public
 sponsors. Production deployment refreshes the list with `npm run sponsors:generate` before
