@@ -31,7 +31,7 @@ A theme for Ionic apps that brings iOS 27 Liquid Glass and motion to the Web. Ca
 
 ## Get started
 
-Start with the standalone theme in an existing Ionic 9 app. Browser-only theme use needs no native Capacitor project or Native UI startup. For a Cordova application, use the optional [Cordova guide](docs/cordova.md), which covers its bundled theme and host-specific startup.
+Start with the standalone theme in an existing Ionic 9 app. Browser-only theme use needs no native Capacitor project or Native UI startup. Install the iOS theme separately if your app uses it. See [Cordova theme setup](/ionic-theme-ios27/docs/cordova).
 
 Only if you want device-driven layout, add [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable), the community plugin by Erkam Yaman, using the [device layout guide](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout). It reports placement, posture and change events; the theme provides Web layout helpers, while Native UI projects controls when separately enabled. Installing Foldable and connecting its events are optional additions, not prerequisites for the theme.
 
@@ -88,7 +88,7 @@ Use [configuration](docs/configuration.md) for individual CSS and animation sett
 
 The Capacitor plugin is maintained in [webview-native-ui/capacitor-plugin](https://github.com/webview-native-ui/capacitor-plugin). This repository owns the Ionic theme, the combined demo, browser screenshots, and simulator integration tests. The demo installs `@rdlabo/capacitor-native-ui` from npm; theme releases do not publish or change the plugin version.
 
-The [Cordova plugin](https://github.com/webview-native-ui/cordova-plugin) is maintained separately. It distributes a pinned copy of this theme with its integration imports connected to Cordova. Shared theme fixes belong here; Cordova updates its pinned theme version in a subsequent plugin release. The Capacitor demo and candidate checks below do not validate Cordova.
+Install the iOS theme separately if your app uses it. See [Cordova theme setup](/ionic-theme-ios27/docs/cordova).
 
 To verify an unpublished plugin archive against the real demo, run:
 

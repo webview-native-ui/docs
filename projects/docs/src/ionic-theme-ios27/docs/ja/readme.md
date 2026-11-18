@@ -1,6 +1,6 @@
 ---
 title: Ionic Theme iOS27
-sourceRevision: 'a2a9e9c5d1e966ad521c387f28322fdb72f3d4334765d19b9105c2ea122bb935'
+sourceRevision: '3d0aa9378b946f8b5e44d22d18f78ac8268ccb930bac6336df6a7405f5b6affc'
 ---
 
 `npm install @rdlabo/ionic-theme-ios27` でインストールします。1.x は [v1.2.1 のガイド](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1)を使用してください。Ionic アプリに iOS 27 の Liquid Glass とアニメーションを適用します。Capacitor iOS では、2.0.0から正式対応した Native UI を対応コントロールへ追加できます。
@@ -31,7 +31,7 @@ sourceRevision: 'a2a9e9c5d1e966ad521c387f28322fdb72f3d4334765d19b9105c2ea122bb93
 
 ## はじめる
 
-既存のIonic 9アプリに、単体テーマから導入します。ブラウザーでテーマだけを使う場合、CapacitorのネイティブプロジェクトやNative UIの起動は不要です。Cordovaアプリは、同梱テーマとホスト固有の起動を説明する任意の[Cordovaガイド](/docs/cordova)を使います。
+既存のIonic 9アプリに、単体テーマから導入します。ブラウザーでテーマだけを使う場合、CapacitorのネイティブプロジェクトやNative UIの起動は不要です。 iOS テーマを使うアプリは、テーマを別途インストールします。手順は [Cordova のテーマ設定](/ionic-theme-ios27/docs/cordova)を参照してください。
 
 端末に応じた配置が必要な場合だけ、Erkam Yamanによるコミュニティプラグイン[Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable)を[端末レイアウトの手順](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout)で追加します。Foldableは配置・姿勢・変更イベントを通知し、テーマはWeb配置を提供します。別途有効にしたNative UIがコントロールを投影します。Foldableの導入とイベント接続は任意の追加機能であり、テーマの前提ではありません。
 
@@ -88,7 +88,7 @@ npm install @rdlabo/ionic-theme-ios27
 
 Capacitor プラグインは [webview-native-ui/capacitor-plugin](https://github.com/webview-native-ui/capacitor-plugin) で保守します。このリポジトリはテーマ、統合デモ、ブラウザー撮影とシミュレーター連携テストを管理します。デモは npm の `@rdlabo/capacitor-native-ui` を使用し、テーマのリリースでプラグインの公開や版の変更は行いません。
 
-[Cordova プラグイン](https://github.com/webview-native-ui/cordova-plugin)は別に保守し、連携 import を Cordova に接続した固定版テーマを配布します。共通テーマの修正はテーマ側で行い、Cordova は後続のプラグインリリースで同梱版を更新します。以下の Capacitor デモと候補検証は Cordova を検証しません。
+iOS テーマを使うアプリは、テーマを別途インストールします。手順は [Cordova のテーマ設定](/ionic-theme-ios27/docs/cordova)を参照してください。
 
 未公開のプラグインアーカイブを実際のデモで検証する場合:
 

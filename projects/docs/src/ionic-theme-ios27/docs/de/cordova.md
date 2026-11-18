@@ -1,62 +1,41 @@
 ---
 title: "Cordova einrichten"
-sourceRevision: "e1489d1b5f63a0aae69a7a641d67e5e563595c6081552422dad3c7ea4796375b"
+sourceRevision: '33b1ccf63a4787bafc8696db5739b64d3e3b2714feabed2703411508407a0bac'
 ---
 
-Verwenden Sie `@webview-native-ui/cordova-plugin` für eine Cordova-App mit Ionic und Native UI. Das Plugin enthält Theme-JavaScript, Typen und CSS, bereits mit seiner nativen Integration verbunden. Bundler-Aliasse oder separate Installationen von `@rdlabo/ionic-theme-ios27` oder `@rdlabo/capacitor-native-ui` sind nicht nötig.
-
-Capacitor ist der standardmäßige native Host dieser Dokumentation. Diese optionale Anleitung beschreibt Paket- und Startunterschiede für eine gebündelte Ionic-Anwendung mit Cordova. Gemeinsames Markup, Styling und Helferverwendung bleiben in den bestehenden Funktionsanleitungen beschrieben.
-
-## 1. Cordova-Plugin installieren
-
-Im Stammverzeichnis der Cordova-Anwendung:
+Installieren Sie das Theme im Web-Projekt nach der [Cordova-Einrichtung](/cordova-native-ui/docs/readme).
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.4
+npm install @rdlabo/ionic-theme-ios27
 ```
 
-Dies installiert die vorbereiteten nativen und JavaScript-Assets und speichert die npm-Abhängigkeit. Ist Ihr Web-Bundler ein separates npm-Projekt, installieren Sie dort dieselbe Version:
+## Optionales iOS-Theme
 
-```sh
-npm install @webview-native-ui/cordova-plugin@0.1.4
-```
-
-Teilen Cordova und Bundler eine `package.json`, ist keine zweite Installation nötig. Behalten Sie vorhandene Ionic-Abhängigkeiten bei. Die [Plugin-Voraussetzungen](https://github.com/webview-native-ui/cordova-plugin#requirements) beschreiben Cordova, SwiftPM, Xcode und Android. Natives Rendering erfordert unterstützte iOS-Versionen; standardmäßige Android-Steuerelemente behalten die Web-Darstellung.
-
-`@erkamyaman/capacitor-foldable` ist ein Capacitor-Plugin und wird für diese Cordova-Einrichtung nicht benötigt. Die Capacitor-spezifische Gerätelayout-Anbindung anderer Theme-Anleitungen belegt keine Cordova-Unterstützung dieser APIs.
-
-## 2. Mitgelieferte Theme-Stile laden
-
-Behalten Sie Ionics Basisstile bei und ergänzen Sie danach diese Importe im globalen Stylesheet. Ersetzen Sie eine vorhandene dunkle Palette, statt mehrere zu laden:
+Behalten Sie die Ionic-Basisstile bei und wählen Sie das Preset für Ihre Dunkelmodus-Einstellung. Für die Systemeinstellung:
 
 ```css
-@import '@ionic/core/css/palettes/dark.system.css';
-@import '@webview-native-ui/cordova-plugin/theme/css/default-variables.css';
-@import '@webview-native-ui/cordova-plugin/theme/css/ionic-theme-ios27.css';
-@import '@webview-native-ui/cordova-plugin/theme/css/md-remove-ios-class-effect.css';
-@import '@webview-native-ui/cordova-plugin/theme/css/ionic-theme-ios27-dark-system.css';
+@import '@rdlabo/ionic-theme-ios27/styles/system.css';
 ```
 
-Verwenden Sie für manuellen Dunkelmodus stattdessen `dark.class.css` und `ionic-theme-ios27-dark-class.css` und schalten Sie `ion-palette-dark` auf `html` um. Halten Sie Ionic- und Theme-Varianten passend zueinander.
+Importieren Sie JavaScript-Helfer aus dem Theme. Ordnen Sie im Web-Bundler den exakten Modulnamen
 
-## 3. Ionic-Animationen konfigurieren
-
-Importieren Sie die Animationen aus dem Cordova-Paket und übergeben Sie sie vor dem Rendern an Ihre vorhandene Ionic-Initialisierung:
+`@rdlabo/capacitor-native-ui/integration` → `@webview-native-ui/cordova-plugin/integration`
 
 ```ts
-import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@webview-native-ui/cordova-plugin/theme';
+// vite.config.ts
+import { defineConfig } from 'vite';
 
-const ionicConfig = {
-  mode: 'ios' as const,
-  navAnimation: iosTransitionAnimation,
-  popoverEnter: popoverEnterAnimation,
-  popoverLeave: popoverLeaveAnimation,
-};
+export default defineConfig({
+  resolve: {
+    alias: [{
+      find: /^@rdlabo\/capacitor-native-ui\/integration$/,
+      replacement: '@webview-native-ui/cordova-plugin/integration',
+    }],
+  },
+});
 ```
 
-Verwenden Sie den vorhandenen Initialisierer Ihres Frameworks wie unter [Initialisierung des Frameworks](setup.md#3-pass-theme-configuration-to-ionic) beschrieben; initialisieren Sie Ionic nicht zweimal. Wenden Sie diese Optionen nur in der iOS-Konfiguration an, um Androids Material-Design-Modus beizubehalten. Weitere Helfer wie `attachTabBarSearchable` sind ebenfalls über `/theme` verfügbar; ihr Import bindet das Verhalten nicht automatisch an.
-
-## 4. Native UI nach Bereitschaft von Cordova und App starten
+## Native UI nach Bereitschaft von Cordova und App starten
 
 Behalten Sie `<script src="cordova.js"></script>` im Cordova-Einstiegs-HTML bei. Registrieren Sie den Device-Ready-Listener beim Start und warten Sie vor dem Aktivieren von Native UI, bis Ihr Framework `ion-app` eingebunden hat:
 
@@ -84,27 +63,9 @@ cordova build ios
 
 Verwenden Sie nach Erfüllung der Voraussetzungen `android` für einen Android-Build. Nutzen Sie für Cordova kein `npx cap sync`. Unter iOS deaktiviert der Adapter automatische Scroll-View-Einzüge; setzen Sie Safe-Area-Abstände im Seiten-CSS wie in der [Plugin-Anleitung](https://github.com/webview-native-ui/cordova-plugin#start-native-ui) beschrieben.
 
-## Gemeinsame Theme-Anleitungen verwenden
-
-Lesen Sie weiter zu [Markup und Klassen](special-markup.md), [eingerückten Listen](using-ion-item-group.md), [CSS-Variablen und Komponentenstilen](features.md) sowie [Animationshelfern](animation.md). Die Beispiele verwenden standardmäßig das eigenständige Theme-Paket. Nutzen Sie für die mit Ihrem Cordova-Plugin gebündelte Theme-Version diese Ersetzungen:
-
-| Standarddokumentation | Cordova-Entsprechung |
-| --- | --- |
-| JavaScript-Importe aus `@rdlabo/ionic-theme-ios27` | `@webview-native-ui/cordova-plugin/theme` |
-| CSS-Importe aus `@rdlabo/ionic-theme-ios27/dist/css/*` | `@webview-native-ui/cordova-plugin/theme/css/*` (mit `.css`-Erweiterung) |
-| Native UI-Start aus `@rdlabo/capacitor-native-ui` | Cordova-Paketwurzel mit dem oben beschriebenen Startlebenszyklus |
-| Sass-Importe aus `@rdlabo/ionic-theme-ios27/src/styles/*` | Nicht im Cordova-Paket enthalten; kompiliertes CSS und CSS-Variablen verwenden |
-
-Die Anleitung für [adaptive Themes](adaptive-themes.md) nutzt Sass-Quellen des eigenständigen Themes und ist nicht direkt auf Cordova übertragbar. Die CSS-Layoutkonzepte von [Vertical Bars-Layout](vertical-bars-layout.md) sind gemeinsam, doch die Capacitor-Foldable-Anbindung benötigt eine hostspezifische Integration. Folgen Sie dem Unterstützungsumfang des Cordova-Plugins, statt native Capacitor-Einrichtungsbefehle zu kopieren.
-
 ## Bestehende Theme-App zu dieser Integration migrieren
 
-Ersetzen Sie alle Theme-JavaScript-Importe aus `@rdlabo/ionic-theme-ios27` durch `@webview-native-ui/cordova-plugin/theme` und CSS-Importe aus `@rdlabo/ionic-theme-ios27/dist/css/*` durch `@webview-native-ui/cordova-plugin/theme/css/*`. Importieren Sie den Native UI-Start aus der Cordova-Paketwurzel. Entfernen Sie alte Integrationsaliase sowie ursprüngliche Theme-/Capacitor-Abhängigkeiten, sobald die App sie nicht mehr nutzt. Behalten Sie Komponenten-Markup, Bindings und Handler bei.
+Ersetzen Sie ab 0.1.6 die Importe des zuvor mitgelieferten Themes. Für das Aussehen aus 0.1.5 verwenden Sie Theme-Version 2.2.0.
 
-Verwenden Sie Helfer und CSS derselben gebündelten Theme-Version. Cordova 0.1.4 enthält Theme 2.2.0; die Installation eines neueren eigenständigen Themes aktualisiert diese Kopie nicht. Prüfen Sie Theme-Version und Core-Revision in `shared/ORIGIN.json` des installierten Cordova-Pakets und aktualisieren Sie das Cordova-Paket für neuere gebündelte Quellen.
-
-## Unterstütztes Verhalten und Überprüfung
-
-Capacitor bleibt der primär unterstützte Host. Cordova-Vergleiche umfassten Ionic 8.8.19 auf iOS 27.2 und Android API 35: Steuerelemente, Tabs, Overlays, Theme-Integration, Dunkelmodus und Stoppen/Neustarten. Die Suche verwendete auf beiden Hosts den Web-Fallback des Themes. Diese Prüfungen belegen weder Gleichwertigkeit nativer Suche noch vollständige Framework-Router-Übergänge oder interaktive Zurück-Gesten. Die Ionic-9-Capacitor-Demo dieses Repositorys ist kein Cordova-Abnahmetest.
-
-Falls Theme-Helfer nicht mit nativen Steuerelementen zusammenarbeiten, prüfen Sie, dass alle Theme-Importe `/theme` verwenden, nur eine Native UI-Laufzeit gestartet wird und Web-Bundle sowie natives Plugin dieselbe Version nutzen. Melden Sie Bridge-, Installations- oder gebündelte Integrationsprobleme in [cordova-plugin](https://github.com/webview-native-ui/cordova-plugin/issues); gemeinsame Theme-Stil- und Animationskorrekturen gehören in dieses Repository.
+- `@webview-native-ui/cordova-plugin/theme` → `@rdlabo/ionic-theme-ios27`
+- `@webview-native-ui/cordova-plugin/theme/css/*` → `@rdlabo/ionic-theme-ios27/dist/css/*`

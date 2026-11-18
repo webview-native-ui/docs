@@ -1,62 +1,41 @@
 ---
 title: "Cordova のセットアップ"
-sourceRevision: "c2900d912e29ceea6285c2795d407d616461f204124a69276b55e3ef3dcda536"
+sourceRevision: '33b1ccf63a4787bafc8696db5739b64d3e3b2714feabed2703411508407a0bac'
 ---
 
-Ionic と Native UI を使う Cordova アプリには、`@webview-native-ui/cordova-plugin` を使用します。このプラグインは、ネイティブ連携へ接続済みのテーマ JavaScript、型、CSS を含みます。バンドラーのエイリアスや、`@rdlabo/ionic-theme-ios27`、`@rdlabo/capacitor-native-ui` の別途インストールは不要です。
-
-このドキュメントの既定のネイティブホストは Capacitor です。この任意のガイドでは、Cordova を使うバンドル済み Ionic アプリのパッケージと起動処理の違いを説明します。共通のマークアップ、スタイル、ヘルパーの使用方法は既存の機能ガイドを参照してください。
-
-## 1. Cordova プラグインをインストールする
-
-Cordova アプリのルートで実行します。
+[Cordova プラグインの導入](/cordova-native-ui/docs/readme)を済ませたら、Web プロジェクトにテーマをインストールします。
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.4
+npm install @rdlabo/ionic-theme-ios27
 ```
 
-準備済みのネイティブと JavaScript のアセットをインストールし、npm の依存関係を保存します。Web バンドラーが別の npm プロジェクトにある場合は、そちらにも同じバージョンをインストールします。
+## iOS テーマを使う場合
 
-```sh
-npm install @webview-native-ui/cordova-plugin@0.1.4
-```
-
-Cordova とバンドラーが `package.json` を共有している場合、2回目のインストールは不要です。既存の Ionic の依存関係は維持します。Cordova、SwiftPM、Xcode、Android の設定は、プラグインの[要件](https://github.com/webview-native-ui/cordova-plugin#requirements)を参照してください。ネイティブ描画には対応する iOS バージョンが必要です。標準の Android コントロールは Web 表示を維持します。
-
-`@erkamyaman/capacitor-foldable` は Capacitor プラグインであり、この Cordova セットアップには不要です。他のテーマガイドにある Capacitor 固有のデバイスレイアウトの配線は、それらの API の Cordova 対応を保証しません。
-
-## 2. 同梱テーマのスタイルを読み込む
-
-Ionic の基本スタイルを維持し、その後にグローバルスタイルシートへ次を追加します。既存のダークパレットは置き換え、複数のパレットを読み込まないでください。
+Ionic の基本 CSS を維持し、現在のダークモード設定に合うプリセットを使います。OS の明暗に追従する場合は次のように指定します。
 
 ```css
-@import '@ionic/core/css/palettes/dark.system.css';
-@import '@webview-native-ui/cordova-plugin/theme/css/default-variables.css';
-@import '@webview-native-ui/cordova-plugin/theme/css/ionic-theme-ios27.css';
-@import '@webview-native-ui/cordova-plugin/theme/css/md-remove-ios-class-effect.css';
-@import '@webview-native-ui/cordova-plugin/theme/css/ionic-theme-ios27-dark-system.css';
+@import '@rdlabo/ionic-theme-ios27/styles/system.css';
 ```
 
-手動のダークモードでは、代わりに `dark.class.css` と `ionic-theme-ios27-dark-class.css` を使い、`html` の `ion-palette-dark` を切り替えます。Ionic とテーマのバリアントを揃えてください。
+JavaScript ヘルパーはテーマからインポートします。ヘルパーを使う場合は、Web バンドラーで次のモジュールを完全一致で置き換え、テーマと Cordova が同じ Native UI の状態を参照するようにします。
 
-## 3. Ionic のアニメーションを設定する
-
-Cordova パッケージからアニメーションをインポートし、アプリを描画する前に既存の Ionic 初期化へ渡します。
+`@rdlabo/capacitor-native-ui/integration` → `@webview-native-ui/cordova-plugin/integration`
 
 ```ts
-import { iosTransitionAnimation, popoverEnterAnimation, popoverLeaveAnimation } from '@webview-native-ui/cordova-plugin/theme';
+// vite.config.ts
+import { defineConfig } from 'vite';
 
-const ionicConfig = {
-  mode: 'ios' as const,
-  navAnimation: iosTransitionAnimation,
-  popoverEnter: popoverEnterAnimation,
-  popoverLeave: popoverLeaveAnimation,
-};
+export default defineConfig({
+  resolve: {
+    alias: [{
+      find: /^@rdlabo\/capacitor-native-ui\/integration$/,
+      replacement: '@webview-native-ui/cordova-plugin/integration',
+    }],
+  },
+});
 ```
 
-[フレームワークの初期化](setup.md#3-pass-theme-configuration-to-ionic)に従い、フレームワークの既存の初期化処理を使います。Ionic を2回初期化しないでください。Android で Material Design モードを維持する場合は、これらの設定を iOS の設定にだけ適用します。`attachTabBarSearchable` などの他のヘルパーも `/theme` から利用できますが、インポートだけでは動作を自動で適用しません。
-
-## 4. Cordova とアプリの準備後に Native UI を起動する
+## Cordova とアプリの準備後に Native UI を起動する
 
 Cordova のエントリー HTML に `<script src="cordova.js"></script>` を残します。起動中にデバイス準備完了のリスナーを登録し、フレームワークが `ion-app` をマウントしてから Native UI を有効にします。
 
@@ -84,27 +63,9 @@ cordova build ios
 
 Android の要件を満たしてビルドする場合は `android` を使います。Cordova に `npx cap sync` は使わないでください。iOS のアダプターはスクロールビューの自動 inset を無効にします。[プラグインガイド](https://github.com/webview-native-ui/cordova-plugin#start-native-ui)に従って、ページの CSS でセーフエリアの余白を適用してください。
 
-## 共通のテーマガイドを使う
-
-[マークアップとクラス](special-markup.md)、[インセットリスト](using-ion-item-group.md)、[CSS 変数とコンポーネントのスタイル](features.md)、[アニメーションヘルパー](animation.md)へ進みます。これらの例は既定で独立したテーマパッケージを使います。Cordova プラグインに同梱されたテーマのバージョンでは、次の置き換えを行ってください。
-
-| 標準ドキュメント | Cordova での対応 |
-| --- | --- |
-| `@rdlabo/ionic-theme-ios27` からの JavaScript インポート | `@webview-native-ui/cordova-plugin/theme` |
-| `@rdlabo/ionic-theme-ios27/dist/css/*` からの CSS インポート | `@webview-native-ui/cordova-plugin/theme/css/*`（`.css` 拡張子を含める） |
-| `@rdlabo/capacitor-native-ui` からの Native UI 起動 | Cordova パッケージのルート。上記の起動ライフサイクルを使用 |
-| `@rdlabo/ionic-theme-ios27/src/styles/*` からの Sass インポート | Cordova パッケージには含まれません。コンパイル済み CSS と CSS 変数を使用 |
-
-[環境に応じたテーマ](adaptive-themes.md)のガイドは、独立したテーマの Sass ソースを使うため、そのまま Cordova に適用できません。[Vertical Bars のレイアウト](vertical-bars-layout.md)の CSS レイアウトの概念は共通ですが、Capacitor Foldable の配線にはホスト固有の連携が必要です。Capacitor のネイティブセットアップコマンドをコピーせず、Cordova プラグインの対応範囲に従ってください。
-
 ## 既存のテーマアプリをこの連携へ移行する
 
-すべてのテーマ JavaScript インポートを `@rdlabo/ionic-theme-ios27` から `@webview-native-ui/cordova-plugin/theme` へ、CSS インポートを `@rdlabo/ionic-theme-ios27/dist/css/*` から `@webview-native-ui/cordova-plugin/theme/css/*` へ置き換えます。Native UI の起動は Cordova パッケージのルートからインポートします。アプリで不要になったら、古い連携用エイリアスと元のテーマ／Capacitor の依存関係を削除します。コンポーネントのマークアップ、バインディング、ハンドラーは維持します。
+0.1.5 以前の同梱テーマを使っていたアプリは、0.1.6 への更新時に次の import を置き換えます。0.1.5 と同じ外観を維持するにはテーマを 2.2.0 に固定します。
 
-ヘルパーと CSS は同じ同梱テーマバージョンのものを使います。Cordova 0.1.4 はテーマ 2.2.0 を含みます。新しい独立テーマをインストールしても、このコピーは更新されません。インストール済み Cordova パッケージの `shared/ORIGIN.json` でテーマのバージョンと Core のリビジョンを確認し、新しい同梱ソースを取得するには Cordova パッケージを更新してください。
-
-## 対応する動作と検証
-
-主な対応ホストは引き続き Capacitor です。Cordova の比較検証は iOS 27.2 と Android API 35 の Ionic 8.8.19 で行い、コントロール、タブ、オーバーレイ、テーマ連携、ダークモード、停止／再起動を対象にしました。検索は両ホストでテーマの Web フォールバックを使いました。これらの検証は、ネイティブ検索の同等性、フレームワークルーターの遷移全般、対話的な戻るジェスチャーを保証しません。このリポジトリの Ionic 9 Capacitor デモは Cordova の受け入れテストではありません。
-
-テーマのヘルパーがネイティブコントロールと連携しない場合は、すべてのテーマインポートが `/theme` を使うこと、Native UI ランタイムを1つだけ起動していること、Web バンドルとネイティブプラグインが同じバージョンであることを確認します。ブリッジ、インストール、同梱連携の問題は [cordova-plugin](https://github.com/webview-native-ui/cordova-plugin/issues) へ報告してください。共通テーマのスタイルやアニメーションの修正は、このリポジトリで扱います。
+- `@webview-native-ui/cordova-plugin/theme` → `@rdlabo/ionic-theme-ios27`
+- `@webview-native-ui/cordova-plugin/theme/css/*` → `@rdlabo/ionic-theme-ios27/dist/css/*`

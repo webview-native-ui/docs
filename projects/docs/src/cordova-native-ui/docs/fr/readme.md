@@ -1,17 +1,17 @@
 ---
 title: "Premiers pas avec Cordova"
-sourceRevision: "f8ab74043a95d5f006f73d9e95eb7bfb54c5927dc48aecba7b7bd9e4d710f15d"
+sourceRevision: '634df3976e546677419f36950fa411c56c3a96be1221e2ee5ad220049d59cb26'
 ---
 
 # Premiers pas avec Cordova
 
-Utilisez la version publiée v0.1.4 de `@webview-native-ui/cordova-plugin` pour ajouter Native UI à une application Cordova. L’adaptateur partage Native UI Core avec le plugin Capacitor ; il ne nécessite pas le runtime JavaScript Capacitor. Le HTML standard est pris en charge via `/core`, tandis que la racine du package ajoute l’intégration Ionic.
+Utilisez la version publiée v0.1.6 de `@webview-native-ui/cordova-plugin` pour ajouter Native UI à une application Cordova. L’adaptateur partage Native UI Core avec le plugin Capacitor ; il ne nécessite pas le runtime JavaScript Capacitor. Le HTML standard est pris en charge via `/core`, tandis que la racine du package ajoute l’intégration Ionic.
 
 ## Prérequis et prise en charge
 
 - Cordova CLI 13, avec cordova-ios 8.1+ utilisant Swift Package Manager, ou cordova-android 15+.
 - Les contrôles iOS natifs nécessitent iOS 26+ et Xcode 26+. Les versions antérieures d’iOS conservent la présentation Web. CocoaPods et les anciennes versions de Cordova ne sont pas pris en charge.
-- L’intégration Ionic et le thème fourni nécessitent `@ionic/core >=8.8.1 <10`. Le HTML standard via `/core` ne nécessite pas Ionic.
+- L’intégration Ionic nécessite `@ionic/core >=8.8.1 <10`. Le HTML standard via `/core` ne nécessite pas Ionic.
 - Android nécessite l’API 24+, le SDK 36, JDK 21, Kotlin 2.2.20 et Compose. Les contrôles standard conservent la présentation Web ; les extensions Compose locales à l’application sont prises en charge séparément. Ne supposez pas une parité avec les barres d’outils ou la recherche iOS.
 
 ## Installer la même version dans les deux projets
@@ -19,13 +19,13 @@ Utilisez la version publiée v0.1.4 de `@webview-native-ui/cordova-plugin` pour 
 Exécutez cette commande dans le projet Cordova :
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.4
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.6
 ```
 
 Pour une application Web assemblée par un bundler, exécutez aussi cette commande dans le projet npm qui construit les ressources Web :
 
 ```sh
-npm install --save-exact @webview-native-ui/cordova-plugin@0.1.4
+npm install --save-exact @webview-native-ui/cordova-plugin@0.1.6
 ```
 
 La commande Cordova installe le plugin natif. La dépendance npm fournit les imports au bundler Web. Gardez leurs versions alignées. Conservez `<script src="cordova.js"></script>` dans le HTML d’entrée Cordova, construisez les ressources Web dans `www`, puis exécutez `cordova prepare` et reconstruisez l’application native. Recharger les ressources Web ne met pas à jour le code natif. L’installation directe par URL Git n’est pas prise en charge.
@@ -57,15 +57,15 @@ Appelez `await nativeUI.destroy()` lorsque l’application cesse définitivement
 
 Pour une application ESM, importez `enableNativeUI` depuis `@webview-native-ui/cordova-plugin/core` pour le HTML standard, ou depuis `@webview-native-ui/cordova-plugin` pour Ionic. Utilisez un seul type d’entrée du runtime. Ne mélangez pas le démarrage npm et le démarrage `window.NativeUI`.
 
-## Thème Ionic fourni, facultatif
+## Thème iOS facultatif
 
-La version 0.1.4 inclut le thème iOS27 en version 2.2.0. Le thème autonome est publié indépendamment ; installer sa version la plus récente ne met pas à jour la copie fournie avec ce plugin Cordova. Utilisez les entrées `/theme` et `/theme/css/*` du plugin sans alias de bundler. Suivez la [configuration du thème Cordova](/ionic-theme-ios27/docs/cordova) pour raccorder les animations et les feuilles de style, et remplacez les anciens imports du thème au lieu de mélanger les deux intégrations.
+Si votre application utilise le thème iOS, installez-le séparément. Consultez [Configurer le thème avec Cordova](/ionic-theme-ios27/docs/cordova).
 
-Ne démarrez Native UI qu’après `deviceready` et le montage de `ion-app` par l’application. Importer ou appliquer les styles du thème n’active pas à lui seul les contrôles natifs. Capacitor est l’hôte principal ; le périmètre de prise en charge de Cordova est plus réduit, et la réussite des builds ne garantit pas une parité complète des routeurs de framework ou des gestes.
+**iPhone Duo** — Cordova ne dispose pas d’équivalent à `@erkamyaman/capacitor-foldable`. Cette configuration ne prend pas en charge l’iPhone Duo.
 
 ## Badges des boutons de barre d’outils
 
-La version 0.1.4 inclut le Core des badges de barre d’outils utilisé par Capacitor 2.1.10 et les styles de thème correspondants. Placez `ion-badge` directement dans un `ion-button` d’un `ion-toolbar` :
+Placez `ion-badge` dans un `ion-button`, directement sous ce bouton dans un `ion-toolbar`.
 
 ```html
 <ion-toolbar>
@@ -83,5 +83,5 @@ Sur les Vertical Bars natives iOS prises en charge, le badge reprend le texte so
 ## Étapes suivantes
 
 - Les [concepts et limites d’Engine](/webview-native-ui-engine/docs/concepts) expliquent le modèle de présentation partagé.
-- Le [README du package](https://github.com/webview-native-ui/cordova-plugin/blob/d4f7aeffb228be4d7f0ff1ec4a21fcd00104f517/README.md) couvre les archives locales, le dépannage, le code partagé et les vérifications de développement.
+- Le [README du package](https://github.com/webview-native-ui/cordova-plugin/blob/v0.1.6/README.md) couvre les archives locales, le dépannage, le code partagé et les vérifications de développement.
 - Signalez les problèmes d’installation Cordova, de callbacks et de cycle de vie dans le [dépôt Cordova](https://github.com/webview-native-ui/cordova-plugin/issues).

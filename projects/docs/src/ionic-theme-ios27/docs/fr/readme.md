@@ -1,6 +1,6 @@
 ---
 title: "Premiers pas"
-sourceRevision: 'a2a9e9c5d1e966ad521c387f28322fdb72f3d4334765d19b9105c2ea122bb935'
+sourceRevision: '3d0aa9378b946f8b5e44d22d18f78ac8268ccb930bac6336df6a7405f5b6affc'
 ---
 
 Installez avec `npm install @rdlabo/ionic-theme-ios27`. Pour la version 1.x, consultez le [guide v1.2.1](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1).
@@ -32,7 +32,7 @@ Un thème pour les applications Ionic qui apporte Liquid Glass et les animations
 
 ## Premiers pas
 
-Commencez par le thème autonome dans une application Ionic 9 existante. Le thème seul dans le navigateur ne nécessite ni projet Capacitor natif ni démarrage Native UI. Pour Cordova, utilisez le [guide facultatif](/docs/cordova) qui couvre le thème fourni et le démarrage propre à cet hôte.
+Commencez par le thème autonome dans une application Ionic 9 existante. Le thème seul dans le navigateur ne nécessite ni projet Capacitor natif ni démarrage Native UI. Si votre application utilise le thème iOS, installez-le séparément. Consultez [Configurer le thème avec Cordova](/ionic-theme-ios27/docs/cordova).
 
 Ajoutez [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable), le plugin communautaire d’Erkam Yaman, uniquement pour une disposition pilotée par l’appareil, en suivant le [guide de disposition](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout). Il signale placement, posture et changements ; le thème fournit la disposition Web et Native UI projette les contrôles lorsqu’il est activé séparément. Son installation et ses événements sont facultatifs et ne sont pas des prérequis du thème.
 
@@ -89,7 +89,7 @@ Utilisez la [configuration](/docs/configuration) pour les réglages individuels 
 
 Le plugin Capacitor est maintenu dans [webview-native-ui/capacitor-plugin](https://github.com/webview-native-ui/capacitor-plugin). Ce dépôt gère le thème Ionic, la démo combinée, les captures du navigateur et les tests d’intégration sur simulateur. La démo installe `@rdlabo/capacitor-native-ui` depuis npm ; les publications du thème ne publient pas le plugin et n’en modifient pas la version.
 
-Le [plugin Cordova](https://github.com/webview-native-ui/cordova-plugin) est maintenu séparément. Il distribue une copie épinglée de ce thème dont les imports d’intégration sont reliés à Cordova. Les corrections communes du thème appartiennent à ce dépôt ; Cordova met à jour la version épinglée lors d’une publication ultérieure du plugin. La démo Capacitor et les vérifications des archives candidates ci-dessous ne valident pas Cordova.
+Si votre application utilise le thème iOS, installez-le séparément. Consultez [Configurer le thème avec Cordova](/ionic-theme-ios27/docs/cordova).
 
 Pour vérifier une archive de plugin non publiée avec la démo réelle, exécutez :
 
