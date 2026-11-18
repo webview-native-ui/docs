@@ -1,6 +1,6 @@
 ---
 title: 'Ionicアプリに導入する'
-sourceRevision: '0e7303553e20e993ca5be392dd8239438cac677d7986a3e1534a66eff4fc440a'
+sourceRevision: 'a67ad0f183afb251096333b5a893f0b52af2159adc4999ccb9fdeea10c4cbcbb'
 headingAliases:
   '%E5%85%A8%E5%AF%BE%E8%B1%A1%EF%BC%9A%E5%B0%8E%E5%85%A5%E5%AE%8C%E4%BA%86%E3%81%AE%E7%A2%BA%E8%AA%8D': '%E7%AB%AF%E6%9C%AB%E3%81%94%E3%81%A8%E3%81%AE%E5%8B%95%E4%BD%9C'
   '5.-%E5%B0%8E%E5%85%A5%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B': '5.-%E3%83%86%E3%83%BC%E3%83%9E%E3%81%A8%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E5%8B%95%E4%BD%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
@@ -38,7 +38,6 @@ npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
 - @import '@ionic/core/css/palettes/dark.system.css';
 + @import '@rdlabo/ionic-theme-ios26/styles/system.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-ios27/styles/system.css' supports(overflow-anchor: auto);
-+ @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 
  :root { --app-content-width: 72rem; }

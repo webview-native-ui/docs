@@ -1,6 +1,6 @@
 ---
 title: 'Eine Ionic-App einrichten'
-sourceRevision: '0e7303553e20e993ca5be392dd8239438cac677d7986a3e1534a66eff4fc440a'
+sourceRevision: 'a67ad0f183afb251096333b5a893f0b52af2159adc4999ccb9fdeea10c4cbcbb'
 headingAliases:
   'vor-dem-start': '1.-pakete-installieren'
   'verify-installation': '5.-die-integration-pr%C3%BCfen'
@@ -38,7 +38,6 @@ Diese system-Presets behalten die bisherige Regel bei, der hellen/dunklen OS-Dar
 - @import '@ionic/core/css/palettes/dark.system.css';
 + @import '@rdlabo/ionic-theme-ios26/styles/system.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-ios27/styles/system.css' supports(overflow-anchor: auto);
-+ @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 
  :root { --app-content-width: 72rem; }

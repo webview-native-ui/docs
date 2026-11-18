@@ -37,7 +37,6 @@ These system presets preserve the existing policy of following OS light/dark app
 - @import '@ionic/core/css/palettes/dark.system.css';
 + @import '@rdlabo/ionic-theme-ios26/styles/system.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-ios27/styles/system.css' supports(overflow-anchor: auto);
-+ @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 
  :root { --app-content-width: 72rem; }

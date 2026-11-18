@@ -1,6 +1,6 @@
 ---
 title: 'Darstellungswechsel hinzufügen'
-sourceRevision: '96278604f5e0a37dea6bee8b7c47217fc3ee67500e5523589899642cbab6480e'
+sourceRevision: '37887a9a5963416b81e624182183decdd98b715058a1c750da59a1194edbd2b2'
 headingAliases:
   '4.-modi-und-fallback-pr%C3%BCfen': '3.-schalter-bet%C3%A4tigen-und-darstellung-pr%C3%BCfen'
   '3.-beide-einstellungen-verbinden': '2.-zwei-schalter-zur-einstellungsseite-hinzuf%C3%BCgen'
@@ -42,7 +42,6 @@ Wenden Sie den Diff auf das globale Stylesheet an. Verwendet Angular src/global.
 - @import '@rdlabo/ionic-theme-ios27/styles/system.css' supports(overflow-anchor: auto);
 + @import '@rdlabo/ionic-theme-ios26/styles/class.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-ios27/styles/class.css' supports(overflow-anchor: auto);
- @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
  @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
 

@@ -1,6 +1,6 @@
 ---
 title: 'Configurer une application Ionic'
-sourceRevision: '0e7303553e20e993ca5be392dd8239438cac677d7986a3e1534a66eff4fc440a'
+sourceRevision: 'a67ad0f183afb251096333b5a893f0b52af2159adc4999ccb9fdeea10c4cbcbb'
 headingAliases:
   'avant-de-commencer': '1.-installer-les-paquets'
   'verify-installation': '5.-v%C3%A9rifier-l%E2%80%99int%C3%A9gration'
@@ -38,7 +38,6 @@ Ces préréglages system conservent la politique existante de suivi clair/sombre
 - @import '@ionic/core/css/palettes/dark.system.css';
 + @import '@rdlabo/ionic-theme-ios26/styles/system.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-ios27/styles/system.css' supports(overflow-anchor: auto);
-+ @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 
  :root { --app-content-width: 72rem; }

@@ -1,6 +1,6 @@
 ---
 title: 'Ajouter un sélecteur d’apparence'
-sourceRevision: '96278604f5e0a37dea6bee8b7c47217fc3ee67500e5523589899642cbab6480e'
+sourceRevision: '37887a9a5963416b81e624182183decdd98b715058a1c750da59a1194edbd2b2'
 headingAliases:
   '4.-v%C3%A9rifier-les-modes-et-le-repli': '3.-changer-les-r%C3%A9glages-et-v%C3%A9rifier-le-r%C3%A9sultat'
   '3.-raccorder-les-deux-r%C3%A9glages': '2.-ajouter-deux-interrupteurs-aux-r%C3%A9glages'
@@ -42,7 +42,6 @@ Appliquez la différence à votre feuille de style globale. Si Angular utilise s
 - @import '@rdlabo/ionic-theme-ios27/styles/system.css' supports(overflow-anchor: auto);
 + @import '@rdlabo/ionic-theme-ios26/styles/class.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-ios27/styles/class.css' supports(overflow-anchor: auto);
- @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
  @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
 

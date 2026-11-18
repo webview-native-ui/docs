@@ -41,7 +41,6 @@ Apply the diff to your global stylesheet. If Angular uses src/global.scss, chang
 - @import '@rdlabo/ionic-theme-ios27/styles/system.css' supports(overflow-anchor: auto);
 + @import '@rdlabo/ionic-theme-ios26/styles/class.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-ios27/styles/class.css' supports(overflow-anchor: auto);
- @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
  @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
 

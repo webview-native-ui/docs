@@ -1,6 +1,6 @@
 ---
 title: '外観の切り替えを追加する'
-sourceRevision: '96278604f5e0a37dea6bee8b7c47217fc3ee67500e5523589899642cbab6480e'
+sourceRevision: '37887a9a5963416b81e624182183decdd98b715058a1c750da59a1194edbd2b2'
 headingAliases:
   '4.-%E6%98%8E%E6%9A%97%E3%81%A8%E7%AB%AF%E6%9C%AB%E9%85%8D%E8%89%B2%E3%81%AE%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B': '3.-%E3%83%88%E3%82%B0%E3%83%AB%E3%82%92%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%81%A6%E8%A6%8B%E3%81%9F%E7%9B%AE%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
   '3.-2%E3%81%A4%E3%81%AE%E8%A8%AD%E5%AE%9A%E3%82%92%E7%94%BB%E9%9D%A2%E3%81%B8%E6%8E%A5%E7%B6%9A%E3%81%99%E3%82%8B': '2.-%E8%A8%AD%E5%AE%9A%E7%94%BB%E9%9D%A2%E3%81%AB2%E3%81%A4%E3%81%AE%E3%83%88%E3%82%B0%E3%83%AB%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B'
@@ -44,7 +44,6 @@ src/global.css（AngularでSCSSを使う場合は src/global.scss）を開き、
 - @import '@rdlabo/ionic-theme-ios27/styles/system.css' supports(overflow-anchor: auto);
 + @import '@rdlabo/ionic-theme-ios26/styles/class.css' supports(not (overflow-anchor: auto));
 + @import '@rdlabo/ionic-theme-ios27/styles/class.css' supports(overflow-anchor: auto);
- @import '@rdlabo/ionic-theme-ios27/dist/css/vertical-bars.css' supports(not (overflow-anchor: auto));
  @import '@rdlabo/ionic-theme-md3/styles/theme.css';
 ```
 
