@@ -51,7 +51,7 @@
   },
   "legacy": {
     "files": {
-      "src/native-ui.ts": "import { enableNativeUIShell } from '@rdlabo/ionic-theme-ios27/native';\nimport { Foldable } from '@erkamyaman/capacitor-foldable';\nimport { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';\n\nexport async function startLegacyUI(): Promise<void> {\n  await enableNativeUIShell();\n  const updateLayout = async () => {\n    const placement = await Foldable.getBarPlacement();\n    setVerticalBarsLayout({ edge: placement.edge, inset: placement.inset });\n  };\n  void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))\n    .then(updateLayout)\n    .catch(console.error);\n}\n",
+      "src/native-ui.ts": "import { enableNativeUI } from '@rdlabo/capacitor-native-ui';\nimport { Foldable } from '@erkamyaman/capacitor-foldable';\nimport { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';\n\nexport async function startLegacyUI(): Promise<void> {\n  await enableNativeUI();\n  const updateLayout = async () => {\n    const placement = await Foldable.getBarPlacement();\n    setVerticalBarsLayout({ edge: placement.edge, inset: placement.inset });\n  };\n  void Foldable.addListener('layoutChange', () => void updateLayout().catch(console.error))\n    .then(updateLayout)\n    .catch(console.error);\n}\n",
       "src/global.css": "@import '@ionic/core/css/core.css';\n@import '@ionic/core/css/palettes/dark.class.css';\n@import '@rdlabo/ionic-theme-ios27/dist/css/default-variables.css';\n@import '@rdlabo/ionic-theme-ios27/dist/css/ionic-theme-ios27.css';\n@import '@rdlabo/ionic-theme-ios27/dist/css/ionic-theme-ios27-dark-class.css';\n@import '@rdlabo/ionic-theme-ios27/dist/css/md-remove-ios-class-effect.css';\n"
     }
   },

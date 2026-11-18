@@ -53,10 +53,10 @@ export const GUIDE_CHAPTERS = [
     id: 'migration',
     kind: 'migration',
     title: {
-      en: 'Migrate an existing app',
-      ja: '既存アプリを移行する',
-      fr: 'Migrer une application existante',
-      de: 'Eine bestehende App migrieren',
+      en: 'Migrate to the recommended setup',
+      ja: '推奨構成に移行する',
+      fr: 'Migrer vers la configuration recommandée',
+      de: 'Zur empfohlenen Konfiguration wechseln',
     },
     description: {
       en: 'Move to the current setup while keeping your application’s responsibilities clear.',

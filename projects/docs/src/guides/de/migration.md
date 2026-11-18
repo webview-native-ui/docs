@@ -1,20 +1,18 @@
 ---
-title: 'Eine bestehende App migrieren'
-sourceRevision: 'f6c682196640ada89288d21f58919e99a41517204ad8bf7aea096a8f052c71f2'
+title: 'Zur empfohlenen Konfiguration wechseln'
+sourceRevision: '0b3b1fd5d4b6c09c3e577c41aeb23c69815275559949b73d7d9a600a914aa5c8'
 ---
 
-# Eine bestehende App migrieren
+# Zur empfohlenen Konfiguration wechseln
 
-Aktualisieren Sie hier eine frühere Integration unter Beibehaltung von Routen, Zustand und Ereignisbehandlung. Dies ist ein eigener Einstieg für bestehende Installationen, kein Schritt nach einer neuen Einrichtung. Ändern Sie nur die verwendeten Funktionen und prüfen Sie deren bisheriges Verhalten.
+Bisher mussten Apps jedes Paket einzeln konfigurieren. Diese Anleitung zeigt, wie Sie die bisherigen Einstellungen für die bereits verwendeten Themes und nativen Funktionen Ihrer Ionic-App durch die empfohlene Konfiguration ersetzen.
 
 ## 1. Die installierten Pakete erfassen
 
-Beginnen Sie mit einer älteren Installation. Der Befehl liest Pakete; behalten Sie die Ausgabe zur Auswahl passender Änderungen. Fehlende Pakete bedeuten ungenutzte Funktionen, keine Aufforderung zur Installation.
-
-Führen Sie dies im App-Verzeichnis aus und notieren Sie Versionen. Ein fehlender Eintrag bedeutet eine nicht installierte Funktion; ergänzen Sie für eine reine Theme-Migration keine Native UI. Diese Anleitung nutzt Ionic 9 und Capacitor 8. Cordova folgt seiner gebündelten Plugin-Migration.
+Ermitteln Sie in Ihrer App mit Ionic 9 und Capacitor 8 die installierten Themes und Plugins für die Aktualisierung in Schritt 2. Für Cordova gilt die [Anleitung zum Cordova-Plugin](/projects/cordova-native-ui/docs/readme).
 
 ```sh
-npm ls @ionic/core @capacitor/core @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @rdlabo/capacitor-native-ui
+npm ls @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
 ```
 
 ## 2. Die verwendeten Pakete aktualisieren
@@ -27,33 +25,13 @@ Aktualisieren Sie für Ionic + Capacitor diese Pakete gemeinsam und behalten Sie
 npm install @rdlabo/ionic-theme-ios26@latest @rdlabo/ionic-theme-ios27@latest   @rdlabo/ionic-theme-md3@latest @rdlabo/capacitor-native-ui@latest   @erkamyaman/capacitor-foldable@8
 ```
 
-## 3. Alte Native-UI-Imports und Startaufrufe ersetzen
+Wenn Ihre App die integrierte Native UI einer älteren Version des iOS-27-Themes verwendet, folgen Sie der [Migrationsanleitung des Pakets](/projects/ionic-theme-ios27/docs/migration#native-ui-package-separation).
 
-Wenden Sie den Diff nur bei vorhandenem altem Import/Aufruf im bestehenden Startmodul an. Sonst überspringen. Derselbe Aufruf nutzt danach den Plugin-Einstieg, ohne zweite Laufzeit.
-
-Nur Apps mit dem früher im Theme gebündelten Native UI benötigen dies. Suchen Sie nach altem native-Einstieg und enableNativeUIShell und ersetzen Sie den bestehenden Shell-Aufruf. Behalten Sie einen Runtime und bestehende Handler. Fehlen die alten Namen, gehen Sie weiter.
-
-<!-- prettier-ignore -->
-```diff:src/native-ui.ts
-@@
-- import { enableNativeUIShell } from '@rdlabo/ionic-theme-ios27/native';
-+ import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
- import { Foldable } from '@erkamyaman/capacitor-foldable';
- import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
-
- export async function startLegacyUI(): Promise<void> {
--   await enableNativeUIShell();
-+   await enableNativeUI();
-   const updateLayout = async () => {
-     const placement = await Foldable.getBarPlacement();
-     setVerticalBarsLayout({ edge: placement.edge, inset: placement.inset });
-```
-
-## 4. Erscheinungsmodus erhalten und Imports vereinfachen
+## 3. Erscheinungsmodus erhalten und Imports vereinfachen
 
 Wenden Sie diesen Style-Diff nur bei passender alter class-Gruppe an. Eine bisherige system/always-Regel bleibt stattdessen erhalten. Die Darstellungsregel bleibt gleich; nur die Importzusammenstellung wird vereinfacht.
 
-Eine App mit klassenbasierter iOS-27-Palette kann diese Gruppe durch ein Preset ersetzen. Behalten Sie system.css bei System-Theme oder always.css bei stets dunklem Theme bei. Für iOS 26/27 + MD3 behalten Sie die vier Imports und das gemeinsame iOS-Preset der [Einrichtung](/standard-setup); fügen Sie diesen einzelnen iOS-27-Import nicht zusätzlich hinzu.
+Eine App mit klassenbasierter iOS-27-Palette kann diese Gruppe durch ein Preset ersetzen. Behalten Sie system.css bei System-Theme oder always.css bei stets dunklem Theme bei. Für iOS 26/27 + MD3 behalten Sie die Imports und das gemeinsame iOS-Preset der [Einrichtung](/standard-setup); fügen Sie diesen einzelnen iOS-27-Import nicht zusätzlich hinzu.
 
 Die kombinierte Einrichtung behält standardmäßig system-Imports beider iOS-Themes für den OS-Hell-/Dunkelmodus. Behalten Sie diese bei einer reinen Theme-Aktualisierung. Erst die [Darstellungsaufgabe](/guides/appearance) wechselt für appgesteuerte Überschreibungen zu class, unabhängig von Gerätefarben. Der folgende alte class-Paletten-Diff behält dessen bisherige manuelle Regel bei.
 
@@ -69,7 +47,7 @@ Die kombinierte Einrichtung behält standardmäßig system-Imports beider iOS-Th
 + @import '@rdlabo/ionic-theme-ios27/styles/class.css';
 ```
 
-## 5. Den bestehenden Layout-Handler aktualisieren
+## 4. Den bestehenden Layout-Handler aktualisieren
 
 Ändern Sie bei vorhandenem altem Layout-Callback nur Import und Resolver-Zuordnung. Der Listener ist bestehender Kontext. Ohne diese Funktion überspringen. Danach wendet genau das bestehende Abonnement das Resolver-Ergebnis an.
 
@@ -96,7 +74,7 @@ Ohne vorhandene Geräte-Layout-Anbindung überspringen Sie diesen Schritt.
      .then(updateLayout)
 ```
 
-## 6. Neu bauen und Verhalten prüfen
+## 5. Neu bauen und Verhalten prüfen
 
 Die zutreffenden Quelländerungen sind abgeschlossen. Bauen Sie im App-Verzeichnis und führen Sie nur Befehle vorhandener nativer Ziele aus. Browser-/Theme-Apps enden nach Web-Prüfungen. Native Apps enden nach erneutem Build, Sync, Neustart und Prüfung genutzter Funktionen, ohne neue Rail- oder Erweiterungs-Voraussetzung.
 

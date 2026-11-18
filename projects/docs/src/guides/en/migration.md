@@ -1,15 +1,13 @@
-# Migrate an existing app
+# Migrate to the recommended setup
 
-Use this page to update an earlier integration, keeping routes, state and event handlers. This is a separate entry for existing installations, not a step after a new setup. Identify the installed features, apply only their changes and verify the behavior you already use.
+Earlier versions required apps to configure each package separately. This guide shows how to replace those settings with the recommended setup for the themes and native features your Ionic app already uses.
 
 ## 1. Record the installed packages
 
-Begin with an earlier installation. This command only reads packages; keep the output to select the applicable changes below. Missing packages identify features not installed, not a reason to install them.
-
-Run this in the app directory and record its package versions. A missing entry tells you that capability is not installed; do not add Native UI to a theme-only app just to migrate a theme. This page uses Ionic 9 and Capacitor 8. Cordova apps use their bundled plugin migration instead of the Capacitor commands here.
+For an Ionic 9 and Capacitor 8 app, list the installed themes and plugins to select the packages to update in step 2. For Cordova, see the [Cordova plugin guide](/projects/cordova-native-ui/docs/readme).
 
 ```sh
-npm ls @ionic/core @capacitor/core @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @rdlabo/capacitor-native-ui
+npm ls @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
 ```
 
 ## 2. Update the packages you use
@@ -22,33 +20,13 @@ For the combined Ionic + Capacitor app, update these packages together, keeping 
 npm install @rdlabo/ionic-theme-ios26@latest @rdlabo/ionic-theme-ios27@latest   @rdlabo/ionic-theme-md3@latest @rdlabo/capacitor-native-ui@latest   @erkamyaman/capacitor-foldable@8
 ```
 
-## 3. Replace old Native UI imports and startup
+If your app uses the Native UI bundled with an older iOS 27 theme, follow the [package migration guide](/projects/ionic-theme-ios27/docs/migration#native-ui-package-separation).
 
-Apply this diff only when the old import/call exists, in the existing startup module. Skip it otherwise. The same startup call now uses the plugin entry; no second runtime is added.
-
-Only apps with the earlier theme-bundled Native UI need this replacement. Search the project for the old native entry and enableNativeUIShell. Replace that existing call at the app shell; keep one runtime and the existing page handlers. If these old names are absent, move to the next step.
-
-<!-- prettier-ignore -->
-```diff:src/native-ui.ts
-@@
-- import { enableNativeUIShell } from '@rdlabo/ionic-theme-ios27/native';
-+ import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
- import { Foldable } from '@erkamyaman/capacitor-foldable';
- import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
-
- export async function startLegacyUI(): Promise<void> {
--   await enableNativeUIShell();
-+   await enableNativeUI();
-   const updateLayout = async () => {
-     const placement = await Foldable.getBarPlacement();
-     setVerticalBarsLayout({ edge: placement.edge, inset: placement.inset });
-```
-
-## 4. Keep the appearance policy and simplify its imports
+## 3. Keep the appearance policy and simplify its imports
 
 Apply this stylesheet diff only if its old class-palette group matches your app. Keep a system/always policy instead when that is the installed policy. The selected policy is unchanged; only its import composition is simplified.
 
-An app already using the iOS 27 class palette can replace the following matching group with one preset. Keep system.css for system-managed theme-only apps and always.css for an always-dark app. For the combined iOS 26/27 + MD3 configuration, keep the four imports and the single iOS preset from [app setup](/standard-setup); do not add this iOS-27-only import alongside them.
+An app already using the iOS 27 class palette can replace the following matching group with one preset. Keep system.css for system-managed theme-only apps and always.css for an always-dark app. For the combined iOS 26/27 + MD3 configuration, keep the imports and the single iOS preset from [app setup](/standard-setup); do not add this iOS-27-only import alongside them.
 
 The combined app setup keeps system imports for both iOS themes by default, preserving OS-following light/dark behavior. Keep those imports during a theme-only update. Only the [appearance settings task](/guides/appearance) changes them to class imports when adding application-controlled light/dark overrides; that policy change is separate from choosing device colors. The legacy class-palette diff below already uses manual policy and preserves it.
 
@@ -64,7 +42,7 @@ The combined app setup keeps system imports for both iOS themes by default, pres
 + @import '@rdlabo/ionic-theme-ios27/styles/class.css';
 ```
 
-## 5. Update the existing layout handler
+## 4. Update the existing layout handler
 
 If an old device-layout callback exists, change only its import and resolver mapping with this diff. The listener shown is existing context. Otherwise skip the step. At the end, one existing subscription applies the resolver result.
 
@@ -91,7 +69,7 @@ Skip this step if the app has no device-layout integration.
      .then(updateLayout)
 ```
 
-## 6. Rebuild and finish the regression checks
+## 5. Rebuild and finish the regression checks
 
 The applicable source changes are now made. Build from the app directory and run only the target commands for existing native features. A browser/theme-only app finishes after its Web checks. Native apps finish when the features actually used still work after rebuild, sync and relaunch; optional rails or extensions are not new prerequisites.
 

@@ -1,20 +1,18 @@
 ---
-title: 'Migrer une application existante'
-sourceRevision: 'f6c682196640ada89288d21f58919e99a41517204ad8bf7aea096a8f052c71f2'
+title: 'Migrer vers la configuration recommandée'
+sourceRevision: '0b3b1fd5d4b6c09c3e577c41aeb23c69815275559949b73d7d9a600a914aa5c8'
 ---
 
-# Migrer une application existante
+# Migrer vers la configuration recommandée
 
-Utilisez cette page pour mettre à jour une ancienne intégration en conservant routes, état et événements. Il s’agit d’une entrée distincte pour les installations existantes, pas d’une étape après une nouvelle configuration. Appliquez uniquement les changements des fonctions utilisées, puis vérifiez leur comportement.
+Les versions précédentes demandaient de configurer chaque paquet séparément dans l’application. Ce guide explique comment remplacer ces réglages par la configuration recommandée pour les thèmes et les fonctions natives que votre application Ionic utilise déjà.
 
 ## 1. Relever les paquets installés
 
-Partez d’une ancienne installation. Cette commande lit les paquets ; conservez le résultat pour sélectionner les changements applicables. Les paquets absents indiquent des fonctions non installées, sans imposer leur ajout.
-
-Exécutez ceci dans l’app et notez les versions. Une entrée absente signifie que la fonction n’est pas installée : n’ajoutez pas Native UI pour migrer un thème seul. Cette page utilise Ionic 9 et Capacitor 8. Cordova suit la migration de son plugin groupé.
+Dans une application Ionic 9 et Capacitor 8, listez les thèmes et plugins installés pour choisir les paquets à mettre à jour à l’étape 2. Pour Cordova, consultez le [guide du plugin Cordova](/projects/cordova-native-ui/docs/readme).
 
 ```sh
-npm ls @ionic/core @capacitor/core @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @rdlabo/capacitor-native-ui
+npm ls @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @rdlabo/capacitor-native-ui @erkamyaman/capacitor-foldable
 ```
 
 ## 2. Mettre à jour les paquets utilisés
@@ -27,33 +25,13 @@ Pour l’app Ionic + Capacitor, mettez ces paquets à jour ensemble en gardant F
 npm install @rdlabo/ionic-theme-ios26@latest @rdlabo/ionic-theme-ios27@latest   @rdlabo/ionic-theme-md3@latest @rdlabo/capacitor-native-ui@latest   @erkamyaman/capacitor-foldable@8
 ```
 
-## 3. Remplacer imports et démarrage anciens
+Si votre application utilise Native UI intégré à une ancienne version du thème iOS 27, suivez le [guide de migration du paquet](/projects/ionic-theme-ios27/docs/migration#native-ui-package-separation).
 
-Appliquez ce diff dans le démarrage existant seulement si l’ancien import et appel existent. Sinon, passez l’étape. Le même appel utilise désormais l’entrée du plugin, sans second runtime.
-
-Seules les apps utilisant l’ancien Native UI intégré au thème ont besoin de ce changement. Recherchez l’ancienne entrée native et enableNativeUIShell puis remplacez l’appel dans le shell, avec un seul runtime et les mêmes événements. Si les noms sont absents, passez à la suite.
-
-<!-- prettier-ignore -->
-```diff:src/native-ui.ts
-@@
-- import { enableNativeUIShell } from '@rdlabo/ionic-theme-ios27/native';
-+ import { enableNativeUI } from '@rdlabo/capacitor-native-ui';
- import { Foldable } from '@erkamyaman/capacitor-foldable';
- import { setVerticalBarsLayout } from '@rdlabo/ionic-theme-ios27';
-
- export async function startLegacyUI(): Promise<void> {
--   await enableNativeUIShell();
-+   await enableNativeUI();
-   const updateLayout = async () => {
-     const placement = await Foldable.getBarPlacement();
-     setVerticalBarsLayout({ edge: placement.edge, inset: placement.inset });
-```
-
-## 4. Garder l’apparence et simplifier les imports
+## 3. Garder l’apparence et simplifier les imports
 
 Appliquez ce diff seulement si l’ancien groupe class correspond. Conservez plutôt la politique system/always si elle était choisie. La politique reste identique, seule la composition des imports est simplifiée.
 
-Une app utilisant déjà la palette iOS 27 par classe peut remplacer ce groupe par un préréglage. Gardez system.css pour le thème seul lié au système ou always.css pour le sombre permanent. Pour iOS 26/27 + MD3, gardez les quatre imports et le préréglage iOS de la [configuration](/standard-setup), sans ajouter cet import iOS 27 seul.
+Une app utilisant déjà la palette iOS 27 par classe peut remplacer ce groupe par un préréglage. Gardez system.css pour le thème seul lié au système ou always.css pour le sombre permanent. Pour iOS 26/27 + MD3, gardez les imports et le préréglage iOS de la [configuration](/standard-setup), sans ajouter cet import iOS 27 seul.
 
 La configuration combinée garde par défaut les imports system des deux thèmes iOS pour suivre le mode clair/sombre du système. Conservez-les lors d’une simple mise à jour du thème. Seule la [tâche d’apparence](/guides/appearance) passe à class pour ajouter une priorité pilotée par l’application, indépendamment du choix des couleurs. Le diff de l’ancienne palette class ci-dessous conserve sa politique manuelle existante.
 
@@ -69,7 +47,7 @@ La configuration combinée garde par défaut les imports system des deux thèmes
 + @import '@rdlabo/ionic-theme-ios27/styles/class.css';
 ```
 
-## 5. Mettre à jour le gestionnaire de disposition
+## 4. Mettre à jour le gestionnaire de disposition
 
 Si un ancien callback de disposition existe, modifiez seulement l’import et la conversion du resolver. L’écouteur affiché est du contexte existant. Sinon, passez l’étape. L’unique abonnement applique alors le résultat du resolver.
 
@@ -96,7 +74,7 @@ Ignorez cette étape si l’application n’intègre pas le layout de l’appare
      .then(updateLayout)
 ```
 
-## 6. Recompiler et vérifier les régressions
+## 5. Recompiler et vérifier les régressions
 
 Les changements applicables sont faits. Compilez dans le répertoire de l’application et exécutez seulement les commandes des fonctions natives existantes. Une application navigateur/thème seul termine avec les vérifications Web. Les applications natives terminent après rebuild, synchronisation, relancement et contrôle des fonctions utilisées, sans nouveau prérequis de rail ou extension.
 
