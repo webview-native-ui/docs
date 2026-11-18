@@ -2,6 +2,9 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="ionicComponentSourceTitle"><source>From the official Ionic Docs</source><target>Aus der offiziellen Ionic-Dokumentation</target></trans-unit>
+      <trans-unit id="ionicComponentDemoCredit"><source>Live demos use WebView Native UI themes.</source><target>Die Live-Demos verwenden die Themes von WebView Native UI.</target></trans-unit>
+      <trans-unit id="ionicComponentOriginal"><source>View original</source><target>Original lesen</target></trans-unit>
       <trans-unit id="skipToContent" datatype="html">
         <source>Skip to content</source>
         <target>Zum Inhalt springen</target>
@@ -645,6 +648,11 @@
 <trans-unit id="codeFiles"><source>Files</source><target>Dateien</target></trans-unit>
       <trans-unit id="combinedSetupContext"><source>Choose your setup</source><target>Einrichtung auswählen</target></trans-unit>
       <trans-unit id="webThemeDemoScope"><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source><target>Die Browser-Demo zeigt das Theme-Design und Web-Interaktionen. Native Steuerelemente und Android-Gerätefarben benötigen die native App auf einem unterstützten Gerät.</target></trans-unit>
+      <trans-unit id="componentReferenceTitle"><source>Component reference</source><target>Komponentenreferenz</target></trans-unit>
+      <trans-unit id="ionicComponentsNav"><source>Ionic components</source><target>Ionic-Komponenten</target></trans-unit>
+      <trans-unit id="filterIonicComponents"><source>Filter components</source><target>Komponenten filtern</target></trans-unit>
+      <trans-unit id="ionicSourceFile"><source>Source on Ionic Docs</source><target>Quelle in Ionic Docs</target></trans-unit>
+      <trans-unit id="ionicThirdParty"><source>Third-party notices</source><target>Hinweise zu Drittanbietern</target></trans-unit>
 </body>
   </file>
 </xliff>

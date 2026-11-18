@@ -199,3 +199,27 @@
   color: #f8fafc;
   font-size: 1rem;
 }
+
+.component-reference {
+  padding-bottom: 0;
+}
+.component-nav-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 0;
+  background: transparent;
+  color: #475569;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.component-nav-entry:hover,
+.component-nav-entry:focus-visible {
+  color: #1767d2;
+  background: #eff6ff;
+}

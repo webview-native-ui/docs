@@ -7,6 +7,7 @@ import { gunzipSync } from 'node:zlib';
 import { JSDOM } from 'jsdom';
 import { DOCS_LOCALES, PUBLISHED_DOCS_LOCALES } from '../shared/docs-locales';
 import { projectDefinitions } from './project-manifest';
+import { catalog as ionicComponents } from '../projects/docs/src/app/generated/ionic-components/catalog';
 import { PROJECTS_EN } from '../projects/docs/src/app/generated/project-catalog.generated';
 import {
   CURRENT_SPONSORS,
@@ -343,6 +344,24 @@ test('prerendered locales include reusable hydration data', async () => {
   }
 });
 
+test('prerenders the official Japanese component article with its shared live demos', async () => {
+  const html = await readFile('dist/docs/browser/ja/components/action-sheet/index.html', 'utf8');
+  const { window } = new JSDOM(html);
+  try {
+    const article = window.document.querySelector('article')!;
+    assert.equal(article.closest('[lang]')?.getAttribute('lang'), 'ja');
+    assert.match(article.querySelector('#properties')!.textContent!, /プロパティ/);
+    assert.match(article.textContent!, /アクションシート/);
+    assert.equal(article.querySelectorAll('app-ionic-component-demo').length, 6);
+    assert.equal(
+      window.document.querySelector('.source-note a')?.getAttribute('href'),
+      'https://ionicframework.com/docs/ja/api/action-sheet',
+    );
+  } finally {
+    window.close();
+  }
+});
+
 test('builds bounded search indexes for every published language with the component UI', async () => {
   const searchDirectory = new URL('../dist/docs/browser/pagefind/', import.meta.url);
   const files = await readdir(searchDirectory, { recursive: true });
@@ -350,7 +369,7 @@ test('builds bounded search indexes for every published language with the compon
   assert.ok(files.includes('pagefind-component-ui.css'));
   const canonicalPages = PROJECTS_EN.filter((project) => !project.hostedUrl).reduce(
     (count, project) => count + 1 + project.pages.length,
-    3 + GUIDE_CHAPTERS.length, // Home, standard setup, support and shared guide chapters.
+    4 + GUIDE_CHAPTERS.length + ionicComponents.length, // Home, setup, support, component index and articles.
   );
   for (const { code } of PUBLISHED_DOCS_LOCALES) {
     assert.ok(

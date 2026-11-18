@@ -1,0 +1,206 @@
+import { cp, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { join, posix } from 'node:path';
+import { load } from 'cheerio';
+import { japaneseDocsRef } from './upstream-inputs.mjs';
+
+// Upstream demos import the version's shared CSS and JS from different nesting depths.
+export async function normalizeDemoImports(usage) {
+  for (const file of await readdir(usage, { recursive: true })) {
+    if (!file.endsWith('/demo.html')) continue;
+    const path = join(usage, file);
+    const original = await readFile(path, 'utf8');
+    const normalized = original.replace(
+      /((?:src|href)=["'])(?:\.\.\/)+(common\.(?:css|js))(?=["'])/g,
+      (_, attr, name) => attr + posix.relative(posix.dirname(file), name),
+    );
+    if (normalized !== original) await writeFile(path, normalized);
+  }
+}
+
+export async function exportPortalComponents(work, output, ref) {
+  const assets = 'projects/docs/public/assets/ionic-components';
+  await mkdir(assets, { recursive: true });
+  await cp(join(work, 'LICENSE'), join(assets, 'LICENSE'));
+  const demos = await exportArticles(work, output, ref);
+  const japaneseDemos = await exportArticles(work, join(output, 'ja'), japaneseDocsRef, 'ja');
+  for (const file of japaneseDemos) demos.add(file);
+  const runtime = join(output, 'preview-assets');
+  // Ionic loads component bundles and SVG icons by name at runtime.
+  await cp(join(runtime, 'dist'), join(assets, 'runtime/dist'), { recursive: true });
+  for (const theme of ['ios26', 'ios27', 'md']) {
+    await cp(join(runtime, theme + '.css'), join(assets, 'runtime', theme + '.css'));
+  }
+  const styles = new Set();
+  for (const file of [...demos, 'usage/v9/common.js', 'usage/v9/common.css']) {
+    const source = await readFile(join(output, file), 'utf8');
+    await mkdir(join(assets, posix.dirname(file)), { recursive: true });
+    await writeFile(join(assets, file), source);
+    for (const match of source.matchAll(
+      /\/assets\/ionic-components\/runtime\/(css\/[\w/-]+(?:\.[\w-]+)*\.css)/g,
+    )) {
+      styles.add(match[1]);
+    }
+  }
+  for (const file of styles) {
+    const source = await readFile(join(runtime, file), 'utf8');
+    await mkdir(join(assets, 'runtime', posix.dirname(file)), { recursive: true });
+    await writeFile(
+      join(assets, 'runtime', file),
+      source.replace(/\/\*# sourceMappingURL=[^*]+\*\//g, ''),
+    );
+  }
+  await normalizeDemoImports(join(assets, 'usage/v9'));
+}
+
+export async function exportArticles(work, output, ref, locale = 'en') {
+  const modules = join(
+    'projects/docs/src/app/generated/ionic-components',
+    locale === 'ja' ? 'ja' : '',
+  );
+  await mkdir(modules, { recursive: true });
+  const files = (await readdir(join(work, 'docs/api')))
+    .filter((name) => name.endsWith('.mdx'))
+    .sort();
+  const catalog = [];
+  const demos = new Set();
+  for (const file of files) {
+    const slug = file.slice(0, -4);
+    if (locale === 'ja') {
+      // Docusaurus falls back to English when the translated MDX is absent.
+      // Fail the sync rather than publish an English article marked as Japanese.
+      await readFile(join(work, 'i18n/ja/docusaurus-plugin-content-docs/current/api', file));
+    }
+    const $ = load(await readFile(join(output, 'api', slug, 'index.html'), 'utf8'));
+    const article = $('.theme-doc-markdown');
+    const title = article.find('h1').first().text();
+    if (!title) throw Error('Missing article: ' + slug);
+    const description = $('meta[name=description]').attr('content') ?? '';
+    article.find('header').first().remove();
+    article.find('.hash-link,.encapsulation-pill,button,script,style').remove();
+    article.find('pre code').each((_, code) => {
+      const lines = $(code).children('.token-line');
+      lines.children('br').remove();
+      if (lines.length)
+        $(code).html(
+          lines
+            .map((_, line) => $(line).html() ?? '')
+            .get()
+            .join('\n'),
+        );
+    });
+    article.find('a[href]').each((_, link) => {
+      const originalHref = $(link).attr('href');
+      const href = originalHref.replace(/^\/docs\/ja\/api\//, '/docs/api/');
+      if (href.startsWith('/docs/api/'))
+        $(link).attr('href', href.replace('/docs/api/', '/components/'));
+      else if (href.startsWith('/docs/')) $(link).attr('href', 'https://ionicframework.com' + href);
+    });
+    article.find('img[src],source[src],video[src]').each((_, el) => {
+      const src = $(el).attr('src');
+      if (src.startsWith('/docs/')) $(el).attr('src', 'https://ionicframework.com' + src);
+    });
+    // Some translations leave a note open across a new section. Keep the
+    // note's introduction and expose the following sections to the renderer.
+    for (const note of article.children('.theme-admonition').toArray()) {
+      if (!$(note).find('[data-ionic-demo]').length) continue;
+      const body = $(note).children().last();
+      const section = body.children('h2,h3,[data-ionic-demo]').first();
+      const following = section.nextAll().addBack().toArray();
+      $(note).after(following);
+    }
+    const blocks = [];
+    for (const node of article.contents()) {
+      const el = $(node);
+      const src = el.attr('data-ionic-demo');
+      if (src) {
+        if (!/^usage\/v9\/[\w/-]+\/demo\.html$/.test(src))
+          throw Error('Unexpected demo path: ' + src);
+        demos.add(src);
+        const examples = el
+          .find('[data-framework]')
+          .map((_, group) => ({
+            name: $(group).attr('data-framework'),
+            files: $(group)
+              .children()
+              .map((_, item) => ({
+                name: $(item).attr('data-filename'),
+                html: $(item).find('pre code').html() ?? '',
+              }))
+              .get(),
+          }))
+          .get();
+        blocks.push({
+          kind: 'demo',
+          src,
+          examples,
+          mode: el.attr('data-mode') ?? '',
+          console: el.attr('data-console') !== undefined,
+        });
+      } else if (el.hasClass('tabs-container')) {
+        const labels = el.find('> [role=tablist] > [role=tab]');
+        const panels = el.find('> div > [role=tabpanel]');
+        if (!panels.length || labels.length !== panels.length)
+          throw Error('Incomplete tabs: ' + slug);
+        blocks.push({
+          kind: 'tabs',
+          panels: panels
+            .map((i, panel) => ({
+              label: labels
+                .eq(i)
+                .text()
+                .replace(/^Javascript$/, 'JavaScript'),
+              html: $(panel).html(),
+            }))
+            .get(),
+        });
+      } else if (/^h[2-6]$/.test(node.name ?? '')) {
+        blocks.push({
+          kind: 'heading',
+          level: Number(node.name[1]),
+          id: el.attr('id'),
+          text: el.text(),
+        });
+      } else {
+        const html = $.html(node);
+        if (!html.trim() || node.type === 'comment') continue;
+        if (blocks.at(-1)?.kind === 'html') blocks.at(-1).html += html;
+        else blocks.push({ kind: 'html', html });
+      }
+    }
+    if (article.find('[data-ionic-demo]').length !== blocks.filter((b) => b.kind === 'demo').length)
+      throw Error('Nested demo: ' + slug);
+    // Keep whole examples together while respecting the portal's JS chunk budget.
+    const parts = [];
+    let part = [];
+    let bytes = 0;
+    for (const block of blocks) {
+      const size = Buffer.byteLength(JSON.stringify(block));
+      if (part.length && bytes + size > 400_000) {
+        parts.push(part);
+        part = [];
+        bytes = 0;
+      }
+      part.push(block);
+      bytes += size;
+    }
+    parts.push(part);
+    const imports = [];
+    for (const [index, content] of parts.entries()) {
+      const filename = slug + (index ? '.' + index : '') + '.json';
+      await writeFile(join(modules, filename), JSON.stringify(content));
+      imports.push(`import('./${filename}').then(m => m.default as unknown[])`);
+    }
+    const loadExpression =
+      imports.length === 1
+        ? imports[0]
+        : `Promise.all([${imports.join(',')}]).then(parts => parts.flat())`;
+    catalog.push(
+      `  { ...${JSON.stringify({ slug, title, description })}, load: () => ${loadExpression} },`,
+    );
+  }
+  await writeFile(
+    join(modules, 'catalog.ts'),
+    `export const revision = '${ref}';\nexport const catalog = [\n${catalog.join('\n')}\n];\n`,
+  );
+  return demos;
+}

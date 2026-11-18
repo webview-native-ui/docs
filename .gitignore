@@ -50,3 +50,7 @@ Thumbs.db
 /projects/docs/public/assets/theme-preview/*.js
 /projects/docs/public/assets/theme-preview/*.css
 /projects/docs/public/assets/theme-preview/markup-*.html
+
+# Compiled by docs:sync:ionic before testing and building the portal.
+/projects/docs/public/assets/ionic-components/
+/projects/docs/src/app/generated/ionic-components/

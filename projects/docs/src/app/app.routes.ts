@@ -1,5 +1,5 @@
 import { GUIDE_CHAPTERS } from '../../../../shared/guide-navigation';
-import { inject } from '@angular/core';
+import { inject, LOCALE_ID } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { DocsPageComponent } from './docs/docs-page';
 import { LandingPageComponent } from './docs/landing-page';
@@ -8,6 +8,10 @@ import { PluginIndexComponent } from './docs/plugin-index';
 import { projectCatalog } from './docs/docs-data';
 import { projectResolver } from './docs/project.resolver';
 
+import { catalog as ionicComponents } from './generated/ionic-components/catalog';
+
+const componentPage = () =>
+  import('./docs/ionic-components-page').then((m) => m.IonicComponentsPage);
 const portalProjects = projectCatalog.filter((project) => !project.hostedUrl);
 
 const projectRoutes: Routes = portalProjects.flatMap((project) => [
@@ -61,6 +65,20 @@ export const routes: Routes = [
     path: `guides/${chapter.id}`,
     data: { chapter: chapter.id },
     loadComponent: () => import('./docs/guide-page').then((module) => module.GuidePageComponent),
+  })),
+  { path: 'components', loadComponent: componentPage },
+  ...ionicComponents.map((item) => ({
+    path: 'components/' + item.slug,
+    data: { slug: item.slug },
+    resolve: {
+      blocks: () =>
+        inject(LOCALE_ID).split('-')[0] === 'ja'
+          ? import('./generated/ionic-components/ja/catalog').then(({ catalog }) =>
+              catalog.find((entry) => entry.slug === item.slug)!.load(),
+            )
+          : item.load(),
+    },
+    loadComponent: componentPage,
   })),
   ...projectLegacyRoutes,
   ...projectRoutes,
