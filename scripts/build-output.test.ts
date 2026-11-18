@@ -7,6 +7,7 @@ import { gunzipSync } from 'node:zlib';
 import { JSDOM } from 'jsdom';
 import { DOCS_LOCALES, PUBLISHED_DOCS_LOCALES } from '../shared/docs-locales';
 import { projectDefinitions } from './project-manifest';
+import { catalog as ionicComponents } from '../projects/docs/src/app/generated/ionic-components/catalog';
 import { PROJECTS_EN } from '../projects/docs/src/app/generated/project-catalog.generated';
 import {
   CURRENT_SPONSORS,
@@ -350,7 +351,7 @@ test('builds bounded search indexes for every published language with the compon
   assert.ok(files.includes('pagefind-component-ui.css'));
   const canonicalPages = PROJECTS_EN.filter((project) => !project.hostedUrl).reduce(
     (count, project) => count + 1 + project.pages.length,
-    3 + GUIDE_CHAPTERS.length, // Home, standard setup, support and shared guide chapters.
+    4 + GUIDE_CHAPTERS.length + ionicComponents.length, // Home, setup, support, component index and articles.
   );
   for (const { code } of PUBLISHED_DOCS_LOCALES) {
     assert.ok(
