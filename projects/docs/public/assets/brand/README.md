@@ -1,7 +1,9 @@
 # Brand assets
 
-`webview-native-ui-logo.png`, `webview-native-ui-touch.png`, and `/favicon.png` are unmodified copies of the official WebView Native UI GitHub organization avatar, retrieved on 2026-11-11 from https://avatars.githubusercontent.com/u/348572082?v=4.
+WebとNative、2つの技術が折り重なり、ひとつの体験になる。
 
-`og-card.svg` is the editable 1200×630 social card. It embeds that same logo unchanged and uses the initiative’s “Beyond the WebView.” tagline. `og-card.png` is its raster export for social platforms. The SVG source can be rendered with Sharp, already present in the Angular build toolchain.
+The documentation mark is a folded W. Two translucent blue bands overlap at the raised center to form a deeper blue fold. Its editable source is `webview-native-ui.svg`. The SVG is used in the header, homepage, static error pages, and browser tabs. The Apple touch icon has an opaque white background and additional padding.
 
-Author and sponsorship attribution remains with rdlabo; site identity uses WebView Native UI.
+`og-card.svg` embeds the same paths and is the editable source for the 1200×630 social image `og-card.png`. Raster exports use Sharp.
+
+Author and sponsorship attribution remains with rdlabo.

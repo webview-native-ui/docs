@@ -118,7 +118,7 @@ describe('App', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('header .docs-brand img')?.getAttribute('src')).toBe(
-      '/assets/brand/webview-native-ui-logo.png',
+      '/assets/brand/webview-native-ui.svg',
     );
     expect(compiled.querySelector('header .docs-brand')?.textContent).toContain(
       'WebView Native UI',

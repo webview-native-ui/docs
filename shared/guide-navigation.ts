@@ -66,7 +66,7 @@ export const GUIDE_COPY = {
   },
   heroHeadline: {
     en: 'One Web app. Two platform experiences.',
-    ja: 'Webに、\nネイティブの手触りを。',
+    ja: 'WebとNative、\n2つの技術が折り重なり、\nひとつの体験になる。',
     fr: 'Une app Web, deux interfaces mobiles.',
     de: 'Eine Web-App. Zwei mobile Oberflächen.',
   },

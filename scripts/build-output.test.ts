@@ -438,11 +438,11 @@ test('ships the WebView Native UI brand in all four languages and static 404 pag
     assert.equal(brand.getAttribute('href'), prefix || '/');
     assert.equal(
       brand.querySelector('img')?.getAttribute('src'),
-      '/assets/brand/webview-native-ui-logo.png',
+      '/assets/brand/webview-native-ui.svg',
     );
     assert.equal(
       home.window.document.querySelector('link[rel="icon"]')?.getAttribute('href'),
-      '/assets/brand/webview-native-ui-logo.png',
+      '/assets/brand/webview-native-ui.svg',
     );
     assert.ok(
       home.window.document.querySelector('footer')?.textContent?.includes('WebView Native UI'),
@@ -456,7 +456,7 @@ test('ships the WebView Native UI brand in all four languages and static 404 pag
     assert.ok(missing.window.document.title.includes('WebView Native UI'), code);
     assert.equal(
       missing.window.document.querySelector('img')?.getAttribute('src'),
-      '/assets/brand/webview-native-ui-logo.png',
+      '/assets/brand/webview-native-ui.svg',
     );
     home.window.close();
     missing.window.close();
