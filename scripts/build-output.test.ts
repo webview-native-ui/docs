@@ -560,7 +560,7 @@ test('shared guides lead from the complete setup to localized package details', 
     assert.ok(!home.querySelector('main .eyebrow')?.textContent?.match(/^0[123]$/));
     for (const chapter of GUIDE_CHAPTERS) {
       const path = `${prefix}/guides/${chapter.id}`;
-      assert.ok(home.querySelector(`main a[href="${path}"]`));
+      assert.equal(Boolean(home.querySelector(`main a[href="${path}"]`)), chapter.kind === 'task');
       const doc = await read(path);
       assert.equal(doc.querySelector('h1')?.textContent, chapter.title[code]);
       assert.equal(
