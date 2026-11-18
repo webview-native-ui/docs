@@ -7,6 +7,7 @@
   "packageManager": "npm@11.7.0",
   "scripts": {
     "ng": "ng",
+    "docs:sync:ionic": "node scripts/preview-ionic-components.mjs",
     "docs:generate": "npm run docs:generate:content && node scripts/build-theme-preview.mjs",
     "docs:generate:content": "tsx scripts/generate-docs.ts",
     "seo:audit": "tsx scripts/seo-audit.ts",

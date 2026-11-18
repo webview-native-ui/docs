@@ -29,6 +29,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Compile the pinned Ionic component reference
+        run: npm run docs:sync:ionic
       - name: Refresh all public sponsors before building
         run: npm run sponsors:generate
         env:

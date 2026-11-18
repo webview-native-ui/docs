@@ -61,3 +61,5 @@ checks that the committed snapshot is current. The generator excludes private
 sponsorships and follows every pagination cursor. If fetching fails, deployment stops rather
 than publishing a stale list. Local builds use the committed snapshot; to refresh it, run
 `GITHUB_TOKEN=<token> npm run sponsors:generate` with a GitHub token provided through the environment.
+
+On a fresh checkout, run `npm run docs:sync:ionic` after installing dependencies to generate the Ionic component reference.

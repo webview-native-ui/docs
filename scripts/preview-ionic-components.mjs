@@ -21,7 +21,15 @@ try {
   run('tar', ['-xzf', 'source.tgz', '--strip-components=1']);
   run('npm', ['ci', '--ignore-scripts', '--legacy-peer-deps', '--no-audit']);
   await pinApiInputs(work);
-  run('npm', ['run', 'generate-markdown']);
+  run('node', ['scripts/native.mjs']);
+  run('node', ['scripts/cli.mjs']);
+  // Release history is outside the component export. Its upstream loader
+  // requires this JSON module even though no release pages are distributed.
+  await writeFile(
+    join(work, 'src/components/page/reference/ReleaseNotes/release-notes.json'),
+    '[]',
+  );
+
   await cp(
     'scripts/ionic-preview/Playground.tsx',
     join(work, 'src/components/global/Playground/index.tsx'),
