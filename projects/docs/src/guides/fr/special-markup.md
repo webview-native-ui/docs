@@ -1,8 +1,8 @@
 ---
-iosOnlyHeadings: ['Boutons principaux', 'Segments pleine largeur']
+iosOnlyHeadings: ['Boutons de soumission', 'Segments pleine largeur']
 md3OnlyHeadings: ['Boutons carrés']
 title: 'Balisage et classes spécifiques'
-sourceRevision: '5f766875c25f9e4ff526fda15830407f6ad181bf7a163cadd16687c62d6b6e58'
+sourceRevision: '150c1bfb9b95ca9971ebd9508f5e7d7d895089d8b4e557f17d63fbbdd94f7a60'
 ---
 
 # Balisage et classes spécifiques
@@ -18,19 +18,20 @@ Pour conserver l’apparence Ionic standard d’un composant, ajoutez-lui `ios-t
 <ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
-## Boutons principaux
+## Boutons de soumission
 
-Utilisez un bouton de soumission pour les formulaires. La classe button-submit applique la même apparence à une autre action. Sous iOS 26, la variable CSS définit la couleur du texte et du liseré lumineux.
+Utilisez `type="submit"` pour envoyer un formulaire ou `button-submit` pour donner la même apparence à une autre action. Sous iOS 26, la couleur du texte et du liseré lumineux se règle pour chaque couleur de bouton. Par exemple, `color="danger"` utilise `--ion-color-danger-brightness`.
 
 ```html
 <style>
   :root {
     --ion-color-primary-brightness: #96feff;
+    --ion-color-danger-brightness: #ffe3e5;
   }
 </style>
 
-<ion-button type="submit" color="primary">Submit</ion-button>
-<ion-button class="button-submit" color="primary">Continue</ion-button>
+<ion-button type="submit" fill="solid" color="primary">Submit</ion-button>
+<ion-button class="button-submit" fill="solid" color="danger">Delete</ion-button>
 ```
 
 ## Badges de barre d’outils

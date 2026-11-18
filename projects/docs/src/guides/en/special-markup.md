@@ -1,5 +1,5 @@
 ---
-iosOnlyHeadings: ['Primary buttons', 'Full-width segments']
+iosOnlyHeadings: ['Submit buttons', 'Full-width segments']
 md3OnlyHeadings: ['Square buttons']
 title: 'Special markup and classes'
 ---
@@ -17,19 +17,20 @@ To use the standard Ionic appearance on a component, add `ios-theme-disabled` fo
 <ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
-## Primary buttons
+## Submit buttons
 
-Use a submit button for forms. The button-submit class gives another action the same appearance. On iOS 26, the brightness color sets the highlight on the text and border.
+Use `type="submit"` to submit a form or `button-submit` to give another action the same appearance. On iOS 26, set the text and border highlight for each button color. For example, `color="danger"` uses `--ion-color-danger-brightness`.
 
 ```html
 <style>
   :root {
     --ion-color-primary-brightness: #96feff;
+    --ion-color-danger-brightness: #ffe3e5;
   }
 </style>
 
-<ion-button type="submit" color="primary">Submit</ion-button>
-<ion-button class="button-submit" color="primary">Continue</ion-button>
+<ion-button type="submit" fill="solid" color="primary">Submit</ion-button>
+<ion-button class="button-submit" fill="solid" color="danger">Delete</ion-button>
 ```
 
 ## Toolbar badges

@@ -1,8 +1,8 @@
 ---
-iosOnlyHeadings: ['Primäre Schaltflächen', 'Segmente in voller Breite']
+iosOnlyHeadings: ['Senden-Schaltflächen', 'Segmente in voller Breite']
 md3OnlyHeadings: ['Eckige Schaltflächen']
 title: 'Spezielles Markup und Klassen'
-sourceRevision: '5f766875c25f9e4ff526fda15830407f6ad181bf7a163cadd16687c62d6b6e58'
+sourceRevision: '150c1bfb9b95ca9971ebd9508f5e7d7d895089d8b4e557f17d63fbbdd94f7a60'
 ---
 
 # Spezielles Markup und Klassen
@@ -18,19 +18,20 @@ Für das Ionic-Standarddesign einer Komponente fügen Sie ihr unter iOS 26 und 2
 <ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
-## Primäre Schaltflächen
+## Senden-Schaltflächen
 
-Verwenden Sie für Formulare einen Submit-Button. Die Klasse button-submit gibt einer anderen Aktion dasselbe Aussehen. Unter iOS 26 legt die CSS-Variable die Glanzfarbe für Text und Rand fest.
+Verwenden Sie `type="submit"` zum Absenden eines Formulars oder `button-submit` für eine andere Aktion mit demselben Aussehen. Unter iOS 26 lässt sich die Glanzfarbe für Text und Rand je nach Schaltflächenfarbe festlegen. Für `color="danger"` verwenden Sie `--ion-color-danger-brightness`.
 
 ```html
 <style>
   :root {
     --ion-color-primary-brightness: #96feff;
+    --ion-color-danger-brightness: #ffe3e5;
   }
 </style>
 
-<ion-button type="submit" color="primary">Submit</ion-button>
-<ion-button class="button-submit" color="primary">Continue</ion-button>
+<ion-button type="submit" fill="solid" color="primary">Submit</ion-button>
+<ion-button class="button-submit" fill="solid" color="danger">Delete</ion-button>
 ```
 
 ## Badges in der Werkzeugleiste

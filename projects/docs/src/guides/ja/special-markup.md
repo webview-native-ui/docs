@@ -1,8 +1,8 @@
 ---
-iosOnlyHeadings: ['主な送信ボタン', '全幅のセグメント']
+iosOnlyHeadings: ['送信ボタン', '全幅のセグメント']
 md3OnlyHeadings: ['角を立てたボタン']
 title: '特別なマークアップとクラス'
-sourceRevision: '5f766875c25f9e4ff526fda15830407f6ad181bf7a163cadd16687c62d6b6e58'
+sourceRevision: '150c1bfb9b95ca9971ebd9508f5e7d7d895089d8b4e557f17d63fbbdd94f7a60'
 ---
 
 # 特別なマークアップとクラス
@@ -18,19 +18,20 @@ Ionic標準の外観を使いたいコンポーネントに、iOS 26・27では 
 <ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
-## 主な送信ボタン
+## 送信ボタン
 
-フォームの送信にはsubmitボタンを使います。ほかの操作にも同じ外観を使う場合はbutton-submitを指定します。 iOS 26では、CSS変数で文字と縁のハイライト色を指定します。
+フォームの送信には `type="submit"` を使います。ほかの操作にも同じ外観を使うには `button-submit` を付けます。iOS 26では文字と縁のハイライトをボタンの色ごとに指定できます。例えば `color="danger"` には `--ion-color-danger-brightness` を設定します。
 
 ```html
 <style>
   :root {
     --ion-color-primary-brightness: #96feff;
+    --ion-color-danger-brightness: #ffe3e5;
   }
 </style>
 
-<ion-button type="submit" color="primary">Submit</ion-button>
-<ion-button class="button-submit" color="primary">Continue</ion-button>
+<ion-button type="submit" fill="solid" color="primary">Submit</ion-button>
+<ion-button class="button-submit" fill="solid" color="danger">Delete</ion-button>
 ```
 
 ## ツールバーボタンのバッジ
