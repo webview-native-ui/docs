@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Searchbar</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <script src="../../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+
+    <style>
+      .container {
+        display: block;
+      }
+    </style>
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-searchbar placeholder="Default"></ion-searchbar>
+          <ion-searchbar color="primary" placeholder="Primary"></ion-searchbar>
+          <ion-searchbar color="secondary" placeholder="Secondary"></ion-searchbar>
+          <ion-searchbar color="tertiary" placeholder="Tertiary"></ion-searchbar>
+          <ion-searchbar color="success" placeholder="Success"></ion-searchbar>
+          <ion-searchbar color="warning" placeholder="Warning"></ion-searchbar>
+          <ion-searchbar color="danger" placeholder="Danger"></ion-searchbar>
+          <ion-searchbar color="light" placeholder="Light"></ion-searchbar>
+          <ion-searchbar color="medium" placeholder="Medium"></ion-searchbar>
+          <ion-searchbar color="dark" placeholder="Dark"></ion-searchbar>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

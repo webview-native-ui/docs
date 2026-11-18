@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Segment</title>
+    <link rel="stylesheet" href="../../common.css" />
+    <script src="../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+
+    <style>
+      .container {
+        display: grid;
+      }
+
+      ion-segment {
+        width: 400px;
+        margin: 0 auto;
+      }
+    </style>
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-segment scrollable value="heart">
+            <ion-segment-button value="home">
+              <ion-icon name="home"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="heart">
+              <ion-icon name="heart"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="pin">
+              <ion-icon name="pin"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="star">
+              <ion-icon name="star"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="call">
+              <ion-icon name="call"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="globe">
+              <ion-icon name="globe"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="basket">
+              <ion-icon name="basket"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="barbell">
+              <ion-icon name="barbell"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="trash">
+              <ion-icon name="trash"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="person">
+              <ion-icon name="person"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

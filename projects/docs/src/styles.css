@@ -353,3 +353,9 @@ pagefind-modal-trigger.docs-search:empty {
 [appHeadingLinks] :is(h2, h3, h4, h5, h6):hover > .header-anchor-link {
   color: #1767d2;
 }
+
+:is(app-ionic-component-demo,app-ionic-article-tabs) .code .token:is(.keyword,.atrule,.decorator) { color:#a82b64 }
+:is(app-ionic-component-demo,app-ionic-article-tabs) .code .token:is(.string,.attr-value,.regex) { color:#09674c }
+:is(app-ionic-component-demo,app-ionic-article-tabs) .code .token:is(.function,.tag,.class-name) { color:#155bab }
+:is(app-ionic-component-demo,app-ionic-article-tabs) .code .token:is(.attr-name,.number,.boolean,.selector,.property) { color:#6945a0 }
+:is(app-ionic-component-demo,app-ionic-article-tabs) .code .token:is(.comment,.punctuation,.operator) { color:#516174 }

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>setFocus</title>
+    <link rel="stylesheet" href="../../common.css" />
+    <script src="../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-button onclick="setFocus()">Click to set focus</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Email" label-placement="floating"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+    <script>
+      function setFocus() {
+        const input = document.querySelector('ion-input');
+        input.setFocus();
+      }
+    </script>
+  </body>
+</html>

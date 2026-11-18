@@ -149,7 +149,15 @@
                 }}</a>
               </section>
             }
+
           </nav>
+          <section class="reference-navigation component-reference" aria-labelledby="component-reference-title">
+            <h2 id="component-reference-title" i18n="@@componentReferenceTitle">Component reference</h2>
+            <button id="open-components" class="component-nav-entry" type="button" (click)="openComponents()">
+              <span i18n="@@ionicComponentsNav">Ionic components</span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 3 5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </section>
           <section class="reference-navigation" aria-labelledby="package-reference-title">
             <h2 id="package-reference-title">{{ guideCopy.reference }}</h2>
             <app-library-picker
@@ -173,7 +181,9 @@
           [attr.inert]="showingLibraries() ? '' : null"
           [attr.aria-hidden]="showingLibraries() ? 'true' : null"
         >
-          @if (navigationProject(); as project) {
+          @if (componentPanel()) {
+            <app-ionic-components-navigation (back)="leaveComponents()" />
+          } @else if (navigationProject(); as project) {
             <app-project-navigation
               [project]="project"
               [categoryLabel]="guideCopy.reference"

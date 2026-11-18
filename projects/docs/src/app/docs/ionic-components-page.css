@@ -1,0 +1,24 @@
+.directory{max-width:1100px;margin:auto;padding:clamp(24px,4vw,48px)}
+.directory ul{list-style:none;padding:0;margin:2rem 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:.25rem 1.5rem}
+.directory li a{display:block;padding:.5rem 0;color:#175bb3}
+.setup-header .guide-kind{display:inline-block;margin-bottom:10px}
+article{min-width:0}
+article :is(h2,h3,h4){scroll-margin-top:6rem}
+footer{margin-top:3rem;font-size:.875rem;color:#475569}
+:host ::ng-deep .docs-page-article table{display:block;max-width:100%;overflow-x:auto}
+:host ::ng-deep .docs-page-article details{margin:.5rem 0}
+.directory input{display:block;margin-top:1.5rem;width:min(100%,28rem);padding:.7rem 1rem;border:1px solid #cbd5e1;border-radius:.6rem}
+
+.source-note {
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+  gap:.5rem 1rem; margin-bottom:1.65rem; padding:.75rem 1rem;
+  background:#f1f5fb; border-radius:.6rem; color:#516177;
+  font-size:.8125rem; line-height:1.5;
+}
+.source-copy {display:grid;gap:.1rem}
+.source-title {font-weight:650;color:#293d57}
+.source-note a {display:inline-flex;align-items:center;gap:.3rem;color:#175bb3;font-weight:600;text-decoration:none}
+.source-note a:hover,.source-note a:focus-visible {text-decoration:underline;text-underline-offset:.18em}
+
+/* Upstream prose sometimes displays the full URL as its link text. */
+:host ::ng-deep .docs-page-article a { overflow-wrap: anywhere; }

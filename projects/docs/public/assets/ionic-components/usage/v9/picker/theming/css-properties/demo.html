@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picker | CSS Variables</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <script src="../../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+
+    <style>
+      ion-picker {
+        --highlight-background: var(--ion-color-dark);
+        --highlight-border-radius: 50px;
+
+        --fade-background-rgb: var(--ion-color-light-rgb);
+      }
+
+      ion-picker-column-option {
+        text-transform: uppercase;
+        background-size: auto auto;
+        background-clip: border-box;
+        background-size: 200% auto;
+        color: #fff;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textclip 2s linear infinite;
+      }
+
+      ion-picker-column-option[value='red'] {
+        background-image: linear-gradient(-225deg, #231557 0%, #44107a 29%, #ff1361 67%, #fff800 100%);
+      }
+      ion-picker-column-option[value='blue'] {
+        background-image: linear-gradient(-225deg, #2cd8d5 0%, #c5c1ff 56%, #ffbac3 100%);
+      }
+      ion-picker-column-option[value='green'] {
+        background-image: linear-gradient(-225deg, #11998e 0%, #38ef7d 48%, #40e0d0 100%);
+      }
+
+      @keyframes textclip {
+        to {
+          background-position: 200% center;
+        }
+      }
+    </style>
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-picker>
+            <ion-picker-column value="red">
+              <ion-picker-column-option value="" disabled="true">--</ion-picker-column-option>
+              <ion-picker-column-option value="red">Red</ion-picker-column-option>
+              <ion-picker-column-option value="blue">Blue</ion-picker-column-option>
+              <ion-picker-column-option value="green">Green</ion-picker-column-option>
+            </ion-picker-column>
+          </ion-picker>
+        </div>
+      </ion-content>
+    </ion-app>
+    <script></script>
+  </body>
+</html>

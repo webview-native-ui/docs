@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toolbar</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <script src="../../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+
+    <style>
+      .container {
+        flex-flow: column;
+        justify-content: space-evenly;
+      }
+    </style>
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-toolbar>
+            <ion-title>Default Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="primary">
+            <ion-title>Primary Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="secondary">
+            <ion-title>Secondary Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="tertiary">
+            <ion-title>Tertiary Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="success">
+            <ion-title>Success Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="warning">
+            <ion-title>Warning Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="danger">
+            <ion-title>Danger Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="light">
+            <ion-title>Light Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="medium">
+            <ion-title>Medium Toolbar</ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="dark">
+            <ion-title>Dark Toolbar</ion-title>
+          </ion-toolbar>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

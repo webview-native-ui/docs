@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radio</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <script src="../../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-radio-group value="primary">
+            <ion-radio aria-label="Primary" color="primary" value="primary"></ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="secondary">
+            <ion-radio aria-label="Secondary" color="secondary" value="secondary"></ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="tertiary">
+            <ion-radio aria-label="Tertiary" color="tertiary" value="tertiary"></ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="success">
+            <ion-radio aria-label="Success" color="success" value="success"></ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="warning">
+            <ion-radio aria-label="Warning" color="warning" value="warning"></ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="danger">
+            <ion-radio aria-label="Danger" color="danger" value="danger"></ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="light">
+            <ion-radio aria-label="Light" color="light" value="light"></ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="medium">
+            <ion-radio aria-label="Medium" color="medium" value="medium"></ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="dark">
+            <ion-radio aria-label="Dark" color="dark" value="dark"></ion-radio>
+          </ion-radio-group>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

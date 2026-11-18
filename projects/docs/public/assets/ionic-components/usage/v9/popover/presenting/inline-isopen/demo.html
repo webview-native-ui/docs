@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popover</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <script src="../../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-button>Click Me</ion-button>
+          <ion-popover>
+            <ion-content class="ion-padding">Hello World!</ion-content>
+          </ion-popover>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const button = document.querySelector('ion-button');
+      const popover = document.querySelector('ion-popover');
+
+      button.addEventListener('click', (e) => {
+        popover.event = e;
+        popover.isOpen = true;
+      });
+
+      popover.addEventListener('didDismiss', () => (popover.isOpen = false));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item Divider</title>
+    <link rel="stylesheet" href="../../common.css" />
+    <script src="../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+
+    <style>
+      .container {
+        display: block;
+      }
+    </style>
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-list>
+            <ion-item-group>
+              <ion-item-divider>
+                <ion-label> Section A </ion-label>
+              </ion-item-divider>
+
+              <ion-item>
+                <ion-label>A1</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>A2</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label>A3</ion-label>
+              </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+              <ion-item-divider>
+                <ion-label> Section B </ion-label>
+              </ion-item-divider>
+
+              <ion-item>
+                <ion-label>B1</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>B2</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label>B3</ion-label>
+              </ion-item>
+            </ion-item-group>
+          </ion-list>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

@@ -33,6 +33,7 @@ import {
 } from '@angular/router';
 import { ProjectSummary, projectGroupsForLocale, projectsForLocale } from './docs/docs-data';
 import { LibraryPicker } from './docs/library-picker';
+import { IonicComponentsNavigation } from './docs/ionic-components-navigation';
 import { ProjectNavigation } from './docs/project-navigation';
 import { canonicalHomePath, localizedPublicPath } from './locale-path';
 import { FooterSponsors } from './footer-sponsors/footer-sponsors';
@@ -61,6 +62,7 @@ export const INITIAL_DOCS_URL = makeStateKey<string>('rdlabo-docs-initial-url');
     RouterLink,
     LibraryPicker,
     ProjectNavigation,
+    IonicComponentsNavigation,
     LanguageMenu,
     FooterSponsors,
   ],
@@ -137,8 +139,22 @@ export class App {
   protected readonly isSupport = computed(() => this.currentUrl().split(/[?#]/)[0] === '/support');
   protected readonly activeProject = computed(() => this.#projectForUrl(this.currentUrl()));
   protected readonly navigationProject = computed(() => this.#projectForUrl(this.navigationUrl()));
+  protected readonly browsingComponents = signal(false);
+  protected readonly componentRoute = computed(() => /^\/components(?:[/?#]|$)/.test(this.navigationUrl()));
+  protected readonly componentPanel = computed(() => this.browsingComponents() || this.componentRoute());
+  protected openComponents(): void {
+    this.#menuRevision++;
+    this.libraryPickerOpen.set(false);
+    this.browsingComponents.set(true);
+    this.#focusProjectNavigation();
+  }
+  protected leaveComponents(): void {
+    this.browsingComponents.set(false);
+    this.openLibraryPicker();
+    afterNextRender(() => this.#focusNavigationLink(this.docsSidebar?.nativeElement.querySelector('#open-components')), {injector:this.#injector});
+  }
   protected readonly showingLibraries = computed(
-    () => !this.navigationProject() || this.libraryPickerOpen(),
+    () => (!this.navigationProject() && !this.componentPanel()) || this.libraryPickerOpen(),
   );
 
   constructor() {
@@ -249,6 +265,7 @@ export class App {
       }
       if (!(event instanceof NavigationEnd) || event.id !== this.#navigationId) return;
       const pending = this.pendingNavigation();
+      this.browsingComponents.set(false);
       this.currentUrl.set(event.urlAfterRedirects);
       this.pendingNavigation.set(null);
       this.navigationError.set(null);
@@ -326,6 +343,7 @@ export class App {
     }
     this.#menuRevision++;
     this.menuOpen.set(false);
+    this.browsingComponents.set(false);
     this.libraryPickerOpen.set(false);
     if (returnFocus) queueMicrotask(() => this.menuButton?.nativeElement.focus());
   }
@@ -445,7 +463,7 @@ export class App {
       this.#document.querySelector('dialog[open], app-language-menu details[open]')
     )
       return;
-    if (this.navigationProject() && this.libraryPickerOpen()) this.closeLibraryPicker();
+    if ((this.navigationProject() || this.componentRoute()) && this.libraryPickerOpen()) this.closeLibraryPicker();
     else if (this.mobileLayout()) this.closeMenu();
   }
 

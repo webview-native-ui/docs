@@ -682,5 +682,10 @@
     </unit>
     <unit id="combinedSetupContext"><segment><source>Choose your setup</source></segment></unit>
     <unit id="webThemeDemoScope"><segment><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source></segment></unit>
+    <unit id="componentReferenceTitle"><segment><source>Component reference</source></segment></unit>
+    <unit id="ionicComponentsNav"><segment><source>Ionic components</source></segment></unit>
+    <unit id="ionicComponentSourceTitle"><segment><source>From the official Ionic Docs</source></segment></unit>
+    <unit id="ionicComponentDemoCredit"><segment><source>Live demos use WebView Native UI themes.</source></segment></unit>
+    <unit id="ionicComponentOriginal"><segment><source>View original</source></segment></unit>
   </file>
 </xliff>

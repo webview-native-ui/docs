@@ -2,6 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template" target-language="fr">
     <body>
+      <trans-unit id="ionicComponentSourceTitle"><source>From the official Ionic Docs</source><target>Source : documentation officielle Ionic</target></trans-unit>
+      <trans-unit id="ionicComponentDemoCredit"><source>Live demos use WebView Native UI themes.</source><target>Les démos utilisent les thèmes de WebView Native UI.</target></trans-unit>
+      <trans-unit id="ionicComponentOriginal"><source>View original</source><target>Lire l’original</target></trans-unit>
       <trans-unit id="skipToContent" datatype="html">
         <source>Skip to content</source>
         <target>Aller au contenu</target>
@@ -645,6 +648,8 @@
 <trans-unit id="codeFiles"><source>Files</source><target>Fichiers</target></trans-unit>
       <trans-unit id="combinedSetupContext"><source>Choose your setup</source><target>Choisir votre intégration</target></trans-unit>
       <trans-unit id="webThemeDemoScope"><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source><target>La démo dans le navigateur montre le style du thème et les interactions Web. Les contrôles natifs et les couleurs Android nécessitent l’application native sur un appareil compatible.</target></trans-unit>
+      <trans-unit id="componentReferenceTitle"><source>Component reference</source><target>Référence des composants</target></trans-unit>
+      <trans-unit id="ionicComponentsNav"><source>Ionic components</source><target>Composants Ionic</target></trans-unit>
 </body>
   </file>
 </xliff>

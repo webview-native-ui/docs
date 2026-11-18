@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Label</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <script src="../../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+
+    <style>
+      ion-label {
+        margin: 0 2px;
+      }
+    </style>
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-label>Default</ion-label>
+          <ion-label color="primary">Primary</ion-label>
+          <ion-label color="secondary">Secondary</ion-label>
+          <ion-label color="tertiary">Tertiary</ion-label>
+          <ion-label color="success">Success</ion-label>
+          <ion-label color="warning">Warning</ion-label>
+          <ion-label color="danger">Danger</ion-label>
+          <ion-label color="light">Light</ion-label>
+          <ion-label color="medium">Medium</ion-label>
+          <ion-label color="dark">Dark</ion-label>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

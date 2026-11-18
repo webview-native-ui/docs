@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <script src="../../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Example</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content color="light">
+        <ion-list inset="true">
+          <ion-item>
+            <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+            <ion-input aria-label="Task name" value="Get eggs"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+            <ion-input aria-label="Task name" value="Get milk"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+            <ion-input aria-label="Task name" value="Take out compost"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+            <ion-input aria-label="Task name" value="Pick up dry cleaning"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+            <ion-input aria-label="Task name" value="Call mom"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+            <ion-input aria-label="Task name" value="Order more dog food"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+            <ion-input aria-label="Task name" value="Think of new tasks for this demo"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

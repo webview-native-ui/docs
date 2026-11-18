@@ -2,6 +2,9 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" target-language="ja" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="ionicComponentSourceTitle"><source>From the official Ionic Docs</source><target>Ionic 公式ドキュメントより</target></trans-unit>
+      <trans-unit id="ionicComponentDemoCredit"><source>Live demos use WebView Native UI themes.</source><target>ライブデモには WebView Native UI のテーマを適用しています。</target></trans-unit>
+      <trans-unit id="ionicComponentOriginal"><source>View original</source><target>原文を読む</target></trans-unit>
       <trans-unit id="docsHomeTitle"><source>WebView Native UI Documentation</source><target>WebView Native UI ドキュメント</target></trans-unit>
       <trans-unit id="documentationLoadError"><source>This page couldn’t be loaded. Reload the documentation to try again.</source><target>ページを読み込めませんでした。ドキュメントを再読み込みしてください。</target></trans-unit>
       <trans-unit id="reloadDocumentation"><source>Reload documentation</source><target>ドキュメントを再読み込み</target></trans-unit>
@@ -88,6 +91,8 @@
 <trans-unit id="codeFiles"><source>Files</source><target>ファイル</target></trans-unit>
       <trans-unit id="combinedSetupContext"><source>Choose your setup</source><target>導入方法を選ぶ</target></trans-unit>
       <trans-unit id="webThemeDemoScope"><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source><target>ブラウザーデモではテーマの見た目とWeb側の操作を確認できます。ネイティブコントロールとAndroid端末の配色は、対応端末のネイティブアプリで確認してください。</target></trans-unit>
+      <trans-unit id="componentReferenceTitle"><source>Component reference</source><target>コンポーネントリファレンス</target></trans-unit>
+      <trans-unit id="ionicComponentsNav"><source>Ionic components</source><target>Ionic コンポーネント</target></trans-unit>
 </body>
   </file>
 </xliff>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item</title>
+    <link rel="stylesheet" href="../../common.css" />
+    <script src="../../common.js"></script>
+    <script type="module" src="/assets/ionic-components/runtime/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="/assets/ionic-components/runtime/css/ionic.bundle.css" />
+
+    <style>
+      .container {
+        flex-direction: column;
+
+        width: 300px;
+        margin: 0 auto;
+      }
+    </style>
+  <!-- Modified by WebView Native UI: load the local runtime and selected theme. -->
+    <script>
+      const previewTheme = new URLSearchParams(location.search).get('theme');
+      if (['ios26','ios27','md'].includes(previewTheme)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/ionic-components/runtime/' + previewTheme + '.css';
+        document.head.append(link);
+      }
+    </script></head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <div class="container">
+          <ion-input label="Default counter" label-placement="floating" counter="true" maxlength="20"></ion-input>
+
+          <ion-input
+            id="custom-input"
+            label="Custom Counter Format"
+            label-placement="floating"
+            counter="true"
+            maxlength="20"
+          ></ion-input>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+
+  <script>
+    const customInput = document.querySelector('#custom-input');
+    customInput.counterFormatter = (inputLength, maxLength) => `${maxLength - inputLength} characters remaining`;
+  </script>
+</html>

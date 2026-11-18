@@ -8,6 +8,10 @@ import { PluginIndexComponent } from './docs/plugin-index';
 import { projectCatalog } from './docs/docs-data';
 import { projectResolver } from './docs/project.resolver';
 
+import { catalog as ionicComponents } from './generated/ionic-components/catalog';
+
+const componentPage = () =>
+  import('./docs/ionic-components-page').then((m) => m.IonicComponentsPage);
 const portalProjects = projectCatalog.filter((project) => !project.hostedUrl);
 
 const projectRoutes: Routes = portalProjects.flatMap((project) => [
@@ -61,6 +65,13 @@ export const routes: Routes = [
     path: `guides/${chapter.id}`,
     data: { chapter: chapter.id },
     loadComponent: () => import('./docs/guide-page').then((module) => module.GuidePageComponent),
+  })),
+  { path: 'components', loadComponent: componentPage },
+  ...ionicComponents.map((item) => ({
+    path: 'components/' + item.slug,
+    data: { slug: item.slug },
+    resolve: { blocks: () => item.load() },
+    loadComponent: componentPage,
   })),
   ...projectLegacyRoutes,
   ...projectRoutes,

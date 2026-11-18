@@ -1,0 +1,18 @@
+WebView Native UI component reference
+
+Articles and live examples are compiled from Ionic Docs (Apache-2.0).
+Source: https://github.com/ionic-team/ionic-docs/tree/a79918700e48c6ae3c8c14e06964d413c7b219ef
+See LICENSE for the complete Apache License.
+Changes: rendered the original articles and code samples for this portal;
+live examples load local runtimes and themes and forward console output.
+
+API definitions: @ionic/docs@9.0.0 (see licenses/ionic-docs-api.txt).
+SHA-256 of core.json: 2f201959495aa9e17c0e0fef0edbcbd4b7e3db5f65f5d43194e4ec27229dd8a7
+
+@ionic/core@9.0.0: licenses/ionic-core.txt
+@rdlabo/ionic-theme-ios26@9.5.0: licenses/ionic-theme-ios26.txt
+@rdlabo/ionic-theme-ios27@2.2.0: licenses/ionic-theme-ios27.txt
+@rdlabo/ionic-theme-md3@9.3.0: licenses/ionic-theme-md3.txt
+Material Design 3 theme notices: licenses/ionic-theme-md3-notices.md
+
+Roboto fonts: Copyright 2011 Google Inc. All Rights Reserved. Apache-2.0 (see LICENSE).
