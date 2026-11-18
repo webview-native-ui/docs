@@ -130,7 +130,10 @@ describe('App', () => {
       );
     }
     expect(compiled.querySelector('.guide-navigation a[href="/standard-setup"]')).not.toBeNull();
-    expect(compiled.querySelector('.reference-navigation h2')?.textContent).toContain(
+    expect(compiled.querySelector('#component-reference-title')?.textContent).toContain(
+      'Component reference',
+    );
+    expect(compiled.querySelector('#package-reference-title')?.textContent).toContain(
       'Package reference',
     );
     expect(compiled.querySelector('details.reference-navigation')).toBeNull();
@@ -519,7 +522,7 @@ describe('App', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.docs-rail')).toBeNull();
-    const reference = compiled.querySelector('.reference-navigation')!;
+    const reference = compiled.querySelector('section[aria-labelledby="package-reference-title"]')!;
     expect(reference.querySelectorAll('app-library-picker a')).toHaveLength(
       projectsForLocale('en').filter((project) => !project.hostedUrl).length,
     );
