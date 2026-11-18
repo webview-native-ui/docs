@@ -1,5 +1,5 @@
 import { GUIDE_CHAPTERS } from '../../../../shared/guide-navigation';
-import { inject } from '@angular/core';
+import { inject, LOCALE_ID } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { DocsPageComponent } from './docs/docs-page';
 import { LandingPageComponent } from './docs/landing-page';
@@ -70,7 +70,14 @@ export const routes: Routes = [
   ...ionicComponents.map((item) => ({
     path: 'components/' + item.slug,
     data: { slug: item.slug },
-    resolve: { blocks: () => item.load() },
+    resolve: {
+      blocks: () =>
+        inject(LOCALE_ID).split('-')[0] === 'ja'
+          ? import('./generated/ionic-components/ja/catalog').then(({ catalog }) =>
+              catalog.find((entry) => entry.slug === item.slug)!.load(),
+            )
+          : item.load(),
+    },
     loadComponent: componentPage,
   })),
   ...projectLegacyRoutes,

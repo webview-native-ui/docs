@@ -3,6 +3,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catalog, revision } from '../generated/ionic-components/catalog';
+import { catalog as japaneseCatalog, revision as japaneseRevision } from '../generated/ionic-components/ja/catalog';
 import { localizedPublicPath } from '../locale-path';
 import { IonicComponentDemo, type IonicDemo } from './ionic-component-demo';
 import { SeoService } from './seo.service';
@@ -25,9 +26,9 @@ type Block = ArticleTabs | IonicDemo | {kind:'html';html:string} | {kind:'headin
       </aside>
     </ng-template>
     @if (entry(); as item) {
-      <div class="setup-layout" lang="en">
+      <div class="setup-layout" [attr.lang]="articleLocale">
         <header class="setup-header"><ng-container [ngTemplateOutlet]="sourceNote" /><a class="guide-kind" routerLink="/components">Components</a><h1>{{ item.title }}</h1></header>
-        <nav class="setup-toc" aria-label="On this page"><p>On this page</p><ol>
+        <nav class="setup-toc" [attr.aria-label]="contentsLabel"><p>{{ contentsLabel }}</p><ol>
           @for (b of blocks(); track $index) { @if (b.kind==='heading' && b.level===2) {
             <li><a [href]="path()+'#'+b.id">{{ b.text }}</a></li>
           } }
@@ -47,27 +48,29 @@ type Block = ArticleTabs | IonicDemo | {kind:'html';html:string} | {kind:'headin
               @case ('demo') {<app-ionic-component-demo [demo]="b"/>}
             }
           }
-          <footer><a [href]="source+item.slug+'.mdx'">Source on Ionic Docs</a> · <a href="/assets/ionic-components/LICENSE">Apache 2.0</a> · <a href="/assets/ionic-components/NOTICE.txt">Third-party notices</a></footer>
+          <footer><a [href]="source+item.slug+'.mdx'" i18n="@@ionicSourceFile">Source on Ionic Docs</a> · <a href="/assets/ionic-components/LICENSE">Apache 2.0</a> · <a href="/assets/ionic-components/NOTICE.txt" i18n="@@ionicThirdParty">Third-party notices</a></footer>
         </article>
       </div>
     } @else {
       <div class="directory"><header class="setup-header"><ng-container [ngTemplateOutlet]="sourceNote" /><h1>Components</h1></header>
-        <input type="search" aria-label="Filter components" placeholder="Filter components" [value]="query()" (input)="query.set($any($event.target).value)"/>
+        <input type="search" i18n-aria-label="@@filterIonicComponents" aria-label="Filter components" i18n-placeholder="@@filterIonicComponents" placeholder="Filter components" [value]="query()" (input)="query.set($any($event.target).value)"/>
         <ul>@for (item of filtered(); track item.slug) {<li><a [routerLink]="['/components',item.slug]">{{ item.title }}</a></li>}</ul>
       </div>
     }
   `,
 })
 export class IonicComponentsPage {
-  readonly catalog = catalog;
+  readonly #locale = inject(LOCALE_ID);
+  readonly articleLocale = this.#locale.split('-')[0] === 'ja' ? 'ja' : 'en';
+  readonly catalog = this.articleLocale === 'ja' ? japaneseCatalog : catalog;
+  readonly contentsLabel = $localize`:@@onThisPage:On this page`;
   readonly query = signal('');
   readonly filtered = computed(() => this.catalog.filter(item => item.title.toLowerCase().includes(this.query().trim().toLowerCase())));
-  readonly source = 'https://github.com/ionic-team/ionic-docs/blob/'+revision+'/docs/api/';
-  readonly #locale = inject(LOCALE_ID);
+  readonly source = 'https://github.com/ionic-team/ionic-docs/blob/'+(this.articleLocale === 'ja' ? japaneseRevision : revision)+'/docs/api/';
   readonly #data = toSignal(inject(ActivatedRoute).data);
   readonly entry = computed(() => this.catalog.find(e=>e.slug===this.#data()?.['slug']));
   protected readonly locale = this.#locale;
-  readonly officialUrl = computed(() => 'https://ionicframework.com/docs/' + (this.entry() ? 'api/' + this.entry()!.slug : 'components'));
+  readonly officialUrl = computed(() => 'https://ionicframework.com/docs/' + (this.articleLocale === 'ja' ? 'ja/' : '') + (this.entry() ? 'api/' + this.entry()!.slug : 'components'));
   readonly path = computed(() => localizedPublicPath(this.#locale,'/components'+(this.entry()?'/'+this.entry()!.slug:'')));
   readonly blocks = computed(() => {
     const articlePath = this.path();

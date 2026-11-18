@@ -1,6 +1,7 @@
 import { cp, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { join, posix } from 'node:path';
 import { load } from 'cheerio';
+import { japaneseDocsRef } from './upstream-inputs.mjs';
 
 // Upstream demos import the version's shared CSS and JS from different nesting depths.
 export async function normalizeDemoImports(usage) {
@@ -21,6 +22,8 @@ export async function exportPortalComponents(work, output, ref) {
   await mkdir(assets, { recursive: true });
   await cp(join(work, 'LICENSE'), join(assets, 'LICENSE'));
   const demos = await exportArticles(work, output, ref);
+  const japaneseDemos = await exportArticles(work, join(output, 'ja'), japaneseDocsRef, 'ja');
+  for (const file of japaneseDemos) demos.add(file);
   const runtime = join(output, 'preview-assets');
   // Ionic loads component bundles and SVG icons by name at runtime.
   await cp(join(runtime, 'dist'), join(assets, 'runtime/dist'), { recursive: true });
@@ -49,8 +52,11 @@ export async function exportPortalComponents(work, output, ref) {
   await normalizeDemoImports(join(assets, 'usage/v9'));
 }
 
-export async function exportArticles(work, output, ref) {
-  const modules = 'projects/docs/src/app/generated/ionic-components';
+export async function exportArticles(work, output, ref, locale = 'en') {
+  const modules = join(
+    'projects/docs/src/app/generated/ionic-components',
+    locale === 'ja' ? 'ja' : '',
+  );
   await mkdir(modules, { recursive: true });
   const files = (await readdir(join(work, 'docs/api')))
     .filter((name) => name.endsWith('.mdx'))
@@ -59,6 +65,11 @@ export async function exportArticles(work, output, ref) {
   const demos = new Set();
   for (const file of files) {
     const slug = file.slice(0, -4);
+    if (locale === 'ja') {
+      // Docusaurus falls back to English when the translated MDX is absent.
+      // Fail the sync rather than publish an English article marked as Japanese.
+      await readFile(join(work, 'i18n/ja/docusaurus-plugin-content-docs/current/api', file));
+    }
     const $ = load(await readFile(join(output, 'api', slug, 'index.html'), 'utf8'));
     const article = $('.theme-doc-markdown');
     const title = article.find('h1').first().text();
@@ -78,7 +89,8 @@ export async function exportArticles(work, output, ref) {
         );
     });
     article.find('a[href]').each((_, link) => {
-      const href = $(link).attr('href');
+      const originalHref = $(link).attr('href');
+      const href = originalHref.replace(/^\/docs\/ja\/api\//, '/docs/api/');
       if (href.startsWith('/docs/api/'))
         $(link).attr('href', href.replace('/docs/api/', '/components/'));
       else if (href.startsWith('/docs/')) $(link).attr('href', 'https://ionicframework.com' + href);
@@ -87,6 +99,15 @@ export async function exportArticles(work, output, ref) {
       const src = $(el).attr('src');
       if (src.startsWith('/docs/')) $(el).attr('src', 'https://ionicframework.com' + src);
     });
+    // Some translations leave a note open across a new section. Keep the
+    // note's introduction and expose the following sections to the renderer.
+    for (const note of article.children('.theme-admonition').toArray()) {
+      if (!$(note).find('[data-ionic-demo]').length) continue;
+      const body = $(note).children().last();
+      const section = body.children('h2,h3,[data-ionic-demo]').first();
+      const following = section.nextAll().addBack().toArray();
+      $(note).after(following);
+    }
     const blocks = [];
     for (const node of article.contents()) {
       const el = $(node);

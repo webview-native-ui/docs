@@ -687,5 +687,8 @@
     <unit id="ionicComponentSourceTitle"><segment><source>From the official Ionic Docs</source></segment></unit>
     <unit id="ionicComponentDemoCredit"><segment><source>Live demos use WebView Native UI themes.</source></segment></unit>
     <unit id="ionicComponentOriginal"><segment><source>View original</source></segment></unit>
+    <unit id="filterIonicComponents"><segment><source>Filter components</source></segment></unit>
+    <unit id="ionicSourceFile"><segment><source>Source on Ionic Docs</source></segment></unit>
+    <unit id="ionicThirdParty"><segment><source>Third-party notices</source></segment></unit>
   </file>
 </xliff>

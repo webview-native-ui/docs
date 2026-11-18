@@ -344,6 +344,24 @@ test('prerendered locales include reusable hydration data', async () => {
   }
 });
 
+test('prerenders the official Japanese component article with its shared live demos', async () => {
+  const html = await readFile('dist/docs/browser/ja/components/action-sheet/index.html', 'utf8');
+  const { window } = new JSDOM(html);
+  try {
+    const article = window.document.querySelector('article')!;
+    assert.equal(article.closest('[lang]')?.getAttribute('lang'), 'ja');
+    assert.match(article.querySelector('#properties')!.textContent!, /プロパティ/);
+    assert.match(article.textContent!, /アクションシート/);
+    assert.equal(article.querySelectorAll('app-ionic-component-demo').length, 6);
+    assert.equal(
+      window.document.querySelector('.source-note a')?.getAttribute('href'),
+      'https://ionicframework.com/docs/ja/api/action-sheet',
+    );
+  } finally {
+    window.close();
+  }
+});
+
 test('builds bounded search indexes for every published language with the component UI', async () => {
   const searchDirectory = new URL('../dist/docs/browser/pagefind/', import.meta.url);
   const files = await readdir(searchDirectory, { recursive: true });

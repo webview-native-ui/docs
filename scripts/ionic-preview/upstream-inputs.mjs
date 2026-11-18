@@ -3,6 +3,45 @@ import { createHash } from 'node:crypto';
 import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
+export const japaneseDocsRef = '48f35c8a956fb55661dcbdbb474f848adb70431b';
+const japaneseApiRef = '0e9f7c7e21496f3ad4582af3b6e53b22658cac1d';
+const japaneseApiDigest = '18a5ba4e5d4f09ccffeffe6693a44490d0fdc1a26d7de5196caf0a8d9e3e2ea1';
+
+export async function prepareJapaneseDocs(work) {
+  const target = join(work, 'i18n/ja/docusaurus-plugin-content-docs/current');
+  await mkdir(target, { recursive: true });
+  const archive = join(work, 'translation-ja.tgz');
+  execFileSync('curl', [
+    '-fsSL',
+    'https://codeload.github.com/ionic-team/ionic-docs/tar.gz/' + japaneseDocsRef,
+    '-o',
+    archive,
+  ]);
+  execFileSync('tar', [
+    '-xzf',
+    archive,
+    '-C',
+    target,
+    '--strip-components=2',
+    'ionic-docs-' + japaneseDocsRef + '/docs',
+  ]);
+  const file = join(work, 'api-ja.json');
+  execFileSync('curl', [
+    '-fsSL',
+    'https://raw.githubusercontent.com/ionic-jp/ionic-docs/' +
+      japaneseApiRef +
+      '/scripts/data/translated-api.json',
+    '-o',
+    file,
+  ]);
+  if (
+    createHash('sha256')
+      .update(await readFile(file))
+      .digest('hex') !== japaneseApiDigest
+  )
+    throw Error('Unexpected Japanese API definitions');
+}
+
 const apiInputs = [
   {
     major: '8',
@@ -50,7 +89,15 @@ export async function pinApiInputs(work) {
   }
   // Keep the upstream rendering logic. Only replace its mutable registry input.
   const plugin = join(work, 'plugins/docusaurus-plugin-ionic-component-api/index.js');
-  const source = await readFile(plugin, 'utf8');
+  const fetchJapanese =
+    'await fetch(`https://raw.githubusercontent.com/ionic-jp/ionic-docs/main/scripts/data/translated-api.json`)';
+  const original = await readFile(plugin, 'utf8');
+  if (original.split(fetchJapanese).length !== 2)
+    throw Error('Review the upstream Japanese API adapter');
+  const source = original.replace(
+    fetchJapanese,
+    '({text: () => require("node:fs/promises").readFile(require("node:path").resolve(__dirname, "../../api-ja.json"), "utf8")})',
+  );
   const fetchApi = 'await fetch(`https://unpkg.com/@ionic/docs@${npmTag}/core.json`)';
   if (source.split(fetchApi).length !== 2) throw new Error('Review the upstream API input adapter');
   await writeFile(
@@ -82,6 +129,10 @@ export async function installDistributionNotices(work, assets, revision) {
     '',
     'Articles and live examples are compiled from Ionic Docs (Apache-2.0).',
     'Source: https://github.com/ionic-team/ionic-docs/tree/' + revision,
+    'Japanese articles: https://github.com/ionic-team/ionic-docs/tree/' + japaneseDocsRef,
+    'Japanese API definitions: https://github.com/ionic-jp/ionic-docs/blob/' +
+      japaneseApiRef +
+      '/scripts/data/translated-api.json',
     'See LICENSE for the complete Apache License.',
     'Changes: rendered the original articles and code samples for this portal;',
     'live examples load local runtimes and themes and forward console output.',

@@ -650,6 +650,9 @@
       <trans-unit id="webThemeDemoScope"><source>The browser demo shows theme styling and Web interactions. Native controls and Android device colors require the native app on a supported device.</source><target>Die Browser-Demo zeigt das Theme-Design und Web-Interaktionen. Native Steuerelemente und Android-Gerätefarben benötigen die native App auf einem unterstützten Gerät.</target></trans-unit>
       <trans-unit id="componentReferenceTitle"><source>Component reference</source><target>Komponentenreferenz</target></trans-unit>
       <trans-unit id="ionicComponentsNav"><source>Ionic components</source><target>Ionic-Komponenten</target></trans-unit>
+      <trans-unit id="filterIonicComponents"><source>Filter components</source><target>Komponenten filtern</target></trans-unit>
+      <trans-unit id="ionicSourceFile"><source>Source on Ionic Docs</source><target>Quelle in Ionic Docs</target></trans-unit>
+      <trans-unit id="ionicThirdParty"><source>Third-party notices</source><target>Hinweise zu Drittanbietern</target></trans-unit>
 </body>
   </file>
 </xliff>

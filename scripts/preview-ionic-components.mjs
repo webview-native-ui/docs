@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { installGenerated } from './ionic-preview/install-generated.mjs';
 import { build } from 'esbuild';
-import { ionicCore, pinApiInputs } from './ionic-preview/upstream-inputs.mjs';
+import { ionicCore, pinApiInputs, prepareJapaneseDocs } from './ionic-preview/upstream-inputs.mjs';
 
 const ref = process.argv[2] ?? 'a79918700e48c6ae3c8c14e06964d413c7b219ef';
 if (!/^[a-f0-9]{40}$/.test(ref)) throw new Error('Expected an ionic-docs commit SHA');
@@ -20,6 +20,7 @@ try {
   ]);
   run('tar', ['-xzf', 'source.tgz', '--strip-components=1']);
   run('npm', ['ci', '--ignore-scripts', '--legacy-peer-deps', '--no-audit']);
+  await prepareJapaneseDocs(work);
   await pinApiInputs(work);
   run('node', ['scripts/native.mjs']);
   run('node', ['scripts/cli.mjs']);
@@ -94,8 +95,6 @@ try {
   run('node', [
     'node_modules/@docusaurus/core/bin/docusaurus.mjs',
     'build',
-    '--locale',
-    'en',
     '--config',
     'preview.config.cjs',
     '--out-dir',
