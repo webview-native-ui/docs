@@ -29,6 +29,9 @@ for (const [index, match] of examples.entries()) {
 <link rel="stylesheet" href="core.css"><link rel="stylesheet" href="${theme}.css">
 <style>*{box-sizing:border-box}body{margin:0;background:white;color:#172033;font:16px system-ui,sans-serif}main{min-height:100vh;display:grid;place-items:center;padding:12px}section{width:min(100%,360px);text-align:center}ion-list,ion-toolbar{text-align:start}main:has(ion-content){padding:0;display:block}section:has(>ion-content){width:100%;height:100vh}</style>
 <script src="markup.js" defer></script></head><body><main><section>${match[1]}</section></main></body></html>`;
-    await writeFile(`projects/docs/public/assets/theme-preview/markup-${index}-${theme}.html`, page);
+    await writeFile(
+      `projects/docs/public/assets/theme-preview/markup-${index}-${theme}.html`,
+      page,
+    );
   }
 }
