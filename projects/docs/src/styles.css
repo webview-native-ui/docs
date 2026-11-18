@@ -163,6 +163,9 @@ pagefind-modal-trigger.docs-search:empty {
 .znc > div > h2:first-child {
   margin-top: 1.35rem;
 }
+.znc > .example-intro ~ .example-intro > h2:first-child {
+  margin-top: 3rem;
+}
 .znc > div > h3 {
   margin-top: 2rem;
   margin-bottom: 0.65rem;

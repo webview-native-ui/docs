@@ -1,4 +1,5 @@
 ---
+md3Headings: ['Square buttons']
 title: 'Special markup and classes'
 ---
 
@@ -8,11 +9,17 @@ Preview Ionic markup with the iOS 26, iOS 27 and Material Design 3 themes. Switc
 
 ## Primary buttons
 
-Use a submit button for forms. The button-submit class gives another action the same appearance.
+Use a submit button for forms. The button-submit class gives another action the same appearance. On iOS 26, the brightness color sets the highlight on the text and border.
 
 ```html
-<ion-button type="submit" fill="solid">Submit</ion-button>
-<ion-button type="button" class="button-submit" fill="solid">Continue</ion-button>
+<style>
+  :root {
+    --ion-color-primary-brightness: #96feff;
+  }
+</style>
+
+<ion-button type="submit" color="primary">Submit</ion-button>
+<ion-button class="button-submit" color="primary">Continue</ion-button>
 ```
 
 ## Toolbar badges
@@ -21,14 +28,8 @@ Place a badge inside its toolbar button. An empty badge marks unread activity.
 
 ```html
 <ion-toolbar>
-  <ion-buttons slot="end">
-    <ion-button aria-label="Unread"
-      ><ion-icon name="mail"></ion-icon><ion-badge></ion-badge
-    ></ion-button>
-    <ion-button aria-label="3 messages"
-      ><ion-icon name="chatbubble"></ion-icon><ion-badge>3</ion-badge></ion-button
-    >
-  </ion-buttons>
+  <ion-button>Mail<ion-badge></ion-badge></ion-button>
+  <ion-button>Messages<ion-badge>3</ion-badge></ion-button>
 </ion-toolbar>
 ```
 
@@ -55,8 +56,8 @@ Select a segment. The segment-style-glass class applies the glass style on iOS 2
 
 ```html
 <ion-segment class="segment-style-glass" value="photos">
-  <ion-segment-button value="photos"><ion-label>Photos</ion-label></ion-segment-button>
-  <ion-segment-button value="albums"><ion-label>Albums</ion-label></ion-segment-button>
+  <ion-segment-button value="photos">Photos</ion-segment-button>
+  <ion-segment-button value="albums">Albums</ion-segment-button>
 </ion-segment>
 ```
 
@@ -65,8 +66,8 @@ Select a segment. The segment-style-glass class applies the glass style on iOS 2
 Use ios-theme-disabled for iOS 26 and 27, and md3-disabled for MD3. Both classes can be applied to the same button to keep its standard Ionic appearance across themes.
 
 ```html
-<ion-button fill="solid">Themed</ion-button>
-<ion-button fill="solid" class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
+<ion-button>Themed</ion-button>
+<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
 ## Square buttons
@@ -74,8 +75,7 @@ Use ios-theme-disabled for iOS 26 and 27, and md3-disabled for MD3. Both classes
 The button-square class changes the corner shape on MD3. Compare it with the default button.
 
 ```html
-<ion-button fill="solid">Default</ion-button>
-<ion-button fill="solid" class="button-square">Square</ion-button>
+<ion-button>Default</ion-button> <ion-button class="button-square">Square</ion-button>
 ```
 
 Apply the themes to your app with the [Ionic setup guide](/standard-setup).

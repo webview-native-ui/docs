@@ -37,6 +37,18 @@
     <loc>https://webview-native-ui.com/de/standard-setup</loc>
   </url>
   <url>
+    <loc>https://webview-native-ui.com/guides/special-markup</loc>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/ja/guides/special-markup</loc>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/fr/guides/special-markup</loc>
+  </url>
+  <url>
+    <loc>https://webview-native-ui.com/de/guides/special-markup</loc>
+  </url>
+  <url>
     <loc>https://webview-native-ui.com/guides/appearance</loc>
   </url>
   <url>
@@ -59,18 +71,6 @@
   </url>
   <url>
     <loc>https://webview-native-ui.com/de/guides/extensions</loc>
-  </url>
-  <url>
-    <loc>https://webview-native-ui.com/guides/special-markup</loc>
-  </url>
-  <url>
-    <loc>https://webview-native-ui.com/ja/guides/special-markup</loc>
-  </url>
-  <url>
-    <loc>https://webview-native-ui.com/fr/guides/special-markup</loc>
-  </url>
-  <url>
-    <loc>https://webview-native-ui.com/de/guides/special-markup</loc>
   </url>
   <url>
     <loc>https://webview-native-ui.com/guides/migration</loc>

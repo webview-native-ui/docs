@@ -1,6 +1,7 @@
 ---
+md3Headings: ['角を立てたボタン']
 title: '特別なマークアップとクラス'
-sourceRevision: 'df7c4aa52eb4addefec5d375025f5b5e9a05956f274bcedaa062aaff7337f963'
+sourceRevision: '0edc4ad914ae8784dac7a83094b9e108d092127f50549ff4e41b2104b74cff88'
 ---
 
 # 特別なマークアップとクラス
@@ -9,11 +10,17 @@ sourceRevision: 'df7c4aa52eb4addefec5d375025f5b5e9a05956f274bcedaa062aaff7337f96
 
 ## 主な送信ボタン
 
-フォームの送信にはsubmitボタンを使います。ほかの操作にも同じ外観を使う場合はbutton-submitを指定します。
+フォームの送信にはsubmitボタンを使います。ほかの操作にも同じ外観を使う場合はbutton-submitを指定します。 iOS 26では、CSS変数で文字と縁のハイライト色を指定します。
 
 ```html
-<ion-button type="submit" fill="solid">Submit</ion-button>
-<ion-button type="button" class="button-submit" fill="solid">Continue</ion-button>
+<style>
+  :root {
+    --ion-color-primary-brightness: #96feff;
+  }
+</style>
+
+<ion-button type="submit" color="primary">Submit</ion-button>
+<ion-button class="button-submit" color="primary">Continue</ion-button>
 ```
 
 ## ツールバーボタンのバッジ
@@ -22,14 +29,8 @@ sourceRevision: 'df7c4aa52eb4addefec5d375025f5b5e9a05956f274bcedaa062aaff7337f96
 
 ```html
 <ion-toolbar>
-  <ion-buttons slot="end">
-    <ion-button aria-label="Unread"
-      ><ion-icon name="mail"></ion-icon><ion-badge></ion-badge
-    ></ion-button>
-    <ion-button aria-label="3 messages"
-      ><ion-icon name="chatbubble"></ion-icon><ion-badge>3</ion-badge></ion-button
-    >
-  </ion-buttons>
+  <ion-button>Mail<ion-badge></ion-badge></ion-button>
+  <ion-button>Messages<ion-badge>3</ion-badge></ion-button>
 </ion-toolbar>
 ```
 
@@ -56,8 +57,8 @@ sourceRevision: 'df7c4aa52eb4addefec5d375025f5b5e9a05956f274bcedaa062aaff7337f96
 
 ```html
 <ion-segment class="segment-style-glass" value="photos">
-  <ion-segment-button value="photos"><ion-label>Photos</ion-label></ion-segment-button>
-  <ion-segment-button value="albums"><ion-label>Albums</ion-label></ion-segment-button>
+  <ion-segment-button value="photos">Photos</ion-segment-button>
+  <ion-segment-button value="albums">Albums</ion-segment-button>
 </ion-segment>
 ```
 
@@ -66,8 +67,8 @@ sourceRevision: 'df7c4aa52eb4addefec5d375025f5b5e9a05956f274bcedaa062aaff7337f96
 iOS 26・27ではios-theme-disabled、MD3ではmd3-disabledを指定します。両方を付けた右のボタンは、どのテーマでもIonic標準の外観になります。
 
 ```html
-<ion-button fill="solid">Themed</ion-button>
-<ion-button fill="solid" class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
+<ion-button>Themed</ion-button>
+<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
 ## 角を立てたボタン
@@ -75,8 +76,7 @@ iOS 26・27ではios-theme-disabled、MD3ではmd3-disabledを指定します。
 MD3ではbutton-squareでボタンの角を立てられます。標準のボタンと並べて比較できます。
 
 ```html
-<ion-button fill="solid">Default</ion-button>
-<ion-button fill="solid" class="button-square">Square</ion-button>
+<ion-button>Default</ion-button> <ion-button class="button-square">Square</ion-button>
 ```
 
 アプリへのテーマの適用は[Ionicアプリに導入する](/standard-setup)を参照してください。

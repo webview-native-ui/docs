@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -25,9 +25,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class MarkupPreview {
   readonly example = input.required<number>();
+  readonly defaultMd = input(false);
   readonly label = input.required<string>();
   protected readonly platforms = [{ id: 'ios', name: 'iOS 27' }, { id: 'ios26', name: 'iOS 26' }, { id: 'md', name: 'MD3' }] as const;
-  protected readonly selected = signal<(typeof this.platforms)[number]>(this.platforms[0]);
+  protected readonly selected = linkedSignal<(typeof this.platforms)[number]>(() => this.defaultMd() ? this.platforms.find(p => p.id === 'md')! : this.platforms[0]);
   readonly #sanitizer = inject(DomSanitizer);
   protected readonly url = computed(() => this.#sanitizer.bypassSecurityTrustResourceUrl(
     `/assets/theme-preview/markup-${this.example()}-${this.selected().id}.html`,
