@@ -12,7 +12,7 @@ export interface GuideContent {
   readonly html: string;
   readonly headings: readonly { readonly id: string; readonly text: string }[];
   readonly editUrl: string;
-  readonly previewSections?: readonly { readonly intro: string; readonly code: string; readonly label: string; readonly defaultMd: boolean }[];
+  readonly previewSections?: readonly { readonly intro: string; readonly code: string; readonly label: string; readonly themes: 'all' | 'ios' | 'md' }[];
 }
 
 @Component({
@@ -48,7 +48,7 @@ export interface GuideContent {
         @if (guide().previewSections; as sections) {
           @for (section of sections; track $index) {
             <div class="example-intro" appHeadingLinks [innerHTML]="section.intro | safeHtml"></div>
-            <app-markup-preview [example]="$index" [label]="section.label" [defaultMd]="section.defaultMd" />
+            <app-markup-preview [example]="$index" [label]="section.label" [themes]="section.themes" />
             <div [innerHTML]="section.code | safeHtml"></div>
           }
         } @else {

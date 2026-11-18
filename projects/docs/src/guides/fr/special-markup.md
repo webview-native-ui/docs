@@ -1,7 +1,8 @@
 ---
-md3Headings: ['Boutons carrés']
+iosOnlyHeadings: ['Boutons principaux', 'Segments pleine largeur']
+md3OnlyHeadings: ['Boutons carrés']
 title: 'Balisage et classes spécifiques'
-sourceRevision: 'be896c36cfe2a17a3d0ea84d8a7da488bb7fef2723ec2eceaf28e08b8127f2c1'
+sourceRevision: '5f766875c25f9e4ff526fda15830407f6ad181bf7a163cadd16687c62d6b6e58'
 ---
 
 # Balisage et classes spécifiques

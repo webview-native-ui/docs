@@ -18,7 +18,7 @@ interface GuideContent {
   html: string;
   headings: { id: string; text: string }[];
   editUrl: string;
-  previewSections?: { intro: string; code: string; label: string; defaultMd: boolean }[];
+  previewSections?: { intro: string; code: string; label: string; themes: 'all' | 'ios' | 'md' }[];
 }
 
 async function renderGuide(root: string, slug: string): Promise<Record<string, GuideContent>> {
@@ -28,7 +28,11 @@ async function renderGuide(root: string, slug: string): Promise<Record<string, G
     const source = `projects/docs/src/guides/${code}/${slug}.md`;
     const raw = await readFile(join(root, source), 'utf8');
     if (code !== 'en') assertReviewedDocsTranslation(english, raw, source);
-    const parsed = fm<{ headingAliases?: Record<string, string>; md3Headings?: string[] }>(raw);
+    const parsed = fm<{
+      headingAliases?: Record<string, string>;
+      md3OnlyHeadings?: string[];
+      iosOnlyHeadings?: string[];
+    }>(raw);
     const body = parsed.body.trim();
     const title = body.match(/^# (.+)$/m)?.[1];
     if (!title) throw new Error(`${source}: title is required`);
@@ -60,7 +64,11 @@ async function renderGuide(root: string, slug: string): Promise<Record<string, G
             intro,
             code: node.outerHTML,
             label,
-            defaultMd: parsed.attributes.md3Headings?.includes(label) ?? false,
+            themes: parsed.attributes.md3OnlyHeadings?.includes(label)
+              ? ('md' as const)
+              : parsed.attributes.iosOnlyHeadings?.includes(label)
+                ? ('ios' as const)
+                : ('all' as const),
           });
           intro = '';
         } else {

@@ -1,5 +1,6 @@
 ---
-md3Headings: ['Square buttons']
+iosOnlyHeadings: ['Primary buttons', 'Full-width segments']
+md3OnlyHeadings: ['Square buttons']
 title: 'Special markup and classes'
 ---
 
