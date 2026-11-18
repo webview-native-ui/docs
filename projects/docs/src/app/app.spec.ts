@@ -81,21 +81,15 @@ describe('App', () => {
     document.querySelector('dialog[data-search-test]')?.remove();
   });
 
-  it('sends one page_view for each completed router navigation', async () => {
+  it('leaves navigation measurement to the docs tag container', async () => {
     const gtag = vi.fn();
     (window as GoogleAnalyticsWindow).gtag = gtag;
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
-    document.title = 'Tracked page';
 
     await router.navigateByUrl('/projects/ionic-theme-ios27?source=test');
 
-    expect(gtag).toHaveBeenCalledTimes(1);
-    expect(gtag).toHaveBeenCalledWith('event', 'page_view', {
-      page_title: 'Tracked page',
-      page_location: window.location.href,
-      page_path: '/projects/ionic-theme-ios27?source=test',
-    });
+    expect(gtag).not.toHaveBeenCalled();
     fixture.destroy();
   });
 

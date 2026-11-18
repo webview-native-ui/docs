@@ -39,10 +39,6 @@ import { FooterSponsors } from './footer-sponsors/footer-sponsors';
 import { LanguageMenu } from './language-menu';
 import { resolveDocsLocale } from '../../../../shared/docs-locales';
 
-type GoogleAnalyticsWindow = Window & {
-  gtag?: (...args: unknown[]) => void;
-};
-
 interface LibrarySelection {
   projectId: string;
   pickerOpen: boolean;
@@ -271,7 +267,6 @@ export class App {
           this.closeMenu(this.#sidebarContainsFocus());
         }
       }
-      this.#sendPageView(event.urlAfterRedirects);
     });
   }
 
@@ -279,18 +274,6 @@ export class App {
     const segments = url.split(/[?#]/)[0].split('/').filter(Boolean);
     const slug = segments[0] === 'projects' ? segments[1] : undefined;
     return this.projects.find((project) => project.slug === slug);
-  }
-
-  #sendPageView(path: string): void {
-    if (!isPlatformBrowser(this.#platformId)) return;
-    const browserWindow = this.#document.defaultView as GoogleAnalyticsWindow | null;
-    if (!browserWindow?.gtag) return;
-
-    browserWindow.gtag('event', 'page_view', {
-      page_title: this.#document.title,
-      page_location: browserWindow.location.href,
-      page_path: localizedPublicPath(this.#locale, path),
-    });
   }
 
   #loadSearchAssets(): void {
