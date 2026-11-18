@@ -18,6 +18,7 @@ interface GuideContent {
   html: string;
   headings: { id: string; text: string }[];
   editUrl: string;
+  previewSections?: { intro: string; code: string; label: string }[];
 }
 
 async function renderGuide(root: string, slug: string): Promise<Record<string, GuideContent>> {
@@ -47,7 +48,24 @@ async function renderGuide(root: string, slug: string): Promise<Record<string, G
     }
     let html = enforceGeneratedHtmlPolicy(document.body.innerHTML, source);
     if (code !== 'en') html = preserveSourceHeadingLinks(guides.en.html, html, source);
+    const article = JSDOM.fragment(html);
+    const previewSections = [];
+    if (slug === 'special-markup') {
+      let intro = '';
+      let label = '';
+      for (const node of article.children) {
+        if (node.matches('h2')) label = node.textContent.trim();
+        if (node.matches('pre') || node.querySelector('pre')) {
+          previewSections.push({ intro, code: node.outerHTML, label });
+          intro = '';
+        } else {
+          intro += node.outerHTML;
+        }
+      }
+      if (intro) previewSections.at(-1)!.code += intro;
+    }
     guides[code] = {
+      ...(previewSections.length ? { previewSections } : {}),
       title,
       description,
       html,

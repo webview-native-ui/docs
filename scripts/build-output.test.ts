@@ -525,7 +525,11 @@ test('shared guides lead from the complete setup to localized package details', 
     assert.ok(home.querySelector('main #packages'));
     assert.deepEqual(
       [...home.querySelectorAll('.guide-chapters a')].map((a) => a.getAttribute('href')),
-      [`${prefix}/guides/appearance`, `${prefix}/guides/extensions`],
+      [
+        `${prefix}/guides/appearance`,
+        `${prefix}/guides/extensions`,
+        `${prefix}/guides/special-markup`,
+      ],
     );
     assert.ok(home.querySelector(`.support-navigation a[href="${prefix}/support"]`));
     assert.equal(home.querySelector('.guide-navigation a[href$="/support"]'), null);

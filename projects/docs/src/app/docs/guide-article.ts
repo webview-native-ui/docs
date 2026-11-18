@@ -1,6 +1,7 @@
 import { Component, LOCALE_ID, computed, inject, input, signal } from '@angular/core';
 import { HeadingLinksDirective } from '../../../../../shared/heading-links';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { MarkupPreview } from './markup-preview';
 import { ScrollSpyDirective } from './scroll-spy.directive';
 import { localizedFragmentPath } from '../locale-path';
 import { guideCopyForLocale } from '../../../../../shared/guide-navigation';
@@ -11,11 +12,12 @@ export interface GuideContent {
   readonly html: string;
   readonly headings: readonly { readonly id: string; readonly text: string }[];
   readonly editUrl: string;
+  readonly previewSections?: readonly { readonly intro: string; readonly code: string; readonly label: string }[];
 }
 
 @Component({
   selector: 'app-guide-article',
-  imports: [SafeHtmlPipe, HeadingLinksDirective, ScrollSpyDirective],
+  imports: [SafeHtmlPipe, HeadingLinksDirective, ScrollSpyDirective, MarkupPreview],
   styleUrl: './guide-article.css',
   template: `
     <div class="setup-layout">
@@ -43,7 +45,15 @@ export interface GuideContent {
         [appScrollSpy]="headingIds()"
         (activeHeadingChange)="activeHeading.set($event)"
       >
-        <div appHeadingLinks [innerHTML]="guide().html | safeHtml"></div>
+        @if (guide().previewSections; as sections) {
+          @for (section of sections; track $index) {
+            <div appHeadingLinks [innerHTML]="section.intro | safeHtml"></div>
+            <app-markup-preview [example]="$index" [label]="section.label" />
+            <div [innerHTML]="section.code | safeHtml"></div>
+          }
+        } @else {
+          <div appHeadingLinks [innerHTML]="guide().html | safeHtml"></div>
+        }
         <p class="mt-10 text-sm">
           <a [href]="guide().editUrl" i18n="@@editOnGitHub">Edit this page on GitHub</a>
         </p>

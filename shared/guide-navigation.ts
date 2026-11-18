@@ -34,6 +34,22 @@ export const GUIDE_CHAPTERS = [
     },
   },
   {
+    id: 'special-markup',
+    kind: 'task',
+    title: {
+      en: 'Special markup and classes',
+      ja: '特別なマークアップとクラス',
+      fr: 'Balisage et classes spécifiques',
+      de: 'Spezielles Markup und Klassen',
+    },
+    description: {
+      en: 'Try Ionic markup with the iOS 26, iOS 27 and Material Design 3 themes.',
+      ja: '同じHTMLの表示と操作を、iOS 26・iOS 27・MD3で比べられます。',
+      fr: 'Essayez le même HTML avec les thèmes iOS 26, iOS 27 et Material Design 3.',
+      de: 'Vergleichen Sie Ionic-Markup in den Themes für iOS 26, iOS 27 und Material Design 3.',
+    },
+  },
+  {
     id: 'migration',
     kind: 'migration',
     title: {
