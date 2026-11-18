@@ -7,6 +7,15 @@ title: 'Special markup and classes'
 
 Preview Ionic markup with the iOS 26, iOS 27 and Material Design 3 themes. Switch themes above each example to compare the same HTML.
 
+## Disable the theme for a component
+
+To use the standard Ionic appearance on a component, add `ios-theme-disabled` for iOS 26 and 27 or `md3-disabled` for MD3.
+
+```html
+<ion-button>Themed</ion-button>
+<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
+```
+
 ## Primary buttons
 
 Use a submit button for forms. The button-submit class gives another action the same appearance. On iOS 26, the brightness color sets the highlight on the text and border.
@@ -68,15 +77,6 @@ Select a segment. The segment-style-glass class applies the glass style on iOS 2
   <ion-segment-button value="photos">Photos</ion-segment-button>
   <ion-segment-button value="albums">Albums</ion-segment-button>
 </ion-segment>
-```
-
-## Use the standard Ionic button
-
-Use ios-theme-disabled for iOS 26 and 27, and md3-disabled for MD3. Both classes can be applied to the same button to keep its standard Ionic appearance across themes.
-
-```html
-<ion-button>Themed</ion-button>
-<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
 ## Square buttons

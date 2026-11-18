@@ -1,12 +1,21 @@
 ---
 md3Headings: ['角を立てたボタン']
 title: '特別なマークアップとクラス'
-sourceRevision: '6a82a7132ed0cc758a3e186c47d939ab99f0621fac33481ceab1c4e321ebcc36'
+sourceRevision: 'be896c36cfe2a17a3d0ea84d8a7da488bb7fef2723ec2eceaf28e08b8127f2c1'
 ---
 
 # 特別なマークアップとクラス
 
 同じHTMLをiOS 26、iOS 27、Material Design 3で表示します。各例の上部でテーマを切り替えて、形や配置、操作感を比べられます。
+
+## コンポーネントごとにテーマを無効にする
+
+Ionic標準の外観を使いたいコンポーネントに、iOS 26・27では `ios-theme-disabled`、MD3では `md3-disabled` を付けます。
+
+```html
+<ion-button>Themed</ion-button>
+<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
+```
 
 ## 主な送信ボタン
 
@@ -69,15 +78,6 @@ sourceRevision: '6a82a7132ed0cc758a3e186c47d939ab99f0621fac33481ceab1c4e321ebcc3
   <ion-segment-button value="photos">Photos</ion-segment-button>
   <ion-segment-button value="albums">Albums</ion-segment-button>
 </ion-segment>
-```
-
-## ボタン単位でテーマを外す
-
-iOS 26・27ではios-theme-disabled、MD3ではmd3-disabledを指定します。両方を付けた右のボタンは、どのテーマでもIonic標準の外観になります。
-
-```html
-<ion-button>Themed</ion-button>
-<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
 ## 角を立てたボタン

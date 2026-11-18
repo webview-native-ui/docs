@@ -1,12 +1,21 @@
 ---
 md3Headings: ['Boutons carrés']
 title: 'Balisage et classes spécifiques'
-sourceRevision: '6a82a7132ed0cc758a3e186c47d939ab99f0621fac33481ceab1c4e321ebcc36'
+sourceRevision: 'be896c36cfe2a17a3d0ea84d8a7da488bb7fef2723ec2eceaf28e08b8127f2c1'
 ---
 
 # Balisage et classes spécifiques
 
 Comparez le même HTML avec les thèmes iOS 26, iOS 27 et Material Design 3. Changez de thème au-dessus de chaque exemple.
+
+## Désactiver le thème pour un composant
+
+Pour conserver l’apparence Ionic standard d’un composant, ajoutez-lui `ios-theme-disabled` pour iOS 26 et 27 ou `md3-disabled` pour MD3.
+
+```html
+<ion-button>Themed</ion-button>
+<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
+```
 
 ## Boutons principaux
 
@@ -69,15 +78,6 @@ Sélectionnez un segment. La classe segment-style-glass active le style verre so
   <ion-segment-button value="photos">Photos</ion-segment-button>
   <ion-segment-button value="albums">Albums</ion-segment-button>
 </ion-segment>
-```
-
-## Conserver le bouton Ionic standard
-
-Appliquez ios-theme-disabled pour iOS 26 et 27 et md3-disabled pour MD3. Avec ces deux classes, le bouton conserve son apparence Ionic standard dans chaque thème.
-
-```html
-<ion-button>Themed</ion-button>
-<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
 ## Boutons carrés

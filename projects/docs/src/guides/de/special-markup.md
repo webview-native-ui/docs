@@ -1,12 +1,21 @@
 ---
 md3Headings: ['Eckige Schaltflächen']
 title: 'Spezielles Markup und Klassen'
-sourceRevision: '6a82a7132ed0cc758a3e186c47d939ab99f0621fac33481ceab1c4e321ebcc36'
+sourceRevision: 'be896c36cfe2a17a3d0ea84d8a7da488bb7fef2723ec2eceaf28e08b8127f2c1'
 ---
 
 # Spezielles Markup und Klassen
 
 Vergleichen Sie dasselbe HTML mit den Themes für iOS 26, iOS 27 und Material Design 3. Wechseln Sie das Theme über dem jeweiligen Beispiel.
+
+## Das Theme für eine Komponente deaktivieren
+
+Für das Ionic-Standarddesign einer Komponente fügen Sie ihr unter iOS 26 und 27 `ios-theme-disabled` und unter MD3 `md3-disabled` hinzu.
+
+```html
+<ion-button>Themed</ion-button>
+<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
+```
 
 ## Primäre Schaltflächen
 
@@ -69,15 +78,6 @@ Wählen Sie ein Segment aus. Unter iOS 26 und 27 aktiviert segment-style-glass d
   <ion-segment-button value="photos">Photos</ion-segment-button>
   <ion-segment-button value="albums">Albums</ion-segment-button>
 </ion-segment>
-```
-
-## Den Ionic-Standardbutton verwenden
-
-Verwenden Sie ios-theme-disabled für iOS 26 und 27 und md3-disabled für MD3. Mit beiden Klassen behält der Button in jedem Theme sein Ionic-Standarddesign.
-
-```html
-<ion-button>Themed</ion-button>
-<ion-button class="ios-theme-disabled md3-disabled">Standard Ionic</ion-button>
 ```
 
 ## Eckige Schaltflächen
