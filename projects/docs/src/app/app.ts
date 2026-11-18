@@ -140,8 +140,12 @@ export class App {
   protected readonly activeProject = computed(() => this.#projectForUrl(this.currentUrl()));
   protected readonly navigationProject = computed(() => this.#projectForUrl(this.navigationUrl()));
   protected readonly browsingComponents = signal(false);
-  protected readonly componentRoute = computed(() => /^\/components(?:[/?#]|$)/.test(this.navigationUrl()));
-  protected readonly componentPanel = computed(() => this.browsingComponents() || this.componentRoute());
+  protected readonly componentRoute = computed(() =>
+    /^\/components(?:[/?#]|$)/.test(this.navigationUrl()),
+  );
+  protected readonly componentPanel = computed(
+    () => this.browsingComponents() || this.componentRoute(),
+  );
   protected openComponents(): void {
     this.#menuRevision++;
     this.libraryPickerOpen.set(false);
@@ -151,7 +155,13 @@ export class App {
   protected leaveComponents(): void {
     this.browsingComponents.set(false);
     this.openLibraryPicker();
-    afterNextRender(() => this.#focusNavigationLink(this.docsSidebar?.nativeElement.querySelector('#open-components')), {injector:this.#injector});
+    afterNextRender(
+      () =>
+        this.#focusNavigationLink(
+          this.docsSidebar?.nativeElement.querySelector('#open-components'),
+        ),
+      { injector: this.#injector },
+    );
   }
   protected readonly showingLibraries = computed(
     () => (!this.navigationProject() && !this.componentPanel()) || this.libraryPickerOpen(),
@@ -463,7 +473,8 @@ export class App {
       this.#document.querySelector('dialog[open], app-language-menu details[open]')
     )
       return;
-    if ((this.navigationProject() || this.componentRoute()) && this.libraryPickerOpen()) this.closeLibraryPicker();
+    if ((this.navigationProject() || this.componentRoute()) && this.libraryPickerOpen())
+      this.closeLibraryPicker();
     else if (this.mobileLayout()) this.closeMenu();
   }
 

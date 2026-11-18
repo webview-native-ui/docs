@@ -48,7 +48,13 @@ export async function exportArticles(work, output, ref) {
     article.find('pre code').each((_, code) => {
       const lines = $(code).children('.token-line');
       lines.children('br').remove();
-      if (lines.length) $(code).html(lines.map((_, line) => $(line).html() ?? '').get().join('\n'));
+      if (lines.length)
+        $(code).html(
+          lines
+            .map((_, line) => $(line).html() ?? '')
+            .get()
+            .join('\n'),
+        );
     });
     article.find('a[href]').each((_, link) => {
       const href = $(link).attr('href');
@@ -90,11 +96,20 @@ export async function exportArticles(work, output, ref) {
       } else if (el.hasClass('tabs-container')) {
         const labels = el.find('> [role=tablist] > [role=tab]');
         const panels = el.find('> div > [role=tabpanel]');
-        if (!panels.length || labels.length !== panels.length) throw Error('Incomplete tabs: ' + slug);
-        blocks.push({kind:'tabs', panels: panels.map((i, panel) => ({
-          label: labels.eq(i).text().replace(/^Javascript$/, 'JavaScript'),
-          html: $(panel).html(),
-        })).get()});
+        if (!panels.length || labels.length !== panels.length)
+          throw Error('Incomplete tabs: ' + slug);
+        blocks.push({
+          kind: 'tabs',
+          panels: panels
+            .map((i, panel) => ({
+              label: labels
+                .eq(i)
+                .text()
+                .replace(/^Javascript$/, 'JavaScript'),
+              html: $(panel).html(),
+            }))
+            .get(),
+        });
       } else if (/^h[2-6]$/.test(node.name ?? '')) {
         blocks.push({
           kind: 'heading',
@@ -132,8 +147,13 @@ export async function exportArticles(work, output, ref) {
       await writeFile(join(modules, filename), JSON.stringify(content));
       imports.push(`import('./${filename}').then(m => m.default as unknown[])`);
     }
-    const loadExpression = imports.length === 1 ? imports[0] : `Promise.all([${imports.join(',')}]).then(parts => parts.flat())`;
-    catalog.push(`  { ...${JSON.stringify({slug,title,description})}, load: () => ${loadExpression} },`);
+    const loadExpression =
+      imports.length === 1
+        ? imports[0]
+        : `Promise.all([${imports.join(',')}]).then(parts => parts.flat())`;
+    catalog.push(
+      `  { ...${JSON.stringify({ slug, title, description })}, load: () => ${loadExpression} },`,
+    );
   }
   await writeFile(
     join(modules, 'catalog.ts'),
