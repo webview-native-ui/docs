@@ -20,13 +20,33 @@ export async function exportPortalComponents(work, output, ref) {
   const assets = 'projects/docs/public/assets/ionic-components';
   await mkdir(assets, { recursive: true });
   await cp(join(work, 'LICENSE'), join(assets, 'LICENSE'));
-  await cp(join(output, 'preview-assets'), join(assets, 'runtime'), { recursive: true });
-  await cp(join(output, 'usage'), join(assets, 'usage'), {
-    recursive: true,
-    filter: (path) => !/\.mdx?$|\/v[678](?:\/|$)/.test(path),
-  });
+  const demos = await exportArticles(work, output, ref);
+  const runtime = join(output, 'preview-assets');
+  // Ionic loads component bundles and SVG icons by name at runtime.
+  await cp(join(runtime, 'dist'), join(assets, 'runtime/dist'), { recursive: true });
+  for (const theme of ['ios26', 'ios27', 'md']) {
+    await cp(join(runtime, theme + '.css'), join(assets, 'runtime', theme + '.css'));
+  }
+  const styles = new Set();
+  for (const file of [...demos, 'usage/v9/common.js', 'usage/v9/common.css']) {
+    const source = await readFile(join(output, file), 'utf8');
+    await mkdir(join(assets, posix.dirname(file)), { recursive: true });
+    await writeFile(join(assets, file), source);
+    for (const match of source.matchAll(
+      /\/assets\/ionic-components\/runtime\/(css\/[\w/-]+(?:\.[\w-]+)*\.css)/g,
+    )) {
+      styles.add(match[1]);
+    }
+  }
+  for (const file of styles) {
+    const source = await readFile(join(runtime, file), 'utf8');
+    await mkdir(join(assets, 'runtime', posix.dirname(file)), { recursive: true });
+    await writeFile(
+      join(assets, 'runtime', file),
+      source.replace(/\/\*# sourceMappingURL=[^*]+\*\//g, ''),
+    );
+  }
   await normalizeDemoImports(join(assets, 'usage/v9'));
-  await exportArticles(work, output, ref);
 }
 
 export async function exportArticles(work, output, ref) {
@@ -36,6 +56,7 @@ export async function exportArticles(work, output, ref) {
     .filter((name) => name.endsWith('.mdx'))
     .sort();
   const catalog = [];
+  const demos = new Set();
   for (const file of files) {
     const slug = file.slice(0, -4);
     const $ = load(await readFile(join(output, 'api', slug, 'index.html'), 'utf8'));
@@ -73,6 +94,7 @@ export async function exportArticles(work, output, ref) {
       if (src) {
         if (!/^usage\/v9\/[\w/-]+\/demo\.html$/.test(src))
           throw Error('Unexpected demo path: ' + src);
+        demos.add(src);
         const examples = el
           .find('[data-framework]')
           .map((_, group) => ({
@@ -159,4 +181,5 @@ export async function exportArticles(work, output, ref) {
     join(modules, 'catalog.ts'),
     `export const revision = '${ref}';\nexport const catalog = [\n${catalog.join('\n')}\n];\n`,
   );
+  return demos;
 }

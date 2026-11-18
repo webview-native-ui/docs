@@ -67,6 +67,7 @@ export async function installDistributionNotices(work, assets, revision) {
   await mkdir(licenses, { recursive: true });
   const packages = [
     [ionicCore, 'ionic-core'],
+    ['node_modules/ionicons', 'ionicons'],
     ...['ios26', 'ios27', 'md3'].map((theme) => [
       'node_modules/@rdlabo/ionic-theme-' + theme,
       'ionic-theme-' + theme,
