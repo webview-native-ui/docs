@@ -13,6 +13,21 @@ import {
   PAST_SPONSORS,
 } from '../projects/docs/src/app/generated/sponsors.generated';
 
+test('theme preview loads its bundle and styles after the Cloudflare clean URL redirect', async () => {
+  const html = await readFile('dist/docs/browser/assets/theme-preview/index.html', 'utf8');
+  const { window } = new JSDOM(html, { url: 'https://webview-native-ui.com/assets/theme-preview' });
+  try {
+    const doc = window.document;
+    const script = doc.querySelector('script[src]');
+    assert.ok(script);
+    for (const file of [script.getAttribute('src')!, 'ios.css', 'md.css']) {
+      await access(join('dist/docs/browser', new URL(file, doc.baseURI).pathname));
+    }
+  } finally {
+    window.close();
+  }
+});
+
 test('split theme and Native UI guides resolve localized links and heading fragments', async () => {
   const ids = projectDefinitions.filter((project) => !project.hostedUrl).map(({ id }) => id);
   for (const { subPath } of PUBLISHED_DOCS_LOCALES) {
