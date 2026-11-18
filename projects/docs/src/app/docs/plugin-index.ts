@@ -15,7 +15,7 @@ import { SeoService } from './seo.service';
     <div class="catalog">
       <header class="catalog-hero">
         <div class="hero-introduction">
-          <p class="product-name">{{ copy.title }}</p>
+          <p class="product-name brand-wordmark">{{ copy.title }}</p>
           <h1>{{ copy.heroHeadline }}</h1>
           <p class="catalog-hero__lead">{{ copy.heroDefinition }}</p>
           <p class="guide-actions"><a class="guide-start" [href]="standardSetupHref">{{ standardSetupLabel }} →</a></p>

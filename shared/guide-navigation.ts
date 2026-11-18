@@ -66,13 +66,13 @@ export const GUIDE_COPY = {
   },
   heroHeadline: {
     en: 'One Web app. Two platform experiences.',
-    ja: 'WebとNative、\n2つの技術が折り重なり、\nひとつの体験になる。',
+    ja: 'WebViewアプリに、\nネイティブの使い心地を。',
     fr: 'Une app Web, deux interfaces mobiles.',
     de: 'Eine Web-App. Zwei mobile Oberflächen.',
   },
   heroDefinition: {
     en: 'Bring Liquid Glass to iOS and Material Design 3 to Android. Keep your Ionic screens, navigation, and event handlers.',
-    ja: 'iOSにはLiquid Glass、AndroidにはMaterial Design 3。Ionicの画面やナビゲーションを活かしたまま、必要な操作にネイティブコントロールを使えます。',
+    ja: 'Ionicの画面を活かしたまま、iOSにはLiquid Glass、AndroidにはMaterial Design 3を。必要な操作にはネイティブコントロールを使えます。',
     fr: 'Adoptez Liquid Glass sur iOS et Material Design 3 sur Android en conservant vos écrans Ionic, votre navigation et vos gestionnaires d’événements.',
     de: 'Liquid Glass für iOS und Material Design 3 für Android. Ansichten, Navigation und Ereignisbehandlung Ihrer Ionic-App bleiben erhalten.',
   },

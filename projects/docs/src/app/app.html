@@ -37,7 +37,7 @@
         height="36"
         alt=""
       />
-      <span class="docs-brand__name truncate text-sm font-normal tracking-[-0.02em] sm:text-base"
+      <span class="docs-brand__name brand-wordmark truncate text-sm sm:text-base"
         >WebView Native UI</span
       >
     </a>
@@ -217,10 +217,21 @@
   <div class="mx-auto grid max-w-6xl gap-3 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-8">
     <app-footer-sponsors [supportUrl]="footerSupportUrl" />
     <div>
-      <p class="m-0 font-semibold">WebView Native UI</p>
-      <p class="mt-2 mb-0 max-w-2xl leading-6 text-[#94a3b8]" i18n="@@footerOwnership">
-        Web and Native UI. One experience. Maintained by rdlabo.
-      </p>
+      @if (searchLanguage === 'ja' && isGuide('/')) {
+        <p class="brand-wordmark footer-wordmark">
+          <img src="/assets/brand/webview-native-ui.svg" width="32" height="32" alt="" />
+          WebView Native UI
+        </p>
+        <p class="mt-2 mb-0 leading-6 text-balance">
+          WebとNative、2つの技術が折り重なり、ひとつの体験になる。
+        </p>
+        <p class="mt-2 mb-0 text-[#94a3b8]">rdlaboが開発・管理しています。</p>
+      } @else {
+        <p class="m-0 font-semibold">WebView Native UI</p>
+        <p class="mt-2 mb-0 max-w-2xl leading-6 text-[#94a3b8]" i18n="@@footerOwnership">
+          Web and Native UI. One experience. Maintained by rdlabo.
+        </p>
+      }
     </div>
     <div class="sm:text-right">
       <a

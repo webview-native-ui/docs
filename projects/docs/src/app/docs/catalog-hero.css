@@ -9,9 +9,7 @@
   display: flex;
   align-items: center;
   gap: .65rem;
-  color: #1659a5;
   font-size: .95rem;
-  font-weight: 650;
 }
 .product-name::before {
   content: '';
@@ -37,7 +35,7 @@
 }
 .hero-setup-note { margin-top: .65rem; color: var(--rd-muted); font-size: .8rem; }
 .hero-introduction { container-type: inline-size; }
-.catalog-hero h1:lang(ja) { font-size: clamp(1.6rem, 9.3cqi, 4rem); }
+.catalog-hero h1:lang(ja) { font-size: clamp(1.4rem, 8.25cqi, 4rem); }
 .app-showcase { min-width: 0; margin: 0; }
 .showcase-screens {
   display: grid;
