@@ -1,9 +1,11 @@
 ---
-title: "Androidの動的な配色"
+title: Android Dynamic Color
 sourceRevision: "3d6692bfba465d82c86b92570ee66682c44f046530492028bbc9d55e9f80e3e5"
 ---
 
-# Androidの動的な配色
+# Android Dynamic Color
+
+<a id="android-dynamic-colors"></a>
 
 動的な配色に対応しており、任意で有効にできます。Android 12以降がライトとダークのMaterial配色を提供し、このパッケージはIonic Docsのカラージェネレーターのアルゴリズムで各ロールを変換します。古いAndroid、iOS、Webでは既存のIonicパレットとコンポーネントのデフォルト色を使います。[カラーシステム](color-system.md)を参照してください。Ionicパレットだけで十分であり、ネイティブのMaterialロールは任意のCSSトークンを補うだけです。
 

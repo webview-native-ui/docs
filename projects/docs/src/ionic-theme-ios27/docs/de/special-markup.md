@@ -1,13 +1,15 @@
 ---
 title: "Spezielles Markup und Klassen"
-sourceRevision: "f4c99978196ccd5ea3369c5f586ef10b5a89ca05bd6fab3ceccb283c516247c2"
+sourceRevision: "a7c2b48ce7774407912f29f9a71a3ad092c5a26e0fb54dd907b62411b7f06cbd"
 ---
 
 # Spezielles Markup und Klassen
 
 Das meiste Ionic-Markup funktioniert unverändert. Die folgenden Kombinationen werden vom Theme bereitgestellt und müssen ausdrücklich aktiviert werden.
 
-## Primäre Absende-Schaltflächen
+<a id="prim%C3%A4re-absende-schaltfl%C3%A4chen"></a><a id="primary-submit-buttons"></a>
+
+## Absende-Schaltflächen
 
 Gefüllte Absende-Schaltflächen verwenden den Kontrastwert der Ionic-Farbe für ihren Vordergrund. Die richtungsabhängige Gestaltung der Ränder folgt dem Erscheinungsbild hervorgehobener Schaltflächen in iOS 27 und benötigt keine zusätzliche Helligkeitsfarbe.
 
@@ -240,7 +242,9 @@ Das Beispiel verwendet die standardmäßige einklappbare Struktur für große Ti
 
 Der Wrapper `.ion-page` lässt diese eingebettete Vorschau wie eine vollständige geroutete Seite funktionieren. Eine Anwendung mit `ion-router-outlet` erhält diesen Seitencontainer normalerweise automatisch. Die eingerückte Liste und ihre Elemente liefern lediglich genügend Inhalt zur Demonstration des Scrollens; `.searchbar-classic` benötigt sie nicht.
 
-## Das Theme gezielt deaktivieren
+<a id="das-theme-gezielt-deaktivieren"></a><a id="opting-out"></a>
+
+## Theme für eine Komponente deaktivieren
 
 Fügen Sie `.ios-theme-disabled` zu einer einzelnen Ionic-Komponente hinzu, wenn diese die standardmäßige iOS-Gestaltung von Ionic behalten soll.
 

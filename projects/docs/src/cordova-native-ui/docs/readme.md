@@ -56,6 +56,16 @@ Call `await nativeUI.destroy()` when the application permanently stops using Nat
 
 For an ESM application, import `enableNativeUI` from `@webview-native-ui/cordova-plugin/core` for standard HTML, or from `@webview-native-ui/cordova-plugin` for Ionic. Use one runtime entry style. Do not mix npm startup with `window.NativeUI` startup.
 
+## Android Dynamic Color
+
+Use Android 12 or later to read the device palette after Cordova is ready. You can use the color API independently of native controls.
+
+```ts
+import { getDynamicColorScheme } from '@webview-native-ui/cordova-plugin/core';
+
+const scheme = await getDynamicColorScheme();
+```
+
 ## Optional iOS theme
 
 Install the iOS theme separately if your app uses it. See [Cordova theme setup](/ionic-theme-ios27/docs/cordova).

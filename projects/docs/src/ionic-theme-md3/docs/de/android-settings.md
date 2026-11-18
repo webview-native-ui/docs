@@ -1,6 +1,6 @@
 ---
 title: "Android Settings-Darstellung"
-sourceRevision: "ed9b62518817e3b5cdb9b2e2c43ab19c2019b4025d944f76b0a912e0939690aa"
+sourceRevision: "33b555b0e7274259d03606af6961c7544bc7bdb7b627bfad770bb27971da641c"
 ---
 
 # Android Settings-Darstellung
@@ -15,7 +15,7 @@ Das Theme verwendet Android Settings als visuelle Referenz und behält Ionics Ko
 | Toggle-Schieber | Kein Zustandssymbol | Ionics `enableOnOffLabels` oder der folgende Symbolhelfer |
 | Schrift | Lokales Google Sans Flex, dann Roboto / Helvetica Neue / sans-serif | Ionics `--ion-font-family` |
 | Zurück-Pfeil | In Ionic konfiguriertes Symbol | Ionics eigene Symbolkonfiguration; kein Theme-Symbol enthalten |
-| Palette | Bestehende Ionic-Farbabsicht | Gerätefarben sind eine separate Funktion für [dynamische Farben](dynamic-colors.md) |
+| Palette | Bestehende Ionic-Farbabsicht | Gerätefarben sind eine separate Funktion für [Android Dynamic Color](dynamic-colors.md) |
 
 ## Standardschrift nur mit CSS
 
@@ -76,6 +76,22 @@ removeIcons();
 Rufen Sie den Helfer nach Erstellung und Verbindung des Toggles auf. Er wartet auf die Registrierung des Custom Elements und auf `componentOnReady()`, sofern verfügbar. Warten Sie in Builds ohne diese Methode zuerst auf das Shadow-DOM-Rendering. Wird die Ansicht während der Einrichtung zerstört, rufen Sie die zurückgegebene Bereinigung sofort auf.
 
 Der Helfer fügt ein Style-Element in das Shadow DOM des öffentlichen handle-Parts ein. Er fängt keine Komponenteneigenschaften ab und beobachtet das Dokument nicht. Ionics eigene Beschriftungen haben bei aktivem `enableOnOffLabels` Vorrang, auch nach späteren Eigenschaftsänderungen. `md3-disabled` und der iOS-Modus unterdrücken diese Symbolerweiterung. Die Demo bindet den Helfer nicht automatisch an.
+
+## Alert-Größen auf Tablets
+
+Breite Tablet-Alerts folgen den gemessenen Android-17-Settings-Proportionen: 85 % im Hochformat und 65 % im Querformat. Beim Tippen auf Android-Tablets bleibt diese Breite erhalten, wenn die IME den Viewport verkleinert. Fenster in Telefongröße behalten Ionics inhaltsabhängiges Layout.
+
+Verwenden Sie öffentliche Größeneigenschaften zur Dialoganpassung. Setzen Sie bei einem per Controller erzeugten Alert `cssClass: 'app-alert'` und platzieren Sie eine mit dem Komponentennamen qualifizierte Regel im globalen Anwendungsstylesheet nach dem Theme:
+
+```css
+ion-alert.app-alert {
+  --width: 400px;
+  --max-width: min(400px, calc(100vw - 32px));
+}
+```
+
+Inline-Style-Bindings funktionieren ebenfalls. Normale CSS-Minimal-/Maximalbeschränkungen gelten weiterhin, und `md3-disabled` stellt Ionics eigene Größenstandards wieder her.
+
 
 ## Aktualisierung und Überprüfung
 

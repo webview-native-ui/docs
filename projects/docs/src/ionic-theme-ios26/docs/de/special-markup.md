@@ -1,25 +1,27 @@
 ---
 title: "Besonderes Markup und Klassen"
-sourceRevision: "6f02d48fe23aef1123b4419535cf0704c579902cbbb274e4eb9cb0ab77aee9d4"
+sourceRevision: "842ff9b07b2980b149982ca6724258ba54d371e6dab02f35c22a20b68ff4c1f1"
 ---
 
 # Besonderes Markup und Klassen
 
 Das meiste Ionic-Markup funktioniert unverändert. Die folgenden Kombinationen werden vom Theme bereitgestellt und müssen ausdrücklich aktiviert werden.
 
-## Primäre Absende-Schaltflächen
+<a id="prim%C3%A4re-absende-schaltfl%C3%A4chen"></a><a id="primary-submit-buttons"></a>
 
-Gefüllte primäre Absende-Schaltflächen verwenden `--ion-color-primary-brightness` für Vordergrund und Randgestaltung. Definieren Sie einen Wert mit ausreichendem Kontrast zu Ihrer Primärfarbe.
+## Absende-Schaltflächen
+
+Verwenden Sie bei einer gefüllten Absende-Schaltfläche in der Farbe danger die Variable `--ion-color-danger-brightness` für Vordergrund und Rand.
 
 ```css
 :root {
-  --ion-color-primary-brightness: #96feff;
+  --ion-color-danger-brightness: #fff;
 }
 ```
 
 ```html preview
-<ion-button type="submit" color="primary">Submit</ion-button>
-<ion-button class="button-submit" fill="solid" color="primary">Continue</ion-button>
+<ion-button type="submit" color="danger">Submit</ion-button>
+<ion-button class="button-submit" fill="solid" color="danger">Continue</ion-button>
 ```
 
 Verwenden Sie `.button-submit`, wenn die Schaltfläche dieselbe Gestaltung benötigt, aber nicht `type="submit"` verwenden kann.
@@ -212,7 +214,9 @@ Fügen Sie `.toolbar-searchbar` hinzu, wenn eine `ion-toolbar` eine Suchleiste m
 </ion-toolbar>
 ```
 
-## Das Theme gezielt deaktivieren
+<a id="das-theme-gezielt-deaktivieren"></a><a id="opting-out"></a>
+
+## Theme für eine Komponente deaktivieren
 
 Fügen Sie `.ios-theme-disabled` zu einer einzelnen Ionic-Komponente hinzu, wenn diese die standardmäßige iOS-Gestaltung von Ionic behalten soll.
 

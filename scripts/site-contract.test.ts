@@ -267,9 +267,10 @@ test('lists ionic theme packages and pins localized README imports', async () =>
   assert.ok(iosExpected);
   assert.match(
     iosReadme,
-    /\]\(https:\/\/docs\.rdlabo\.dev\/projects\/ionic-theme-ios26\/docs\/using-ion-item-group\)/,
+    /\]\(https:\/\/webview-native-ui\.com\/projects\/ionic-theme-ios26\/docs\/using-ion-item-group\)/,
   );
-  assert.match(iosReadme, /ios26ThemeConfig/);
+  assert.match(iosReadme, /npm install @rdlabo\/ionic-theme-ios26/);
+  assert.match(await englishGuideSource(iosProject, 'setup.md'), /ios26ThemeConfig/);
 
   assert.equal(yamlTitle(usingDocJa), 'ion-item-groupの使用方法');
   assert.notEqual(yamlTitle(usingDocJa), usingPage.title.en);
@@ -325,7 +326,11 @@ test('separates iOS 26 and iOS 27 documentation, source branches, and screenshot
   const oldGuide = ionicThemeIos26En.pages.find((page) => page.slug === 'migration');
   const newGuide = ionicThemeIos27En.pages.find((page) => page.slug === 'migration');
   assert.match(oldGuide!.editUrl, /\/edit\/ios26\/docs\/migration\.md$/);
-  assert.match(newGuide!.editUrl, /\/edit\/main\/docs\/migration\.md$/);
+  assert.equal(
+    newGuide!.editUrl,
+    'https://github.com/webview-native-ui/docs/edit/main/projects/docs/src/ionic-theme-ios27/docs/migration.md',
+  );
+  assert.doesNotMatch(newGuide!.html, /Cordova-bundled theme/);
   assert.match(newGuide!.html, /href="\/projects\/ionic-theme-ios26\/docs\/migration"/);
 });
 

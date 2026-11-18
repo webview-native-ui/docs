@@ -1,6 +1,6 @@
 ---
 title: "Apparence Android Settings"
-sourceRevision: "ed9b62518817e3b5cdb9b2e2c43ab19c2019b4025d944f76b0a912e0939690aa"
+sourceRevision: "33b555b0e7274259d03606af6961c7544bc7bdb7b627bfad770bb27971da641c"
 ---
 
 # Apparence Android Settings
@@ -15,7 +15,7 @@ Le thème prend Android Settings comme référence visuelle tout en conservant l
 | Curseur d’interrupteur | Sans icône d’état | `enableOnOffLabels` d’Ionic ou le helper d’icônes ci-dessous |
 | Police | Google Sans Flex local, puis Roboto / Helvetica Neue / sans-serif | `--ion-font-family` d’Ionic |
 | Flèche de retour | Icône configurée dans Ionic | Configuration d’icône d’Ionic ; aucune icône fournie par le thème |
-| Palette | Intention des couleurs Ionic existante | Les couleurs de l’appareil sont une fonctionnalité distincte de [couleurs dynamiques](dynamic-colors.md) |
+| Palette | Intention des couleurs Ionic existante | Les couleurs de l’appareil sont une fonctionnalité distincte de [Android Dynamic Color](dynamic-colors.md) |
 
 ## Police par défaut, uniquement en CSS
 
@@ -76,6 +76,22 @@ removeIcons();
 Appelez le helper après avoir créé et connecté l’interrupteur. Il attend l’enregistrement de l’élément personnalisé et `componentOnReady()` si disponible. Dans les builds sans cette méthode, attendez d’abord le rendu du Shadow DOM. Si la vue est détruite pendant l’attente, appelez immédiatement la fonction de nettoyage renvoyée.
 
 Le helper ajoute un élément style au Shadow DOM de la Part publique handle. Il n’intercepte pas les propriétés du composant et n’observe pas le document. Les libellés Ionic sont prioritaires lorsque `enableOnOffLabels` est activé, y compris après des changements de propriété. `md3-disabled` et le mode iOS désactivent cette amélioration d’icônes. La démo n’attache pas ce helper automatiquement.
+
+## Dimensions des Alert sur tablette
+
+Les Alert de tablettes larges suivent les proportions mesurées d’Android 17 Settings : 85 % en portrait et 65 % en paysage. Lors de la saisie sur tablette Android, cette largeur est conservée quand l’IME redimensionne le viewport. Les fenêtres de taille téléphone gardent la disposition Ionic adaptée au contenu.
+
+Utilisez les propriétés publiques de dimensionnement pour personnaliser un dialogue. Pour une Alert créée par contrôleur, définissez `cssClass: 'app-alert'` et placez une règle qualifiée par le composant dans la feuille de style globale de l’application après le thème :
+
+```css
+ion-alert.app-alert {
+  --width: 400px;
+  --max-width: min(400px, calc(100vw - 32px));
+}
+```
+
+Les bindings de style en ligne fonctionnent également. Les contraintes CSS minimales/maximales habituelles s’appliquent toujours, et `md3-disabled` restaure les dimensions par défaut d’Ionic.
+
 
 ## Mise à niveau et vérification
 

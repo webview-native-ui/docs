@@ -16,6 +16,8 @@ Keep Ionic’s base styles and use the preset matching your existing dark-mode p
 @import '@rdlabo/ionic-theme-ios27/styles/system.css';
 ```
 
+Pass `ios27ThemeConfig` to your existing Ionic initializer to enable page transitions and popover animations. See the [Angular, React and Vue examples](setup.md).
+
 If using JavaScript helpers, import them from the theme package. In your Web bundler, map the exact module name
 
 `@rdlabo/capacitor-native-ui/integration` → `@webview-native-ui/cordova-plugin/integration`

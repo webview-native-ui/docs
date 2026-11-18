@@ -1,11 +1,13 @@
 ---
 title: Ionic Theme iOS27
-sourceRevision: '3d0aa9378b946f8b5e44d22d18f78ac8268ccb930bac6336df6a7405f5b6affc'
+sourceRevision: "7340ece4c80437455dcad07cad5def0cdb3b564fba7a8717de8392e9719df36f"
 ---
 
-`npm install @rdlabo/ionic-theme-ios27` でインストールします。1.x は [v1.2.1 のガイド](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1)を使用してください。Ionic アプリに iOS 27 の Liquid Glass とアニメーションを適用します。Capacitor iOS では、2.0.0から正式対応した Native UI を対応コントロールへ追加できます。
+IonicコンポーネントにiOS 27のLiquid Glassとアニメーションを適用します。
 
-**[Ionic 9 デモ](https://ionic-theme-ios27.rdlabo.dev/) · [セットアップ](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup)**
+[セットアップ](setup.md) · [ブラウザーで試す](https://ionic-theme-ios27.rdlabo.dev/)
+
+セットアップ例はIonic 9向けです。Ionic 8のAngularアプリでは、`provideIonicAngular` を `@ionic/angular/standalone` からインポートします。
 
 <!-- rdlabo-docs-pick -->
 
@@ -17,78 +19,38 @@ sourceRevision: '3d0aa9378b946f8b5e44d22d18f78ac8268ccb930bac6336df6a7405f5b6aff
 
 <!-- /rdlabo-docs-pick -->
 
+<a id="%E3%81%AF%E3%81%98%E3%82%81%E3%82%8B"></a><a id="get-started"></a>
+
 ## 何をしたいですか？
+
+Cordovaでも、まずIonicの初期化に `ios27ThemeConfig` を渡し、その後に[Cordova連携](cordova.md)を設定します。
 
 | 目的 | ガイド |
 | --- | --- |
-| 既存の Ionic アプリにテーマを適用する | [はじめる](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup) |
-| iOS 26/27 の選択と任意の MD3 併用 | [適応テーマ](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/adaptive-themes) |
-| Capacitor アプリに iOS のネイティブコントロールを追加する | [Native UI を追加](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/add-native-ui) |
-| 既存テーマを維持して Ionic にサイドレールを追加する | [Vertical Bars の導入](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/ionic-vertical-bars) |
+| 既存の Ionic アプリにテーマを適用する | [はじめる](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/setup) |
+| iOS 26/27 の選択と任意の MD3 併用 | [適応テーマ](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/adaptive-themes) |
+| Capacitor アプリに iOS のネイティブコントロールを追加する | [Native UI を追加](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/add-native-ui) |
+| 既存テーマを維持して Ionic にサイドレールを追加する | [Vertical Bars の導入](https://webview-native-ui.com/projects/capacitor-native-ui/docs/ionic-vertical-bars) |
 | 任意で Cordova からテーマと Native UI を使う | [Cordova の設定](/docs/cordova) |
 | スタイル・ダークモード・アニメーションを個別に設定する | [設定](/docs/configuration) |
-| 既存環境を更新する | [移行](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/migration) |
-
-## はじめる
-
-既存のIonic 9アプリに、単体テーマから導入します。ブラウザーでテーマだけを使う場合、CapacitorのネイティブプロジェクトやNative UIの起動は不要です。 iOS テーマを使うアプリは、テーマを別途インストールします。手順は [Cordova のテーマ設定](/ionic-theme-ios27/docs/cordova)を参照してください。
-
-端末に応じた配置が必要な場合だけ、Erkam Yamanによるコミュニティプラグイン[Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable)を[端末レイアウトの手順](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout)で追加します。Foldableは配置・姿勢・変更イベントを通知し、テーマはWeb配置を提供します。別途有効にしたNative UIがコントロールを投影します。Foldableの導入とイベント接続は任意の追加機能であり、テーマの前提ではありません。
-
-テーマを導入し、Ionic の基本 CSS の後にグローバルのテーマ CSS を1つ読み込み、既存の Ionic 初期化へテーマ設定を渡します。Angular・React・Vue の手順は[セットアップ](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup)を参照してください。
-
-```sh
-npm install @rdlabo/ionic-theme-ios27
-```
-
-```diff:src/global.css
-@@
- @import '@ionic/core/css/core.css';
- @import '@ionic/core/css/structure.css';
-- @import '@ionic/core/css/palettes/dark.system.css';
-+ @import '@rdlabo/ionic-theme-ios27/styles/system.css';
-
- :root { --app-content-width: 72rem; }
-```
-
-```diff:src/app/app.config.ts
-@@
- import { ApplicationConfig } from '@angular/core';
- import { provideIonicAngular } from '@ionic/angular';
-+ import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
- import { provideRouter } from '@angular/router';
- import { routes } from './app.routes';
-
- export const appConfig: ApplicationConfig = {
-   providers: [
-     provideRouter(routes),
--     provideIonicAngular(),
-+     provideIonicAngular({ ...ios27ThemeConfig }),
-     provideHttpClient(),
-   ],
- };
-```
-
-手動のダークモードには `styles/class.css`、常時ダークには `styles/always.css` を選びます。対応する Ionic ダークパレットも含まれます。テーマ設定は iOS モードとアニメーションを既定とし、アプリのオプションで上書きできます。対応する Ionic は `>=9 <10` です。ブラウザー専用アプリにネイティブ Capacitor プロジェクトは不要です。
-
-テーマは toolbar、tabs、list、button、search、overlay のライト・ダーク外観を提供しますが、ネイティブコントロールは有効にしません。Web テーマの動作後に任意で [Native UI を追加](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/add-native-ui)できます。
+| 既存環境を更新する | [移行](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/migration) |
 
 ## アプリをカスタマイズする
 
 個別の CSS とアニメーションは[設定](/docs/configuration)、既存アプリの任意の簡略化は[移行](/docs/migration#optional-simplify-the-setup)を参照してください。
 
-- [機能](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/features): CSS 変数、Liquid Glass、コンポーネント別の読み込み。
-- [特殊なマークアップとクラス](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/special-markup): 明示的に有効にする動作。
-- [ion-item-group](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/using-ion-item-group): inset リストの構造。
-- [アニメーション](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/animation): tab・segment・検索の効果。
-- [ESLint](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/eslint): 未対応リスト構造の検出。
-- [Vertical Bars レイアウト](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/vertical-bars-layout): 余白、RTL、配置、姿勢、split pane。
+- [機能](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/features): CSS 変数、Liquid Glass、コンポーネント別の読み込み。
+- [特殊なマークアップとクラス](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/special-markup): 明示的に有効にする動作。
+- [ion-item-group](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/using-ion-item-group): inset リストの構造。
+- [アニメーション](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/animation): tab・segment・検索の効果。
+- [ESLint](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/eslint): 未対応リスト構造の検出。
+- [Vertical Bars レイアウト](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout): 余白、RTL、配置、姿勢、split pane。
 
 ## リポジトリの責務
 
 Capacitor プラグインは [webview-native-ui/capacitor-plugin](https://github.com/webview-native-ui/capacitor-plugin) で保守します。このリポジトリはテーマ、統合デモ、ブラウザー撮影とシミュレーター連携テストを管理します。デモは npm の `@rdlabo/capacitor-native-ui` を使用し、テーマのリリースでプラグインの公開や版の変更は行いません。
 
-iOS テーマを使うアプリは、テーマを別途インストールします。手順は [Cordova のテーマ設定](/ionic-theme-ios27/docs/cordova)を参照してください。
+iOS テーマを使うアプリは、テーマを別途インストールします。手順は [Cordova のテーマ設定](cordova.md)を参照してください。
 
 未公開のプラグインアーカイブを実際のデモで検証する場合:
 

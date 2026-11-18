@@ -1,9 +1,11 @@
 ---
-sourceRevision: "0ed08a5bc4e61a961fca993c3e8e50da51b29dcc99005812b1c14e8703c9e6a9"
-title: Dynamische Android-Farben
+sourceRevision: "c5b40760a44685746f9a2a9a06f5afacc0133ba6e65cadb8943e7be9d747d3c1"
+title: Android Dynamic Color
 ---
 
-# Dynamische Android-Farben
+# Android Dynamic Color
+
+<a id="android-dynamic-colors"></a>
 
 Dynamische Farben sind eine unterstützte, ausdrücklich zu aktivierende API. Lesen Sie die Material You-Palette des Geräts, ohne Native UI-Projektion zu aktivieren, das Activity-Theme zu ändern oder Wallpaper-/Speicherberechtigungen anzufordern. Zum Auslesen der Farben ist Ionic nicht erforderlich. App-lokale SwiftUI-/Compose-Erweiterungen bleiben experimentell; ihr Status ist davon unabhängig.
 

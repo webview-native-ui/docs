@@ -1,13 +1,15 @@
 ---
 title: "Balisage et classes spécifiques"
-sourceRevision: "f4c99978196ccd5ea3369c5f586ef10b5a89ca05bd6fab3ceccb283c516247c2"
+sourceRevision: "a7c2b48ce7774407912f29f9a71a3ad092c5a26e0fb54dd907b62411b7f06cbd"
 ---
 
 # Balisage et classes particuliers
 
 La plupart du balisage Ionic fonctionne sans modification. Les combinaisons ci-dessous sont des options du thème à activer explicitement.
 
-## Boutons d’envoi principaux
+<a id="boutons-d%E2%80%99envoi-principaux"></a><a id="primary-submit-buttons"></a>
+
+## Boutons d’envoi
 
 Les boutons d’envoi à remplissage plein utilisent la valeur de contraste de la couleur Ionic pour leur premier plan. Leur traitement des bords directionnel suit l’apparence des boutons mis en avant d’iOS 27 et ne nécessite pas de couleur de luminosité supplémentaire.
 
@@ -240,7 +242,9 @@ L’exemple utilise la structure standard d’Ionic avec un grand titre rétract
 
 Le conteneur `.ion-page` permet à cet aperçu intégré de se comporter comme une page routée complète. Une application utilisant `ion-router-outlet` reçoit normalement ce conteneur de page automatiquement. La liste en retrait et ses éléments fournissent seulement assez de contenu pour démontrer le défilement ; `.searchbar-classic` ne les exige pas.
 
-## Désactiver le thème
+<a id="d%C3%A9sactiver-le-th%C3%A8me"></a><a id="opting-out"></a>
+
+## Désactiver le thème pour un composant
 
 Ajoutez `.ios-theme-disabled` à un composant Ionic individuel lorsqu’il doit conserver le style iOS standard d’Ionic.
 

@@ -56,6 +56,16 @@ document.addEventListener('deviceready', async () => {
 
 ESM アプリでは、標準 HTML は `@webview-native-ui/cordova-plugin/core`、Ionic は `@webview-native-ui/cordova-plugin` から `enableNativeUI` を import します。ランタイムの開始方法は1つに統一し、npm と `window.NativeUI` の開始を混在させないでください。
 
+## Android Dynamic Color
+
+Android 12以降では、Cordovaの準備ができた後に端末の配色を取得できます。配色だけを使うアプリではNative UIの起動は不要です。
+
+```ts
+import { getDynamicColorScheme } from '@webview-native-ui/cordova-plugin/core';
+
+const scheme = await getDynamicColorScheme();
+```
+
 ## iOS テーマを使う場合
 
 iOS テーマを使うアプリは、テーマを別途インストールします。手順は [Cordova のテーマ設定](/ionic-theme-ios27/docs/cordova)を参照してください。

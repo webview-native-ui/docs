@@ -37,49 +37,49 @@ export const PROJECTS_EN = [
         "title": "Getting Started",
         "navTitle": "Getting Started",
         "slug": "readme",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/webview-native-ui-engine/docs/readme"
       },
       {
         "title": "Documentation overview",
         "navTitle": "Documentation overview",
         "slug": "overview",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/webview-native-ui-engine/docs/overview"
       },
       {
         "title": "Concepts and limits",
         "navTitle": "Concepts and limits",
         "slug": "concepts",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/webview-native-ui-engine/docs/concepts"
       },
       {
         "title": "Shared controls for native adapters",
         "navTitle": "Shared controls for native adapters",
         "slug": "controls",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/webview-native-ui-engine/docs/controls"
       },
       {
         "title": "Basic initialization",
         "navTitle": "Basic initialization",
         "slug": "getting-started/initialization",
-        "section": "Integration",
+        "section": "Getting started",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/initialization"
       },
       {
         "title": "Capacitor plugin integration",
         "navTitle": "Capacitor plugin integration",
         "slug": "getting-started/capacitor",
-        "section": "Integration",
+        "section": "Getting started",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/capacitor"
       },
       {
         "title": "Cordova plugin integration",
         "navTitle": "Cordova plugin integration",
         "slug": "getting-started/cordova",
-        "section": "Integration",
+        "section": "Getting started",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/cordova"
       },
       {
@@ -121,7 +121,7 @@ export const PROJECTS_EN = [
         "title": "Custom overlay pause and resume",
         "navTitle": "Custom overlay pause and resume",
         "slug": "configuration/pause-resume",
-        "section": "Guides",
+        "section": "Configuration",
         "path": "/projects/webview-native-ui-engine/docs/configuration/pause-resume"
       },
       {
@@ -198,7 +198,7 @@ export const PROJECTS_EN = [
         "title": "Development and releases",
         "navTitle": "Development and releases",
         "slug": "maintenance",
-        "section": "Guides",
+        "section": "Development",
         "path": "/projects/webview-native-ui-engine/docs/maintenance"
       }
     ]
@@ -219,91 +219,91 @@ export const PROJECTS_EN = [
         "title": "Ionic Theme iOS27",
         "navTitle": "Getting Started",
         "slug": "readme",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/ionic-theme-ios27/docs/readme"
       },
       {
         "title": "Set up the iOS 27 theme",
         "navTitle": "Theme setup",
         "slug": "setup",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/ionic-theme-ios27/docs/setup"
       },
       {
         "title": "Theme configuration",
         "navTitle": "Theme configuration",
         "slug": "configuration",
-        "section": "Guides",
+        "section": "Reference",
         "path": "/projects/ionic-theme-ios27/docs/configuration"
       },
       {
         "title": "Cordova theme setup",
         "navTitle": "Cordova setup",
         "slug": "cordova",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/ionic-theme-ios27/docs/cordova"
       },
       {
         "title": "Adaptive themes",
         "navTitle": "Adaptive themes",
         "slug": "adaptive-themes",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios27/docs/adaptive-themes"
       },
       {
         "title": "Add Native UI",
         "navTitle": "Add Native UI",
         "slug": "add-native-ui",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/ionic-theme-ios27/docs/add-native-ui"
       },
       {
         "title": "Using ion-item-group",
         "navTitle": "Using ion-item-group",
         "slug": "using-ion-item-group",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios27/docs/using-ion-item-group"
       },
       {
         "title": "Special markup and classes",
         "navTitle": "Special markup and classes",
         "slug": "special-markup",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios27/docs/special-markup"
       },
       {
         "title": "Keep lists consistent with ESLint",
         "navTitle": "Keep lists consistent with ESLint",
         "slug": "eslint",
-        "section": "Guides",
+        "section": "Development",
         "path": "/projects/ionic-theme-ios27/docs/eslint"
       },
       {
         "title": "Features",
         "navTitle": "Features",
         "slug": "features",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios27/docs/features"
       },
       {
         "title": "Animation",
         "navTitle": "Animation",
         "slug": "animation",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios27/docs/animation"
       },
       {
         "title": "Vertical Bars layout",
         "navTitle": "Vertical Bars layout",
         "slug": "vertical-bars-layout",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios27/docs/vertical-bars-layout"
       },
       {
         "title": "Theme migration",
         "navTitle": "Theme migration",
         "slug": "migration",
-        "section": "Guides",
+        "section": "Migration",
         "path": "/projects/ionic-theme-ios27/docs/migration"
       }
     ]
@@ -324,84 +324,91 @@ export const PROJECTS_EN = [
         "title": "Getting Started",
         "navTitle": "Getting Started",
         "slug": "readme",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
         "title": "Ionic setup",
         "navTitle": "Ionic setup",
         "slug": "setup",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
         "title": "Application startup and device layout",
         "navTitle": "Application startup and device layout",
         "slug": "device-layout",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/capacitor-native-ui/docs/device-layout"
       },
       {
         "title": "Native UI without Ionic",
         "navTitle": "Native UI without Ionic",
         "slug": "framework-independent",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
         "title": "Vertical Bars with your existing theme",
         "navTitle": "Vertical Bars with your existing theme",
         "slug": "ionic-vertical-bars",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
       },
       {
         "title": "Native UI",
         "navTitle": "Native UI",
         "slug": "native-ui",
-        "section": "Guides",
+        "section": "Reference",
         "path": "/projects/capacitor-native-ui/docs/native-ui"
       },
       {
         "title": "Configuration",
         "navTitle": "Configuration",
         "slug": "configuration",
-        "section": "Guides",
+        "section": "Reference",
         "path": "/projects/capacitor-native-ui/docs/configuration"
       },
       {
         "title": "Light and dark appearance",
         "navTitle": "Light and dark appearance",
         "slug": "appearance",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/capacitor-native-ui/docs/appearance"
       },
       {
         "title": "Android dynamic colors",
         "navTitle": "Android dynamic colors",
         "slug": "dynamic-colors",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/capacitor-native-ui/docs/dynamic-colors"
       },
       {
         "title": "Vertical Bars",
         "navTitle": "Vertical Bars",
         "slug": "vertical-bars",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/capacitor-native-ui/docs/vertical-bars"
       },
       {
         "title": "App-local Native UI extensions (experimental)",
         "navTitle": "App-local Native UI extensions (experimental)",
         "slug": "native-ui-extensions",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/capacitor-native-ui/docs/native-ui-extensions"
+      },
+      {
+        "title": "Native UI extension reference",
+        "navTitle": "Native UI extension reference",
+        "slug": "native-ui-extension-reference",
+        "section": "Reference",
+        "path": "/projects/capacitor-native-ui/docs/native-ui-extension-reference"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Guides",
+        "section": "Migration",
         "path": "/projects/capacitor-native-ui/docs/migration"
       }
     ]
@@ -423,70 +430,70 @@ export const PROJECTS_EN = [
         "title": "Getting Started",
         "navTitle": "Getting Started",
         "slug": "readme",
-        "section": "Quickstart",
+        "section": "Getting started",
         "path": "/projects/ionic-theme-ios26/docs/readme"
       },
       {
         "title": "Set up the iOS 26 theme",
         "navTitle": "Theme setup",
         "slug": "setup",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/ionic-theme-ios26/docs/setup"
       },
       {
         "title": "Theme configuration",
         "navTitle": "Theme configuration",
         "slug": "configuration",
-        "section": "Guides",
+        "section": "Reference",
         "path": "/projects/ionic-theme-ios26/docs/configuration"
       },
       {
         "title": "Using ion-item-group",
         "navTitle": "Using ion-item-group",
         "slug": "using-ion-item-group",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios26/docs/using-ion-item-group"
       },
       {
         "title": "Special markup and classes",
         "navTitle": "Special markup and classes",
         "slug": "special-markup",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios26/docs/special-markup"
       },
       {
         "title": "Keep lists consistent with ESLint",
         "navTitle": "Keep lists consistent with ESLint",
         "slug": "eslint",
-        "section": "Guides",
+        "section": "Development",
         "path": "/projects/ionic-theme-ios26/docs/eslint"
       },
       {
         "title": "Features",
         "navTitle": "Features",
         "slug": "features",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios26/docs/features"
       },
       {
         "title": "Experimental Animation",
         "navTitle": "Experimental Animation",
         "slug": "experimental-animation",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios26/docs/experimental-animation"
       },
       {
         "title": "iOS 18",
         "navTitle": "iOS 18",
         "slug": "ios-18",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-ios26/docs/ios-18"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Guides",
+        "section": "Migration",
         "path": "/projects/ionic-theme-ios26/docs/migration"
       },
       {
@@ -521,70 +528,70 @@ export const PROJECTS_EN = [
         "title": "Getting Started",
         "navTitle": "Getting Started",
         "slug": "readme",
-        "section": "Documentation",
+        "section": "Getting started",
         "path": "/projects/ionic-theme-md3/docs/readme"
       },
       {
         "title": "Set up the MD3 theme",
         "navTitle": "Theme setup",
         "slug": "setup",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/ionic-theme-md3/docs/setup"
       },
       {
         "title": "Theme configuration",
         "navTitle": "Theme configuration",
         "slug": "configuration",
-        "section": "Guides",
+        "section": "Reference",
         "path": "/projects/ionic-theme-md3/docs/configuration"
       },
       {
         "title": "Android Settings appearance",
         "navTitle": "Android Settings appearance",
         "slug": "android-settings",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-md3/docs/android-settings"
       },
       {
         "title": "Android dynamic colors",
         "navTitle": "Android dynamic colors",
         "slug": "dynamic-colors",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-md3/docs/dynamic-colors"
       },
       {
         "title": "Color system",
         "navTitle": "Color system",
         "slug": "color-system",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-md3/docs/color-system"
       },
       {
         "title": "Using ion-item-group",
         "navTitle": "Using ion-item-group",
         "slug": "using-ion-item-group",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-md3/docs/using-ion-item-group"
       },
       {
         "title": "Special markup",
         "navTitle": "Special markup",
         "slug": "special-markup",
-        "section": "Guides",
+        "section": "Usage",
         "path": "/projects/ionic-theme-md3/docs/special-markup"
       },
       {
         "title": "Keep lists consistent with ESLint",
         "navTitle": "Keep lists consistent with ESLint",
         "slug": "eslint",
-        "section": "Guides",
+        "section": "Development",
         "path": "/projects/ionic-theme-md3/docs/eslint"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Guides",
+        "section": "Migration",
         "path": "/projects/ionic-theme-md3/docs/migration"
       },
       {
@@ -619,7 +626,7 @@ export const PROJECTS_EN = [
         "title": "Getting Started with Cordova",
         "navTitle": "Getting Started",
         "slug": "readme",
-        "section": "Guides",
+        "section": "Getting started",
         "path": "/projects/cordova-native-ui/docs/readme"
       }
     ]
@@ -664,49 +671,49 @@ export const PROJECTS_JA = [
         "title": "はじめに",
         "navTitle": "はじめに",
         "slug": "readme",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/webview-native-ui-engine/docs/readme"
       },
       {
         "title": "ドキュメント概要",
         "navTitle": "ドキュメント概要",
         "slug": "overview",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/webview-native-ui-engine/docs/overview"
       },
       {
         "title": "概念と制約",
         "navTitle": "概念と制約",
         "slug": "concepts",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/webview-native-ui-engine/docs/concepts"
       },
       {
         "title": "ネイティブアダプターの共有コントロール",
         "navTitle": "ネイティブアダプターの共有コントロール",
         "slug": "controls",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/webview-native-ui-engine/docs/controls"
       },
       {
         "title": "基本的な初期化",
         "navTitle": "基本的な初期化",
         "slug": "getting-started/initialization",
-        "section": "組み込み",
+        "section": "導入",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/initialization"
       },
       {
         "title": "Capacitorプラグインへの組み込み",
         "navTitle": "Capacitorプラグインへの組み込み",
         "slug": "getting-started/capacitor",
-        "section": "組み込み",
+        "section": "導入",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/capacitor"
       },
       {
         "title": "Cordovaプラグインへの組み込み",
         "navTitle": "Cordovaプラグインへの組み込み",
         "slug": "getting-started/cordova",
-        "section": "組み込み",
+        "section": "導入",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/cordova"
       },
       {
@@ -748,7 +755,7 @@ export const PROJECTS_JA = [
         "title": "カスタムオーバーレイの一時停止と再開",
         "navTitle": "カスタムオーバーレイの一時停止と再開",
         "slug": "configuration/pause-resume",
-        "section": "ガイド",
+        "section": "設定",
         "path": "/projects/webview-native-ui-engine/docs/configuration/pause-resume"
       },
       {
@@ -825,7 +832,7 @@ export const PROJECTS_JA = [
         "title": "開発とリリース",
         "navTitle": "開発とリリース",
         "slug": "maintenance",
-        "section": "ガイド",
+        "section": "開発",
         "path": "/projects/webview-native-ui-engine/docs/maintenance"
       }
     ]
@@ -846,91 +853,91 @@ export const PROJECTS_JA = [
         "title": "Ionic Theme iOS27",
         "navTitle": "はじめに",
         "slug": "readme",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/ionic-theme-ios27/docs/readme"
       },
       {
         "title": "iOS 27 テーマをセットアップする",
         "navTitle": "テーマのセットアップ",
         "slug": "setup",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/ionic-theme-ios27/docs/setup"
       },
       {
         "title": "iOS 27 テーマを設定する",
         "navTitle": "テーマの設定",
         "slug": "configuration",
-        "section": "ガイド",
+        "section": "リファレンス",
         "path": "/projects/ionic-theme-ios27/docs/configuration"
       },
       {
         "title": "Cordova のセットアップ",
         "navTitle": "Cordova のセットアップ",
         "slug": "cordova",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/ionic-theme-ios27/docs/cordova"
       },
       {
         "title": "iOS 26、iOS 27、MD3 のテーマを使う",
         "navTitle": "テーマの自動切り替え",
         "slug": "adaptive-themes",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios27/docs/adaptive-themes"
       },
       {
         "title": "テーマに Native UI を追加する",
         "navTitle": "Native UIの追加",
         "slug": "add-native-ui",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/ionic-theme-ios27/docs/add-native-ui"
       },
       {
         "title": "ion-item-group の使い方",
         "navTitle": "ion-item-groupの使用方法",
         "slug": "using-ion-item-group",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios27/docs/using-ion-item-group"
       },
       {
         "title": "特別なマークアップとクラス",
         "navTitle": "特別なマークアップとクラス",
         "slug": "special-markup",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios27/docs/special-markup"
       },
       {
         "title": "ESLint でリストの一貫性を保つ",
         "navTitle": "ESLintでリストの構造を整える",
         "slug": "eslint",
-        "section": "ガイド",
+        "section": "開発",
         "path": "/projects/ionic-theme-ios27/docs/eslint"
       },
       {
         "title": "機能",
         "navTitle": "機能",
         "slug": "features",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios27/docs/features"
       },
       {
         "title": "アニメーション",
         "navTitle": "アニメーション",
         "slug": "animation",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios27/docs/animation"
       },
       {
         "title": "Vertical Bars のレイアウト",
         "navTitle": "Vertical Barsのレイアウト",
         "slug": "vertical-bars-layout",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios27/docs/vertical-bars-layout"
       },
       {
         "title": "テーマの移行",
         "navTitle": "テーマの移行",
         "slug": "migration",
-        "section": "ガイド",
+        "section": "移行",
         "path": "/projects/ionic-theme-ios27/docs/migration"
       }
     ]
@@ -951,84 +958,91 @@ export const PROJECTS_JA = [
         "title": "Capacitor Native UI",
         "navTitle": "はじめに",
         "slug": "readme",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
         "title": "Ionic アプリで Native UI をセットアップする",
         "navTitle": "Ionicの設定",
         "slug": "setup",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
         "title": "アプリの起動とデバイス配置",
         "navTitle": "アプリの起動とデバイス配置",
         "slug": "device-layout",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/capacitor-native-ui/docs/device-layout"
       },
       {
         "title": "Ionic なしで Native UI を使う",
         "navTitle": "Ionicを使わないNative UI",
         "slug": "framework-independent",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
         "title": "既存テーマで使う Vertical Bars",
         "navTitle": "既存テーマで使うVertical Bars",
         "slug": "ionic-vertical-bars",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
       },
       {
         "title": "Native UI",
         "navTitle": "Native UI",
         "slug": "native-ui",
-        "section": "ガイド",
+        "section": "リファレンス",
         "path": "/projects/capacitor-native-ui/docs/native-ui"
       },
       {
         "title": "設定",
         "navTitle": "設定",
         "slug": "configuration",
-        "section": "ガイド",
+        "section": "リファレンス",
         "path": "/projects/capacitor-native-ui/docs/configuration"
       },
       {
         "title": "ライト／ダーク表示",
         "navTitle": "ライト／ダーク表示",
         "slug": "appearance",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/capacitor-native-ui/docs/appearance"
       },
       {
-        "title": "Androidの動的な配色",
+        "title": "Android Dynamic Color",
         "navTitle": "Androidの動的な配色",
         "slug": "dynamic-colors",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/capacitor-native-ui/docs/dynamic-colors"
       },
       {
         "title": "Vertical Bars",
         "navTitle": "Vertical Bars",
         "slug": "vertical-bars",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/capacitor-native-ui/docs/vertical-bars"
       },
       {
         "title": "アプリ内の Native UI 拡張（実験的）",
         "navTitle": "アプリ内のNative UI拡張（実験的）",
         "slug": "native-ui-extensions",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/capacitor-native-ui/docs/native-ui-extensions"
+      },
+      {
+        "title": "Native UI拡張リファレンス",
+        "navTitle": "Native UI拡張リファレンス",
+        "slug": "native-ui-extension-reference",
+        "section": "リファレンス",
+        "path": "/projects/capacitor-native-ui/docs/native-ui-extension-reference"
       },
       {
         "title": "移行",
         "navTitle": "移行",
         "slug": "migration",
-        "section": "ガイド",
+        "section": "移行",
         "path": "/projects/capacitor-native-ui/docs/migration"
       }
     ]
@@ -1050,70 +1064,70 @@ export const PROJECTS_JA = [
         "title": "Ionic Theme iOS26",
         "navTitle": "はじめに",
         "slug": "readme",
-        "section": "クイックスタート",
+        "section": "導入",
         "path": "/projects/ionic-theme-ios26/docs/readme"
       },
       {
         "title": "iOS 26 テーマをセットアップする",
         "navTitle": "テーマのセットアップ",
         "slug": "setup",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/ionic-theme-ios26/docs/setup"
       },
       {
         "title": "iOS 26 テーマを設定する",
         "navTitle": "テーマの設定",
         "slug": "configuration",
-        "section": "ガイド",
+        "section": "リファレンス",
         "path": "/projects/ionic-theme-ios26/docs/configuration"
       },
       {
         "title": "ion-item-groupの使用方法",
         "navTitle": "ion-item-groupの使用方法",
         "slug": "using-ion-item-group",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios26/docs/using-ion-item-group"
       },
       {
         "title": "特別なマークアップとクラス",
         "navTitle": "特別なマークアップとクラス",
         "slug": "special-markup",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios26/docs/special-markup"
       },
       {
         "title": "ESLintでリストの構造を整える",
         "navTitle": "ESLintでリストの構造を整える",
         "slug": "eslint",
-        "section": "ガイド",
+        "section": "開発",
         "path": "/projects/ionic-theme-ios26/docs/eslint"
       },
       {
         "title": "機能",
         "navTitle": "機能",
         "slug": "features",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios26/docs/features"
       },
       {
         "title": "実験的なアニメーション",
         "navTitle": "実験的なアニメーション",
         "slug": "experimental-animation",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios26/docs/experimental-animation"
       },
       {
         "title": "iOS 18",
         "navTitle": "iOS 18",
         "slug": "ios-18",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-ios26/docs/ios-18"
       },
       {
         "title": "移行",
         "navTitle": "移行",
         "slug": "migration",
-        "section": "ガイド",
+        "section": "移行",
         "path": "/projects/ionic-theme-ios26/docs/migration"
       },
       {
@@ -1148,70 +1162,70 @@ export const PROJECTS_JA = [
         "title": "Ionic Theme Material Design 3",
         "navTitle": "はじめに",
         "slug": "readme",
-        "section": "ドキュメント",
+        "section": "導入",
         "path": "/projects/ionic-theme-md3/docs/readme"
       },
       {
         "title": "MD3 テーマをセットアップする",
         "navTitle": "テーマのセットアップ",
         "slug": "setup",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/ionic-theme-md3/docs/setup"
       },
       {
         "title": "テーマの設定",
         "navTitle": "テーマの設定",
         "slug": "configuration",
-        "section": "ガイド",
+        "section": "リファレンス",
         "path": "/projects/ionic-theme-md3/docs/configuration"
       },
       {
         "title": "Android Settings の外観",
         "navTitle": "Android Settings の外観",
         "slug": "android-settings",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-md3/docs/android-settings"
       },
       {
-        "title": "Androidの動的な配色",
+        "title": "Android Dynamic Color",
         "navTitle": "Android の動的な色",
         "slug": "dynamic-colors",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-md3/docs/dynamic-colors"
       },
       {
         "title": "カラーシステム",
         "navTitle": "カラーシステム",
         "slug": "color-system",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-md3/docs/color-system"
       },
       {
         "title": "ion-item-groupの使用方法",
         "navTitle": "ion-item-groupの使用方法",
         "slug": "using-ion-item-group",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-md3/docs/using-ion-item-group"
       },
       {
         "title": "特別なマークアップ",
         "navTitle": "特別なマークアップ",
         "slug": "special-markup",
-        "section": "ガイド",
+        "section": "使い方",
         "path": "/projects/ionic-theme-md3/docs/special-markup"
       },
       {
         "title": "ESLintでリストの構造を整える",
         "navTitle": "ESLintでリストの構造を整える",
         "slug": "eslint",
-        "section": "ガイド",
+        "section": "開発",
         "path": "/projects/ionic-theme-md3/docs/eslint"
       },
       {
         "title": "移行",
         "navTitle": "移行",
         "slug": "migration",
-        "section": "ガイド",
+        "section": "移行",
         "path": "/projects/ionic-theme-md3/docs/migration"
       },
       {
@@ -1246,7 +1260,7 @@ export const PROJECTS_JA = [
         "title": "Cordova ではじめる",
         "navTitle": "はじめに",
         "slug": "readme",
-        "section": "ガイド",
+        "section": "導入",
         "path": "/projects/cordova-native-ui/docs/readme"
       }
     ]
@@ -1291,49 +1305,49 @@ export const PROJECTS_FR = [
         "title": "Premiers pas",
         "navTitle": "Premiers pas",
         "slug": "readme",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/webview-native-ui-engine/docs/readme"
       },
       {
         "title": "Vue d’ensemble de la documentation",
         "navTitle": "Vue d’ensemble de la documentation",
         "slug": "overview",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/webview-native-ui-engine/docs/overview"
       },
       {
         "title": "Concepts et limites",
         "navTitle": "Concepts et limites",
         "slug": "concepts",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/webview-native-ui-engine/docs/concepts"
       },
       {
         "title": "Contrôles partagés pour les adaptateurs natifs",
         "navTitle": "Contrôles partagés pour les adaptateurs natifs",
         "slug": "controls",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/webview-native-ui-engine/docs/controls"
       },
       {
         "title": "Initialisation de base",
         "navTitle": "Initialisation de base",
         "slug": "getting-started/initialization",
-        "section": "Intégration",
+        "section": "Prise en main",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/initialization"
       },
       {
         "title": "Intégration dans un plugin Capacitor",
         "navTitle": "Intégration dans un plugin Capacitor",
         "slug": "getting-started/capacitor",
-        "section": "Intégration",
+        "section": "Prise en main",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/capacitor"
       },
       {
         "title": "Intégration dans un plugin Cordova",
         "navTitle": "Intégration dans un plugin Cordova",
         "slug": "getting-started/cordova",
-        "section": "Intégration",
+        "section": "Prise en main",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/cordova"
       },
       {
@@ -1375,7 +1389,7 @@ export const PROJECTS_FR = [
         "title": "Pause et reprise pour les superpositions personnalisées",
         "navTitle": "Pause et reprise pour les superpositions personnalisées",
         "slug": "configuration/pause-resume",
-        "section": "Guides",
+        "section": "Configuration",
         "path": "/projects/webview-native-ui-engine/docs/configuration/pause-resume"
       },
       {
@@ -1452,7 +1466,7 @@ export const PROJECTS_FR = [
         "title": "Développement et publications",
         "navTitle": "Développement et publications",
         "slug": "maintenance",
-        "section": "Guides",
+        "section": "Développement",
         "path": "/projects/webview-native-ui-engine/docs/maintenance"
       }
     ]
@@ -1473,91 +1487,91 @@ export const PROJECTS_FR = [
         "title": "Premiers pas",
         "navTitle": "Premiers pas",
         "slug": "readme",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/ionic-theme-ios27/docs/readme"
       },
       {
         "title": "Installer le thème iOS 27",
         "navTitle": "Configurer le thème",
         "slug": "setup",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/ionic-theme-ios27/docs/setup"
       },
       {
         "title": "Configurer le thème iOS 27",
         "navTitle": "Configuration du thème",
         "slug": "configuration",
-        "section": "Guides",
+        "section": "Référence",
         "path": "/projects/ionic-theme-ios27/docs/configuration"
       },
       {
         "title": "Configuration Cordova",
         "navTitle": "Configuration Cordova",
         "slug": "cordova",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/ionic-theme-ios27/docs/cordova"
       },
       {
         "title": "Utiliser les thèmes iOS 26, iOS 27 et MD3",
         "navTitle": "Thèmes adaptatifs",
         "slug": "adaptive-themes",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios27/docs/adaptive-themes"
       },
       {
         "title": "Ajouter Native UI à votre thème",
         "navTitle": "Ajouter Native UI",
         "slug": "add-native-ui",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/ionic-theme-ios27/docs/add-native-ui"
       },
       {
         "title": "Utiliser ion-item-group",
         "navTitle": "Utiliser ion-item-group",
         "slug": "using-ion-item-group",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios27/docs/using-ion-item-group"
       },
       {
         "title": "Balisage et classes spécifiques",
         "navTitle": "Balisage et classes particuliers",
         "slug": "special-markup",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios27/docs/special-markup"
       },
       {
         "title": "Garder des listes cohérentes avec ESLint",
         "navTitle": "Assurer la cohérence des listes avec ESLint",
         "slug": "eslint",
-        "section": "Guides",
+        "section": "Développement",
         "path": "/projects/ionic-theme-ios27/docs/eslint"
       },
       {
         "title": "Fonctionnalités",
         "navTitle": "Fonctionnalités",
         "slug": "features",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios27/docs/features"
       },
       {
         "title": "Animation",
         "navTitle": "Animation",
         "slug": "animation",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios27/docs/animation"
       },
       {
         "title": "Disposition Vertical Bars",
         "navTitle": "Disposition de Vertical Bars",
         "slug": "vertical-bars-layout",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios27/docs/vertical-bars-layout"
       },
       {
         "title": "Migration du thème",
         "navTitle": "Migration du thème",
         "slug": "migration",
-        "section": "Guides",
+        "section": "Migration",
         "path": "/projects/ionic-theme-ios27/docs/migration"
       }
     ]
@@ -1578,84 +1592,91 @@ export const PROJECTS_FR = [
         "title": "Capacitor Native UI",
         "navTitle": "Premiers pas",
         "slug": "readme",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
         "title": "Configurer Native UI dans une application Ionic",
         "navTitle": "Configuration Ionic",
         "slug": "setup",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
         "title": "Démarrage et disposition de l’appareil",
         "navTitle": "Démarrage de l’application et disposition de l’appareil",
         "slug": "device-layout",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/capacitor-native-ui/docs/device-layout"
       },
       {
         "title": "Native UI sans Ionic",
         "navTitle": "Native UI sans Ionic",
         "slug": "framework-independent",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
         "title": "Vertical Bars avec votre thème existant",
         "navTitle": "Vertical Bars avec votre thème existant",
         "slug": "ionic-vertical-bars",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
       },
       {
         "title": "Native UI",
         "navTitle": "Native UI",
         "slug": "native-ui",
-        "section": "Guides",
+        "section": "Référence",
         "path": "/projects/capacitor-native-ui/docs/native-ui"
       },
       {
         "title": "Configurer Native UI",
         "navTitle": "Configuration",
         "slug": "configuration",
-        "section": "Guides",
+        "section": "Référence",
         "path": "/projects/capacitor-native-ui/docs/configuration"
       },
       {
         "title": "Apparence claire et sombre",
         "navTitle": "Apparence claire et sombre",
         "slug": "appearance",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/capacitor-native-ui/docs/appearance"
       },
       {
-        "title": "Couleurs dynamiques Android",
+        "title": "Android Dynamic Color",
         "navTitle": "Couleurs dynamiques Android",
         "slug": "dynamic-colors",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/capacitor-native-ui/docs/dynamic-colors"
       },
       {
         "title": "Vertical Bars",
         "navTitle": "Vertical Bars",
         "slug": "vertical-bars",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/capacitor-native-ui/docs/vertical-bars"
       },
       {
         "title": "Extensions Native UI locales à l’application (expérimentales)",
         "navTitle": "Extensions Native UI locales à l’application (expérimentales)",
         "slug": "native-ui-extensions",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/capacitor-native-ui/docs/native-ui-extensions"
+      },
+      {
+        "title": "Référence des extensions Native UI",
+        "navTitle": "Référence des extensions Native UI",
+        "slug": "native-ui-extension-reference",
+        "section": "Référence",
+        "path": "/projects/capacitor-native-ui/docs/native-ui-extension-reference"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Guides",
+        "section": "Migration",
         "path": "/projects/capacitor-native-ui/docs/migration"
       }
     ]
@@ -1677,70 +1698,70 @@ export const PROJECTS_FR = [
         "title": "Premiers pas",
         "navTitle": "Premiers pas",
         "slug": "readme",
-        "section": "Démarrage rapide",
+        "section": "Prise en main",
         "path": "/projects/ionic-theme-ios26/docs/readme"
       },
       {
         "title": "Installer le thème iOS 26",
         "navTitle": "Configurer le thème",
         "slug": "setup",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/ionic-theme-ios26/docs/setup"
       },
       {
         "title": "Configurer le thème iOS 26",
         "navTitle": "Configuration du thème",
         "slug": "configuration",
-        "section": "Guides",
+        "section": "Référence",
         "path": "/projects/ionic-theme-ios26/docs/configuration"
       },
       {
         "title": "Utiliser ion-item-group",
         "navTitle": "Utiliser ion-item-group",
         "slug": "using-ion-item-group",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios26/docs/using-ion-item-group"
       },
       {
         "title": "Balisage et classes particuliers",
         "navTitle": "Balisage et classes particuliers",
         "slug": "special-markup",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios26/docs/special-markup"
       },
       {
         "title": "Assurer la cohérence des listes avec ESLint",
         "navTitle": "Assurer la cohérence des listes avec ESLint",
         "slug": "eslint",
-        "section": "Guides",
+        "section": "Développement",
         "path": "/projects/ionic-theme-ios26/docs/eslint"
       },
       {
         "title": "Fonctionnalités",
         "navTitle": "Fonctionnalités",
         "slug": "features",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios26/docs/features"
       },
       {
         "title": "Animation expérimentale",
         "navTitle": "Animation expérimentale",
         "slug": "experimental-animation",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios26/docs/experimental-animation"
       },
       {
         "title": "Prendre en charge iOS 18",
         "navTitle": "iOS 18",
         "slug": "ios-18",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-ios26/docs/ios-18"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Guides",
+        "section": "Migration",
         "path": "/projects/ionic-theme-ios26/docs/migration"
       },
       {
@@ -1775,70 +1796,70 @@ export const PROJECTS_FR = [
         "title": "Premiers pas",
         "navTitle": "Premiers pas",
         "slug": "readme",
-        "section": "Documentation",
+        "section": "Prise en main",
         "path": "/projects/ionic-theme-md3/docs/readme"
       },
       {
         "title": "Installer le thème MD3",
         "navTitle": "Configurer le thème",
         "slug": "setup",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/ionic-theme-md3/docs/setup"
       },
       {
         "title": "Configuration du thème",
         "navTitle": "Configuration du thème",
         "slug": "configuration",
-        "section": "Guides",
+        "section": "Référence",
         "path": "/projects/ionic-theme-md3/docs/configuration"
       },
       {
         "title": "Apparence Android Settings",
         "navTitle": "Apparence Android Settings",
         "slug": "android-settings",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-md3/docs/android-settings"
       },
       {
-        "title": "Couleurs dynamiques Android",
+        "title": "Android Dynamic Color",
         "navTitle": "Couleurs dynamiques Android",
         "slug": "dynamic-colors",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-md3/docs/dynamic-colors"
       },
       {
         "title": "Système de couleurs",
         "navTitle": "Système de couleurs",
         "slug": "color-system",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-md3/docs/color-system"
       },
       {
         "title": "Utiliser ion-item-group",
         "navTitle": "Utiliser ion-item-group",
         "slug": "using-ion-item-group",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-md3/docs/using-ion-item-group"
       },
       {
         "title": "Balisage particulier",
         "navTitle": "Balisage particulier",
         "slug": "special-markup",
-        "section": "Guides",
+        "section": "Utilisation",
         "path": "/projects/ionic-theme-md3/docs/special-markup"
       },
       {
         "title": "Assurer la cohérence des listes avec ESLint",
         "navTitle": "Assurer la cohérence des listes avec ESLint",
         "slug": "eslint",
-        "section": "Guides",
+        "section": "Développement",
         "path": "/projects/ionic-theme-md3/docs/eslint"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Guides",
+        "section": "Migration",
         "path": "/projects/ionic-theme-md3/docs/migration"
       },
       {
@@ -1873,7 +1894,7 @@ export const PROJECTS_FR = [
         "title": "Premiers pas avec Cordova",
         "navTitle": "Premiers pas",
         "slug": "readme",
-        "section": "Guides",
+        "section": "Prise en main",
         "path": "/projects/cordova-native-ui/docs/readme"
       }
     ]
@@ -1918,49 +1939,49 @@ export const PROJECTS_DE = [
         "title": "Erste Schritte",
         "navTitle": "Erste Schritte",
         "slug": "readme",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/webview-native-ui-engine/docs/readme"
       },
       {
         "title": "Dokumentationsübersicht",
         "navTitle": "Dokumentationsübersicht",
         "slug": "overview",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/webview-native-ui-engine/docs/overview"
       },
       {
         "title": "Konzepte und Grenzen",
         "navTitle": "Konzepte und Grenzen",
         "slug": "concepts",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/webview-native-ui-engine/docs/concepts"
       },
       {
         "title": "Gemeinsame Steuerelemente für native Adapter",
         "navTitle": "Gemeinsame Steuerelemente für native Adapter",
         "slug": "controls",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/webview-native-ui-engine/docs/controls"
       },
       {
         "title": "Grundlegende Initialisierung",
         "navTitle": "Grundlegende Initialisierung",
         "slug": "getting-started/initialization",
-        "section": "Integration",
+        "section": "Einstieg",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/initialization"
       },
       {
         "title": "Integration in ein Capacitor-Plugin",
         "navTitle": "Integration in ein Capacitor-Plugin",
         "slug": "getting-started/capacitor",
-        "section": "Integration",
+        "section": "Einstieg",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/capacitor"
       },
       {
         "title": "Integration in ein Cordova-Plugin",
         "navTitle": "Integration in ein Cordova-Plugin",
         "slug": "getting-started/cordova",
-        "section": "Integration",
+        "section": "Einstieg",
         "path": "/projects/webview-native-ui-engine/docs/getting-started/cordova"
       },
       {
@@ -2002,7 +2023,7 @@ export const PROJECTS_DE = [
         "title": "Pause und Fortsetzung bei benutzerdefinierten Overlays",
         "navTitle": "Pause und Fortsetzung bei benutzerdefinierten Overlays",
         "slug": "configuration/pause-resume",
-        "section": "Anleitungen",
+        "section": "Konfiguration",
         "path": "/projects/webview-native-ui-engine/docs/configuration/pause-resume"
       },
       {
@@ -2079,7 +2100,7 @@ export const PROJECTS_DE = [
         "title": "Entwicklung und Veröffentlichungen",
         "navTitle": "Entwicklung und Veröffentlichungen",
         "slug": "maintenance",
-        "section": "Anleitungen",
+        "section": "Entwicklung",
         "path": "/projects/webview-native-ui-engine/docs/maintenance"
       }
     ]
@@ -2100,91 +2121,91 @@ export const PROJECTS_DE = [
         "title": "Erste Schritte",
         "navTitle": "Erste Schritte",
         "slug": "readme",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/ionic-theme-ios27/docs/readme"
       },
       {
         "title": "Das iOS-27-Theme einrichten",
         "navTitle": "Theme einrichten",
         "slug": "setup",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/ionic-theme-ios27/docs/setup"
       },
       {
         "title": "Das iOS-27-Theme konfigurieren",
         "navTitle": "Theme-Konfiguration",
         "slug": "configuration",
-        "section": "Anleitungen",
+        "section": "Referenz",
         "path": "/projects/ionic-theme-ios27/docs/configuration"
       },
       {
         "title": "Cordova einrichten",
         "navTitle": "Cordova einrichten",
         "slug": "cordova",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/ionic-theme-ios27/docs/cordova"
       },
       {
         "title": "iOS-26-, iOS-27- und MD3-Themes verwenden",
         "navTitle": "Adaptive Themes",
         "slug": "adaptive-themes",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios27/docs/adaptive-themes"
       },
       {
         "title": "Native UI zum Theme hinzufügen",
         "navTitle": "Native UI hinzufügen",
         "slug": "add-native-ui",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/ionic-theme-ios27/docs/add-native-ui"
       },
       {
         "title": "ion-item-group in eingerückten Listen verwenden",
         "navTitle": "ion-item-group verwenden",
         "slug": "using-ion-item-group",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios27/docs/using-ion-item-group"
       },
       {
         "title": "Spezielles Markup und Klassen",
         "navTitle": "Besonderes Markup und Klassen",
         "slug": "special-markup",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios27/docs/special-markup"
       },
       {
         "title": "Listen mit ESLint konsistent halten",
         "navTitle": "Einheitliche Listen mit ESLint sicherstellen",
         "slug": "eslint",
-        "section": "Anleitungen",
+        "section": "Entwicklung",
         "path": "/projects/ionic-theme-ios27/docs/eslint"
       },
       {
         "title": "Funktionen",
         "navTitle": "Funktionen",
         "slug": "features",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios27/docs/features"
       },
       {
         "title": "Animation",
         "navTitle": "Animation",
         "slug": "animation",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios27/docs/animation"
       },
       {
         "title": "Vertical Bars-Layout",
         "navTitle": "Layout von Vertical Bars",
         "slug": "vertical-bars-layout",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios27/docs/vertical-bars-layout"
       },
       {
         "title": "Theme-Migration",
         "navTitle": "Theme migrieren",
         "slug": "migration",
-        "section": "Anleitungen",
+        "section": "Migration",
         "path": "/projects/ionic-theme-ios27/docs/migration"
       }
     ]
@@ -2205,84 +2226,91 @@ export const PROJECTS_DE = [
         "title": "Capacitor Native UI",
         "navTitle": "Erste Schritte",
         "slug": "readme",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/capacitor-native-ui/docs/readme"
       },
       {
         "title": "Native UI in einer Ionic-App einrichten",
         "navTitle": "Ionic-Einrichtung",
         "slug": "setup",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/capacitor-native-ui/docs/setup"
       },
       {
         "title": "Anwendungsstart und Gerätelayout",
         "navTitle": "Anwendungsstart und Gerätelayout",
         "slug": "device-layout",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/capacitor-native-ui/docs/device-layout"
       },
       {
         "title": "Native UI ohne Ionic",
         "navTitle": "Native UI ohne Ionic",
         "slug": "framework-independent",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/capacitor-native-ui/docs/framework-independent"
       },
       {
         "title": "Vertical Bars mit Ihrem bestehenden Theme",
         "navTitle": "Vertical Bars mit Ihrem bestehenden Theme",
         "slug": "ionic-vertical-bars",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/capacitor-native-ui/docs/ionic-vertical-bars"
       },
       {
         "title": "Native UI",
         "navTitle": "Native UI",
         "slug": "native-ui",
-        "section": "Anleitungen",
+        "section": "Referenz",
         "path": "/projects/capacitor-native-ui/docs/native-ui"
       },
       {
         "title": "Native UI konfigurieren",
         "navTitle": "Konfiguration",
         "slug": "configuration",
-        "section": "Anleitungen",
+        "section": "Referenz",
         "path": "/projects/capacitor-native-ui/docs/configuration"
       },
       {
         "title": "Helle und dunkle Darstellung",
         "navTitle": "Helle und dunkle Darstellung",
         "slug": "appearance",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/capacitor-native-ui/docs/appearance"
       },
       {
-        "title": "Dynamische Android-Farben",
+        "title": "Android Dynamic Color",
         "navTitle": "Dynamische Android-Farben",
         "slug": "dynamic-colors",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/capacitor-native-ui/docs/dynamic-colors"
       },
       {
         "title": "Vertical Bars",
         "navTitle": "Vertical Bars",
         "slug": "vertical-bars",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/capacitor-native-ui/docs/vertical-bars"
       },
       {
         "title": "App-lokale Native UI-Erweiterungen (experimentell)",
         "navTitle": "App-lokale Native UI-Erweiterungen (experimentell)",
         "slug": "native-ui-extensions",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/capacitor-native-ui/docs/native-ui-extensions"
+      },
+      {
+        "title": "Referenz für Native-UI-Erweiterungen",
+        "navTitle": "Referenz für Native-UI-Erweiterungen",
+        "slug": "native-ui-extension-reference",
+        "section": "Referenz",
+        "path": "/projects/capacitor-native-ui/docs/native-ui-extension-reference"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Anleitungen",
+        "section": "Migration",
         "path": "/projects/capacitor-native-ui/docs/migration"
       }
     ]
@@ -2304,70 +2332,70 @@ export const PROJECTS_DE = [
         "title": "Erste Schritte",
         "navTitle": "Erste Schritte",
         "slug": "readme",
-        "section": "Schnellstart",
+        "section": "Einstieg",
         "path": "/projects/ionic-theme-ios26/docs/readme"
       },
       {
         "title": "Das iOS-26-Theme einrichten",
         "navTitle": "Theme einrichten",
         "slug": "setup",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/ionic-theme-ios26/docs/setup"
       },
       {
         "title": "Das iOS-26-Theme konfigurieren",
         "navTitle": "Theme-Konfiguration",
         "slug": "configuration",
-        "section": "Anleitungen",
+        "section": "Referenz",
         "path": "/projects/ionic-theme-ios26/docs/configuration"
       },
       {
         "title": "ion-item-group verwenden",
         "navTitle": "ion-item-group verwenden",
         "slug": "using-ion-item-group",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios26/docs/using-ion-item-group"
       },
       {
         "title": "Besonderes Markup und Klassen",
         "navTitle": "Besonderes Markup und Klassen",
         "slug": "special-markup",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios26/docs/special-markup"
       },
       {
         "title": "Einheitliche Listen mit ESLint sicherstellen",
         "navTitle": "Einheitliche Listen mit ESLint sicherstellen",
         "slug": "eslint",
-        "section": "Anleitungen",
+        "section": "Entwicklung",
         "path": "/projects/ionic-theme-ios26/docs/eslint"
       },
       {
         "title": "Funktionen",
         "navTitle": "Funktionen",
         "slug": "features",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios26/docs/features"
       },
       {
         "title": "Experimentelle Animation",
         "navTitle": "Experimentelle Animation",
         "slug": "experimental-animation",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios26/docs/experimental-animation"
       },
       {
         "title": "iOS 18 unterstützen",
         "navTitle": "iOS 18",
         "slug": "ios-18",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-ios26/docs/ios-18"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Anleitungen",
+        "section": "Migration",
         "path": "/projects/ionic-theme-ios26/docs/migration"
       },
       {
@@ -2402,70 +2430,70 @@ export const PROJECTS_DE = [
         "title": "Erste Schritte",
         "navTitle": "Erste Schritte",
         "slug": "readme",
-        "section": "Dokumentation",
+        "section": "Einstieg",
         "path": "/projects/ionic-theme-md3/docs/readme"
       },
       {
         "title": "Das MD3-Theme einrichten",
         "navTitle": "Theme einrichten",
         "slug": "setup",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/ionic-theme-md3/docs/setup"
       },
       {
         "title": "Theme-Konfiguration",
         "navTitle": "Theme-Konfiguration",
         "slug": "configuration",
-        "section": "Anleitungen",
+        "section": "Referenz",
         "path": "/projects/ionic-theme-md3/docs/configuration"
       },
       {
         "title": "Android Settings-Darstellung",
         "navTitle": "Android Settings-Darstellung",
         "slug": "android-settings",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-md3/docs/android-settings"
       },
       {
-        "title": "Dynamische Android-Farben",
+        "title": "Android Dynamic Color",
         "navTitle": "Dynamische Android-Farben",
         "slug": "dynamic-colors",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-md3/docs/dynamic-colors"
       },
       {
         "title": "Farbsystem",
         "navTitle": "Farbsystem",
         "slug": "color-system",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-md3/docs/color-system"
       },
       {
         "title": "ion-item-group verwenden",
         "navTitle": "ion-item-group verwenden",
         "slug": "using-ion-item-group",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-md3/docs/using-ion-item-group"
       },
       {
         "title": "Besonderes Markup",
         "navTitle": "Besonderes Markup",
         "slug": "special-markup",
-        "section": "Anleitungen",
+        "section": "Verwendung",
         "path": "/projects/ionic-theme-md3/docs/special-markup"
       },
       {
         "title": "Einheitliche Listen mit ESLint sicherstellen",
         "navTitle": "Einheitliche Listen mit ESLint sicherstellen",
         "slug": "eslint",
-        "section": "Anleitungen",
+        "section": "Entwicklung",
         "path": "/projects/ionic-theme-md3/docs/eslint"
       },
       {
         "title": "Migration",
         "navTitle": "Migration",
         "slug": "migration",
-        "section": "Anleitungen",
+        "section": "Migration",
         "path": "/projects/ionic-theme-md3/docs/migration"
       },
       {
@@ -2500,7 +2528,7 @@ export const PROJECTS_DE = [
         "title": "Erste Schritte mit Cordova",
         "navTitle": "Erste Schritte",
         "slug": "readme",
-        "section": "Anleitungen",
+        "section": "Einstieg",
         "path": "/projects/cordova-native-ui/docs/readme"
       }
     ]

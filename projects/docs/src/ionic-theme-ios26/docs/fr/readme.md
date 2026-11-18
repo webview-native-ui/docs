@@ -1,11 +1,15 @@
 ---
 title: "Premiers pas"
-sourceRevision: "9f7a5183ea7ed9205438425af52ed708da19f83b39a4968ee49cd27c9c3b28cc"
+sourceRevision: "fe28a70dd3e5a307f1c8f967dd9abf34ad160f8ca54335f6c4913e5ef295d72c"
 ---
 
 # Ionic Theme iOS26
 
-Bibliothèque de thème CSS/JS qui applique le système de design iOS26 aux applications Ionic.
+Appliquez le style iOS 26 et les interactions Liquid Glass aux composants Ionic.
+
+[Installation](setup.md) · [Démo Web](https://ionic-theme-ios26.rdlabo.dev/)
+
+Les exemples utilisent Ionic 9. Avec Ionic 8 et Angular, importez `provideIonicAngular` depuis `@ionic/angular/standalone`.
 
 <!-- rdlabo-docs-pick -->
 
@@ -13,46 +17,27 @@ Bibliothèque de thème CSS/JS qui applique le système de design iOS26 aux appl
 
 <!-- /rdlabo-docs-pick -->
 
-Démonstration : https://ionic-theme-ios26.rdlabo.dev/
-
 ## Installation
 
 ```sh
 npm install @rdlabo/ionic-theme-ios26
 ```
 
-Après le CSS de base d’Ionic, ajoutez la feuille de style sombre système à votre feuille de style globale.
-
-```css
-@import '@rdlabo/ionic-theme-ios26/styles/system.css';
-```
-
-Déployez `ios26ThemeConfig` par spread dans les options de votre initialiseur Ionic existant. La configuration fournit le mode iOS et les animations du thème.
-
-```ts
-import { ios26ThemeConfig } from '@rdlabo/ionic-theme-ios26';
-
-const ionicConfig = {
-  ...ios26ThemeConfig,
-  // animated: false,
-};
-```
-
-Suivez [Installer le thème](/docs/setup) pour les exemples Angular, React et Vue, le choix du mode sombre et un aperçu. Utilisez la [configuration](/docs/configuration) pour les exports individuels de CSS et d’animation, les options personnalisées et la combinaison iOS 26 avec MD3. Les applications existantes peuvent adopter les wrappers à l’aide de la [migration](/docs/migration).
+[Installation](setup.md) · [Configuration](configuration.md)
 
 ## Documentation
 
-- [Utiliser ion-item-group](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/using-ion-item-group) — balisage requis pour les listes en retrait.
-- [Balisage et classes particuliers](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/special-markup) — balisage à activer explicitement et classes utilitaires du thème.
-- [ESLint](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/eslint) — vérifier la structure des listes avec les règles ESLint.
-- [Fonctionnalités](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/features) — variables CSS, Liquid Glass, importations sélectives et mode sombre.
-- [Animation expérimentale](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/experimental-animation) — effets de barre d’onglets et de recherche.
-- [iOS 18](https://docs.rdlabo.dev/projects/ionic-theme-ios26/docs/ios-18) — charger le thème uniquement sur iOS 26.
+- [Utiliser ion-item-group](https://webview-native-ui.com/projects/ionic-theme-ios26/docs/using-ion-item-group) — balisage requis pour les listes en retrait.
+- [Balisage et classes particuliers](https://webview-native-ui.com/projects/ionic-theme-ios26/docs/special-markup) — balisage à activer explicitement et classes utilitaires du thème.
+- [ESLint](https://webview-native-ui.com/projects/ionic-theme-ios26/docs/eslint) — vérifier la structure des listes avec les règles ESLint.
+- [Fonctionnalités](https://webview-native-ui.com/projects/ionic-theme-ios26/docs/features) — variables CSS, Liquid Glass, importations sélectives et mode sombre.
+- [Animation expérimentale](https://webview-native-ui.com/projects/ionic-theme-ios26/docs/experimental-animation) — effets de barre d’onglets et de recherche.
+- [iOS 18](https://webview-native-ui.com/projects/ionic-theme-ios26/docs/ios-18) — charger le thème uniquement sur iOS 26.
 - [Migration](/docs/migration) — adoption facultative des wrappers et étapes de mise à niveau propres à chaque version.
 
 <!-- rdlabo-docs-omit -->
 
-**Documentation complète :** [https://docs.rdlabo.dev/projects/ionic-theme-ios26](https://docs.rdlabo.dev/projects/ionic-theme-ios26)
+**Documentation complète :** [https://webview-native-ui.com/projects/ionic-theme-ios26](https://webview-native-ui.com/projects/ionic-theme-ios26)
 
 ## Développement et tests
 

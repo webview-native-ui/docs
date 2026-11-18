@@ -1,6 +1,6 @@
 ---
 title: "Capacitor Native UI"
-sourceRevision: "6b71e7c15aabcd36aa31f342d7285eca9fc6d8baf823c4ef16845167f055f22d"
+sourceRevision: "dd556626c1b6cd34d162abfab4838a6b31ac8436c3f49c0a02a91c799d68719c"
 ---
 
 # Capacitor Native UI
@@ -11,6 +11,8 @@ Capacitor Native UI fournit des contrôles natifs, les couleurs de l’appareil 
 Pour configurer une application Ionic avec Native UI iOS et Dynamic Color Android, suivez la [configuration standard WebView Native UI](https://webview-native-ui.com/standard-setup).
 
 ## Guides individuels
+
+Choisissez le guide correspondant à la fonctionnalité souhaitée.
 
 ### 1. Utiliser Native UI du plugin
 

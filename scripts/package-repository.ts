@@ -81,6 +81,10 @@ export async function pinPackageSourceLinks(
   // The current theme repository no longer contains these extension example files.
   if (project.packageName === '@rdlabo/capacitor-native-ui') {
     content = content
+      .replaceAll(
+        'https://github.com/webview-native-ui/capacitor-plugin/blob/main/docs/native-ui-extension-reference.md',
+        '/capacitor-native-ui/docs/native-ui-extension-reference',
+      )
       .replace(
         /https:\/\/github\.com\/webview-native-ui\/ionic-theme-ios27\/blob\/main\/(demo\/(?:ios\/App\/App\/(?:NativeMiniPlayer|NativeUICounter)\.swift|src\/native-ui\/(?:counter|mini-player)\.ts))/g,
         'https://github.com/webview-native-ui/ionic-theme-ios27/blob/ios27-v2.1.0/$1',

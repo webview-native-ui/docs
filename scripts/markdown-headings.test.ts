@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { JSDOM } from 'jsdom';
-import { addHeadingAliases, normalizeImportedReadmeHeadings } from './markdown-headings';
+import {
+  addHeadingAliases,
+  normalizeImportedReadmeHeadings,
+  restorePackageFragmentAnchors,
+} from './markdown-headings';
 
 test('keeps an old published fragment attached to a renamed heading', () => {
   const document = new JSDOM('<h2 id="initialize">initialize</h2>').window.document;
@@ -50,4 +54,15 @@ test('removes the README title and preserves nested heading levels after another
       ['H4', 'detail'],
     ],
   );
+});
+
+test('restores empty legacy anchors without interpreting code samples or extra attributes', () => {
+  const document = new JSDOM(
+    '<li>&lt;a id="old"&gt;&lt;/a&gt;<a href="/new">New</a></li><p><code>&lt;a id="sample"&gt;&lt;/a&gt;</code></p><p>&lt;a id="other" title="extra"&gt;&lt;/a&gt;</p>',
+  ).window.document;
+  restorePackageFragmentAnchors(document);
+  assert.equal(document.querySelector('li span')?.id, 'old');
+  assert.equal(document.querySelector('li')?.textContent, 'New');
+  assert.equal(document.getElementById('sample'), null);
+  assert.equal(document.getElementById('other'), null);
 });

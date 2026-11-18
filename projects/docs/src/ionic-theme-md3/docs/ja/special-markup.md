@@ -140,7 +140,9 @@ buttonのcornerをよりsquareにする場合は `.button-square` を追加し�
 
 上記の共通構造はプラットフォーム専用のテンプレートなしで使えます。iOS 専用の `segment-style-glass`、`searchbar-classic`、iPad のフローティングシート、iOS のタブバー配置は Android の外観要件ではありません。MD3 は Ionic のセグメント、検索バー、モーダル、タブバーの動作を維持します。`.button-square` は MD3 の任意の形状拡張であり、共通マークアップの必須規約ではありません。
 
-## Themeを無効にする
+<a id="theme%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B"></a><a id="opting-out"></a>
+
+## コンポーネントごとにテーマを無効にする
 
 個別のIonic componentで標準のMaterial styleを維持する場合は `.md3-disabled` を追加します。
 

@@ -1,6 +1,6 @@
 ---
 title: "Premiers pas avec Cordova"
-sourceRevision: '634df3976e546677419f36950fa411c56c3a96be1221e2ee5ad220049d59cb26'
+sourceRevision: "35da5b9f3e7e7fcba7f19ea5c7aecf4d92b6cedd6d66be1956bce5f1e6e4aeff"
 ---
 
 # Premiers pas avec Cordova
@@ -56,6 +56,16 @@ document.addEventListener('deviceready', async () => {
 Appelez `await nativeUI.destroy()` lorsque l’application cesse définitivement d’utiliser Native UI. Inspectez `nativeUI.getStatus()` pour diagnostiquer le repli Web. Sur iOS, prévoyez les espacements de zone sûre dans votre CSS, par exemple avec `env(safe-area-inset-top)` ; les retraits automatiques de la vue défilante sont désactivés.
 
 Pour une application ESM, importez `enableNativeUI` depuis `@webview-native-ui/cordova-plugin/core` pour le HTML standard, ou depuis `@webview-native-ui/cordova-plugin` pour Ionic. Utilisez un seul type d’entrée du runtime. Ne mélangez pas le démarrage npm et le démarrage `window.NativeUI`.
+
+## Android Dynamic Color
+
+Sous Android 12 ou version ultérieure, lisez la palette après l’initialisation de Cordova. Cette API fonctionne indépendamment des contrôles natifs.
+
+```ts
+import { getDynamicColorScheme } from '@webview-native-ui/cordova-plugin/core';
+
+const scheme = await getDynamicColorScheme();
+```
 
 ## Thème iOS facultatif
 

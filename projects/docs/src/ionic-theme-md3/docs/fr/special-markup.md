@@ -1,6 +1,6 @@
 ---
 title: "Balisage particulier"
-sourceRevision: "bca33665f4a0cd2593c3cf038f0f7f0c9311760c592aecee00ad193226d2680b"
+sourceRevision: "f1b82fd450564bbd66dda7b769a435dd9277fada395ee64951366b826b34a162"
 ---
 
 # Balisage particulier
@@ -143,7 +143,9 @@ Le thème principal fournit une police MD par défaut uniquement en CSS : Google
 
 La structure commune ci-dessus fonctionne sans modèles propres à une plateforme. Les éléments iOS `segment-style-glass`, `searchbar-classic`, les feuilles flottantes iPad et le placement des barres d’onglets iOS ne sont pas des exigences visuelles Android. MD3 conserve le comportement Ionic des segments, barres de recherche, modales et barres d’onglets. `.button-square` est une extension de forme MD3 facultative, pas une convention de balisage commun obligatoire.
 
-## Désactiver le thème
+<a id="d%C3%A9sactiver-le-th%C3%A8me"></a><a id="opting-out"></a>
+
+## Désactiver le thème pour un composant
 
 Ajoutez `.md3-disabled` à un composant Ionic pour conserver les styles Material standard d’Ionic.
 

@@ -1,9 +1,11 @@
 ---
-title: "Dynamische Android-Farben"
-sourceRevision: "3d6692bfba465d82c86b92570ee66682c44f046530492028bbc9d55e9f80e3e5"
+title: Android Dynamic Color
+sourceRevision: "af8ad1eca1896f582ca5e4e5603a156d18031e7e17da39628701bef9270b699f"
 ---
 
-# Dynamische Android-Farben
+# Android Dynamic Color
+
+<a id="android-dynamic-colors"></a>
 
 Dynamische Farben werden unterstützt und optional aktiviert. Android 12 und neuer liefern helle und dunkle Material-Farbschemata; dieses Paket konvertiert deren Rollen mit den Algorithmen des Ionic-Docs-Farbgenerators. Ältere Android-Versionen, iOS und Web verwenden die vorhandene Ionic-Palette und die Standardfarben der Komponenten. Siehe [Farbsystem](color-system.md): Ionic-Paletten allein reichen aus; native Material-Rollen verfeinern lediglich optionale CSS-Tokens.
 

@@ -1,6 +1,6 @@
 ---
 title: "Migration"
-sourceRevision: "4b8de5860de00367ba770c30161d8e38cca109862c6c957365ae5f82c0e83218"
+sourceRevision: "929ea31df886c85d69c16cb9b3287e8544076c58dcc6005aa6e59017c2d3a361"
 ---
 
 # Migration
@@ -78,7 +78,7 @@ Dasselbe Aussehen gilt für vorhandene `.button-submit`-Aktionen mit solider Fü
 
 Native Steuerelemente behalten während Navigation, Modal-Animationen und Bildübergaben die Zuständigkeit. Ein in der WebView angezeigtes Bild ist weiterhin die Darstellung der nativen Projektion und keine Rückkehr zum ursprünglichen Web-Button. Testen und entfernen Sie transitionsspezifische Workarounds, die diese Steuerelemente ins Web zurückzwingen. Behalten Sie beabsichtigte Ausnahmen sowie die Behandlung nicht unterstützter Steuerelemente und nativer Fehler bei; zusätzliche Animationsflags oder eine zweite Laufzeit sind nicht nötig.
 
-Prüfen Sie beide Leistenseiten, das Verschwinden der Leiste, Falten und Drehen, Karten-, Sheet- und Vollbilddarstellungen sowie solide Absendeaktionen. Prüfen Sie auch ein gewöhnliches iPhone und den Browser-Fallback. Verwenden Sie für Cordova die [gebündelte Integration](https://github.com/webview-native-ui/cordova-plugin); das festgelegte Theme und native Änderungen werden durch ein Cordova-Plugin-Release bereitgestellt, nicht über diese Capacitor-Installationsbefehle.
+Prüfen Sie beide Leistenseiten, das Verschwinden der Leiste, Falten und Drehen, Karten-, Sheet- und Vollbilddarstellungen sowie gefüllte Absende-Schaltflächen. Prüfen Sie auch ein gewöhnliches iPhone und den Browser-Fallback. Verwenden Sie für Cordova die [gebündelte Integration](https://github.com/webview-native-ui/cordova-plugin); das festgelegte Theme und native Änderungen werden durch ein Cordova-Plugin-Release bereitgestellt, nicht über diese Capacitor-Installationsbefehle.
 
 ## Von 1.2.1 aktualisieren
 

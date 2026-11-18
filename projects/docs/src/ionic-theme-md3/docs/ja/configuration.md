@@ -17,7 +17,7 @@ Ionic の基本 CSS と選択したダークパレットの後に、次の impor
 
 これら2ファイルをまとめたものが `styles/theme.css` です。まとめたスタイルシートと個別 import のどちらかを使い、アプリ独自の上書きはテーマの後に置いてください。
 
-ダークパレットの選択は Ionic が担当します。アプリの外観方針に合わせ、`@ionic/core/css/palettes/` の `dark.system.css`、`dark.class.css`、`dark.always.css` を選びます。[Dynamic Colors](dynamic-colors.md) は `ion-palette-dark` を管理し、`dark.class.css` を使用します。
+ダークパレットの選択は Ionic が担当します。アプリの外観方針に合わせ、`@ionic/core/css/palettes/` の `dark.system.css`、`dark.class.css`、`dark.always.css` を選びます。[Android Dynamic Color](dynamic-colors.md) は `ion-palette-dark` を管理し、`dark.class.css` を使用します。
 
 ## アニメーションを直接設定する
 

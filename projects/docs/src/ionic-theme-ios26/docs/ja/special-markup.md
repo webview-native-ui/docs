@@ -4,19 +4,21 @@ title: 特別なマークアップとクラス
 
 既存のIonicコンポーネントに属性やクラスを追加して、テーマ固有の外観を適用できます。
 
-## Primaryのsubmit button
+<a id="primary%E3%81%AEsubmit-button"></a><a id="primary-submit-buttons"></a>
 
-solidのPrimary submit buttonは、foregroundとborderの表現に `--ion-color-primary-brightness` を使います。Primary colorに対して十分なcontrastを確保できる値を定義してください。
+## 送信ボタン
+
+塗りつぶしの送信ボタンには、指定したIonicカラーのbrightness変数を使います。`color="danger"` の場合、前景色と縁の色を `--ion-color-danger-brightness` で設定します。
 
 ```css
 :root {
-  --ion-color-primary-brightness: #96feff;
+  --ion-color-danger-brightness: #fff;
 }
 ```
 
 ```html preview
-<ion-button type="submit" color="primary">Submit</ion-button>
-<ion-button class="button-submit" fill="solid" color="primary">Continue</ion-button>
+<ion-button type="submit" color="danger">Submit</ion-button>
+<ion-button class="button-submit" fill="solid" color="danger">Continue</ion-button>
 ```
 
 buttonに `type="submit"` を指定できない場合に同じstyleを適用するには、`.button-submit` を使います。
@@ -209,7 +211,9 @@ search barとstartまたはend buttonを組み合わせる `ion-toolbar` には�
 </ion-toolbar>
 ```
 
-## Themeを無効にする
+<a id="theme%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B"></a><a id="opting-out"></a>
+
+## コンポーネントごとにテーマを無効にする
 
 個別の Ionic コンポーネントで標準の iOS スタイルを維持する場合は `.ios-theme-disabled` を追加します。
 

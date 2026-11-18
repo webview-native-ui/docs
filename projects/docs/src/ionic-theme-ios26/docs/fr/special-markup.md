@@ -1,25 +1,27 @@
 ---
 title: "Balisage et classes particuliers"
-sourceRevision: "6f02d48fe23aef1123b4419535cf0704c579902cbbb274e4eb9cb0ab77aee9d4"
+sourceRevision: "842ff9b07b2980b149982ca6724258ba54d371e6dab02f35c22a20b68ff4c1f1"
 ---
 
 # Balisage et classes particuliers
 
 La plupart du balisage Ionic fonctionne sans modification. Les combinaisons ci-dessous sont des options du thème à activer explicitement.
 
-## Boutons d’envoi principaux
+<a id="boutons-d%E2%80%99envoi-principaux"></a><a id="primary-submit-buttons"></a>
 
-Les boutons d’envoi pleins de couleur primaire utilisent `--ion-color-primary-brightness` pour leur premier plan et leur bordure. Définissez une valeur offrant un contraste suffisant avec votre couleur primaire.
+## Boutons d’envoi
+
+Pour un bouton d’envoi plein de couleur danger, définissez `--ion-color-danger-brightness` pour le premier plan et la bordure.
 
 ```css
 :root {
-  --ion-color-primary-brightness: #96feff;
+  --ion-color-danger-brightness: #fff;
 }
 ```
 
 ```html preview
-<ion-button type="submit" color="primary">Submit</ion-button>
-<ion-button class="button-submit" fill="solid" color="primary">Continue</ion-button>
+<ion-button type="submit" color="danger">Submit</ion-button>
+<ion-button class="button-submit" fill="solid" color="danger">Continue</ion-button>
 ```
 
 Utilisez `.button-submit` lorsque le bouton doit recevoir le même traitement mais ne peut pas utiliser `type="submit"`.
@@ -212,7 +214,9 @@ Ajoutez `.toolbar-searchbar` lorsqu’un `ion-toolbar` associe une barre de rech
 </ion-toolbar>
 ```
 
-## Désactiver le thème
+<a id="d%C3%A9sactiver-le-th%C3%A8me"></a><a id="opting-out"></a>
+
+## Désactiver le thème pour un composant
 
 Ajoutez `.ios-theme-disabled` à un composant Ionic individuel lorsqu’il doit conserver le style iOS standard d’Ionic.
 

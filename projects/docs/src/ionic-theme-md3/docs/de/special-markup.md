@@ -1,6 +1,6 @@
 ---
 title: "Besonderes Markup"
-sourceRevision: "bca33665f4a0cd2593c3cf038f0f7f0c9311760c592aecee00ad193226d2680b"
+sourceRevision: "f1b82fd450564bbd66dda7b769a435dd9277fada395ee64951366b826b34a162"
 ---
 
 # Besonderes Markup
@@ -143,7 +143,9 @@ Das Haupttheme liefert eine reine CSS-Standardschrift für MD: lokales Google Sa
 
 Die gemeinsame Struktur funktioniert ohne plattformspezifische Templates. Die iOS-spezifischen `segment-style-glass`, `searchbar-classic`, schwebenden iPad-Sheets und iOS-Tabbar-Positionierungen sind keine Android-Darstellungsanforderungen. MD3 behält Ionics Verhalten für Segmente, Suchleisten, Modals und Tab-Leisten bei. `.button-square` ist eine optionale MD3-Formerweiterung, keine erforderliche gemeinsame Markup-Konvention.
 
-## Das Theme gezielt deaktivieren
+<a id="das-theme-gezielt-deaktivieren"></a><a id="opting-out"></a>
+
+## Theme für eine Komponente deaktivieren
 
 Fügen Sie `.md3-disabled` zu einer einzelnen Ionic-Komponente hinzu, wenn diese die standardmäßige Material-Gestaltung von Ionic behalten soll.
 

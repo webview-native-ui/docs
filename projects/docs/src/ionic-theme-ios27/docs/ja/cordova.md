@@ -1,6 +1,6 @@
 ---
 title: "Cordova のセットアップ"
-sourceRevision: '33b1ccf63a4787bafc8696db5739b64d3e3b2714feabed2703411508407a0bac'
+sourceRevision: "07b45f9b135f41690d411c8e630f95c0d7be1090936d7401b69a22fa33298403"
 ---
 
 [Cordova プラグインの導入](/cordova-native-ui/docs/readme)を済ませたら、Web プロジェクトにテーマをインストールします。
@@ -16,6 +16,8 @@ Ionic の基本 CSS を維持し、現在のダークモード設定に合うプ
 ```css
 @import '@rdlabo/ionic-theme-ios27/styles/system.css';
 ```
+
+ページ遷移とポップオーバーにテーマのアニメーションを使うには、既存のIonic初期化に `ios27ThemeConfig` を渡します。[Angular・React・Vueの設定例](setup.md)を参照してください。
 
 JavaScript ヘルパーはテーマからインポートします。ヘルパーを使う場合は、Web バンドラーで次のモジュールを完全一致で置き換え、テーマと Cordova が同じ Native UI の状態を参照するようにします。
 

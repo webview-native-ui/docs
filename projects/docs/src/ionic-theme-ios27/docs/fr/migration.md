@@ -1,11 +1,9 @@
 ---
 title: "Migration du thème"
-sourceRevision: "e0736094ab4c14cfe7ca73ae198834b8da48fae24d8e4c7ad8f82e95a6484fad"
+sourceRevision: "25e8cb7653b724a4371610ef0a83e923080786121eb266dded92b675046cfb49"
 ---
 
-# Migration du thème
-
-Ce guide met à niveau le thème autonome et son intégration Capacitor. Pour adopter le thème fourni avec Cordova, consultez [Migrer une application existante vers Cordova](cordova.md#moving-an-existing-theme-app-to-this-integration).
+Ce guide explique comment mettre à jour le thème iOS 27 et son intégration Capacitor. Pour Cordova, installez le thème séparément en suivant le [guide de configuration Cordova](cordova.md).
 
 
 ## Facultatif : simplifier la configuration
@@ -132,7 +130,7 @@ La même apparence s’applique aux actions `.button-submit` existantes avec rem
 
 Les contrôles natifs conservent la responsabilité de leur présentation pendant la navigation, les animations de modales et les transferts d’images. Une image affichée dans la WebView reste la présentation de la projection native, et non un retour au bouton Web d’origine. Retestez puis supprimez les contournements propres aux transitions qui forcent ces contrôles à revenir au Web. Conservez les exclusions intentionnelles et la gestion des contrôles non pris en charge ou des échecs natifs ; aucun indicateur d’animation supplémentaire ni second runtime n’est nécessaire.
 
-Vérifiez les deux côtés du rail, sa disparition, le pliage et la rotation, les présentations carte, feuille et plein écran, ainsi que les actions d’envoi pleines. Vérifiez aussi un iPhone ordinaire et le repli navigateur. Pour Cordova, utilisez l’[intégration fournie](https://github.com/webview-native-ui/cordova-plugin) ; son thème épinglé et les changements natifs arrivent par une publication du plugin Cordova, pas par ces commandes d’installation Capacitor.
+Vérifiez les deux côtés du rail, sa disparition, le pliage et la rotation, les présentations carte, feuille et plein écran, ainsi que les actions d’envoi pleines. Vérifiez aussi un iPhone ordinaire et le repli navigateur.
 
 ## Séparation du package Native UI
 

@@ -21,6 +21,7 @@ import { enforceGeneratedHtmlPolicy } from './html-policy';
 import { compactDocsHtml } from './compact-docs-html';
 import {
   addHeadingAliases,
+  restorePackageFragmentAnchors,
   normalizeImportedReadmeHeadings,
   resolveGeneratedHeadingId,
 } from './markdown-headings';
@@ -690,6 +691,7 @@ async function generateProject(
     ) {
       normalizeImportedReadmeHeadings(htmlDocument);
     }
+    restorePackageFragmentAnchors(htmlDocument);
     addHeadingAliases(
       htmlDocument,
       locale === 'en' && page.headingAliases

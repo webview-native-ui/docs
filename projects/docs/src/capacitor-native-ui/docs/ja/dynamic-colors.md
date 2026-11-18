@@ -1,9 +1,11 @@
 ---
 sourceRevision: "0ed08a5bc4e61a961fca993c3e8e50da51b29dcc99005812b1c14e8703c9e6a9"
-title: Androidの動的な配色
+title: Android Dynamic Color
 ---
 
-# Android の動的な配色
+# Android Dynamic Color
+
+<a id="android-dynamic-colors"></a>
 
 Android端末のMaterial Youパレットを読み取り、Web画面の配色に使えます。このAPIは単独で利用でき、IonicやNative UIの初期化、Activityのテーマ変更、壁紙やストレージへのアクセス権限は不要です。
 

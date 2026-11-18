@@ -91,17 +91,6 @@ Material You はこれらの値の任意のプロバイダーの1つです。ネ
 
 計測したタブレットのダイアログ寸法、角、キーボードの動作、過去のネイティブ参照キャプチャは [Android 17 タブレットレビュー](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.3.0/docs/validation/android17-tablet-2026-11-07.md)を参照してください。その後の Ionic 既定色への修正とブラウザー検証は [Ionic の色継承レビュー](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.3.0/docs/validation/ionic-color-inheritance-2026-11-07.md)を参照してください。
 
-## タブレットの Alert のサイズ
+<a id="%E3%82%BF%E3%83%96%E3%83%AC%E3%83%83%E3%83%88%E3%81%AE-alert-%E3%81%AE%E3%82%B5%E3%82%A4%E3%82%BA"></a><a id="tablet-alert-sizing"></a>
 
-幅広のタブレットの Alert は、計測した Android 17 Settings の比率に従い、縦向き 85%、横向き 65% になります。Android タブレットで入力中に IME がビューポートをリサイズしても、その幅を維持します。スマートフォンサイズのウィンドウは Ionic の内容に応じたサイズを維持します。
-
-ダイアログのカスタマイズには公開されたサイズプロパティを使います。コントローラーで作成した Alert では `cssClass: 'app-alert'` を設定し、テーマの後のグローバルスタイルシートへ、コンポーネント名を指定したルールを置きます。
-
-```css
-ion-alert.app-alert {
-  --width: 400px;
-  --max-width: min(400px, calc(100vw - 32px));
-}
-```
-
-インラインスタイルのバインディングも使えます。通常の CSS の最小／最大制約は引き続き適用され、`md3-disabled` は Ionic 自身のサイズの既定値を復元します。
+[タブレットの Alert のサイズ](android-settings.md#tablet-alert-sizing)

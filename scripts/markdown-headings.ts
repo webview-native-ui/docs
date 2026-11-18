@@ -61,3 +61,22 @@ export function normalizeImportedReadmeHeadings(document: Document): void {
     }
   }
 }
+
+/** Package READMEs use empty anchors to keep published fragments after moving a section. */
+export function restorePackageFragmentAnchors(document: Document): void {
+  for (const block of document.querySelectorAll('p, li')) {
+    const node = block.firstChild;
+    if (!node || node.nodeType !== 3) continue;
+    const text = node.textContent ?? '';
+    const prefix = text.match(/^(?:<a id="[\p{L}\p{N}_%.():-]+"><\/a>\s*)+/u)?.[0];
+    if (!prefix) continue;
+    for (const match of prefix.matchAll(/<a id="([^"]+)"><\/a>/g)) {
+      if (document.getElementById(match[1])) continue;
+      const anchor = document.createElement('span');
+      anchor.id = match[1];
+      anchor.setAttribute('aria-hidden', 'true');
+      block.insertBefore(anchor, node);
+    }
+    node.textContent = text.slice(prefix.length);
+  }
+}

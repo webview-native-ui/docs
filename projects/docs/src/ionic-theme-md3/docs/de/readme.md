@@ -1,11 +1,15 @@
 ---
 title: "Erste Schritte"
-sourceRevision: "5abed5c2acf333c556ccd78eb4955416be07bf93a18c58aa0d3ed4fe935c69f7"
+sourceRevision: "2b0b4fa387f8d9ab5df77a621f1011bb3f9559dc7a44037fdb5886cee9bd6b29"
 ---
 
 # Ionic Theme Material Design 3
 
-Ein CSS/JS-Theme für Ionic-Anwendungen mit Android Settings als visueller Referenz, das Ionics Komponenten-APIs und Farbsemantik bewahrt.
+Verwenden Sie für Ionic-Komponenten im Material Design 3 dasselbe Markup wie für die iOS-Themes.
+
+[Einrichtung](setup.md) · [Web-Demo](https://ionic-theme-md3.rdlabo.dev/)
+
+Die Beispiele verwenden Ionic 9. Importieren Sie unter Ionic 8 mit Angular `provideIonicAngular` aus `@ionic/angular/standalone`.
 
 <!-- rdlabo-docs-pick -->
 
@@ -13,37 +17,27 @@ Ein CSS/JS-Theme für Ionic-Anwendungen mit Android Settings als visueller Refer
 
 <!-- /rdlabo-docs-pick -->
 
-Die Demo finden Sie hier: https://ionic-theme-md3.rdlabo.dev/
-
-Für die Kompatibilität mit `@rdlabo/ionic-theme-ios27` entwickelt, sodass ein Markup-Baum beide Ionic-Modi gestalten kann.
-
 ## Installation
 
 Verwenden Sie die [Einrichtungsanleitung](/docs/setup), um das Paket zu installieren, `@rdlabo/ionic-theme-md3/styles/theme.css` zu importieren und `md3ThemeConfig` per Spread in die Optionen Ihrer bestehenden Ionic-Initialisierung zu übernehmen. Ionic `>=8.8.0 <10` wird unterstützt. Apps mit älteren Ionic-Versionen können `@rdlabo/ionic-theme-md3@1.0.2` verwenden.
 
 Folgen Sie für bestehende Apps der [optionalen Vereinfachung der Einrichtung](/docs/migration#optional-simplify-the-setup). Einzelne CSS-Dateien und Animationseinstellungen beschreibt die [Konfiguration](/docs/configuration).
 
-### Android Settings-Darstellung
-
-Das Theme bewahrt Ionics Farbsemantik und Schriftanpassungen der Anwendung. Standard-Toggles sind ohne Symbole. Die MD-Standardschrift nutzt lokal auf dem Gerät verfügbares Google Sans Flex mit üblichen Ersatzschriften und ist im Theme-CSS enthalten. Weder Schriftinitialisierungscode noch ein Capacitor-Plugin ist erforderlich. Zurück-Symbole bleiben Ionics Zuständigkeit.
-
-Installation, Ersatzschriften und Komponenten-Anpassungen beschreibt [Android Settings-Darstellung](/docs/android-settings). Bestehende Nutzer sollten die [Migrationshinweise zu 9.2.0](/docs/migration#migrating-to-9.2.0%3A-android-settings-alignment) zu geänderten Toolbar-, Listen- und Toggle-Abmessungen lesen.
-
-### Optional: MD3- und iOS-27-Themes gemeinsam verwenden
-
-Folgen Sie der [kombinierten Theme-Konfiguration](/docs/configuration#use-md3-and-ios-27-together) für die Reihenfolge der Stylesheets und die plattformabhängige Auswahl der Animationen.
+<a id="android-settings-darstellung"></a><a id="optional%3A-md3--und-ios-27-themes-gemeinsam-verwenden"></a><a id="android-settings-appearance"></a>
+<a id="optional%3A-use-the-md3-and-ios-27-themes-together"></a>
+<a id="optional-use-the-md3-and-ios-27-themes-together"></a>
 
 ## Dokumentation
 
-- [Einrichtung](/docs/setup) — das Theme mit dem Theme-Stylesheet und Konfigurationsobjekt installieren und konfigurieren.
+- [MD3 und iOS 27 kombinieren](configuration.md#use-md3-and-ios-27-together)
 - [Konfiguration](/docs/configuration) — einzelne Stylesheets, Animationen und die vorhandene Modusauswahl.
 
-- [Dynamische Android-Farben](/docs/dynamic-colors) — optionale Material You-Einrichtung, helle/dunkle Darstellung, Lebenszyklus und Rollenzuordnung.
+- [Android Dynamic Color](/docs/dynamic-colors) — optionale Material You-Einrichtung, helle/dunkle Darstellung, Lebenszyklus und Rollenzuordnung.
 - [Farbsystem](/docs/color-system) — Ionic-Palettenstandards, optionale Material-Rollen und Farbzuordnungen für Komponenten.
 - [Android Settings-Darstellung](/docs/android-settings) — Standardgeometrie, CSS-Standardschriften und Ionic-Anpassungen.
-- [ion-item-group verwenden](https://docs.rdlabo.dev/projects/ionic-theme-md3/docs/using-ion-item-group) — gemeinsames Markup für eingerückte Listen in iOS 27 und MD3.
-- [Besonderes Markup](https://docs.rdlabo.dev/projects/ionic-theme-md3/docs/special-markup) — optionale Komponentenkombinationen der Demo.
-- [ESLint](https://docs.rdlabo.dev/projects/ionic-theme-md3/docs/eslint) — Listenstruktur mit ESLint-Regeln prüfen.
+- [ion-item-group verwenden](https://webview-native-ui.com/projects/ionic-theme-md3/docs/using-ion-item-group) — gemeinsames Markup für eingerückte Listen in iOS 27 und MD3.
+- [Besonderes Markup](https://webview-native-ui.com/projects/ionic-theme-md3/docs/special-markup) — optionale Komponentenkombinationen der Demo.
+- [ESLint](https://webview-native-ui.com/projects/ionic-theme-md3/docs/eslint) — Listenstruktur mit ESLint-Regeln prüfen.
 - [Migration](/docs/migration) — optionale Vereinfachung der Einrichtung und versionsspezifische Aktualisierungsschritte.
 
 ## Verwandte Projekte
@@ -56,7 +50,7 @@ Wenn Sie eine umfassendere Implementierung von Material Design 3 benötigen, kö
 
 <!-- rdlabo-docs-omit -->
 
-**Vollständige Dokumentation:** [https://docs.rdlabo.dev/projects/ionic-theme-md3](https://docs.rdlabo.dev/projects/ionic-theme-md3)
+**Vollständige Dokumentation:** [https://webview-native-ui.com/projects/ionic-theme-md3](https://webview-native-ui.com/projects/ionic-theme-md3)
 
 ## Entwicklung und Tests
 

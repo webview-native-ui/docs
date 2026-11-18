@@ -1,6 +1,6 @@
 ---
 title: "Cordova einrichten"
-sourceRevision: '33b1ccf63a4787bafc8696db5739b64d3e3b2714feabed2703411508407a0bac'
+sourceRevision: "07b45f9b135f41690d411c8e630f95c0d7be1090936d7401b69a22fa33298403"
 ---
 
 Installieren Sie das Theme im Web-Projekt nach der [Cordova-Einrichtung](/cordova-native-ui/docs/readme).
@@ -16,6 +16,8 @@ Behalten Sie die Ionic-Basisstile bei und wählen Sie das Preset für Ihre Dunke
 ```css
 @import '@rdlabo/ionic-theme-ios27/styles/system.css';
 ```
+
+Übergeben Sie `ios27ThemeConfig` an die bestehende Ionic-Initialisierung, um Seitenübergänge und Popover zu animieren. Siehe [Beispiele für Angular, React und Vue](setup.md).
 
 Importieren Sie JavaScript-Helfer aus dem Theme. Ordnen Sie im Web-Bundler den exakten Modulnamen
 

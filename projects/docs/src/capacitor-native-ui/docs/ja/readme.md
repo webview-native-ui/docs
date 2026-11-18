@@ -11,6 +11,8 @@ iOS Native UI と Android Dynamic Color をまとめた Ionic アプリの導入
 
 ## 個別のガイド
 
+使いたい機能を選んでください。
+
 ### 1. プラグインの Native UI を使う
 
 対応する Ionic・HTML コントロールを iOS でネイティブ表示します。アプリの状態、ルーティング、ハンドラーはそのまま使います。

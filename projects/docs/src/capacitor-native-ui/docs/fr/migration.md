@@ -1,6 +1,6 @@
 ---
 title: "Migration"
-sourceRevision: "4b8de5860de00367ba770c30161d8e38cca109862c6c957365ae5f82c0e83218"
+sourceRevision: "929ea31df886c85d69c16cb9b3287e8544076c58dcc6005aa6e59017c2d3a361"
 ---
 
 # Migration
@@ -78,7 +78,7 @@ La même apparence s’applique aux actions `.button-submit` existantes avec rem
 
 Les contrôles natifs conservent la responsabilité de leur présentation pendant la navigation, les animations de modales et les transferts d’images. Une image affichée dans la WebView reste la présentation de la projection native, et non un retour au bouton Web d’origine. Retestez puis supprimez les contournements propres aux transitions qui forcent ces contrôles à revenir au Web. Conservez les exclusions intentionnelles et la gestion des contrôles non pris en charge ou des échecs natifs ; aucun indicateur d’animation supplémentaire ni second runtime n’est nécessaire.
 
-Vérifiez les deux côtés du rail, sa disparition, le pliage et la rotation, les présentations carte, feuille et plein écran, ainsi que les actions d’envoi pleines. Vérifiez aussi un iPhone ordinaire et le repli navigateur. Pour Cordova, utilisez l’[intégration fournie](https://github.com/webview-native-ui/cordova-plugin) ; son thème épinglé et les changements natifs arrivent par une publication du plugin Cordova, pas par ces commandes d’installation Capacitor.
+Vérifiez les deux côtés du rail, sa disparition, le pliage et la rotation, les présentations carte, feuille et plein écran, ainsi que les boutons d’envoi pleins. Vérifiez aussi un iPhone ordinaire et le repli navigateur. Pour Cordova, utilisez l’[intégration fournie](https://github.com/webview-native-ui/cordova-plugin) ; son thème épinglé et les changements natifs arrivent par une publication du plugin Cordova, pas par ces commandes d’installation Capacitor.
 
 ## Migrer depuis la version 1.2.1
 

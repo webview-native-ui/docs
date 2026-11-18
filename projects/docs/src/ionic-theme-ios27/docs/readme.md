@@ -2,10 +2,11 @@
 title: Ionic Theme iOS27
 ---
 
-Install with `npm install @rdlabo/ionic-theme-ios27`. For 1.x, use the [v1.2.1 guide](https://github.com/webview-native-ui/ionic-theme-ios27/tree/ios27-v1.2.1).
-A theme for Ionic apps that brings iOS 27 Liquid Glass and motion to the Web. Capacitor iOS apps can also opt into Native UI for supported controls, officially supported starting with 2.0.0.
+Apply iOS 27 Liquid Glass styling and animations to Ionic components.
 
-**[Ionic 9 demo](https://ionic-theme-ios27.rdlabo.dev/) · [Setup guide](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup)**
+[Setup](setup.md) · [Browser demo](https://ionic-theme-ios27.rdlabo.dev/)
+
+The setup guide uses Ionic 9. On Ionic 8, Angular apps import `provideIonicAngular` from `@ionic/angular/standalone`.
 
 <!-- rdlabo-docs-pick -->
 
@@ -17,78 +18,38 @@ A theme for Ionic apps that brings iOS 27 Liquid Glass and motion to the Web. Ca
 
 <!-- /rdlabo-docs-pick -->
 
+<a id="get-started"></a>
+
 ## What would you like to do?
+
+With Cordova, pass `ios27ThemeConfig` to Ionic first, then [configure the Cordova integration](cordova.md).
 
 | Goal                                                    | Guide                                                                                                       |
 | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Style an existing Ionic app                             | [Get started](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup)                                |
-| Select iOS 26/27 styles and optionally use MD3          | [Adaptive themes](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/adaptive-themes)                  |
-| Add native iOS controls to a Capacitor app              | [Add Native UI](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/add-native-ui)                      |
-| Add a side rail to Ionic while keeping your own theme   | [Vertical Bars step by step](https://docs.rdlabo.dev/projects/capacitor-native-ui/docs/ionic-vertical-bars) |
-| Optional: use the theme and Native UI with Cordova      | [Cordova setup](docs/cordova.md)                                                                            |
+| Style an existing Ionic app                             | [Get started](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/setup)                                |
+| Select iOS 26/27 styles and optionally use MD3          | [Adaptive themes](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/adaptive-themes)                  |
+| Add native iOS controls to a Capacitor app              | [Add Native UI](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/add-native-ui)                      |
+| Add a side rail to Ionic while keeping your own theme   | [Vertical Bars step by step](https://webview-native-ui.com/projects/capacitor-native-ui/docs/ionic-vertical-bars) |
+| Optional: use the theme and Native UI with Cordova      | [Cordova setup](cordova.md)                                                                            |
 | Configure styles, dark mode and animations individually | [Configuration](docs/configuration.md)                                                                      |
-| Upgrade an existing installation                        | [Migration](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/migration)                              |
-
-## Get started
-
-Start with the standalone theme in an existing Ionic 9 app. Browser-only theme use needs no native Capacitor project or Native UI startup. Install the iOS theme separately if your app uses it. See [Cordova theme setup](/ionic-theme-ios27/docs/cordova).
-
-Only if you want device-driven layout, add [Capacitor Foldable](https://github.com/erkamyaman/capacitor-foldable), the community plugin by Erkam Yaman, using the [device layout guide](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout). It reports placement, posture and change events; the theme provides Web layout helpers, while Native UI projects controls when separately enabled. Installing Foldable and connecting its events are optional additions, not prerequisites for the theme.
-
-Install the theme, add one global theme stylesheet after Ionic's base CSS, and pass the theme configuration to your existing Ionic initializer. See the [setup guide](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/setup) for Angular, React and Vue.
-
-```sh
-npm install @rdlabo/ionic-theme-ios27
-```
-
-```diff:src/global.css
-@@
- @import '@ionic/core/css/core.css';
- @import '@ionic/core/css/structure.css';
-- @import '@ionic/core/css/palettes/dark.system.css';
-+ @import '@rdlabo/ionic-theme-ios27/styles/system.css';
-
- :root { --app-content-width: 72rem; }
-```
-
-```diff:src/app/app.config.ts
-@@
- import { ApplicationConfig } from '@angular/core';
- import { provideIonicAngular } from '@ionic/angular';
-+ import { ios27ThemeConfig } from '@rdlabo/ionic-theme-ios27';
- import { provideRouter } from '@angular/router';
- import { routes } from './app.routes';
-
- export const appConfig: ApplicationConfig = {
-   providers: [
-     provideRouter(routes),
--     provideIonicAngular(),
-+     provideIonicAngular({ ...ios27ThemeConfig }),
-     provideHttpClient(),
-   ],
- };
-```
-
-Choose `styles/class.css` for application-controlled dark mode or `styles/always.css` for always-dark mode. The stylesheet includes the matching Ionic dark palette. The theme configuration defaults to iOS mode and its animations, with application options taking precedence. Ionic compatibility is `>=9 <10`. Browser-only apps do not need a native Capacitor project.
-
-The theme styles toolbars, tabs, lists, buttons, search, and overlays, with light and dark appearances. It does not activate native controls. Once the Web theme is working, you can optionally [add Native UI](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/add-native-ui).
+| Upgrade an existing installation                        | [Migration](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/migration)                              |
 
 ## Customize your app
 
 Use [configuration](docs/configuration.md) for individual CSS and animation settings. Existing applications can optionally simplify their setup using the [migration guide](docs/migration.md#optional-simplify-the-setup).
 
-- [Features](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/features): CSS variables, Liquid Glass, and selective component imports.
-- [Special markup and classes](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/special-markup): opt-in component behavior.
-- [Using ion-item-group](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/using-ion-item-group): inset list markup.
-- [Animation](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/animation): tab, segment, and search effects.
-- [ESLint](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/eslint): catch unsupported list structure.
-- [Vertical Bars layout](https://docs.rdlabo.dev/projects/ionic-theme-ios27/docs/vertical-bars-layout): spacing, RTL, device placement, posture, and split panes.
+- [Features](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/features): CSS variables, Liquid Glass, and selective component imports.
+- [Special markup and classes](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/special-markup): opt-in component behavior.
+- [Using ion-item-group](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/using-ion-item-group): inset list markup.
+- [Animation](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/animation): tab, segment, and search effects.
+- [ESLint](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/eslint): catch unsupported list structure.
+- [Vertical Bars layout](https://webview-native-ui.com/projects/ionic-theme-ios27/docs/vertical-bars-layout): spacing, RTL, device placement, posture, and split panes.
 
 ## Repository boundaries
 
 The Capacitor plugin is maintained in [webview-native-ui/capacitor-plugin](https://github.com/webview-native-ui/capacitor-plugin). This repository owns the Ionic theme, the combined demo, browser screenshots, and simulator integration tests. The demo installs `@rdlabo/capacitor-native-ui` from npm; theme releases do not publish or change the plugin version.
 
-Install the iOS theme separately if your app uses it. See [Cordova theme setup](/ionic-theme-ios27/docs/cordova).
+Install the iOS theme separately if your app uses it. See [Cordova theme setup](cordova.md).
 
 To verify an unpublished plugin archive against the real demo, run:
 

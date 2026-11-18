@@ -1,6 +1,6 @@
 ---
 title: "Configuration Cordova"
-sourceRevision: '33b1ccf63a4787bafc8696db5739b64d3e3b2714feabed2703411508407a0bac'
+sourceRevision: "07b45f9b135f41690d411c8e630f95c0d7be1090936d7401b69a22fa33298403"
 ---
 
 Installez le thème dans le projet Web après avoir suivi [la configuration Cordova](/cordova-native-ui/docs/readme).
@@ -16,6 +16,8 @@ Conservez les styles de base Ionic et choisissez le préréglage correspondant a
 ```css
 @import '@rdlabo/ionic-theme-ios27/styles/system.css';
 ```
+
+Passez `ios27ThemeConfig` à l’initialisation Ionic existante pour activer les animations des transitions de page et des popovers. Consultez les [exemples Angular, React et Vue](setup.md).
 
 Si vous utilisez les helpers JavaScript, importez-les depuis le thème. Dans le bundler Web, associez le nom de module exact
 

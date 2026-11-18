@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, LOCALE_ID, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProjectIconComponent } from './project-icon';
-import { ProjectDocs } from './docs-data';
+import { ProjectDocs, sectionsFor } from './docs-data';
 import { GitHubStarsService } from './github-stars.service';
 import { docsBreadcrumbStructuredData } from './seo-json-ld';
 import { SeoService } from './seo.service';
@@ -88,9 +88,9 @@ import { resolveDocsLocale } from '../../../../../shared/docs-locales';
           <section id="documentation" class="project-section scroll-mt-8" aria-labelledby="all-documentation">
             <h2 id="all-documentation" i18n="@@allDocumentation">All documentation</h2>
             <div class="mt-6 border-t border-[var(--rd-line)]">
-              @for (group of documentationGroups(); track group.section) {
+              @for (group of documentationGroups(); track group.name) {
                 <div class="grid gap-4 border-b border-[var(--rd-line)] py-5 sm:grid-cols-[160px_1fr]">
-                  <h3 class="m-0 pt-3 text-sm font-semibold text-slate-500">{{ group.section }}</h3>
+                  <h3 class="m-0 pt-3 text-sm font-semibold text-slate-500">{{ group.name }}</h3>
                   <ul class="m-0 grid list-none gap-x-6 p-0 lg:grid-cols-2">
                     @for (page of group.pages; track page.path) {
                       <li class="min-w-0"><a class="flex min-h-12 items-center justify-between gap-4 rounded-md px-3 py-3 text-sm no-underline hover:bg-[#eff6ff] hover:text-[var(--rd-accent)] focus-visible:outline" [routerLink]="page.path"><span class="[overflow-wrap:anywhere]">{{ page.navTitle || page.title }}</span><span class="shrink-0 text-slate-400" aria-hidden="true">→</span></a></li>
@@ -151,17 +151,13 @@ export class LandingPageComponent implements OnInit {
   };
   protected readonly project = signal<ProjectDocs | undefined>(undefined);
   protected readonly setupPage = computed(() => {
-    const pages = this.project()?.pages ?? [];
-    return pages.find((page) => page.slug === 'setup') ?? pages[0];
+    const project = this.project();
+    const pages = project?.pages ?? [];
+    const entrySlug = project?.entryGuideSlugs?.[0] ?? 'setup';
+    return pages.find((page) => page.slug === entrySlug) ?? pages[0];
   });
 
-  protected readonly documentationGroups = computed(() => {
-    const pages = this.project()?.pages ?? [];
-    return [...new Set(pages.map((page) => page.section))].map((section) => ({
-      section,
-      pages: pages.filter((page) => page.section === section),
-    }));
-  });
+  protected readonly documentationGroups = computed(() => sectionsFor({ pages: this.project()?.pages ?? [] }));
 
   ngOnInit(): void {
     const project = this.#route.snapshot.data['project'] as ProjectDocs | undefined;

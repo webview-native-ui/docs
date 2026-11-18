@@ -1,9 +1,11 @@
 ---
 title: "Native UI in einer Ionic-App einrichten"
-sourceRevision: "c24a68fae4ae36e0f30982c0700fa3e54da972bb90c5a2fc05acf8fa2dc5051b"
+sourceRevision: "27561a11a6125111875bc9bc277ac829aa9c566cf1f28c9ededdb9ac3312f212"
 ---
 
 # Native UI in einer Ionic-App einrichten
+
+Diese Anleitung gilt für Ionic-Apps mit Capacitor 8 und dem iOS-27-Theme. Um Ihr Theme beizubehalten, folgen Sie der [Anleitung für bestehende Themes](ionic-vertical-bars.md).
 
 Installieren Sie die Pakete, konfigurieren Sie das Theme und starten Sie Native UI. Gewöhnliche Bedienelemente und **Vertical Bars sind standardmäßig aktiviert**; das Gerät bestimmt, ob eine native Rail verfügbar ist.
 

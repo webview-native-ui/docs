@@ -1,6 +1,6 @@
 ---
 title: "Farbsystem"
-sourceRevision: "79e7e0b178e6fd4575a71845de20170669907b6e167485038114f66832472852"
+sourceRevision: "ec66c1ae2be4c001b4ea3fd74f64025bf08e35ecd03c04f1497e9e8f46e9cd90"
 ---
 
 # Farbsystem
@@ -35,7 +35,7 @@ Explizite Varianten (`.md3-tonal`, `.md3-elevated`, `.md3-filled`, `.md3-outline
 
 Geben Sie beim Ändern eines Vordergrund-/Hintergrundrollenpaars beide gemeinsam an. Ausgelassene Rollen folgen weiterhin Ionic. Eine separate Registrierung oder ein vollständiges Schema ist nicht nötig.
 
-Material You ist ein optionaler Anbieter dieser Werte. [Dynamische Farben](dynamic-colors.md) beschreibt nativen Bezug und Darstellungssteuerung. Der Anbieter bewahrt Materials `on*`-Rollen für MD3-Komponenten; Ionics benannte Farben verwenden angegebene `onPrimary`, `onSecondary`, `onTertiary` und `onError` als Kontrastwerte, mit Ionics Kontrastberechnung als Fallback je Rolle. Shade und tint behalten Ionics Berechnungen bei. Die native API stellt zudem optionale fixed/inverse-Rollen für eigene Komponentendesigns bereit.
+Material You ist ein optionaler Anbieter dieser Werte. [Android Dynamic Color](dynamic-colors.md) beschreibt nativen Bezug und Darstellungssteuerung. Der Anbieter bewahrt Materials `on*`-Rollen für MD3-Komponenten; Ionics benannte Farben verwenden angegebene `onPrimary`, `onSecondary`, `onTertiary` und `onError` als Kontrastwerte, mit Ionics Kontrastberechnung als Fallback je Rolle. Shade und tint behalten Ionics Berechnungen bei. Die native API stellt zudem optionale fixed/inverse-Rollen für eigene Komponentendesigns bereit.
 
 Importieren Sie für eigene Sass-Komponenten `utils/colors` aus dem exportierten Paketpfad `src/styles` und verwenden Sie `color(secondary-container)` im Namensraum des Moduls. Die Funktion erzeugt eine optionale Rolle samt gleichem Ionic-Fallback. Sie unterstützt Rollen aus `utils/_colors.scss`; unbekannte Rollen lassen den Sass-Build scheitern. Generierte Container-Fallbacks sind für ausdrücklich angeforderte Varianten gedacht; normale Komponenten behalten ihre Ionic-Fallback-Ketten. Nutzen Sie für reine CSS-Komponenten dasselbe Muster `var(--md-sys-color-..., ...)` mit Ionic-Fallback.
 
@@ -91,17 +91,6 @@ Farben und Geometrie des Themes funktionieren ohne optionale JavaScript-Helfer o
 
 Gemessene Tablet-Dialoggrößen, Ecken, Tastaturverhalten und historische native Referenzaufnahmen finden Sie im [Android-17-Tablet-Review](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.3.0/docs/validation/android17-tablet-2026-11-07.md). Die anschließende Korrektur der Ionic-Standardfarben und ihre Browserprüfung beschreibt der [Review der Ionic-Farbvererbung](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.3.0/docs/validation/ionic-color-inheritance-2026-11-07.md).
 
-## Alert-Größen auf Tablets
+<a id="alert-gr%C3%B6%C3%9Fen-auf-tablets"></a><a id="tablet-alert-sizing"></a>
 
-Breite Tablet-Alerts folgen den gemessenen Android-17-Settings-Proportionen: 85 % im Hochformat und 65 % im Querformat. Beim Tippen auf Android-Tablets bleibt diese Breite erhalten, wenn die IME den Viewport verkleinert. Fenster in Telefongröße behalten Ionics inhaltsabhängiges Layout.
-
-Verwenden Sie öffentliche Größeneigenschaften zur Dialoganpassung. Setzen Sie bei einem per Controller erzeugten Alert `cssClass: 'app-alert'` und platzieren Sie eine mit dem Komponentennamen qualifizierte Regel im globalen Anwendungsstylesheet nach dem Theme:
-
-```css
-ion-alert.app-alert {
-  --width: 400px;
-  --max-width: min(400px, calc(100vw - 32px));
-}
-```
-
-Inline-Style-Bindings funktionieren ebenfalls. Normale CSS-Minimal-/Maximalbeschränkungen gelten weiterhin, und `md3-disabled` stellt Ionics eigene Größenstandards wieder her.
+[Alert-Größen auf Tablets](android-settings.md#tablet-alert-sizing)

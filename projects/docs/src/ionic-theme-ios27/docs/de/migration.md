@@ -1,11 +1,9 @@
 ---
 title: "Theme-Migration"
-sourceRevision: "e0736094ab4c14cfe7ca73ae198834b8da48fae24d8e4c7ad8f82e95a6484fad"
+sourceRevision: "25e8cb7653b724a4371610ef0a83e923080786121eb266dded92b675046cfb49"
 ---
 
-# Theme-Migration
-
-Diese Anleitung aktualisiert das eigenständige Theme und dessen Capacitor-Integration. Für das mit Cordova gebündelte Theme lesen Sie [Eine bestehende Theme-App nach Cordova migrieren](cordova.md#moving-an-existing-theme-app-to-this-integration).
+Diese Anleitung beschreibt das Update des iOS-27-Themes und der Capacitor-Integration. Installieren Sie das Theme für Cordova separat wie in der [Cordova-Anleitung](cordova.md) beschrieben.
 
 
 ## Optional: die Einrichtung vereinfachen
@@ -132,7 +130,7 @@ Dasselbe Aussehen gilt für vorhandene `.button-submit`-Aktionen mit solider Fü
 
 Native Steuerelemente behalten während Navigation, Modal-Animationen und Bildübergaben die Zuständigkeit. Ein in der WebView angezeigtes Bild ist weiterhin die Darstellung der nativen Projektion und keine Rückkehr zum ursprünglichen Web-Button. Testen und entfernen Sie transitionsspezifische Workarounds, die diese Steuerelemente ins Web zurückzwingen. Behalten Sie beabsichtigte Ausnahmen sowie die Behandlung nicht unterstützter Steuerelemente und nativer Fehler bei; zusätzliche Animationsflags oder eine zweite Laufzeit sind nicht nötig.
 
-Prüfen Sie beide Leistenseiten, das Verschwinden der Leiste, Falten und Drehen, Karten-, Sheet- und Vollbilddarstellungen sowie solide Absendeaktionen. Prüfen Sie auch ein gewöhnliches iPhone und den Browser-Fallback. Verwenden Sie für Cordova die [gebündelte Integration](https://github.com/webview-native-ui/cordova-plugin); das festgelegte Theme und native Änderungen werden durch ein Cordova-Plugin-Release bereitgestellt, nicht über diese Capacitor-Installationsbefehle.
+Prüfen Sie beide Leistenseiten, das Verschwinden der Leiste, Falten und Drehen, Karten-, Sheet- und Vollbilddarstellungen sowie solide Absendeaktionen. Prüfen Sie auch ein gewöhnliches iPhone und den Browser-Fallback.
 
 ## Aufteilung in ein eigenes Native UI-Paket
 

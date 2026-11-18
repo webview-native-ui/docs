@@ -77,6 +77,22 @@ removeIcons();
 
 ヘルパーは公開された handle Part の Shadow DOM に style 要素を1つ追加します。コンポーネントのプロパティを横取りしたり、ドキュメントを監視したりしません。`enableOnOffLabels` が有効な場合は、その後のプロパティ変更も含めて Ionic 自身のラベルが優先されます。`md3-disabled` と iOS モードでは、このアイコン拡張は無効です。デモはこのヘルパーを自動で適用しません。
 
+## タブレットの Alert のサイズ
+
+幅広のタブレットの Alert は、計測した Android 17 Settings の比率に従い、縦向き 85%、横向き 65% になります。Android タブレットで入力中に IME がビューポートをリサイズしても、その幅を維持します。スマートフォンサイズのウィンドウは Ionic の内容に応じたサイズを維持します。
+
+ダイアログのカスタマイズには公開されたサイズプロパティを使います。コントローラーで作成した Alert では `cssClass: 'app-alert'` を設定し、テーマの後のグローバルスタイルシートへ、コンポーネント名を指定したルールを置きます。
+
+```css
+ion-alert.app-alert {
+  --width: 400px;
+  --max-width: min(400px, calc(100vw - 32px));
+}
+```
+
+インラインスタイルのバインディングも使えます。通常の CSS の最小／最大制約は引き続き適用され、`md3-disabled` は Ionic 自身のサイズの既定値を復元します。
+
+
 ## 更新と検証
 
 寸法の変更は[移行の注意事項](migration.md#migrating-to-9.2.0%3A-android-settings-alignment)、サイズ設定は[グループ化したリストのマークアップ](using-ion-item-group.md)を確認してください。Ionic の明示的な `color`、disabled 状態、操作、ローカルの上書きの意味は変わりません。[計測レポート](https://github.com/webview-native-ui/ionic-theme-md3/blob/v9.3.0/docs/validation/android17-pixel-pass1-2026-11-09.md)は実機の根拠とブラウザーの回帰検証を区別しています。描画結果の完全一致やネイティブタブレットでの受け入れ完了を主張するものではありません。

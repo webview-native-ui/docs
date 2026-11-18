@@ -1,6 +1,6 @@
 ---
 title: "Theme-Konfiguration"
-sourceRevision: "2d57f4924684edd7bb61d1d6a98d9a46dc779f6cbc984b04dc663b35a0ec7b52"
+sourceRevision: "3bd549a3c1dbed82dc6a7a49de2e46052aa608d7be3ab8990828eba2fd5926cf"
 ---
 
 # Theme-Konfiguration
@@ -18,7 +18,7 @@ Platzieren Sie diese Importe nach Ionics Core-CSS und der gewählten dunklen Ion
 
 Diese beiden Dateien bilden `styles/theme.css`. Verwenden Sie entweder das Theme-Stylesheet oder die einzelnen Importe. Platzieren Sie anwendungsspezifische CSS-Überschreibungen nach dem Theme.
 
-Ionic ist für die Auswahl der dunklen Palette zuständig. Wählen Sie je nach Darstellungsstrategie Ihrer App `dark.system.css`, `dark.class.css` oder `dark.always.css` aus `@ionic/core/css/palettes/`. [Dynamic Colors](dynamic-colors.md) verwaltet `ion-palette-dark` und verwendet `dark.class.css`.
+Ionic ist für die Auswahl der dunklen Palette zuständig. Wählen Sie je nach Darstellungsstrategie Ihrer App `dark.system.css`, `dark.class.css` oder `dark.always.css` aus `@ionic/core/css/palettes/`. [Android Dynamic Color](dynamic-colors.md) verwaltet `ion-palette-dark` und verwendet `dark.class.css`.
 
 ## Animationen direkt konfigurieren
 
