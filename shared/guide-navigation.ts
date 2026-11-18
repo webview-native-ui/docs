@@ -140,17 +140,11 @@ export const GUIDE_COPY = {
     fr: 'Installation',
     de: 'Einrichtung',
   },
-  migrationGroup: {
-    en: 'Update an existing integration',
-    ja: '移行・更新',
-    fr: 'Mettre à jour une intégration',
-    de: 'Eine bestehende Integration aktualisieren',
-  },
-  migrationReading: {
-    en: 'For an existing integration. Follow the changes that apply to the packages and features your app already uses.',
-    ja: 'テーマだけを使うアプリは、テーマの更新とWeb画面の確認が対象です。ネイティブ連携を使う場合は、その起動処理と端末での動作も確認します。',
-    fr: 'Pour une intégration existante. Appliquez les changements correspondant aux paquets et fonctions déjà utilisés.',
-    de: 'Für eine bestehende Integration. Führen Sie die Änderungen für die bereits genutzten Pakete und Funktionen aus.',
+  otherGuides: {
+    en: 'Other',
+    ja: 'その他',
+    fr: 'Autres',
+    de: 'Sonstiges',
   },
   standardAudience: {
     en: 'For Ionic 9 + Capacitor 8',
@@ -273,10 +267,10 @@ export const GUIDE_COPY = {
     de: 'Capacitor + HTML ohne Ionic',
   },
   cordovaSetup: {
-    en: 'Cordova integration',
-    ja: 'Cordovaでの導入',
-    fr: 'Intégration Cordova',
-    de: 'Cordova-Integration',
+    en: 'Use in a Cordova app',
+    ja: 'Cordovaアプリで使う',
+    fr: 'Utiliser dans une application Cordova',
+    de: 'In einer Cordova-App verwenden',
   },
   iosPreview: {
     en: 'iOS 27 theme: Library screen',

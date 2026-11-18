@@ -499,7 +499,6 @@ test('the portal owns combined setup while plugin guides keep feature boundaries
       'ionic-theme-md3/docs/setup',
       'capacitor-native-ui/docs/ionic-vertical-bars',
       'capacitor-native-ui/docs/framework-independent',
-      'cordova-native-ui/docs/readme',
     ])
       assert.ok(selector.querySelector(`a[href="${prefix}/projects/${path}"]`), `${code}: ${path}`);
     assert.ok(!selector.querySelector(`a[href="${prefix}/guides/appearance"]`));
@@ -545,7 +544,16 @@ test('shared guides lead from the complete setup to localized package details', 
       );
     }
     assert.equal(home.querySelectorAll('.guide-chapters a[href$="/migration"]').length, 0);
-    assert.ok(home.querySelector('.migration-guide a[href$="/migration"]'));
+    assert.ok(
+      home.querySelector(
+        `section[aria-labelledby="migration-navigation-title"] a[href="${prefix}/projects/cordova-native-ui/docs/readme"]`,
+      ),
+    );
+    assert.ok(
+      home.querySelector(
+        'section[aria-labelledby="migration-navigation-title"] a[href$="/migration"]',
+      ),
+    );
     assert.ok(home.querySelector('#installation-navigation-title'));
     assert.ok(home.querySelector('#task-navigation-title'));
     assert.ok(home.querySelector('#migration-navigation-title'));

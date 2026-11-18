@@ -78,7 +78,6 @@ import { SeoService } from './seo.service';
             <a [href]="guideHref('/projects/ionic-theme-md3/docs/setup')">MD3</a></div>
             <a [href]="guideHref('/projects/capacitor-native-ui/docs/ionic-vertical-bars')">{{ copy.existingTheme }}</a>
             <a [href]="guideHref('/projects/capacitor-native-ui/docs/framework-independent')">{{ copy.htmlSetup }}</a>
-            <a [href]="guideHref('/projects/cordova-native-ui/docs/readme')">{{ copy.cordovaSetup }}</a>
           </nav>
       </section>
       <header class="chapter-heading"><h2>{{ copy.guideTitle }}</h2></header>
@@ -90,13 +89,7 @@ import { SeoService } from './seo.service';
           </section>
         }
       </section>
-      @if (migrationGuide; as chapter) {
-        <section class="guide-chapter migration-guide" aria-labelledby="migration-guide-title">
-          <h2 id="migration-guide-title">{{ copy.migrationGroup }}</h2>
-          <p>{{ copy.migrationReading }}</p>
-          <a [href]="guideHref(chapter.path)">{{ chapter.title }} →</a>
-        </section>
-      }
+
       <section id="packages" class="package-reference-intro">
         <h2>{{ copy.reference }}</h2>
         <p>{{ copy.referenceDescription }}</p>
@@ -151,7 +144,6 @@ export class PluginIndexComponent implements OnInit {
   protected readonly copy = guideCopyForLocale(this.#locale);
   protected readonly chapters = guideChaptersForLocale(this.#locale);
   protected readonly taskGuides = this.chapters.filter((chapter) => chapter.kind === 'task');
-  protected readonly migrationGuide = this.chapters.find((chapter) => chapter.kind === 'migration');
   protected guideHref(path: string): string { return localizedPublicPath(this.#locale, path); }
   protected readonly standardSetupLabel = STANDARD_SETUP_LABELS[resolveDocsLocale(this.#locale)];
   protected readonly standardSetupHref = localizedPublicPath(this.#locale, STANDARD_SETUP_PATH);

@@ -138,12 +138,15 @@
             </section>
             @if (migrationGuide; as chapter) {
               <section aria-labelledby="migration-navigation-title">
-                <h2 id="migration-navigation-title">{{ guideCopy.migrationGroup }}</h2>
+                <h2 id="migration-navigation-title">{{ guideCopy.otherGuides }}</h2>
                 <a
                   [href]="guideHref(chapter.path)"
                   [attr.aria-current]="isGuide(chapter.path) ? 'page' : null"
                   >{{ chapter.title }}</a
                 >
+                <a [href]="guideHref('/projects/cordova-native-ui/docs/readme')">{{
+                  guideCopy.cordovaSetup
+                }}</a>
               </section>
             }
           </nav>

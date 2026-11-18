@@ -71,7 +71,7 @@ export class GuideArticleComponent {
     this.kind() === 'setup'
       ? this.#copy.setupGroup
       : this.kind() === 'migration'
-        ? this.#copy.migrationGroup
+        ? this.#copy.otherGuides
         : this.#copy.guideTitle,
   );
   protected readonly contentsLabel = $localize`:@@onThisPage:On this page`;

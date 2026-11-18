@@ -37,7 +37,7 @@ describe('Task guides', () => {
       expect(page.querySelector('h1')?.textContent).toBe(chapter.title[code]);
       const copy = guideCopyForLocale(code);
       expect(page.querySelector('.guide-kind')?.textContent?.trim()).toBe(
-        chapter.kind === 'migration' ? copy.migrationGroup : copy.guideTitle,
+        chapter.kind === 'migration' ? copy.otherGuides : copy.guideTitle,
       );
       const steps = page.querySelectorAll('article h2[id]');
       expect(steps.length).toBeGreaterThanOrEqual(4);
