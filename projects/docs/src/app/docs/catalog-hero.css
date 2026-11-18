@@ -1,0 +1,68 @@
+.catalog-hero {
+  display: grid;
+  align-items: center;
+  gap: clamp(1.5rem, 3cqi, 3rem);
+  padding-block: clamp(2rem, 5cqi, 4rem);
+  border-bottom: 1px solid var(--rd-line);
+}
+.product-name {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  color: #1659a5;
+  font-size: .95rem;
+  font-weight: 650;
+}
+.product-name::before {
+  content: '';
+  width: 1.65rem;
+  height: 1.65rem;
+  background: url('/assets/brand/webview-native-ui-logo.png') center / contain no-repeat;
+}
+.catalog-hero h1 {
+  margin: .9rem 0 1.25rem;
+  font-size: clamp(2.25rem, 5.25cqi, 4.4rem);
+  line-height: 1.13;
+  font-weight: 720;
+  letter-spacing: -.045em;
+  white-space: pre-line;
+  text-wrap: balance;
+  color: #14243e;
+}
+.catalog-hero__lead {
+  max-width: 38ch;
+  color: #425469;
+  font-size: clamp(1rem, 1.6cqi, 1.13rem);
+  line-height: 1.75;
+}
+.hero-setup-note { margin-top: .65rem; color: var(--rd-muted); font-size: .8rem; }
+.hero-introduction { container-type: inline-size; }
+.catalog-hero h1:lang(ja) { font-size: clamp(1.6rem, 9.3cqi, 4rem); }
+.app-showcase { min-width: 0; margin: 0; }
+.showcase-screens {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: .5rem;
+}
+.showcase-device {
+  min-width: 0; display: grid; justify-items: center; align-content: start;
+  padding: clamp(.55rem, 1.45cqi, 1.25rem);
+  border-radius: .85rem;
+  background: linear-gradient(155deg,#e6edff,#f3f5ff 72%);
+}
+.showcase-device + .showcase-device { background: linear-gradient(155deg,#daede7,#f1f7ed 72%); }
+.showcase-device p { margin: 0 0 .85rem; color: #26374c; font-size: clamp(.72rem,1.15cqi,.9rem); font-weight: 650; }
+.showcase-device small { margin-top: .85rem; font-size: .7rem; color: #47566a; text-align: center; }
+.device-capture { position: relative; width: 100%; max-width: 12.75rem; aspect-ratio: 658 / 1428; overflow: hidden; border-radius: clamp(.8rem, 2cqi, 1.55rem); box-shadow: 0 0 0 2px #22303a, 0 .4rem .8rem #15203a24; }
+.device-capture--iphone img { position: absolute; display: block; width: 104.863%; max-width: none; height: auto; left: -2.432%; top: -5.322%; }
+.device-capture--pixel { aspect-ratio: 1080 / 2400; }
+.device-capture--pixel img { display: block; width: 100%; height: auto; }
+.app-showcase figcaption { margin-top: .5rem; color: #526176; text-align: end; font-size: .72rem; }
+.platform-name { white-space: nowrap; }
+@container docs-content (min-width: 47rem) {
+  .catalog-hero { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
+}
+@container docs-content (max-width: 40rem) {
+  .showcase-device p { min-height: 3em; align-content: end; }
+
+}

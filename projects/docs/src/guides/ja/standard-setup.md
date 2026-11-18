@@ -1,33 +1,22 @@
 ---
 title: 'Ionicアプリに導入する'
-sourceRevision: 'b506eab74252bcd05a928532b54bd643b0d0c60820256d5eed3aba78a61cc385'
+sourceRevision: '0e7303553e20e993ca5be392dd8239438cac677d7986a3e1534a66eff4fc440a'
 headingAliases:
+  '%E5%85%A8%E5%AF%BE%E8%B1%A1%EF%BC%9A%E5%B0%8E%E5%85%A5%E5%AE%8C%E4%BA%86%E3%81%AE%E7%A2%BA%E8%AA%8D': '%E7%AB%AF%E6%9C%AB%E3%81%94%E3%81%A8%E3%81%AE%E5%8B%95%E4%BD%9C'
+  '5.-%E5%B0%8E%E5%85%A5%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B': '5.-%E3%83%86%E3%83%BC%E3%83%9E%E3%81%A8%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E5%8B%95%E4%BD%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
+  '%E5%B0%8E%E5%85%A5%E5%89%8D%E3%81%AB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B': '1.-%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B'
   '3.-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B7%E3%82%A7%E3%83%AB%E3%81%AE%E6%8F%8F%E7%94%BB%E5%BE%8C%E3%81%AB%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B': '3.-%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E6%8F%8F%E7%94%BB%E5%BE%8C%E3%81%AB%E8%B5%B7%E5%8B%95%E5%87%A6%E7%90%86%E3%82%92%E5%91%BC%E3%81%B6'
   '2.-%E4%B8%A1%E6%96%B9%E3%81%AE%E3%83%86%E3%83%BC%E3%83%9E%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B': '2.-%E3%83%86%E3%83%BC%E3%83%9E%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B'
-  'verify-installation': '5.-%E5%B0%8E%E5%85%A5%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
-  '%E5%90%84%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%A7%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B': '5.-%E5%B0%8E%E5%85%A5%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
+  'verify-installation': '5.-%E3%83%86%E3%83%BC%E3%83%9E%E3%81%A8%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E5%8B%95%E4%BD%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
+  '%E5%90%84%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%A7%E7%B5%90%E6%9E%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B': '5.-%E3%83%86%E3%83%BC%E3%83%9E%E3%81%A8%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E5%8B%95%E4%BD%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B'
   '%E5%B0%8E%E5%85%A5%E5%BE%8C%E3%81%AB%E9%80%B2%E3%82%80': '%E5%B0%8E%E5%85%A5%E5%AE%8C%E4%BA%86'
 ---
 
 # Ionicアプリに導入する
 
-既存のIonic + Capacitorアプリに、iOS 26／27テーマとAndroid向けのMaterial Design 3を導入します。iOSのネイティブコントロール、端末に応じたレイアウト、Androidの端末配色も設定します。
-
-## 導入前に確認する
-
-この手順は、dark.system.cssでOSの明暗に追従しているアプリ向けです。クラスで明暗を切り替える場合や常時ダークの場合は、現在の方式に合う[テーマ設定](/projects/ionic-theme-ios27/docs/configuration)を使います。すでにテーマを設定しているアプリには、[Native UIだけを追加する手順](/projects/capacitor-native-ui/docs/ionic-vertical-bars)もあります。
-
-対象はIonic 9・Capacitor 8・Foldable 8.5以降（メジャーバージョン8）のアプリです。Webビルドが成功し、導入先のiOSまたはAndroidプロジェクトがある状態から始めます。
-
-iOSのネイティブコントロールにはiOS 26以降とXcode 26以降、Androidの端末配色にはAndroid 12以降が必要です。古いOSではWebコントロールと既定の配色を使います。レール表示の条件は[対応端末とOS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering)を参照してください。
-
-テーマだけの導入は[iOS 26](/projects/ionic-theme-ios26/docs/setup)・[iOS 27](/projects/ionic-theme-ios27/docs/setup)・[MD3](/projects/ionic-theme-md3/docs/setup)、Ionicを使わない場合は[HTML](/projects/capacitor-native-ui/docs/framework-independent)、Cordovaアプリは[Cordova](/projects/cordova-native-ui/docs/readme)の手順を使います。
-
-差分は既存ファイルへ適用し、ファイル名はアプリの構成に合わせて読み替えてください。たとえばsrc/global.cssは、Angularではsrc/global.scssに当たります。新規作成するファイルは各手順で指定します。差分にないルートや設定はそのまま残します。
+Ionic 9・Capacitor 8のアプリに、iOSとAndroidのテーマを追加します。iOSでは対応するボタンやタブをネイティブ表示し、Androidでは端末の配色を使えます。
 
 ## 1. パッケージをインストールする
-
-アプリのディレクトリで、必要なパッケージをインストールします。
 
 ```sh
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
@@ -35,11 +24,11 @@ npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
   @erkamyaman/capacitor-foldable@8
 ```
 
+バーの配置を取得するFoldableは8.5以降の8.xを使用します。
+
 ## 2. テーマを設定する
 
-グローバルスタイルを変更し、使っているフレームワークの例に沿ってIonicを初期化します。
-
-system.cssでOSの明暗追従を維持します。アプリ内で切り替える設定は、導入後に[外観設定](/guides/appearance)で追加できます。
+グローバルスタイル（Angularでは通常src/global.scss）のdark.system.cssを、次のテーマに置き換えます。OSの明暗に追従する構成の例です。クラス切り替え・常時ダークのアプリでは、[現在の方式に合うプリセット](/projects/ionic-theme-ios27/docs/configuration)を使います。
 
 <!-- prettier-ignore -->
 ```diff:src/global.css
@@ -57,9 +46,7 @@ system.cssでOSの明暗追従を維持します。アプリ内で切り替え�
 
 iOS 26を基本に、`overflow-anchor: auto` 対応ブラウザーではiOS 27を表示します。Material DesignモードにはMD3を使います。
 
-テーマ設定のプリセットは、Ionicのモードや画面遷移のアニメーションをまとめた設定オブジェクトです。iOS 26／27には、ネイティブ遷移との同期を含む共通の `ios27ThemeConfig` を渡します。
-
-以下からフレームワークを一つ選び、既存のIonic初期化処理へプリセットを渡します。
+既存のIonic初期化処理に、対象OSのプリセットを渡します。iOS 26／27は、ネイティブの画面遷移を同期する `ios27ThemeConfig` を共用します。
 
 ### Angular / Ionic 9
 
@@ -265,6 +252,8 @@ npx cap sync ios
 npx cap open ios
 ```
 
+SwiftPMではEngineが自動解決されます。CocoaPodsを使う場合は[ネイティブプロジェクト設定](/projects/capacitor-native-ui/docs/configuration#native-project-setup)に沿って設定します。
+
 ### Android
 
 ```sh
@@ -272,17 +261,20 @@ npx cap sync android
 npx cap open android
 ```
 
-SwiftPMではEngineが自動解決されます。CocoaPodsを使う場合は[ネイティブプロジェクト設定](/projects/capacitor-native-ui/docs/configuration#native-project-setup)に沿って設定します。
+## 5. テーマとコントロールの動作を確認する
 
-## 5. 導入結果を確認する
+既存画面でライト・ダークを切り替え、どちらでも文字が読めることを確認します。
 
-ネイティブ表示と端末レイアウトへの追従は、ここまでの設定で有効になります。既存の画面を開き、以下の項目を確認します。
+### 端末ごとの動作
 
-次の一時診断はiOS 26以降向けです。Androidと古いiOSでは「全対象：導入完了の確認」へ進んでください。
+- **iOS** — Xcode 26以降でビルドし、iOS 26以降で開くと、対応するボタンやタブがネイティブ表示されます。タップすると元のWeb側の処理が1回だけ動きます。古いiOSではWebコントロールを使います。
+- **Android** — Android 12以降で端末の配色を変更し、アプリを開き直すとMD3テーマの色が変わります。端末配色に非対応の機種ではテーマの既定色を使います。
+- **縦型レール** — [対応端末](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering)でレイアウトを変更すると、バーと余白が新しい配置に追従し、元に戻すと余白も戻ります。
+- **ブラウザー** — ツールバーのボタンやタブを操作すると、導入前と同じ画面に移動できます。
 
 ### iOS 26以降・Xcode 26以降のみ：一時診断を追加する
 
-src/native-ui.tsのawait enableNativeUI()を一時的に置き換え、表示状態を取得できるようにします。
+ボタンやタブがネイティブ表示されないときは、src/native-ui.ts の await enableNativeUI() を一時的に置き換え、表示状態を調べられます。
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts (iOS verification)
@@ -299,16 +291,6 @@ window.inspectNativeUI();
 ```
 
 stateがnative、projectedが正数で、ネイティブコントロールから元のWeb処理が一度だけ動けば正常です。projectedが0なら描画を待って再確認します。stateがwebのままなら、reasonを手がかりに対応条件やプラグインの同期・再ビルドを確認してください。
-
-### 全対象：導入完了の確認
-
-| 対象                     | 確認する操作                                                           | 完了条件                                                                                                                       |
-| ------------------------ | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| 全対象                   | 既存画面を開き、画面遷移とライト・ダークを試す                         | 元の画面へ移動でき、ライト・ダークのどちらでも文字が読める                                                                     |
-| iOS                      | iOS 26以降で対応コントロールを操作する                                 | 既存の対応コントロールがネイティブ表示され、操作すると元のWebの処理が一度だけ実行される。古いOSでは操作できるWeb表示が期待結果 |
-| Android                  | ネイティブアプリを開く。Android 12以降では端末の配色を変更して開き直す | 対応端末ではMD3に端末配色が反映され、非対応端末では既定色のWebコントロールで操作できる                                         |
-| ネイティブレール対応端末 | レイアウトを変更し、元に戻す                                           | 通知された配置にVertical Barsが追従し、領域がなくなれば余白も戻る。他の端末では通常配置が期待結果                              |
-| ブラウザー               | ツールバーのボタンを押すか、タブを切り替える                           | ブラウザーでもボタンの操作やタブ移動が導入前と同じように動く                                                                   |
 
 ### iOS 26以降・Xcode 26以降のみ：一時診断を撤去する
 
@@ -335,7 +317,7 @@ typeof window.inspectNativeUI;
 
 ## 導入完了
 
-選んだ対象で上の確認ができれば、導入は完了です。機能を追加する場合に、[外観設定](/guides/appearance)または[独自のネイティブUI](/guides/extensions)の手順を選んでください。
+[設定画面に外観の切り替えを追加する](/guides/appearance) · [SwiftUIやComposeで独自のコントロールを作る](/guides/extensions)
 
 ## 個別のオプション
 

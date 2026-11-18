@@ -4,17 +4,13 @@ title: Native UI
 
 # Native UI
 
-Native UI は、対応する Web コントロールをネイティブ表示へ投影します。アプリ内の[拡張](native-ui-extensions.md)は引き続き実験的です。
+iOSでは、対応するツールバーやタブバーのコントロールをUIKitまたはSwiftUIで描画できます。ページの内容、スクロール、状態、画面遷移はWebViewが管理します。DOMとネイティブ表示の対応は[投影の仕組み](../README.md#how-projection-works)を参照してください。
 
-Native UI は Ionic アプリの Web コンテンツの周囲に、ネイティブのナビゲーションと操作コントロールを提供します。任意の Capacitor iOS プラグインが、対応する固定の Ionic コントロールを UIKit または SwiftUI とシステムの Liquid Glass で描画します。ページ内容、スクロール、アプリの状態、ルーティングは Ionic の WebView に残ります。
-
-DOM とネイティブ表示の共有モデルは[投影の仕組み](../README.md#how-projection-works)を参照してください。このページは対応コントロールと API のリファレンスです。初回導入と動作例は [Ionic のセットアップ](setup.md)または [HTML のセットアップ](framework-independent.md)から始めてください。
+独自のビューを登録する[拡張API](native-ui-extensions.md)は実験的な機能です。
 
 ## Native UI を有効にする
 
-まず[標準の導入手順](setup.md)に従ってください。テーマ設定、デバイスサービス、1つの起動呼び出しに Vertical Bars がデフォルトで含まれます。以下はランタイム API の参照例であり、追加の起動呼び出しではありません。
-
-iOS テーマを使用中なら[テーマに Native UI を追加する](/ionic-theme-ios27/docs/add-native-ui)に従ってください。その他の Web 外観では [Native UI のセットアップ](setup.md)を使用します。
+初期化の手順は[Ionic](setup.md)、[iOSテーマを設定済みのアプリ](/ionic-theme-ios27/docs/add-native-ui)、[標準HTML](framework-independent.md)から選びます。標準の起動処理にはVertical Barsも含まれます。
 
 Capacitor が検出できるよう、ネイティブパッケージをアプリの直接依存としてインストールします。
 

@@ -7,13 +7,11 @@ headingAliases:
 
 # 既存アプリを移行する
 
-既存アプリで使用中のパッケージと設定を更新します。以下の手順から、導入済みの機能に該当する変更を適用してください。対象はIonic 9・Capacitor 8です。
+Ionic 9・Capacitor 8の既存アプリで、テーマとNative UIプラグインを更新する際の変更点をまとめます。テーマ内蔵のNative UIを使っている場合は、起動処理をCapacitor Native UIプラグインへ移します。
 
 ## 1. 使用中のパッケージを確認する
 
-アプリのディレクトリで、使用中のパッケージとバージョンを確認します。
-
-一覧にないパッケージは更新対象から外します。Cordovaを使う場合は[専用プラグインの手順](/projects/cordova-native-ui/docs/readme)を参照してください。
+アプリのディレクトリで次のコマンドを実行し、導入済みのテーマとプラグインを確認してください。手順2の更新例から、自分のアプリで使うものを選びます。Cordovaを使う場合は[専用プラグインの手順](/projects/cordova-native-ui/docs/readme)を参照してください。
 
 ```sh
 npm ls @ionic/core @capacitor/core @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 @rdlabo/capacitor-native-ui
@@ -21,9 +19,7 @@ npm ls @ionic/core @capacitor/core @rdlabo/ionic-theme-ios26 @rdlabo/ionic-theme
 
 ## 2. 利用するパッケージを更新する
 
-使用中のパッケージを更新します。以下はIonicとCapacitorを組み合わせた構成の例です。
-
-テーマだけを使うアプリでは、使用中のテーマだけを更新します。Foldableはメジャーバージョン8を使い、npmが更新したlockfileも保存します。
+次のコマンドには、手順1で見つかったパッケージだけを含めてください。Foldableは8.xを使い、更新したlockfileも保存します。
 
 ```sh
 npm install @rdlabo/ionic-theme-ios26@latest @rdlabo/ionic-theme-ios27@latest   @rdlabo/ionic-theme-md3@latest @rdlabo/capacitor-native-ui@latest   @erkamyaman/capacitor-foldable@8

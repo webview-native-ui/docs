@@ -18,13 +18,12 @@ export interface GuideContent {
   imports: [SafeHtmlPipe, HeadingLinksDirective, ScrollSpyDirective],
   styleUrl: './guide-article.css',
   template: `
-    <header class="setup-header">
-      <p class="guide-kind">{{ kindLabel() }}</p>
-      <h1>{{ guide().title }}</h1>
-      <p>{{ guide().description }}</p>
-      <p class="guide-reading-hint">{{ readingHint() }}</p>
-    </header>
     <div class="setup-layout">
+      <header class="setup-header">
+        <p class="guide-kind">{{ kindLabel() }}</p>
+        <h1>{{ guide().title }}</h1>
+        <p>{{ guide().description }}</p>
+      </header>
       <nav class="setup-toc" [attr.aria-label]="contentsLabel" data-pagefind-ignore>
         <p>{{ contentsLabel }}</p>
         <ol>
@@ -64,13 +63,6 @@ export class GuideArticleComponent {
       : this.kind() === 'migration'
         ? this.#copy.migrationGroup
         : this.#copy.guideTitle,
-  );
-  protected readonly readingHint = computed(() =>
-    this.kind() === 'setup'
-      ? this.#copy.setupReading
-      : this.kind() === 'migration'
-        ? this.#copy.migrationReading
-        : this.#copy.taskReading,
   );
   protected readonly contentsLabel = $localize`:@@onThisPage:On this page`;
   protected readonly headingIds = computed(() =>

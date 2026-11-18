@@ -188,13 +188,10 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       'Native UI placement, scroll tracking, and Web projection for Capacitor and Cordova plugin authors.',
       'Capacitor・Cordovaプラグイン開発者向けの、ネイティブUI配置・スクロール追従・Web投影ライブラリ。',
     ),
-    headline: text(
-      'Bring Native UI seamlessly into Web apps',
-      'Native UIをWebアプリへシームレスに',
-    ),
+    headline: text('Bring Native UI seamlessly into Web apps', 'WebView Native UI Engine'),
     overview: text(
       'Coordinate native controls and Web content across scrolling screens, transitions, and overlays on iOS and Android. Integrate the Engine into your plugin while retaining its renderer and public API.',
-      'iOS・Androidのスクロール画面、画面遷移、オーバーレイでネイティブコントロールとWebコンテンツを連携させます。プラグインのレンダラーと公開APIを維持したままEngineを組み込めます。',
+      'Capacitor・Cordovaのプラグイン開発者向けのライブラリです。スクロールや画面遷移に合わせて、Webコンテンツ上のネイティブコントロールの位置を更新します。各プラグインは独自の描画処理と公開APIを使用できます。',
     ),
     featuresHeading: text('Features', '機能'),
     features: [],
@@ -410,7 +407,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     headline: text('Ionic Theme iOS27', 'Ionic Theme iOS27'),
     overview: text(
       'Apply Liquid Glass, animations, and device-driven layouts to Ionic. Add the separate Capacitor Native UI plugin when you need native controls.',
-      'IonicにLiquid Glass、アニメーション、デバイスに応じたレイアウトを適用します。ネイティブコントロールが必要な場合は、独立したCapacitor Native UIプラグインを追加できます。',
+      'IonicコンポーネントにiOS 27のLiquid Glass、アニメーション、端末に応じたレイアウトを適用するテーマです。対応するコントロールをネイティブ表示するには、Capacitor Native UIを併用します。',
     ),
     featuresHeading: text('Features', '機能'),
     features: [],
@@ -573,7 +570,7 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     headline: text('Capacitor Native UI', 'Capacitor Native UI'),
     overview: {
       en: 'Use built-in native controls on iOS, read Android Dynamic Color, or build custom SwiftUI and Compose content.',
-      ja: 'iOSの既成ネイティブコントロール、Android Dynamic Color、独自のSwiftUI・Composeコンテンツを利用できます。',
+      ja: 'iOSではWeb画面の対応コントロールをネイティブ表示し、Androidでは端末の配色を取得するCapacitorプラグインです。拡張APIでは、SwiftUIやComposeで独自のビューを実装できます。',
       fr: 'Utilisez les contrôles natifs iOS, lisez Dynamic Color Android ou créez du contenu SwiftUI et Compose personnalisé.',
       de: 'Verwenden Sie native iOS-Steuerelemente, lesen Sie Android Dynamic Color oder erstellen Sie eigene SwiftUI- und Compose-Inhalte.',
     },
@@ -752,10 +749,10 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       'iOS 26 design styling for Ionic applications.',
       'Ionicアプリ向けのiOS 26デザインスタイル。',
     ),
-    headline: text('Bring iOS 26 design to Ionic apps', 'IonicアプリにiOS 26デザインを取り入れる'),
+    headline: text('Bring iOS 26 design to Ionic apps', 'Ionic Theme iOS26'),
     overview: text(
       'Apply iOS 26 CSS, transitions, and Liquid Glass interactions to Ionic components, with dark mode and selective migration support.',
-      'IonicコンポーネントへiOS 26のCSS、トランジション、Liquid Glassインタラクションを適用し、ダークモードと段階的な移行にも対応します。',
+      'IonicコンポーネントにiOS 26のスタイル、画面遷移、Liquid Glassの操作表現を適用するテーマです。ダークモードに対応し、既存アプリに段階的に導入できます。',
     ),
     featuresHeading: text('Theme capabilities', 'テーマの機能'),
     features: [
@@ -919,13 +916,10 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
       'Material Design 3 styling for Ionic applications.',
       'Ionicアプリ向けのMaterial Design 3スタイル。',
     ),
-    headline: text(
-      'Bring Material Design 3 to Ionic apps',
-      'IonicアプリにMaterial Design 3を取り入れる',
-    ),
+    headline: text('Bring Material Design 3 to Ionic apps', 'Ionic Theme MD3'),
     overview: text(
       'Apply Material Design 3 styling to Ionic while keeping markup compatible with the iOS 26 theme and shared transition animations.',
-      'iOS 26テーマと共通のマークアップ互換性を保ちつつ、IonicへMaterial Design 3スタイルとトランジションアニメーションを適用します。',
+      'IonicコンポーネントにMaterial Design 3のスタイルと画面遷移のアニメーションを適用します。iOS 26テーマと同じマークアップを使用できます。',
     ),
     featuresHeading: text('Theme capabilities', 'テーマの機能'),
     features: [
@@ -1123,13 +1117,13 @@ export const projectDefinitions: readonly ProjectDefinition[] = [
     },
     headline: {
       en: 'Bring Native UI to your Cordova app',
-      ja: 'CordovaアプリにNative UIを追加する',
+      ja: 'Cordova Native UI',
       fr: 'Ajoutez Native UI à votre application Cordova',
       de: 'Native UI in Ihre Cordova-App integrieren',
     },
     overview: {
       en: 'Install the published adapter in your native and Web projects, start after deviceready, and keep Web fallback behavior on unsupported controls. Capacitor and Cordova share Core, but their host integrations and support scopes differ.',
-      ja: '公開済みのアダプターをネイティブとWebの両プロジェクトへ導入し、deviceready後に開始します。未対応コントロールはWeb表示を維持します。CapacitorとCordovaはCoreを共有しますが、ホスト連携と対応範囲は異なります。',
+      ja: 'CordovaのWebViewで、対応するHTMLコントロールをネイティブ表示するプラグインです。初期化はdevicereadyイベントの後に行います。未対応の要素はWebViewに表示され、HTMLのまま操作できます。',
       fr: 'Installez l’adaptateur publié dans vos projets natif et Web, démarrez après deviceready et conservez la présentation Web des contrôles non pris en charge. Capacitor et Cordova partagent Core, mais leur intégration hôte et leur périmètre de prise en charge diffèrent.',
       de: 'Installieren Sie den veröffentlichten Adapter im nativen und im Web-Projekt, starten Sie nach deviceready und behalten Sie die Web-Darstellung nicht unterstützter Steuerelemente bei. Capacitor und Cordova teilen Core, unterscheiden sich jedoch bei Host-Integration und Unterstützungsumfang.',
     },

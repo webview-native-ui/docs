@@ -575,7 +575,14 @@ test('home showcases real app screens and preserves navigation in every locale',
   for (const { subPath } of PUBLISHED_DOCS_LOCALES) {
     const html = await readFile(join('dist/docs/browser', subPath, 'index.html'), 'utf8');
     const doc = new JSDOM(html).window.document;
-    assert.equal(doc.querySelectorAll('main iframe').length, 0);
+    const previews = [...doc.querySelectorAll('main iframe')];
+    assert.deepEqual(
+      previews.map((frame) => frame.getAttribute('src')),
+      ['/assets/theme-preview/index.html#ios', '/assets/theme-preview/index.html#md'],
+    );
+    for (const file of ['index.html', 'controls.js', 'ios.css', 'md.css']) {
+      await access(join('dist/docs/browser/assets/theme-preview', file));
+    }
     const images = [...doc.querySelectorAll<HTMLImageElement>('.app-showcase img')];
     assert.equal(images.length, 2);
     for (const image of images) {

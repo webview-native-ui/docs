@@ -5,7 +5,7 @@ title: Androidの動的な配色
 
 # Android の動的な配色
 
-動的な配色は、正式対応のオプトイン API です。Native UI の投影を有効にしたり、Activity のテーマを変更したり、壁紙・ストレージへの権限を要求したりせずに、デバイスの Material You パレットを読み取れます。色の取得に Ionic は不要です。アプリ内の SwiftUI／Compose 拡張は引き続き実験的であり、そのステータスとは独立しています。
+Android端末のMaterial Youパレットを読み取り、Web画面の配色に使えます。このAPIは単独で利用でき、IonicやNative UIの初期化、Activityのテーマ変更、壁紙やストレージへのアクセス権限は不要です。
 
 ## インストールとインポート
 

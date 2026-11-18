@@ -17,7 +17,6 @@ describe('Standard setup navigation', () => {
       fixture.detectChanges();
       const copy = guideCopyForLocale(code);
       expect(fixture.nativeElement.querySelector('.guide-kind')?.textContent?.trim()).toBe(copy.setupGroup);
-      expect(fixture.nativeElement.querySelector('.guide-reading-hint')?.textContent?.trim()).toBe(copy.setupReading);
       await fixture.whenStable();
       const page = fixture.nativeElement as HTMLElement;
       const links = page.querySelectorAll<HTMLAnchorElement>('.setup-toc a');

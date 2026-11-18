@@ -46,3 +46,6 @@ Thumbs.db
 .dev.vars*
 !.dev.vars.example
 /cdp_api_key.json
+
+/projects/docs/public/assets/theme-preview/*.js
+/projects/docs/public/assets/theme-preview/*.css

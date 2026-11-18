@@ -1,6 +1,7 @@
 ---
 title: 'Set up an Ionic app'
 headingAliases:
+  'before-you-start': '1.-install-the-packages'
   'verify-installation': '5.-verify-the-integration'
   'check-the-result-on-each-platform': '5.-verify-the-integration'
   'after-setup': 'setup-complete'
@@ -10,27 +11,15 @@ headingAliases:
 
 Set up an existing Ionic + Capacitor app with iOS 26 as its base iOS theme, iOS 27 styling on capable browsers, and Material Design 3 on Android. This guide also connects iOS native controls, iPhone Duo / Vertical Bars, and Android Dynamic Color.
 
-## Before you start
-
-This combined guide starts from an app that already uses Ionic dark.system.css and follows OS light/dark appearance. The removal line in the stylesheet diff is this actual starting policy, not a placeholder for any dark palette. If your app uses class or always policy, keep that behavior and use [existing-theme integration](/projects/capacitor-native-ui/docs/ionic-vertical-bars), the theme’s [configuration](/projects/ionic-theme-ios27/docs/configuration), or the [migration guide](/guides/migration) for an update. Switching such an app to system would change behavior and is outside this setup.
-
-Use an existing Ionic 9 app with Capacitor 8 and Foldable 8.5 or later within major version 8. Choose iOS, Android, or both as your target. Begin with a working Web build and a native project for each selected platform; a second native project is not required. Keep your existing routes and handlers.
-
-iOS native controls require iOS 26+ and Xcode 26+. Android Dynamic Color requires Android 12+; older devices retain the default palette. Native rail rendering additionally requires a [supported device and OS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering).
-
-For a theme-only app, choose the [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup), or [MD3](/projects/ionic-theme-md3/docs/setup) installation. For [Native UI with an existing theme](/projects/capacitor-native-ui/docs/ionic-vertical-bars), [HTML without Ionic](/projects/capacitor-native-ui/docs/framework-independent), or [Cordova](/projects/cordova-native-ui/docs/readme), use that integration instead.
-
-Paths in these diffs are example names for existing roles. Apply each edit to your app’s existing entry, root, page or global stylesheet; for Angular that stylesheet is often src/global.scss. Do not create src/global.css just to match a caption, because an unimported new file has no effect. Create only the files explicitly described as new, and retain unshown application code.
-
 ## 1. Install the packages
-
-An existing app builds, but these packages are not installed. Run the command in the application directory. This step is complete when npm succeeds and the dependency manifest and lockfile have been updated; the UI is not enabled yet.
 
 ```sh
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
   @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 \
   @erkamyaman/capacitor-foldable@8
 ```
+
+Use Foldable 8.5 or later within major version 8 for bar placement.
 
 ## 2. Configure both themes
 
@@ -265,11 +254,23 @@ SwiftPM resolves Engine automatically. Existing CocoaPods projects use [native p
 
 ## 5. Verify the integration
 
+iOS native controls require iOS 26+ and Xcode 26+. Android Dynamic Color requires Android 12+; older devices retain the default palette. Native rail rendering additionally requires a [supported device and OS](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering).
+
 Native presentation of supported Ionic controls and device-layout updates are already enabled by setup. Use your existing screens and handlers to verify them below; no toolbar action, custom component or layout-preview code needs to be added.
 
-The updated app is running. Android-only apps and iOS systems below the native requirements skip both iOS-only sections below, including all Safari commands, temporary-hook diffs, and iOS rebuild/sync commands. Use the completion-check table for your targets, then continue to Setup complete. Only iOS 26+ built with Xcode 26+ performs the temporary inspection and its removal.
+### All targets: completion checks
+
+| Target                          | Check                                                                     | Complete when                                                                                                                              |
+| ------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| All targets                     | Open existing pages, navigate, and change light/dark appearance.          | Routes, handlers, and readable Web controls still work.                                                                                    |
+| iOS                             | Run on iOS 26+ with Xcode 26+ and inspect supported controls.             | The existing supported control renders natively; activating it runs the original Web handler once. Older systems keep usable Web controls. |
+| Android                         | Open the native app; on Android 12+ change the device palette and reopen. | MD3 uses device colors where available; unsupported devices keep a usable fallback palette and Web controls.                               |
+| Device with native rail support | Change its layout and restore it.                                         | Vertical Bars follows the reported layout and removes spacing again. On other devices, ordinary layout is the expected result.             |
+| Browser                         | Preview themes and use existing actions.                                  | Web appearance and behavior work; this is not evidence of native controls, device colors, or rails.                                        |
 
 ### iOS 26+ / Xcode 26+ only: add temporary inspection
+
+If an iOS control stays in its Web appearance, use the optional Safari inspection below.
 
 On iOS 26+ with Xcode 26+, inspect the existing runtime once during verification. In src/native-ui.ts, temporarily replace the existing await enableNativeUI() inside the iOS branch with these two lines. This exposes a read-only check of that same handle; it does not start another runtime.
 
@@ -288,16 +289,6 @@ window.inspectNativeUI();
 ```
 
 For supported native controls, state must be native and projected must be positive, and activating a control must call its original Web handler once. Projection is asynchronous: if projected is initially 0, let the page finish displaying and check again. A persistent 0 does not verify native rendering. If state stays web on a supported iOS build, inspect reason and check the native sync/rebuild and control support before completing setup. A web fallback is expected on unsupported systems; confirm that the Web controls remain usable. After checking, remove the temporary hook and restore the original await enableNativeUI() call.
-
-### All targets: completion checks
-
-| Target                          | Check                                                                     | Complete when                                                                                                                              |
-| ------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| All targets                     | Open existing pages, navigate, and change light/dark appearance.          | Routes, handlers, and readable Web controls still work.                                                                                    |
-| iOS                             | Run on iOS 26+ with Xcode 26+ and inspect supported controls.             | The existing supported control renders natively; activating it runs the original Web handler once. Older systems keep usable Web controls. |
-| Android                         | Open the native app; on Android 12+ change the device palette and reopen. | MD3 uses device colors where available; unsupported devices keep a usable fallback palette and Web controls.                               |
-| Device with native rail support | Change its layout and restore it.                                         | Vertical Bars follows the reported layout and removes spacing again. On other devices, ordinary layout is the expected result.             |
-| Browser                         | Preview themes and use existing actions.                                  | Web appearance and behavior work; this is not evidence of native controls, device colors, or rails.                                        |
 
 ### iOS 26+ / Xcode 26+ only: remove temporary inspection
 

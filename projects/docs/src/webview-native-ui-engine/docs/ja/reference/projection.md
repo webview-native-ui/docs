@@ -4,11 +4,11 @@ sourceRevision: "d6e205890bb47cc1f699356a5bad18552de59a45acff1f2d38b356df2157202
 ---
 # 投影リファレンス
 
-組み込みの契約とプラットフォームの制約を確認するためのリファレンスです。まず[概念と組み込み方式の選択](../concepts.md)で、Engineが対象のUIに適しているか判断します。[ネイティブ初期化](../getting-started/initialization.md)で必須入力、任意の設定、高度なAPIを区別してから、[Capacitor](../getting-started/capacitor.md)、[Cordova](../getting-started/cordova.md)、[レンダラー](../advanced/renderer.md)のいずれかのガイドに従ってください。
+投影では、Web側の要素とネイティブ側のコントロールを対応付けます。画面遷移でDOMが置き換わったとき、古いページへの復元応答でそのコントロールが再表示されないよう、レンダラーは要素の寿命と投影先を区別します。
 
-このページではDOMのライフタイム、投影先の優先順位、ホストの要件、ネイティブの適格性を扱います。キャプチャの詳細は[プラットフォームの制約](platforms.md)、表示意図の属性は[投影状態](state.md)、HTML/Ionicのホストは[コンテナの対応状況](containers.md)を参照してください。
+対応するホストは[コンテナの対応状況](containers.md)、表示状態を表す属性は[投影状態](state.md)、キャプチャの制約は[プラットフォームの制約](platforms.md)に記載しています。
 
-画面遷移をまたいで何を維持すべきか判断する際に、この契約を使います。たとえば、ネイティブの復元応答がまだ届いていない間にモーダルが閉じ、フレームワークがページのDOMを置き換える場合です。古い応答が退場済みページのコントロールを再表示してはいけません。以下のライフタイムと投影先のルールが、その境界を定めます。
+Engineの組み込みには[概念と組み込み方式の選択](../concepts.md)と[ネイティブ初期化](../getting-started/initialization.md)を参照してください。実装例は[Capacitor](../getting-started/capacitor.md)、[Cordova](../getting-started/cordova.md)、[レンダラー](../advanced/renderer.md)にあります。
 
 ## DOMとページのライフタイム
 

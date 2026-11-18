@@ -350,6 +350,34 @@
 }
 
 @media (max-width: 639px) {
+  .project-identity,
+  .project-actions {
+    justify-content: flex-start;
+  }
+  .project-hero {
+    margin-top: 1.5rem;
+    text-align: start;
+  }
+  .project-hero h1,
+  .project-summary {
+    margin-inline: 0;
+  }
+  .project-summary {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  .project-actions {
+    margin-top: 1rem;
+  }
+  .project-resources {
+    display: flex;
+    column-gap: 1rem;
+    row-gap: 0;
+  }
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
   .related-articles {
     grid-template-columns: minmax(0, 1fr);
   }

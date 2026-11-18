@@ -4,7 +4,7 @@ title: Cordova ではじめる
 
 # Cordova ではじめる
 
-公開済みの `@webview-native-ui/cordova-plugin` v0.1.4 を使い、Cordova アプリに Native UI を追加します。Capacitor プラグインと Native UI Core を共有しますが、Capacitor の JavaScript ランタイムは不要です。標準 HTML は `/core`、Ionic 連携はパッケージルートから利用します。
+`@webview-native-ui/cordova-plugin` v0.1.4 は、CordovaアプリのHTMLコントロールをネイティブ表示するプラグインです。標準HTMLでは `/core`、Ionicアプリではパッケージルートからインポートします。Capacitor版とNative UI Coreを共有し、Cordovaのランタイムで動作します。
 
 ## 要件と対応範囲
 

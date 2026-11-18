@@ -46,3 +46,10 @@ To refresh: build and install the native demo, verify its Native UI setup, open 
 screen on a physical device, wait for images to load, and capture that device. Record the exact
 source revision, package versions, device, OS and capture method. Never relabel browser or
 simulator captures as physical-device screenshots.
+
+## Native tab bar detail
+
+The “Go native where it matters.” section uses a frame from the iOS 27 simulator press-and-drag comparison in
+`ionic-theme-ios27/screenshots/native-ui-drag/native-ui.png`. XCTest held the selection over
+Docs in the seeded Library gallery. The source comparison verified a UIKit UITabBar in the
+native run. The site serves a resized JPEG and crops to the tab bar in CSS.

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Ionic theme preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: white; color: #1c2c3a; font: 500 15px/1.5 system-ui,sans-serif; }
+      main { padding: 0 18px; }
+      ion-toggle, ion-checkbox { display: flex; width: 100%; min-height: 56px; }
+      .volume { padding: 12px 0 6px; border-block: 1px solid #dde3ea; }
+      .volume div { display: flex; align-items: center; justify-content: space-between; }
+      output { font: 12px ui-monospace,monospace; }
+      ion-range { display: block; padding-inline: 6px; }
+    </style>
+    <script defer src="controls.js"></script>
+  </head>
+  <body><main data-pagefind-ignore>
+    <ion-toggle checked justify="space-between"></ion-toggle>
+    <section class="volume"><div><label for="volume"></label><output for="volume">40%</output></div><ion-range id="volume" min="0" max="100" value="40"></ion-range></section>
+    <ion-checkbox checked label-placement="start" justify="space-between"></ion-checkbox>
+  </main></body>
+</html>

@@ -6,7 +6,7 @@ scrollActiveLine: []
 
 ## iOS 18でテーマファイルの読み込みを防ぐ方法
 
-テーマファイルをユーザーの端末がiOS 26のときだけ読み込みたい場合（iOS 18のユーザーにはデフォルトのIonic iOSテーマを使わせる場合）、`import` に supports-condition を追加することで実現できます。
+iOS 18でIonic標準の外観を使うには、テーマの `import` に次の条件を追加します。スタイルシートはブラウザーが text-wrap: pretty に対応する場合に読み込まれます。
 
 ```css
 @import '@rdlabo/ionic-theme-ios26/dist/css/default-variables.css' supports(text-wrap: pretty);

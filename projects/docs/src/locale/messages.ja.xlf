@@ -32,7 +32,7 @@
       <trans-unit id="openDemo"><source>Open demo</source><target>デモを開く</target></trans-unit>
       <trans-unit id="loadingDemo"><source>Loading demo…</source><target>デモを読み込んでいます…</target></trans-unit>
       <trans-unit id="primaryNavigation"><source>Primary navigation</source><target>メインナビゲーション</target></trans-unit>
-      <trans-unit id="allProjectsNav"><source>Documentation overview</source><target>ドキュメントの全体像</target></trans-unit>
+      <trans-unit id="allProjectsNav"><source>Documentation overview</source><target>ドキュメントの概要</target></trans-unit>
       <trans-unit id="articlesNav"><source>Articles</source><target>記事</target></trans-unit>
       <trans-unit id="supportNav"><source>Sponsor</source><target>スポンサーになる</target></trans-unit>
       <trans-unit id="breadcrumb"><source>Breadcrumb</source><target>パンくずリスト</target></trans-unit>

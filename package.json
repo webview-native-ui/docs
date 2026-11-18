@@ -7,7 +7,7 @@
   "packageManager": "npm@11.7.0",
   "scripts": {
     "ng": "ng",
-    "docs:generate": "npm run docs:generate:content",
+    "docs:generate": "npm run docs:generate:content && node scripts/build-theme-preview.mjs",
     "docs:generate:content": "tsx scripts/generate-docs.ts",
     "seo:audit": "tsx scripts/seo-audit.ts",
     "sponsors:generate": "tsx scripts/generate-sponsors.ts",
@@ -95,6 +95,7 @@
     "ajv-formats": "^3.0.1",
     "angular-eslint": "22.1.0",
     "cf-workers-native": "0.1.8",
+    "esbuild": "0.28.1",
     "eslint": "^10.9.1",
     "jsdom": "^28.0.0",
     "pagefind": "1.5.2",

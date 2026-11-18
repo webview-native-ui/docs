@@ -1,7 +1,8 @@
 ---
 title: 'Eine Ionic-App einrichten'
-sourceRevision: 'b506eab74252bcd05a928532b54bd643b0d0c60820256d5eed3aba78a61cc385'
+sourceRevision: '0e7303553e20e993ca5be392dd8239438cac677d7986a3e1534a66eff4fc440a'
 headingAliases:
+  'vor-dem-start': '1.-pakete-installieren'
   'verify-installation': '5.-die-integration-pr%C3%BCfen'
   'das-ergebnis-auf-jeder-plattform-pr%C3%BCfen': '5.-die-integration-pr%C3%BCfen'
   'nach-der-einrichtung': 'einrichtung-abgeschlossen'
@@ -11,27 +12,15 @@ headingAliases:
 
 Richten Sie eine bestehende Ionic- und Capacitor-App mit iOS 26 als iOS-Basistheme, iOS 27 für geeignete Browser und Material Design 3 auf Android ein. Diese Anleitung verbindet außerdem native iOS-Steuerelemente, iPhone Duo / Vertical Bars und Android Dynamic Color.
 
-## Vor dem Start
-
-Diese kombinierte Anleitung beginnt bei einer App, die bereits Ionics dark.system.css nutzt und dem OS-Hell-/Dunkelmodus folgt. Die entfernte Zeile steht für genau diese Ausgangsregel, nicht für eine beliebige Dunkelpalette. Bei class- oder always-Regeln behalten Sie das Verhalten und nutzen [die Integration vorhandener Themes](/projects/capacitor-native-ui/docs/ionic-vertical-bars), [Theme-Konfiguration](/projects/ionic-theme-ios27/docs/configuration) oder [Migration](/guides/migration). Ein Wechsel solcher Apps zu system würde das Verhalten ändern und gehört nicht zu dieser Einrichtung.
-
-Verwenden Sie eine vorhandene Ionic-9-App mit Capacitor 8 und Foldable ab 8.5 innerhalb der Hauptversion 8. Wählen Sie iOS, Android oder beide. Beginnen Sie mit einem funktionierenden Web-Build und einem nativen Projekt für jede gewählte Plattform; ein weiteres Projekt ist nicht nötig. Behalten Sie vorhandene Routen und Handler.
-
-Native iOS-Steuerelemente benötigen iOS 26+ und Xcode 26+. Android Dynamic Color benötigt Android 12+; ältere Geräte behalten die Standardpalette. Natives Rail-Rendering erfordert zusätzlich ein [unterstütztes Gerät und Betriebssystem](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering).
-
-Für ein Theme allein wählen Sie die Installation von [iOS 26](/projects/ionic-theme-ios26/docs/setup), [iOS 27](/projects/ionic-theme-ios27/docs/setup) oder [MD3](/projects/ionic-theme-md3/docs/setup). Für [Native UI mit vorhandenem Theme](/projects/capacitor-native-ui/docs/ionic-vertical-bars), [HTML ohne Ionic](/projects/capacitor-native-ui/docs/framework-independent) oder [Cordova](/projects/cordova-native-ui/docs/readme) verwenden Sie die jeweilige Anleitung.
-
-Die Diff-Pfade sind Beispielnamen für vorhandene Dateien mit derselben Rolle: Einstieg, Wurzel, Seite und globales Stylesheet. Bei Angular ist letzteres oft src/global.scss. Erstellen Sie nicht src/global.css nur wegen der Beschriftung; eine nicht importierte neue Datei bleibt wirkungslos. Erstellen Sie nur ausdrücklich als neu bezeichnete Dateien und behalten Sie nicht gezeigten App-Code.
-
 ## 1. Pakete installieren
-
-Ausgangspunkt ist eine App mit funktionierendem Web-Build, ohne diese Pakete. Führen Sie den Befehl im App-Verzeichnis aus. Dieser Schritt endet mit erfolgreicher Installation und aktualisierten Abhängigkeiten und Lockfile; die UI ist noch nicht aktiviert.
 
 ```sh
 npm install @rdlabo/capacitor-native-ui @rdlabo/ionic-theme-ios26 \
   @rdlabo/ionic-theme-ios27 @rdlabo/ionic-theme-md3 \
   @erkamyaman/capacitor-foldable@8
 ```
+
+Für die Positionierung der Leisten ist Foldable ab 8.5 innerhalb der Hauptversion 8 erforderlich.
 
 ## 2. Beide Themes konfigurieren
 
@@ -266,11 +255,23 @@ SwiftPM löst Engine automatisch auf. Für CocoaPods siehe [native Einrichtung](
 
 ## 5. Die Integration prüfen
 
+Native iOS-Steuerelemente benötigen iOS 26+ und Xcode 26+. Android Dynamic Color benötigt Android 12+; ältere Geräte behalten die Standardpalette. Natives Rail-Rendering erfordert zusätzlich ein [unterstütztes Gerät und Betriebssystem](/projects/capacitor-native-ui/docs/vertical-bars#native-rendering).
+
 Die native Darstellung unterstützter Ionic-Steuerelemente und die Reaktion auf Layoutänderungen sind bereits eingerichtet. Prüfen Sie dies mit vorhandenen Bildschirmen und Aktionen; zusätzliche Toolbar-Aktionen, eigene Komponenten oder Layout-Vorschaucodes sind nicht erforderlich.
 
-Die aktualisierte App läuft. Reine Android-Apps und ältere iOS-Systeme überspringen beide folgenden iOS-Abschnitte vollständig: Safari-Befehle, temporäre Hook-Diffs sowie iOS-Neubau und Sync eingeschlossen. Prüfen Sie die Tabelle für Ihre Ziele und gehen Sie zu Einrichtung abgeschlossen. Nur iOS 26+ mit Xcode 26+ führt die temporäre Prüfung und deren Entfernung aus.
+### Alle Ziele: Abschlussprüfung
+
+| Ziel                   | Prüfung                                                                   | Fertig, wenn                                                                                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Alle                   | Seiten öffnen, navigieren und Hell/Dunkel wechseln.                       | Routen, Aktionen und lesbare Web-Elemente funktionieren.                                                                                                               |
+| iOS                    | Mit Xcode 26+ unter iOS 26+ starten und unterstützte Elemente betrachten. | Das vorhandene unterstützte Element erscheint nativ und ruft bei Bedienung den ursprünglichen Web-Handler einmal auf. Ältere Systeme behalten bedienbare Web-Elemente. |
+| Android                | Native App öffnen; ab Android 12 Gerätepalette ändern und erneut öffnen.  | MD3 nutzt verfügbare Gerätefarben; sonst bleiben Fallback-Farben und Web-Elemente bedienbar.                                                                           |
+| Gerät mit nativer Rail | Layout ändern und zurücksetzen.                                           | Vertical Bars folgt den Meldungen und entfernt den Platz wieder. Andere Geräte behalten das normale Layout.                                                            |
+| Browser                | Themes und vorhandene Aktionen ausprobieren.                              | Web-Darstellung und Verhalten funktionieren; dies belegt keine nativen Elemente, Gerätefarben oder Rails.                                                              |
 
 ### Nur iOS 26+ / Xcode 26+: temporäre Prüfung ergänzen
+
+Wenn ein iOS-Steuerelement weiterhin in der Webansicht erscheint, können Sie seinen Status in Safari prüfen.
 
 Prüfen Sie unter iOS 26+ mit Xcode 26+ einmal die vorhandene Runtime. Ersetzen Sie im iOS-Zweig von src/native-ui.ts den vorhandenen Aufruf await enableNativeUI() vorübergehend durch diese beiden Zeilen. Die Diagnose liest denselben Handle und startet keine weitere Runtime.
 
@@ -289,16 +290,6 @@ window.inspectNativeUI();
 ```
 
 Bei unterstützten Elementen muss state native und projected positiv sein; eine Aktion ruft ihren Web-Handler einmal auf. Die Projektion ist asynchron: Ist projected anfangs 0, warten Sie auf die Darstellung und prüfen erneut. Ein dauerhaftes 0 bestätigt keine native Darstellung. Bleibt state bei einem unterstützten iOS-Build web, prüfen Sie reason, native Synchronisierung/Neubau und Elementunterstützung vor dem Abschluss. Auf nicht unterstützten Systemen wird der Web-Fallback erwartet; die Web-Elemente müssen bedienbar bleiben. Entfernen Sie danach die temporäre Diagnose und stellen Sie await enableNativeUI() wieder her.
-
-### Alle Ziele: Abschlussprüfung
-
-| Ziel                   | Prüfung                                                                   | Fertig, wenn                                                                                                                                                           |
-| ---------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Alle                   | Seiten öffnen, navigieren und Hell/Dunkel wechseln.                       | Routen, Aktionen und lesbare Web-Elemente funktionieren.                                                                                                               |
-| iOS                    | Mit Xcode 26+ unter iOS 26+ starten und unterstützte Elemente betrachten. | Das vorhandene unterstützte Element erscheint nativ und ruft bei Bedienung den ursprünglichen Web-Handler einmal auf. Ältere Systeme behalten bedienbare Web-Elemente. |
-| Android                | Native App öffnen; ab Android 12 Gerätepalette ändern und erneut öffnen.  | MD3 nutzt verfügbare Gerätefarben; sonst bleiben Fallback-Farben und Web-Elemente bedienbar.                                                                           |
-| Gerät mit nativer Rail | Layout ändern und zurücksetzen.                                           | Vertical Bars folgt den Meldungen und entfernt den Platz wieder. Andere Geräte behalten das normale Layout.                                                            |
-| Browser                | Themes und vorhandene Aktionen ausprobieren.                              | Web-Darstellung und Verhalten funktionieren; dies belegt keine nativen Elemente, Gerätefarben oder Rails.                                                              |
 
 ### Nur iOS 26+ / Xcode 26+: temporäre Prüfung entfernen
 

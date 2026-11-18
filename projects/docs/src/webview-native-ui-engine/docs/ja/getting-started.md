@@ -5,9 +5,7 @@ sourceRevision: "635f8fc3732f288be4f1da7339ad66108f22c8e9b2592057ff6545a2806f4c5
 
 # WebViewのその先へ。
 
-**Native UIをWebアプリへシームレスに組み込む。**
-
-Webの柔軟性とネイティブプラットフォームのコントロールや機能を組み合わせて画面を構築できます。WebView Native UI Engineは、Webのレイアウトとナビゲーションを維持しながら、それらを一体の体験として連携させます。
+WebView Native UI Engineを使うと、Webページの一部にネイティブビューを表示できます。レイアウトと画面遷移は既存のWebアプリが管理します。
 
 ## Web UIとNative UIを、ひとつの体験に。
 

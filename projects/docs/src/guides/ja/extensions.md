@@ -8,9 +8,9 @@ headingAliases:
 
 # 独自のネイティブUIを作る
 
-Webのカウンターを、iOSではSwiftUI、AndroidではComposeで表示します。カウントと加算処理はWeb側で管理します。拡張APIは実験的な機能です。
+Native UIの拡張APIでは、Webの要素にSwiftUIやJetpack Composeのビューを割り当てられます。この例では、ネイティブのボタンを押すとWeb側のカウントが増え、新しい値がネイティブのラベルに表示されます。
 
-[Ionicアプリへの導入](/standard-setup)を終えたアプリが対象です。
+拡張APIは実験的な機能です。[導入済みのIonicアプリ](/standard-setup)で手順1・2のカウンターを作ります。iOSは手順3a、Androidは手順3bを実装し、両OSに対応する場合は両方を追加します。手順4でアプリの起動処理に登録します。
 
 ## 1. 先にWebのカウンターを動かす
 
@@ -384,7 +384,7 @@ Android API 24以降が対象です。npx cap sync androidを実行し、既存�
 
 ## 4. 既存の起動処理に定義を渡す
 
-src/native-ui.ts を開き、手順2で作った counter をインポートします。起動時の enableNativeUI() にこの定義を渡すと、カウンターを表示したときに対応するネイティブUIが使われます。
+src/native-ui.ts を開き、手順2で作った counter をインポートします。これまでiOSの分岐内で呼んでいた enableNativeUI() を、iOS・Android共通の起動処理に移し、counter を渡します。ブラウザーでは手順1のWebカウンターが動きます。
 
 <!-- prettier-ignore -->
 ```diff:src/native-ui.ts

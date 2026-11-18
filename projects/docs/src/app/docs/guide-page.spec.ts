@@ -39,9 +39,6 @@ describe('Task guides', () => {
       expect(page.querySelector('.guide-kind')?.textContent?.trim()).toBe(
         chapter.kind === 'migration' ? copy.migrationGroup : copy.guideTitle,
       );
-      expect(page.querySelector('.guide-reading-hint')?.textContent?.trim()).toBe(
-        chapter.kind === 'migration' ? copy.migrationReading : copy.taskReading,
-      );
       const steps = page.querySelectorAll('article h2[id]');
       expect(steps.length).toBeGreaterThanOrEqual(4);
       expect(page.querySelectorAll('article pre code').length).toBeGreaterThanOrEqual(2);

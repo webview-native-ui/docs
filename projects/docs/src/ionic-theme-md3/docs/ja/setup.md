@@ -3,11 +3,9 @@ title: MD3 テーマをセットアップする
 sourceRevision: '4bb3ca73de2c3058aaaad70af3a9155293f579b4b9675405076d8a4708cc1d6d'
 ---
 
-既存のIonic 9アプリへMaterial Design 3テーマを導入し、ブラウザーで表示と画面遷移を確認します。Angular・React・Vueに対応しています。
+Material Design 3テーマは、Angular・React・VueのIonic 9アプリで使用できます。テーマのスタイルと初期化設定を追加すると、既存の画面とルーターを使ってブラウザーで表示と画面遷移を確認できます。
 
-差分はアプリの既存ファイルへ適用します。src/global.cssは、Angularならsrc/global.scssなど、使用中のグローバルスタイルへ読み替えてください。ルーターやアプリ固有の設定は残します。
-
-以下はdark.system.cssでOSの明暗に追従する構成の例です。クラスによる切り替えや常時ダークを使っている場合は、その方式を維持します。
+以下の例は、dark.system.cssでOSの明暗に追従する構成です。クラスで切り替えるアプリや常時ダークのアプリでは、現在の方式を維持してください。スタイルはアプリが読み込むグローバルスタイルシート（Angularでは通常src/global.scss）に追加します。
 
 ## テーマをインストールする
 
