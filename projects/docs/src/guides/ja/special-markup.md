@@ -1,7 +1,7 @@
 ---
 md3Headings: ['角を立てたボタン']
 title: '特別なマークアップとクラス'
-sourceRevision: '0edc4ad914ae8784dac7a83094b9e108d092127f50549ff4e41b2104b74cff88'
+sourceRevision: '6a82a7132ed0cc758a3e186c47d939ab99f0621fac33481ceab1c4e321ebcc36'
 ---
 
 # 特別なマークアップとクラス
@@ -25,12 +25,21 @@ sourceRevision: '0edc4ad914ae8784dac7a83094b9e108d092127f50549ff4e41b2104b74cff8
 
 ## ツールバーボタンのバッジ
 
-ツールバーのボタン内にバッジを置きます。空のバッジは未読の印、数字を入れたバッジは件数を表示します。
+アイコンとバッジをボタンの直下に並べます。封筒の右上に未読の点、吹き出しの右上にメッセージの件数が表示されます。
 
+<!-- prettier-ignore -->
 ```html
 <ion-toolbar>
-  <ion-button>Mail<ion-badge></ion-badge></ion-button>
-  <ion-button>Messages<ion-badge>3</ion-badge></ion-button>
+  <ion-buttons slot="end">
+    <ion-button title="Unread mail">
+      <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+      <ion-badge></ion-badge>
+    </ion-button>
+    <ion-button title="Messages">
+      <ion-icon slot="icon-only" name="chatbubbles-outline"></ion-icon>
+      <ion-badge>3</ion-badge>
+    </ion-button>
+  </ion-buttons>
 </ion-toolbar>
 ```
 

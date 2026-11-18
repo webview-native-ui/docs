@@ -1,7 +1,7 @@
 ---
 md3Headings: ['Eckige Schaltflächen']
 title: 'Spezielles Markup und Klassen'
-sourceRevision: '0edc4ad914ae8784dac7a83094b9e108d092127f50549ff4e41b2104b74cff88'
+sourceRevision: '6a82a7132ed0cc758a3e186c47d939ab99f0621fac33481ceab1c4e321ebcc36'
 ---
 
 # Spezielles Markup und Klassen
@@ -27,10 +27,19 @@ Verwenden Sie für Formulare einen Submit-Button. Die Klasse button-submit gibt 
 
 Platzieren Sie das Badge im Button. Ein leeres Badge kennzeichnet ungelesene Nachrichten.
 
+<!-- prettier-ignore -->
 ```html
 <ion-toolbar>
-  <ion-button>Mail<ion-badge></ion-badge></ion-button>
-  <ion-button>Messages<ion-badge>3</ion-badge></ion-button>
+  <ion-buttons slot="end">
+    <ion-button title="Unread mail">
+      <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+      <ion-badge></ion-badge>
+    </ion-button>
+    <ion-button title="Messages">
+      <ion-icon slot="icon-only" name="chatbubbles-outline"></ion-icon>
+      <ion-badge>3</ion-badge>
+    </ion-button>
+  </ion-buttons>
 </ion-toolbar>
 ```
 

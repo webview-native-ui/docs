@@ -1,3 +1,7 @@
+import { addIcons } from 'ionicons';
+import { mailOutline, chatbubblesOutline } from 'ionicons/icons';
+import { defineCustomElement as defineButtons } from '@ionic/core/components/ion-buttons.js';
+import { defineCustomElement as defineIcon } from '@ionic/core/components/ion-icon.js';
 import { initialize } from '@ionic/core/components';
 import { defineCustomElement as defineBadge } from '@ionic/core/components/ion-badge.js';
 import { defineCustomElement as defineButton } from '@ionic/core/components/ion-button.js';
@@ -12,6 +16,9 @@ import { defineCustomElement as defineContent } from '@ionic/core/components/ion
 import { defineCustomElement as defineToolbar } from '@ionic/core/components/ion-toolbar.js';
 
 initialize({ mode: document.documentElement.classList.contains('ios') ? 'ios' : 'md' });
+addIcons({ mailOutline, chatbubblesOutline });
+defineIcon();
+defineButtons();
 defineBadge();
 defineButton();
 defineItem();

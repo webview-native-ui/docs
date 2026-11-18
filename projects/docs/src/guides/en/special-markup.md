@@ -26,10 +26,19 @@ Use a submit button for forms. The button-submit class gives another action the 
 
 Place a badge inside its toolbar button. An empty badge marks unread activity.
 
+<!-- prettier-ignore -->
 ```html
 <ion-toolbar>
-  <ion-button>Mail<ion-badge></ion-badge></ion-button>
-  <ion-button>Messages<ion-badge>3</ion-badge></ion-button>
+  <ion-buttons slot="end">
+    <ion-button title="Unread mail">
+      <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+      <ion-badge></ion-badge>
+    </ion-button>
+    <ion-button title="Messages">
+      <ion-icon slot="icon-only" name="chatbubbles-outline"></ion-icon>
+      <ion-badge>3</ion-badge>
+    </ion-button>
+  </ion-buttons>
 </ion-toolbar>
 ```
 
