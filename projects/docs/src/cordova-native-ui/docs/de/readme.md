@@ -1,11 +1,15 @@
 ---
 title: "Erste Schritte mit Cordova"
-sourceRevision: "35da5b9f3e7e7fcba7f19ea5c7aecf4d92b6cedd6d66be1956bce5f1e6e4aeff"
+sourceRevision: "55d276c960fcb2656787871e306b1fe9e82df2a1a4481c0912a900d5df439950"
 ---
 
 # Erste Schritte mit Cordova
 
-Verwenden Sie das veröffentlichte Paket `@webview-native-ui/cordova-plugin` v0.1.6, um Native UI in eine Cordova-Anwendung einzubinden. Der Adapter verwendet denselben Native UI Core wie das Capacitor-Plugin; die JavaScript-Laufzeit von Capacitor ist nicht erforderlich. Standard-HTML wird über `/core` unterstützt, während der Paketeinstieg die Ionic-Integration ergänzt.
+Verwenden Sie das veröffentlichte Paket `@webview-native-ui/cordova-plugin` v0.1.7, um Native UI in eine Cordova-Anwendung einzubinden. Der Adapter verwendet denselben Native UI Core wie das Capacitor-Plugin; die JavaScript-Laufzeit von Capacitor ist nicht erforderlich. Standard-HTML wird über `/core` unterstützt, während der Paketeinstieg die Ionic-Integration ergänzt.
+
+Unter iOS behalten Aktionen in der vertikalen Leiste den Glashintergrund des Systems. Mit der Ionic-Eigenschaft `color` legen Sie die Symbolfarbe fest.
+
+Wenn eine virtuelle Liste nach einem Tabwechsel weiter aktualisiert wird, bereitet Core das Bild für die Webansicht vor, sobald der Übergang zur nativen Ansicht abgeschlossen ist.
 
 ## Voraussetzungen und unterstützter Umfang
 
@@ -19,13 +23,13 @@ Verwenden Sie das veröffentlichte Paket `@webview-native-ui/cordova-plugin` v0.
 Führen Sie diesen Befehl im Cordova-Projekt aus:
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.6
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.7
 ```
 
 Bei einer gebündelten Web-Anwendung führen Sie außerdem diesen Befehl in dem npm-Projekt aus, das die Web-Assets erstellt:
 
 ```sh
-npm install --save-exact @webview-native-ui/cordova-plugin@0.1.6
+npm install --save-exact @webview-native-ui/cordova-plugin@0.1.7
 ```
 
 Der Cordova-Befehl installiert das native Plugin. Die npm-Abhängigkeit stellt die Importe für den Web-Bundler bereit. Halten Sie beide Versionen gleich. Behalten Sie `<script src="cordova.js"></script>` im HTML-Einstiegspunkt von Cordova bei, erstellen Sie die Web-Assets unter `www`, führen Sie anschließend `cordova prepare` aus und bauen Sie die native Anwendung neu. Das Neuladen der Web-Assets aktualisiert keinen nativen Code. Die direkte Installation über eine Git-URL wird nicht unterstützt.
@@ -93,5 +97,5 @@ Auf unterstützten nativen iOS Vertical Bars übernimmt das Badge den Quelltext 
 ## Nächste Schritte
 
 - [Engine-Konzepte und Grenzen](/webview-native-ui-engine/docs/concepts) erläutern das gemeinsame Darstellungsmodell.
-- Das [Paket-README](https://github.com/webview-native-ui/cordova-plugin/blob/v0.1.6/README.md) behandelt lokale Archive, Fehlerbehebung, gemeinsam genutzten Quellcode und Entwicklungsprüfungen.
+- Das [Paket-README](https://github.com/webview-native-ui/cordova-plugin/blob/v0.1.7/README.md) behandelt lokale Archive, Fehlerbehebung, gemeinsam genutzten Quellcode und Entwicklungsprüfungen.
 - Melden Sie Probleme mit Cordova-Installation, Callbacks und Lebenszyklus im [Cordova-Repository](https://github.com/webview-native-ui/cordova-plugin/issues).

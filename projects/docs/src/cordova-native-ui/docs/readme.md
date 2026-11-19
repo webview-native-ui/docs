@@ -4,7 +4,11 @@ title: Getting Started with Cordova
 
 # Getting Started with Cordova
 
-Use the published `@webview-native-ui/cordova-plugin` v0.1.6 to add Native UI to a Cordova application. The adapter shares Native UI Core with the Capacitor plugin; it does not require the Capacitor JavaScript runtime. Standard HTML is supported through `/core`, while the package root adds Ionic integration.
+Use the published `@webview-native-ui/cordova-plugin` v0.1.7 to add Native UI to a Cordova application. The adapter shares Native UI Core with the Capacitor plugin; it does not require the Capacitor JavaScript runtime. Standard HTML is supported through `/core`, while the package root adds Ionic integration.
+
+On iOS, vertical rail actions with an explicit Ionic `color` keep the system glass background and use the chosen color for the icon.
+
+When a virtual list keeps updating after a tab switch, Core prepares the image for Web presentation once the native handoff animation finishes.
 
 ## Requirements and support
 
@@ -18,13 +22,13 @@ Use the published `@webview-native-ui/cordova-plugin` v0.1.6 to add Native UI to
 Run this command in the Cordova project:
 
 ```sh
-cordova plugin add @webview-native-ui/cordova-plugin@0.1.6
+cordova plugin add @webview-native-ui/cordova-plugin@0.1.7
 ```
 
 For a bundled Web application, also run this command in the npm project that builds the Web assets:
 
 ```sh
-npm install --save-exact @webview-native-ui/cordova-plugin@0.1.6
+npm install --save-exact @webview-native-ui/cordova-plugin@0.1.7
 ```
 
 The Cordova command installs the native plugin. The npm dependency supplies imports to the Web bundler. Keep their versions aligned. Keep `<script src="cordova.js"></script>` in the Cordova entry HTML, build the Web assets into `www`, then run `cordova prepare` and rebuild the native application. Reloading Web assets does not update native code. Direct Git URL installation is unsupported.
@@ -92,5 +96,5 @@ On supported iOS native Vertical Bars, the badge follows the source text and Ion
 ## Next steps
 
 - [Engine concepts and limits](/webview-native-ui-engine/docs/concepts) explain the shared presentation model.
-- The [package README](https://github.com/webview-native-ui/cordova-plugin/blob/v0.1.6/README.md) covers local archives, troubleshooting, shared source, and development checks.
+- The [package README](https://github.com/webview-native-ui/cordova-plugin/blob/v0.1.7/README.md) covers local archives, troubleshooting, shared source, and development checks.
 - Report Cordova installation, callbacks, and lifecycle issues in the [Cordova repository](https://github.com/webview-native-ui/cordova-plugin/issues).

@@ -1,13 +1,11 @@
 ---
 title: "Erste Schritte"
-sourceRevision: "635f8fc3732f288be4f1da7339ad66108f22c8e9b2592057ff6545a2806f4c5d"
+sourceRevision: "03793c2d9f17f2cb0cb23e31da92b06452f9b5e41ea9255e1664ef84b8b9aa0e"
 ---
 
-# Über die WebView hinaus.
+# WebView Native UI Engine
 
-**Native UI nahtlos in Web-Apps integrieren.**
-
-Entwickeln Sie Ihre Ansichten mit der Flexibilität des Webs und den Steuerelementen und Funktionen nativer Plattformen. WebView Native UI Engine verbindet sie zu einem einheitlichen Erlebnis, während Ihre Web-Layouts und Navigation erhalten bleiben.
+Binden Sie native Ansichten über ein Capacitor- oder Cordova-Plugin in Weboberflächen ein. [Registrieren Sie zuerst die native Ansicht und ihren DOM-Container](/de/projects/webview-native-ui-engine/docs/getting-started/initialization).
 
 ## Web UI. Native UI. Ein Erlebnis.
 
@@ -40,7 +38,7 @@ Das Plugin stellt eine native Ansicht und einen DOM-Container bereit, der ihren 
 
 Wenn die Web-Ebene die Darstellung übernehmen muss, zeigt die Engine ein vorbereitetes Bild der nativen Komponente in diesem Container an. Sobald die native Darstellung wieder möglich ist, koordiniert sie die Platzierung und Wiederherstellung der interaktiven Ansicht.
 
-Das Bild ist eine vorübergehende visuelle Projektion, kein zweites interaktives Steuerelement. Es leitet keine Klicks weiter und spielt keine Live-Videos ab. Aufnahmebedingungen und plattformspezifische Darstellungsgrenzen gelten weiterhin, einschließlich abweichender Liquid Glass-Glanzlichter. Ist kein geeignetes Bild verfügbar, verwendet die Integration ihren konfigurierten Web-Fallback. Lesen Sie vor der Auswahl einer Komponente die [Konzepte und Grenzen](docs/concepts.md) und die [Plattformunterstützung](docs/reference/platforms.md).
+Das Bild ist eine vorübergehende visuelle Projektion, kein zweites interaktives Steuerelement. Es leitet keine Klicks weiter und spielt keine Live-Videos ab. Aufnahmebedingungen und plattformspezifische Darstellungsgrenzen gelten weiterhin, einschließlich abweichender Liquid Glass-Glanzlichter. Ist kein geeignetes Bild verfügbar, verwendet die Integration ihren konfigurierten Web-Fallback. Lesen Sie vor der Auswahl einer Komponente die [Konzepte und Grenzen](/de/projects/webview-native-ui-engine/docs/concepts) und die [Plattformunterstützung](/de/projects/webview-native-ui-engine/docs/reference/platforms).
 
 Unter iOS 26 und neuer ist für Liquid-Glass-Aufnahmen standardmäßig eine experimentelle Umgehung mit einer **privaten Apple-API** aktiv. Prüfen Sie vor dem Einsatz dieser Version die Risiken und [deaktivieren Sie sie bei Bedarf](docs/experimental/glass-capture.md).
 
@@ -50,10 +48,10 @@ Die Engine unterstützt **iOS und Android**. Ionic und Angular sind optional. Be
 
 | Einstieg | Zweck |
 | --- | --- |
-| [Grundlegende Initialisierung](docs/getting-started/initialization.md) | Eine native Ansicht und ihren DOM-Container mit der minimal erforderlichen Einrichtung registrieren. |
-| [Capacitor-Plugin-Leitfaden](docs/getting-started/capacitor.md) | Die Engine mit einem vorhandenen Capacitor-Plugin verbinden. |
-| [Cordova-Plugin-Leitfaden](docs/getting-started/cordova.md) | Denselben Lebenszyklus über die nativen Hooks von Cordova nutzen. |
-| [Dokumentation](docs/README.md) | Optionale Einstellungen, Renderer-APIs und Referenzen nach dem zu lösenden Problem finden. |
+| [Grundlegende Initialisierung](/de/projects/webview-native-ui-engine/docs/getting-started/initialization) | Eine native Ansicht und ihren DOM-Container mit der minimal erforderlichen Einrichtung registrieren. |
+| [Capacitor-Plugin-Leitfaden](/de/projects/webview-native-ui-engine/docs/getting-started/capacitor) | Die Engine mit einem vorhandenen Capacitor-Plugin verbinden. |
+| [Cordova-Plugin-Leitfaden](/de/projects/webview-native-ui-engine/docs/getting-started/cordova) | Denselben Lebenszyklus über die nativen Hooks von Cordova nutzen. |
+| [Dokumentation](/de/projects/webview-native-ui-engine/docs/overview) | Optionale Einstellungen, Renderer-APIs und Referenzen nach dem zu lösenden Problem finden. |
 
 Verwenden Sie übereinstimmende Engine-Versionen in npm und den nativen Abhängigkeiten und behalten Sie die Abhängigkeits-Lockdateien für reproduzierbare Builds bei. Die Android-Platzierung benötigt API 23+; zusammengesetzte Schnappschüsse sind ab API 26 verfügbar.
 
@@ -67,14 +65,14 @@ import { enableSupportIonicOverlays } from '@webview-native-ui/engine/ionic';
 enableSupportIonicOverlays();
 ```
 
-Rufen Sie ihn einmal beim Anwendungsstart auf, sofern Ihr Plugin ihn nicht bereits aktiviert. Anwendungen, die ihn direkt importieren, benötigen `@webview-native-ui/engine` als direkte Abhängigkeit. Diese gemeinsame Framework-Integration koordiniert die Abdeckung zwischen Plugins; jedes Plugin behält die Kontrolle über seine eigene Darstellungs-API. Einrichtung, unterstützte Overlays und Renderer-Hilfsfunktionen beschreibt die [Ionic-Overlay-Unterstützung](docs/configuration/ionic-overlays.md).
+Rufen Sie ihn einmal beim Anwendungsstart auf, sofern Ihr Plugin ihn nicht bereits aktiviert. Anwendungen, die ihn direkt importieren, benötigen `@webview-native-ui/engine` als direkte Abhängigkeit. Diese gemeinsame Framework-Integration koordiniert die Abdeckung zwischen Plugins; jedes Plugin behält die Kontrolle über seine eigene Darstellungs-API. Einrichtung, unterstützte Overlays und Renderer-Hilfsfunktionen beschreibt die [Ionic-Overlay-Unterstützung](/de/projects/webview-native-ui-engine/docs/configuration/ionic-overlays).
 
 ## Mitwirken
 
-Entwicklung, Prüfung und Veröffentlichung des Repositorys beschreibt [Entwicklung und Releases](docs/maintenance.md).
+Entwicklung, Prüfung und Veröffentlichung des Repositorys beschreibt [Entwicklung und Releases](/de/projects/webview-native-ui-engine/docs/maintenance).
 
 ## Lizenz
 
 [MIT](LICENSE). Kommerzielle Nutzung, Änderungen und Weiterverbreitung sind unter Einhaltung der Hinweis- und Namensnennungspflichten der Lizenz erlaubt. Die Lizenz der Engine ändert nicht die Lizenzen der Anwendungen oder Plugins, die von ihr abhängen.
 
-Die optionale gemeinsame Steuerelement-Laufzeit und die Zuständigkeitsgrenzen der Adapter beschreibt [Gemeinsame Steuerelemente](docs/controls.md).
+Die optionale gemeinsame Steuerelement-Laufzeit und die Zuständigkeitsgrenzen der Adapter beschreibt [Gemeinsame Steuerelemente](/de/projects/webview-native-ui-engine/docs/controls).

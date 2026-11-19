@@ -126,7 +126,7 @@ Keep your existing click handlers, routing and form associations. By default, ac
 
 See [Choose button appearance](https://webview-native-ui.com/projects/capacitor-native-ui/docs/vertical-bars#choose-button-appearance) for appearance settings and local overrides.
 
-The default is `system`: SwiftUI styles vertical buttons and tints their icons. If your existing theme should supply their fill and colors, set the options on the application's existing startup call; keep the device connection:
+With the default `system` projection, SwiftUI supplies the glass background. Set the button’s Ionic `color` to tint its icon. To use the theme’s fill as well, update the existing startup call:
 
 ```ts
 const shell = await enableNativeUI({

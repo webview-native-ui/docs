@@ -1,13 +1,11 @@
 ---
 title: "Dokumentationsübersicht"
-sourceRevision: "339bb3e513fd876e35a512576514f1ade9a934f38ffb77152486abd6bd7e0fdd"
+sourceRevision: "7ebbbea5c8145b6a73f8cdfac9b5d8cadb68978b49eed9a627ab79c91761a373"
 ---
 
 # Dokumentation
 
-Entwickeln Sie Web-gesteuerte Ansichten mit nativen Steuerelementen und Funktionen. Diese Leitfäden erklären, wie Sie die Engine in ein Plugin integrieren, damit Web UI und Native UI koexistieren können. Beginnen Sie mit [dem gemeinsamen Modell](concepts.md): wie eine native Komponente in ein Web-Layout eingebunden ist, welche Ebene sie darstellt und wie die Interaktion zur aktiven Ansicht zurückkehrt. Scrollen und Overlays sind Beispiele dieser Koordination, keine getrennten Integrationsmodelle.
-
-Wählen Sie anschließend die kleinste Integration, die zu Ihren Zuständigkeiten passt. Registrieren Sie eine native Ansicht und ihren DOM-Container, verbinden Sie die benötigten Lebenszyklusbenachrichtigungen und ergänzen Sie erweiterte APIs nur dann, wenn Sie bereits die Bündelung oder Platzierung eines Renderers verwalten.
+Verbinden Sie die native Ansicht über die [Registrierung](getting-started/initialization.md) mit ihrem DOM-Container. Folgen Sie anschließend der Anleitung für [Capacitor](getting-started/capacitor.md) oder [Cordova](getting-started/cordova.md). Das [gemeinsame Modell](concepts.md) erklärt, wie beide Ebenen Scrollen, Overlays und Interaktionen koordinieren.
 
 ## Nach dem zu lösenden Problem auswählen
 

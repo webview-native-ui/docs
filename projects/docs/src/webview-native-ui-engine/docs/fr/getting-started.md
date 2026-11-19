@@ -1,13 +1,11 @@
 ---
 title: "Premiers pas"
-sourceRevision: "635f8fc3732f288be4f1da7339ad66108f22c8e9b2592057ff6545a2806f4c5d"
+sourceRevision: "03793c2d9f17f2cb0cb23e31da92b06452f9b5e41ea9255e1664ef84b8b9aa0e"
 ---
 
-# Au-delà de la WebView.
+# WebView Native UI Engine
 
-**Intégrez Native UI de façon fluide aux applications Web.**
-
-Créez vos écrans avec la souplesse du Web et les contrôles et capacités des plateformes natives. WebView Native UI Engine les aide à fonctionner comme une seule expérience, tout en conservant vos mises en page et votre navigation Web.
+Intégrez une vue native à un écran Web dans un plugin Capacitor ou Cordova. Commencez par [enregistrer la vue native et son conteneur DOM](/fr/projects/webview-native-ui-engine/docs/getting-started/initialization).
 
 ## Web UI. Native UI. Une seule expérience.
 
@@ -40,7 +38,7 @@ Le plugin fournit une vue native et un conteneur DOM qui définit sa place dans 
 
 Lorsque la couche Web doit prendre en charge la présentation, l’Engine affiche une image préparée du composant natif dans ce conteneur. Lorsque la présentation native peut reprendre, il coordonne le placement et la restauration de la vue interactive.
 
-L’image est une projection visuelle temporaire, pas un second contrôle interactif. Elle ne transmet pas les clics et ne lit pas de vidéo en direct. Les conditions d’éligibilité de capture et les limites de rendu des plateformes restent applicables, notamment les différences de reflets de Liquid Glass. Lorsqu’aucune image adaptée n’est disponible, l’intégration utilise son repli Web configuré. Consultez les [concepts et limites](docs/concepts.md) et la [prise en charge des plateformes](docs/reference/platforms.md) avant de choisir un composant.
+L’image est une projection visuelle temporaire, pas un second contrôle interactif. Elle ne transmet pas les clics et ne lit pas de vidéo en direct. Les conditions d’éligibilité de capture et les limites de rendu des plateformes restent applicables, notamment les différences de reflets de Liquid Glass. Lorsqu’aucune image adaptée n’est disponible, l’intégration utilise son repli Web configuré. Consultez les [concepts et limites](/fr/projects/webview-native-ui-engine/docs/concepts) et la [prise en charge des plateformes](/fr/projects/webview-native-ui-engine/docs/reference/platforms) avant de choisir un composant.
 
 Sous iOS 26 et versions ultérieures, un contournement expérimental utilisant une **API privée Apple** est activé par défaut pour capturer Liquid Glass. Évaluez les risques et [désactivez-le si nécessaire](docs/experimental/glass-capture.md) avant d’adopter cette version.
 
@@ -50,10 +48,10 @@ L’Engine prend en charge **iOS et Android**. Ionic et Angular sont facultatifs
 
 | Point de départ | Objectif |
 | --- | --- |
-| [Initialisation de base](docs/getting-started/initialization.md) | Enregistrer une vue native et son conteneur DOM avec la configuration minimale requise. |
-| [Guide de plugin Capacitor](docs/getting-started/capacitor.md) | Connecter l’Engine à un plugin Capacitor existant. |
-| [Guide de plugin Cordova](docs/getting-started/cordova.md) | Utiliser le même cycle de vie via les points d’entrée natifs de Cordova. |
-| [Documentation](docs/README.md) | Trouver paramètres facultatifs, API de moteur de rendu et référence selon le problème à résoudre. |
+| [Initialisation de base](/fr/projects/webview-native-ui-engine/docs/getting-started/initialization) | Enregistrer une vue native et son conteneur DOM avec la configuration minimale requise. |
+| [Guide de plugin Capacitor](/fr/projects/webview-native-ui-engine/docs/getting-started/capacitor) | Connecter l’Engine à un plugin Capacitor existant. |
+| [Guide de plugin Cordova](/fr/projects/webview-native-ui-engine/docs/getting-started/cordova) | Utiliser le même cycle de vie via les points d’entrée natifs de Cordova. |
+| [Documentation](/fr/projects/webview-native-ui-engine/docs/overview) | Trouver paramètres facultatifs, API de moteur de rendu et référence selon le problème à résoudre. |
 
 Utilisez des versions correspondantes de l’Engine dans npm et les dépendances natives, et conservez les fichiers de verrouillage des dépendances pour des builds reproductibles. Le placement Android nécessite l’API 23+, et les instantanés composites sont disponibles à partir de l’API 26.
 
@@ -67,14 +65,14 @@ import { enableSupportIonicOverlays } from '@webview-native-ui/engine/ionic';
 enableSupportIonicOverlays();
 ```
 
-Appelez-le une fois au démarrage de l’application, sauf si votre plugin l’active déjà. Les applications qui l’importent directement ont besoin de `@webview-native-ui/engine` comme dépendance directe. Cette intégration partagée du framework coordonne la couverture entre plugins ; chaque plugin garde le contrôle de sa propre API de présentation. Consultez la [prise en charge des superpositions Ionic](docs/configuration/ionic-overlays.md) pour la configuration, les superpositions prises en charge et les fonctions utilitaires des moteurs de rendu.
+Appelez-le une fois au démarrage de l’application, sauf si votre plugin l’active déjà. Les applications qui l’importent directement ont besoin de `@webview-native-ui/engine` comme dépendance directe. Cette intégration partagée du framework coordonne la couverture entre plugins ; chaque plugin garde le contrôle de sa propre API de présentation. Consultez la [prise en charge des superpositions Ionic](/fr/projects/webview-native-ui-engine/docs/configuration/ionic-overlays) pour la configuration, les superpositions prises en charge et les fonctions utilitaires des moteurs de rendu.
 
 ## Contribution
 
-Pour le développement, la vérification et la publication du dépôt, consultez [développement et publications](docs/maintenance.md).
+Pour le développement, la vérification et la publication du dépôt, consultez [développement et publications](/fr/projects/webview-native-ui-engine/docs/maintenance).
 
 ## Licence
 
 [MIT](LICENSE). L’utilisation commerciale, la modification et la redistribution sont autorisées sous réserve de respecter les exigences de mention et d’attribution de la licence. La licence de l’Engine ne modifie pas celles des applications ou plugins qui en dépendent.
 
-Pour le runtime facultatif des contrôles partagés et les frontières des adaptateurs, consultez les [contrôles partagés](docs/controls.md).
+Pour le runtime facultatif des contrôles partagés et les frontières des adaptateurs, consultez les [contrôles partagés](/fr/projects/webview-native-ui-engine/docs/controls).

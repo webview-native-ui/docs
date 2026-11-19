@@ -1,11 +1,11 @@
 ---
 title: "はじめに"
-sourceRevision: "635f8fc3732f288be4f1da7339ad66108f22c8e9b2592057ff6545a2806f4c5d"
+sourceRevision: "03793c2d9f17f2cb0cb23e31da92b06452f9b5e41ea9255e1664ef84b8b9aa0e"
 ---
 
-# WebViewのその先へ。
+# WebView Native UI Engine
 
-WebView Native UI Engineを使うと、Webページの一部にネイティブビューを表示できます。レイアウトと画面遷移は既存のWebアプリが管理します。
+Capacitor または Cordova プラグインで、Web 画面にネイティブビューを組み込みます。まず[ネイティブビューと DOM コンテナを登録](/ja/projects/webview-native-ui-engine/docs/getting-started/initialization)してください。
 
 ## Web UIとNative UIを、ひとつの体験に。
 
@@ -38,7 +38,7 @@ WebViewの上にあるネイティブビューは、DOMのスクロール、ク�
 
 Webレイヤーが表示を担う必要がある場合、Engineは準備済みのネイティブコンポーネントの画像をそのコンテナに表示します。ネイティブ表示に戻せる状態になったら、操作可能なビューの配置と復元を調整します。
 
-この画像は一時的な見た目の投影であり、もうひとつの操作可能なコントロールではありません。クリックの転送やライブ動画の再生は行いません。Liquid Glassのハイライトの違いを含め、キャプチャの可否やプラットフォームの描画上の制約は引き続き適用されます。適切な画像を利用できない場合は、組み込み側で設定したWebフォールバックを使います。コンポーネントを選ぶ前に、[概念と制約](docs/concepts.md)と[プラットフォームの対応状況](docs/reference/platforms.md)を確認してください。
+この画像は一時的な見た目の投影であり、もうひとつの操作可能なコントロールではありません。クリックの転送やライブ動画の再生は行いません。Liquid Glassのハイライトの違いを含め、キャプチャの可否やプラットフォームの描画上の制約は引き続き適用されます。適切な画像を利用できない場合は、組み込み側で設定したWebフォールバックを使います。コンポーネントを選ぶ前に、[概念と制約](/ja/projects/webview-native-ui-engine/docs/concepts)と[プラットフォームの対応状況](/ja/projects/webview-native-ui-engine/docs/reference/platforms)を確認してください。
 
 iOS 26以降では、Liquid Glassのキャプチャに**Appleの非公開API**を使う実験的な回避策が既定で有効です。この版を導入する前にリスクを確認し、[必要に応じて無効化](docs/experimental/glass-capture.md)してください。
 
@@ -48,10 +48,10 @@ Engineは**iOSとAndroid**に対応しています。IonicとAngularは任意で
 
 | 入口 | 目的 |
 | --- | --- |
-| [基本的な初期化](docs/getting-started/initialization.md) | 必要最小限の設定で、ネイティブビューとそのDOMコンテナを登録します。 |
-| [Capacitorプラグインガイド](docs/getting-started/capacitor.md) | 既存のCapacitorプラグインへEngineを接続します。 |
-| [Cordovaプラグインガイド](docs/getting-started/cordova.md) | Cordovaのネイティブフックで同じライフサイクルを利用します。 |
-| [ドキュメント](docs/README.md) | 解決したい問題に応じて、任意の設定、レンダラーAPI、リファレンスを探します。 |
+| [基本的な初期化](/ja/projects/webview-native-ui-engine/docs/getting-started/initialization) | 必要最小限の設定で、ネイティブビューとそのDOMコンテナを登録します。 |
+| [Capacitorプラグインガイド](/ja/projects/webview-native-ui-engine/docs/getting-started/capacitor) | 既存のCapacitorプラグインへEngineを接続します。 |
+| [Cordovaプラグインガイド](/ja/projects/webview-native-ui-engine/docs/getting-started/cordova) | Cordovaのネイティブフックで同じライフサイクルを利用します。 |
+| [ドキュメント](/ja/projects/webview-native-ui-engine/docs/overview) | 解決したい問題に応じて、任意の設定、レンダラーAPI、リファレンスを探します。 |
 
 npmとネイティブ依存でEngineのバージョンを揃え、再現可能なビルドのために依存関係のロックファイルを保持してください。Androidの配置にはAPI 23以上が必要で、合成済みスナップショットはAPI 26以上で利用できます。
 
@@ -65,14 +65,14 @@ import { enableSupportIonicOverlays } from '@webview-native-ui/engine/ionic';
 enableSupportIonicOverlays();
 ```
 
-プラグインがすでに有効化している場合を除き、アプリの起動時に一度呼び出してください。直接インポートするアプリでは、`@webview-native-ui/engine`を直接依存に追加する必要があります。この共通のフレームワーク連携がプラグイン間の被覆を調整します。各プラグインは自身の表示APIを引き続き管理します。設定、対応するオーバーレイ、レンダラー用ヘルパーは、[Ionicオーバーレイ対応](docs/configuration/ionic-overlays.md)を参照してください。
+プラグインがすでに有効化している場合を除き、アプリの起動時に一度呼び出してください。直接インポートするアプリでは、`@webview-native-ui/engine`を直接依存に追加する必要があります。この共通のフレームワーク連携がプラグイン間の被覆を調整します。各プラグインは自身の表示APIを引き続き管理します。設定、対応するオーバーレイ、レンダラー用ヘルパーは、[Ionicオーバーレイ対応](/ja/projects/webview-native-ui-engine/docs/configuration/ionic-overlays)を参照してください。
 
 ## 貢献
 
-リポジトリの開発、検証、公開については、[開発とリリース](docs/maintenance.md)を参照してください。
+リポジトリの開発、検証、公開については、[開発とリリース](/ja/projects/webview-native-ui-engine/docs/maintenance)を参照してください。
 
 ## ライセンス
 
 [MIT](LICENSE)です。ライセンスの通知と帰属表示の要件を満たせば、商用利用、変更、再配布が可能です。Engineのライセンスは、依存するアプリケーションやプラグインのライセンスを変更しません。
 
-任意の共有コントロールランタイムとアダプター間の責任範囲は、[共有コントロール](docs/controls.md)を参照してください。
+任意の共有コントロールランタイムとアダプター間の責任範囲は、[共有コントロール](/ja/projects/webview-native-ui-engine/docs/controls)を参照してください。

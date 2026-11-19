@@ -31,18 +31,7 @@ Public paths and npm package names remain unchanged. Related English articles re
 The catalog order is Themes, Plugins, then Developer tools.
 The Plugins category contains the Capacitor and Cordova integrations.
 
-Published package versions checked against npm on 2026-11-12:
-
-| Package | Version |
-| --- | --- |
-| `@rdlabo/ionic-theme-ios27` | 2.1.3 |
-| `@rdlabo/ionic-theme-ios26` | 9.4.3 |
-| `@rdlabo/ionic-theme-md3` | 9.2.2 |
-| `@rdlabo/capacitor-native-ui` | 2.1.4 |
-| `@webview-native-ui/cordova-plugin` | 0.1.1 |
-| `@webview-native-ui/engine` | 1.0.4 |
-
-Cordova 0.1.1 bundles iOS27 theme 2.1.0; it does not inherit the standalone theme version.
+The catalog uses the package versions pinned in `package.json`. Since Cordova plugin 0.1.6, applications install their Ionic theme separately.
 
 Cloudflare Workers Static Assets uses `wrangler.jsonc` and the `webview-native-ui-docs` service.
 Every push to `main`, including a merged PR, automatically runs the production deployment workflow.

@@ -102,10 +102,10 @@ test('pins only source links that belong to the package repository', async () =>
   assert.equal(
     await pinPackageSourceLinks(project, markdown),
     [
-      '[fork](https://github.com/webview-native-ui/engine/tree/v1.0.10/src) [upstream](https://github.com/ionic-team/capacitor-docgen/tree/v0.3.1/src)',
-      '[blob](https://github.com/webview-native-ui/engine/blob/v1.0.10/docs/api.md)',
-      '![raw](https://raw.githubusercontent.com/webview-native-ui/engine/v1.0.10/image.png)',
-      '[pinned](https://github.com/webview-native-ui/engine/blob/v1.0.10/README.md)',
+      '[fork](https://github.com/webview-native-ui/engine/tree/v1.0.11/src) [upstream](https://github.com/ionic-team/capacitor-docgen/tree/v0.3.1/src)',
+      '[blob](https://github.com/webview-native-ui/engine/blob/v1.0.11/docs/api.md)',
+      '![raw](https://raw.githubusercontent.com/webview-native-ui/engine/v1.0.11/image.png)',
+      '[pinned](https://github.com/webview-native-ui/engine/blob/v1.0.11/README.md)',
     ].join('\n'),
   );
 });

@@ -1,6 +1,6 @@
 ---
 title: "開発とリリース"
-sourceRevision: "0f1122357e2783205b137a54a18c5240b8ce3a79609fd694d77b917119561407"
+sourceRevision: "5a3174b50ea047c18e35195e9d624a4c6dcd96189d08997b0fde00c9401eef63"
 ---
 
 # 開発とリリース
@@ -39,7 +39,7 @@ lintは、厳密なTypeScriptチェック、標準のESLint/TypeScript推奨ル�
 
 ネイティブのチェックは各プラットフォームのCIジョブで実行します。`npm run lint:swift`はmacOS上で、Capacitor設定のnode-swiftlintを使います（`brew install swiftlint`）。`npm run lint:android`はKotlinの整形チェックと、警告をエラー扱いするAndroid Lintを実行します（JDK 21とAndroid SDK 36）。ネイティブの整形には`npm run format:swift`と`npm run format:kotlin`を使います。既存のネイティブテストフィクスチャをPrettier Kotlinプラグインが解析できないため、Kotlinにはktfmtを使います。
 
-Swift CIは独立した処理を`swift-package`、`ios-integration`、`ios-consumers`に分け、既存の`swift`チェックは3つすべての成功を要求します。Packageテストは決定論的なネイティブビュー、キャプチャ所有権、エンコードの契約を扱います。実際のWKWebViewの遷移・スクロール追従、アクティブなUIKit表示、実画面の画像パイプラインはUIApplicationを持つ`NativeUIHostedTests`で実行します。CocoaPodとCordovaの利用側検証は`ios-consumers`の並列マトリクスで行い、`swift`は両方を必須とします。両ネイティブテスト群はアプリ内でのみ動くケースも含め、それぞれに割り当てられたスイートを実行します。シミュレーター起動はNode.js設定とランタイム生成の後に開始し、依存関係の準備と競合させません。各ジョブは選択したデバイス上で直列にテストします。Package・Hostedスイートのシミュレーター準備は2分、各スイートの実行は5分、各macOSジョブは12分が上限です。失敗時の`.xcresult`を保持します。[Appleの説明](https://developer.apple.com/forums/thread/698054)に従い、`-collect-test-diagnostics never`で失敗後の遅いシステム診断を避けます。テスト失敗、アサーション、フィクスチャの状態は結果に残ります。自動リトライで失敗を隠しません。
+Swift CIは独立した処理を`swift-package`、`ios-integration`、`ios-consumers`に分け、既存の`swift`チェックは3つすべての成功を要求します。Packageテストは決定論的なネイティブビュー、キャプチャ所有権、エンコードの契約を扱います。実際のWKWebViewの遷移・スクロール追従、アクティブなUIKit表示、実画面の画像パイプラインはUIApplicationを持つ`NativeUIHostedTests`で実行します。CocoaPodとCordovaの利用側検証は`ios-consumers`の並列マトリクスで行い、`swift`は両方を必須とします。両ネイティブテスト群はアプリ内でのみ動くケースも含め、それぞれに割り当てられたスイートを実行します。シミュレーター起動はNode.js設定とランタイム生成の後に開始し、依存関係の準備と競合させません。各ジョブは選択したデバイス上で直列にテストします。Package・Hostedスイートのシミュレーター準備は2分、各スイートの実行は5分、パッケージジョブは12分、ホスト統合・利用側ジョブは20分が上限です。後者は Xcode の初回ビルドとシミュレーターへのインストールを含み、従来の12分では検証前に打ち切られることがありました。失敗時の`.xcresult`を保持します。[Appleの説明](https://developer.apple.com/forums/thread/698054)に従い、`-collect-test-diagnostics never`で失敗後の遅いシステム診断を避けます。テスト失敗、アサーション、フィクスチャの状態は結果に残ります。自動リトライで失敗を隠しません。
 
 Packageテストの正確な除外設定は`.github/workflows/native-ui-engine.yml`、Hostedテストの選択は[XcodeGenのテスト選択](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md#test-target)を使う`ios/Tests/project.yml`にあります。実行環境間でテストを移す場合、実行集合が重複せず、和集合が全スイートを維持することを確認します。Hostedの選択をローカル実行するには次を使います。
 

@@ -1,6 +1,6 @@
 ---
 title: "Vertical Bars"
-sourceRevision: "a43e5343874f8a7a01da73c6907fb90a5a433981aeabb5e45d160bc0626149e2"
+sourceRevision: "7224c1bc5d1e2887bdd56930e42989d22a7f7ee2e708f558bad1e456d01dc7b1"
 ---
 
 # Vertical Bars
@@ -257,7 +257,7 @@ Wählen Sie für native vertikale `ion-button`- und `ion-menu-button`-Aktionen, 
 
 | `buttonProjection` | Darstellung |
 | --- | --- |
-| `'system'` (Standard) | SwiftUI gestaltet Schaltflächen und tönt ihre Symbole. Ionic-Füllung, -Farben und -Ränder werden nicht angewendet. |
+| `'system'` (Standard) | SwiftUI stellt den Glashintergrund bereit. Eine explizite Ionic-Farbe (`color`) färbt die Aktion. Ohne Angabe gilt die Systemfarbe. |
 | `'source'` | Projiziert unterstützte Ionic-Füllung und berechnete Farben gemäß [Quellfüllregeln](#source-fill-rules). |
 
 ```ts

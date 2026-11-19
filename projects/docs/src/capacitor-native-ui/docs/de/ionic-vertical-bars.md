@@ -1,6 +1,6 @@
 ---
 title: "Vertical Bars mit Ihrem bestehenden Theme"
-sourceRevision: 'e8fca461b9c50e67c4ceeb02b0509e81050f55c942ba53750abaae7d4679a8ab'
+sourceRevision: "28810afe694403f9b0a7a5a3f5db8eaf512302c7a3741e22f9c363a66758319c"
 headingAliases:
   '4.-erstellen%2C-synchronisieren-und-auf-iphone-duo-ausf%C3%BChren': '4.-erstellen%2C-synchronisieren-und-unter-ios-ausf%C3%BChren'
 ---
@@ -127,7 +127,7 @@ Behalten Sie bestehende Klickhandler, Routing und Formularzuordnungen. Aktionen 
 
 Darstellungseinstellungen und lokale Überschreibungen beschreibt [Schaltflächendarstellung auswählen](vertical-bars.md#choose-button-appearance).
 
-Standard ist `system`: SwiftUI gestaltet vertikale Schaltflächen und färbt ihre Icons. Soll Ihr bestehendes Theme Füllung und Farben liefern, setzen Sie die Optionen am bestehenden Startaufruf der Anwendung; behalten Sie die Geräteverbindung:
+Bei der Standardprojektion `system` stellt SwiftUI den Glashintergrund bereit. Die Ionic-Eigenschaft `color` der Schaltfläche bestimmt die Symbolfarbe. Um auch die Füllung des Themes zu verwenden, passen Sie den bestehenden Startaufruf an:
 
 ```ts
 const shell = await enableNativeUI({

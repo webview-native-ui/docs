@@ -1,6 +1,6 @@
 ---
 title: "Vertical Bars avec votre thème existant"
-sourceRevision: 'e8fca461b9c50e67c4ceeb02b0509e81050f55c942ba53750abaae7d4679a8ab'
+sourceRevision: "28810afe694403f9b0a7a5a3f5db8eaf512302c7a3741e22f9c363a66758319c"
 headingAliases:
   '4.-compiler%2C-synchroniser-et-ex%C3%A9cuter-sur-iphone-duo': '4.-compiler%2C-synchroniser-et-ex%C3%A9cuter-sur-ios'
 ---
@@ -127,7 +127,7 @@ Conservez vos gestionnaires de clic, votre routage et vos associations de formul
 
 Consultez [Choisir l’apparence des boutons](vertical-bars.md#choose-button-appearance) pour les réglages et remplacements locaux.
 
-La valeur par défaut est `system` : SwiftUI définit le style des boutons verticaux et teinte leurs icônes. Si votre thème existant doit fournir leur remplissage et leurs couleurs, définissez les options sur l’appel de démarrage existant de l’application ; conservez la connexion à l’appareil :
+Avec la projection `system` par défaut, SwiftUI fournit le fond en verre. Réglez la propriété Ionic `color` du bouton pour teinter son icône. Pour utiliser également le remplissage du thème, modifiez l’appel de démarrage existant :
 
 ```ts
 const shell = await enableNativeUI({

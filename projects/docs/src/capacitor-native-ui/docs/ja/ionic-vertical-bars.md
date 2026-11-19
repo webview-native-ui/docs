@@ -2,7 +2,7 @@
 title: 既存テーマで使う Vertical Bars
 headingAliases:
   '4.-%E3%83%93%E3%83%AB%E3%83%89%E3%83%BB%E5%90%8C%E6%9C%9F%E3%81%97%E3%81%A6-iphone-duo-%E3%81%A7%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B': '4.-%E3%83%93%E3%83%AB%E3%83%89%E3%83%BB%E5%90%8C%E6%9C%9F%E3%81%97%E3%81%A6ios%E3%81%A7%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B'
-sourceRevision: 'e8fca461b9c50e67c4ceeb02b0509e81050f55c942ba53750abaae7d4679a8ab'
+sourceRevision: "28810afe694403f9b0a7a5a3f5db8eaf512302c7a3741e22f9c363a66758319c"
 ---
 
 Vertical Bars は Native UI のデフォルト構成に含まれます。このガイドでは標準の iOS 27 テーマではなく、既存の Web テーマを維持する場合を扱います。
@@ -129,7 +129,7 @@ Xcode 26以降でビルドし、通常のiPhoneを含むiOS 26以降のシミュ
 
 外観設定とローカル上書きは[ボタンの外観の選択](vertical-bars.md#choose-button-appearance)を参照してください。
 
-既定は `system` で SwiftUI が縦ボタンを装飾しアイコンを着色します。既存テーマの fill と色を使うには手順 3 の起動呼び出しだけを次に置き換え、Foldable の購読は維持します。
+既定の `system` では、SwiftUI がガラス背景を描画します。アイコンの色はボタンの `color` で指定できます。テーマの塗りも使う場合は、既存の起動処理を次のように変更します。
 
 ```ts
 const shell = await enableNativeUI({

@@ -135,4 +135,4 @@ const shell = await enableNativeUI({
 
 ## 使用例
 
-[通常の HTML の例](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.10/examples/native-ui-html)は Add、ルーターなしの Home/Details/Back 遷移、任意の Web レール投影、クリーンアップを示します。Ionic・テーマ CSS は使いません。
+[通常の HTML の例](https://github.com/webview-native-ui/capacitor-plugin/tree/v2.1.12/examples/native-ui-html)は Add、ルーターなしの Home/Details/Back 遷移、任意の Web レール投影、クリーンアップを示します。Ionic・テーマ CSS は使いません。

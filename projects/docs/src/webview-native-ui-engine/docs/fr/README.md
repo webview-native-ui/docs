@@ -1,13 +1,11 @@
 ---
 title: "Vue d’ensemble de la documentation"
-sourceRevision: "339bb3e513fd876e35a512576514f1ade9a934f38ffb77152486abd6bd7e0fdd"
+sourceRevision: "7ebbbea5c8145b6a73f8cdfac9b5d8cadb68978b49eed9a627ab79c91761a373"
 ---
 
 # Documentation
 
-Créez des écrans pilotés par le Web avec des contrôles et des capacités natives. Ces guides expliquent comment intégrer l’Engine dans un plugin pour faire coexister Web UI et Native UI. Commencez par [le modèle partagé](concepts.md) : comment un composant natif trouve sa place dans une mise en page Web, quelle couche le présente et comment les interactions reviennent à la vue active. Le défilement et les superpositions sont des exemples de cette coordination, pas des modèles d’intégration distincts.
-
-Choisissez ensuite l’intégration minimale adaptée à vos responsabilités. Enregistrez une vue native et son conteneur DOM, connectez les notifications de cycle de vie nécessaires à votre interface et n’ajoutez les API avancées que si vous gérez déjà les lots ou le placement d’un moteur de rendu.
+Suivez les [étapes d’enregistrement](getting-started/initialization.md) pour relier une vue native à son conteneur DOM, puis le guide de votre hôte, [Capacitor](getting-started/capacitor.md) ou [Cordova](getting-started/cordova.md). Le [modèle partagé](concepts.md) explique comment les deux couches coordonnent le défilement, les superpositions et les interactions.
 
 ## Choisir selon le problème à résoudre
 
