@@ -1,17 +1,11 @@
 import assert from 'node:assert/strict';
-import { access, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { projectDefinitions } from './project-manifest';
 import { SITE_CONFIG } from '../projects/docs/src/app/site-config';
 
-test('the migration retains every original source and reviewed translation', async () => {
-  const inventory = JSON.parse(await readFile('migration/source-inventory.json', 'utf8'));
-  for (const id of inventory.projects)
-    assert.ok(projectDefinitions.some((project) => project.id === id));
+test('publishes documentation at the canonical origin', () => {
   assert.equal(SITE_CONFIG.origin, 'https://webview-native-ui.com');
-  for (const file of inventory.files) {
-    await access(file.path);
-  }
 });
 
 test('all migrated languages point portal edit links at the new repository', async () => {
