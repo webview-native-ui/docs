@@ -7,12 +7,12 @@ import { DomSanitizer } from '@angular/platform-browser';
     <div class="preview">
       <div class="themes" role="group" [attr.aria-label]="label()">
         @for (platform of platforms; track platform.id) {
-          <button type="button" [disabled]="themes() !== 'all' && (platform.id === 'md' ? themes() !== 'md' : themes() !== 'ios')" [attr.aria-pressed]="selected() === platform" (click)="selected.set(platform)">
+          <button type="button" [disabled]="themes() !== 'all' && (themes() === 'ios' ? platform.id === 'md' : platform.id !== themes())" [attr.aria-pressed]="selected() === platform" (click)="selected.set(platform)">
             {{ platform.name }}
           </button>
         }
       </div>
-      <iframe [src]="url()" [title]="label() + ' · ' + selected().name" loading="lazy"></iframe>
+      <iframe [style.height]="tallPreview() ? '22rem' : null" [src]="url()" [title]="label() + ' · ' + selected().name" loading="lazy"></iframe>
     </div>
   `,
   styles: `
@@ -25,11 +25,12 @@ import { DomSanitizer } from '@angular/platform-browser';
   `,
 })
 export class MarkupPreview {
+  readonly tallPreview = input(false);
   readonly example = input.required<number>();
-  readonly themes = input.required<'all' | 'ios' | 'md'>();
+  readonly themes = input.required<'all' | 'ios' | 'ios26' | 'md'>();
   readonly label = input.required<string>();
   protected readonly platforms = [{ id: 'ios', name: 'iOS 27' }, { id: 'ios26', name: 'iOS 26' }, { id: 'md', name: 'MD3' }] as const;
-  protected readonly selected = linkedSignal<(typeof this.platforms)[number]>(() => this.themes() === 'md' ? this.platforms[2] : this.platforms[0]);
+  protected readonly selected = linkedSignal<(typeof this.platforms)[number]>(() => this.platforms.find(platform => platform.id === this.themes()) ?? this.platforms[0]);
   readonly #sanitizer = inject(DomSanitizer);
   protected readonly url = computed(() => this.#sanitizer.bypassSecurityTrustResourceUrl(
     `/assets/theme-preview/markup-${this.example()}-${this.selected().id}.html`,

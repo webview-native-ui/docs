@@ -9,10 +9,10 @@ import { guideCopyForLocale } from '../../../../../shared/guide-navigation';
 export interface GuideContent {
   readonly title: string;
   readonly description: string;
-  readonly html: string;
+  readonly html?: string;
   readonly headings: readonly { readonly id: string; readonly text: string }[];
   readonly editUrl: string;
-  readonly previewSections?: readonly { readonly intro: string; readonly code: string; readonly label: string; readonly themes: 'all' | 'ios' | 'md' }[];
+  readonly previewSections?: readonly { readonly tallPreview?: boolean; readonly intro: string; readonly code: string; readonly label: string; readonly themes: 'all' | 'ios' | 'ios26' | 'md' }[];
 }
 
 @Component({
@@ -48,11 +48,11 @@ export interface GuideContent {
         @if (guide().previewSections; as sections) {
           @for (section of sections; track $index) {
             <div class="example-intro" appHeadingLinks [innerHTML]="section.intro | safeHtml"></div>
-            <app-markup-preview [example]="$index" [label]="section.label" [themes]="section.themes" />
-            <div [innerHTML]="section.code | safeHtml"></div>
+            <app-markup-preview [example]="$index" [tallPreview]="section.tallPreview === true" [label]="section.label" [themes]="section.themes" />
+            <div appHeadingLinks [innerHTML]="section.code | safeHtml"></div>
           }
         } @else {
-          <div appHeadingLinks [innerHTML]="guide().html | safeHtml"></div>
+          <div appHeadingLinks [innerHTML]="(guide().html ?? '') | safeHtml"></div>
         }
         <p class="mt-10 text-sm">
           <a [href]="guide().editUrl" i18n="@@editOnGitHub">Edit this page on GitHub</a>

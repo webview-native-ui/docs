@@ -15,15 +15,22 @@ import { addHeadingAliases } from './markdown-headings';
 interface GuideContent {
   title: string;
   description: string;
-  html: string;
+  html?: string;
   headings: { id: string; text: string }[];
   editUrl: string;
-  previewSections?: { intro: string; code: string; label: string; themes: 'all' | 'ios' | 'md' }[];
+  previewSections?: {
+    intro: string;
+    code: string;
+    label: string;
+    tallPreview?: boolean;
+    themes: 'all' | 'ios' | 'ios26' | 'md';
+  }[];
 }
 
 async function renderGuide(root: string, slug: string): Promise<Record<string, GuideContent>> {
   const english = await readFile(join(root, `projects/docs/src/guides/en/${slug}.md`), 'utf8');
   const guides: Record<string, GuideContent> = {};
+  let englishHtml = '';
   for (const { code } of PUBLISHED_DOCS_LOCALES) {
     const source = `projects/docs/src/guides/${code}/${slug}.md`;
     const raw = await readFile(join(root, source), 'utf8');
@@ -31,6 +38,7 @@ async function renderGuide(root: string, slug: string): Promise<Record<string, G
     const parsed = fm<{
       headingAliases?: Record<string, string>;
       md3OnlyHeadings?: string[];
+      ios26OnlyHeadings?: string[];
       iosOnlyHeadings?: string[];
     }>(raw);
     const body = parsed.body.trim();
@@ -51,7 +59,8 @@ async function renderGuide(root: string, slug: string): Promise<Record<string, G
       }
     }
     let html = enforceGeneratedHtmlPolicy(document.body.innerHTML, source);
-    if (code !== 'en') html = preserveSourceHeadingLinks(guides.en.html, html, source);
+    if (code === 'en') englishHtml = html;
+    else html = preserveSourceHeadingLinks(englishHtml, html, source);
     const article = JSDOM.fragment(html);
     const previewSections = [];
     if (slug === 'special-markup') {
@@ -63,12 +72,19 @@ async function renderGuide(root: string, slug: string): Promise<Record<string, G
           previewSections.push({
             intro,
             code: node.outerHTML,
+            ...(/<ion-(?:alert\b|action-sheet\b|header\b[^>]*\bcollapse="condense")/.test(
+              node.textContent,
+            )
+              ? { tallPreview: true }
+              : {}),
             label,
             themes: parsed.attributes.md3OnlyHeadings?.includes(label)
               ? ('md' as const)
-              : parsed.attributes.iosOnlyHeadings?.includes(label)
-                ? ('ios' as const)
-                : ('all' as const),
+              : parsed.attributes.ios26OnlyHeadings?.includes(label)
+                ? ('ios26' as const)
+                : parsed.attributes.iosOnlyHeadings?.includes(label)
+                  ? ('ios' as const)
+                  : ('all' as const),
           });
           intro = '';
         } else {
@@ -81,7 +97,7 @@ async function renderGuide(root: string, slug: string): Promise<Record<string, G
       ...(previewSections.length ? { previewSections } : {}),
       title,
       description,
-      html,
+      ...(previewSections.length ? {} : { html }),
       headings: Array.from(JSDOM.fragment(html).querySelectorAll('h2[id]')).map((heading) => ({
         id: heading.id,
         text: heading.textContent?.trim() ?? '',

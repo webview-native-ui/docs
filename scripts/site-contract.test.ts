@@ -532,9 +532,13 @@ test('all published internal document links resolve within this standalone site'
     const { GUIDE_CONTENT } =
       await import('../projects/docs/src/app/generated/guide-content.generated');
     for (const chapter of GUIDE_CHAPTERS) {
+      const guide = GUIDE_CONTENT[chapter.id][locale];
       documents.push({
         name: `guides/${chapter.id}/${locale}`,
-        html: GUIDE_CONTENT[chapter.id][locale].html,
+        html:
+          'html' in guide
+            ? guide.html
+            : guide.previewSections.map((s) => s.intro + s.code).join(''),
       });
     }
 
